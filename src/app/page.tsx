@@ -77,16 +77,16 @@ export default function HomePage() {
             <div className="text-center max-w-5xl mx-auto">
               <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight">
                 <span className="block text-glow-purple bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-                  Train ML Models
+                  KI-Modelle lokal
                 </span>
                 <span className="block text-glow-blue bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 bg-clip-text text-transparent">
-                  Locally. Securely.
+                  trainieren & fine-tunen.
                 </span>
               </h1>
               
               <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Die ultimative Desktop-App für professionelles Machine Learning Training. 
-                <span className="text-purple-400"> Deine Daten, deine Kontrolle, deine Modelle.</span>
+                Fine-Tune HuggingFace Modelle mit LoRA & PyTorch direkt auf deiner GPU –
+                <span className="text-purple-400"> ohne Cloud, ohne Abo, ohne Datenverlust.</span>
               </p>
 
               {/* CTA Buttons */}
@@ -283,6 +283,69 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Was ist FrameTrain – SEO Section */}
+        <section className="py-24 px-4 relative" id="about">
+          <div className="max-w-4xl mx-auto">
+            <div className="glass-strong rounded-3xl p-12">
+              <h2 className="text-4xl font-black mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Was ist FrameTrain?
+              </h2>
+              <div className="text-gray-300 space-y-4 text-lg leading-relaxed">
+                <p>
+                  FrameTrain ist eine <strong className="text-white">Desktop-App für lokales Machine Learning Training</strong>, die es Data Scientists, ML Engineers und Forschern ermöglicht, KI-Modelle direkt auf der eigenen Hardware zu trainieren – ohne Cloud-Abhängigkeit.
+                </p>
+                <p>
+                  Mit nativer <strong className="text-white">HuggingFace-Integration</strong> hast du Zugriff auf tausende vortrainierte Modelle, die du per <strong className="text-white">LoRA Fine-Tuning</strong> effizient auf eigene Datensätze anpassen kannst. Ob NLP, Computer Vision oder LLM Fine-Tuning – FrameTrain unterstützt gängige <strong className="text-white">PyTorch</strong>- und Transformers-basierte Workflows.
+                </p>
+                <p>
+                  Im Gegensatz zu Cloud-Lösungen wie AWS SageMaker, Google Colab oder Paperspace verlassen deine Daten und Modelle <strong className="text-white">niemals dein Gerät</strong>. Das macht FrameTrain zur idealen Lösung für DSGVO-konforme ML-Projekte in Unternehmen und im Forschungsumfeld.
+                </p>
+                <p>
+                  GPU-Beschleunigung (NVIDIA CUDA, Apple Metal), automatisches Model Checkpointing und Live-Monitoring der Trainingsmetriken sind standardmäßig integriert.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-24 px-4 relative" id="faq">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                Häufige Fragen
+              </h2>
+              <p className="text-gray-400 text-lg">Alles was du über FrameTrain wissen musst</p>
+            </div>
+            <div className="space-y-4">
+              <FAQItem
+                question="Kann ich LLMs mit FrameTrain fine-tunen?"
+                answer="Ja. FrameTrain unterstützt das Fine-Tuning von Large Language Models (LLMs) via LoRA und QLoRA. Du kannst Modelle wie Llama, Mistral oder Phi direkt aus HuggingFace importieren und auf eigene Datensätze anpassen."
+              />
+              <FAQItem
+                question="Welche GPUs werden unterstützt?"
+                answer="FrameTrain läuft auf allen NVIDIA-GPUs mit CUDA-Unterstützung (ab GTX 10-Serie) sowie auf Apple Silicon (M1/M2/M3/M4) über Metal Performance Shaders. Auch rein CPU-basiertes Training ist möglich."
+              />
+              <FAQItem
+                question="Was ist der Unterschied zu Google Colab oder AWS SageMaker?"
+                answer="FrameTrain läuft vollständig lokal auf deinem Rechner. Es entstehen keine laufenden Cloud-Kosten, deine Daten werden nicht hochgeladen und du bist nicht auf Internetverbindung angewiesen. Ideal für sensible oder proprietäre Datensätze."
+              />
+              <FAQItem
+                question="Brauche ich Programmierkenntnisse?"
+                answer="Nein. FrameTrain ist als grafische Anwendung konzipiert. Du konfigurierst Trainingsparameter über eine intuitive Oberfläche, ohne Code schreiben zu müssen. Für Fortgeschrittene gibt es zusätzlich Konfigurationsdateien."
+              />
+              <FAQItem
+                question="Unterstützt FrameTrain LoRA-Training?"
+                answer="Ja, LoRA (Low-Rank Adaptation) ist vollständig integriert. Du kannst LoRA-Rank, Alpha und Target-Module direkt in der App konfigurieren, was das Fine-Tuning auch auf GPUs mit wenig VRAM ermöglicht."
+              />
+              <FAQItem
+                question="Warum kostet FrameTrain nur 1,99€?"
+                answer="FrameTrain befindet sich aktuell in der Early-Access-Phase. Der Preis ist bewusst niedrig gehalten, damit möglichst viele Entwickler und Forscher Zugang bekommen. Der Preis wird mit zukünftigen Feature-Updates steigen."
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="py-32 px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
@@ -372,6 +435,27 @@ function StepCard({ number, icon, title, description }: any) {
         <h3 className="text-2xl font-bold text-white mb-3">{title}</h3>
         <p className="text-gray-400 leading-relaxed">{description}</p>
       </div>
+    </div>
+  )
+}
+
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="glass-strong rounded-2xl overflow-hidden">
+      <button
+        className="w-full text-left px-8 py-6 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+      >
+        <h3 className="text-white font-semibold text-lg">{question}</h3>
+        <span className={`text-purple-400 text-2xl transition-transform duration-300 flex-shrink-0 ${open ? 'rotate-45' : ''}`}>+</span>
+      </button>
+      {open && (
+        <div className="px-8 pb-6 text-gray-400 leading-relaxed">
+          {answer}
+        </div>
+      )}
     </div>
   )
 }
