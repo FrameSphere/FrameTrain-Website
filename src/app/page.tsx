@@ -308,6 +308,92 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Warum lokales ML Training */}
+        <section className="py-24 px-4 relative" id="why-local">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
+                Warum lokal statt Cloud?
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                Die Vorteile von lokalem ML-Training gegenüber Cloud-Services auf einen Blick
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <ReasonCard
+                icon="💰"
+                title="Keine laufenden Kosten"
+                description="Cloud-GPU-Instanzen kosten 0,50€ bis 10€+ pro Stunde. Mit FrameTrain zahlst du einmalig 1,99€ und trainierst unbegrenzt auf deiner eigenen Hardware."
+              />
+              <ReasonCard
+                icon="🔒"
+                title="Maximale Datensicherheit"
+                description="Sensible Daten – Kundeninformationen, Unternehmensdaten, proprietäre Datensätze – verlassen niemals deinen Rechner. DSGVO-Konformität ohne Aufwand."
+              />
+              <ReasonCard
+                icon="⚡"
+                title="Volle GPU-Kontrolle"
+                description="Keine geteilten Ressourcen, kein Throttling. Du nutzt 100% deiner GPU-Kapazität ohne künstliche Limits oder Warteschlangen."
+              />
+              <ReasonCard
+                icon="📡"
+                title="Offline-Betrieb"
+                description="Kein Internet nötig. Trainiere in abgesicherten Netzwerken, auf Reisen oder in Umgebungen ohne stabilen Internetzugang."
+              />
+              <ReasonCard
+                icon="🔓"
+                title="Kein Vendor Lock-in"
+                description="Du bist nicht abhängig von AWS, Google oder Microsoft. Deine Modelle, deine Daten, deine Infrastruktur – vollständig unter deiner Kontrolle."
+              />
+              <ReasonCard
+                icon="🚀"
+                title="Schnellere Iteration"
+                description="Kein Upload von Datensätzen, kein Warten auf Instanz-Start. Experimente starten in Sekunden – für schnellere Entwicklungszyklen."
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Use Cases */}
+        <section className="py-24 px-4 relative" id="use-cases">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent">
+                Typische Anwendungsfälle
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                FrameTrain wird von Entwicklern, Forschern und Unternehmen weltweit eingesetzt
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <UseCaseCard
+                tag="NLP"
+                title="Unternehmensinterne Chatbots & Assistenten"
+                description="Fine-Tune ein LLM (z.B. Llama oder Mistral) auf interne Dokumentation, Handbüher und FAQs. Erstelle einen Unternehmens-Chatbot, der vertrauliche Daten niemals verlässt."
+                keywords={['LLM Fine-Tuning', 'LoRA', 'DSGVO']}
+              />
+              <UseCaseCard
+                tag="NLP"
+                title="Dokumenten-Klassifikation"
+                description="Trainiere ein Klassifikationsmodell auf eigene Dokumentenkategorien. Ideal für Branchen wie Recht, Medizin, Versicherung oder Buchhaltung."
+                keywords={['Text Classification', 'PyTorch', 'Transformer']}
+              />
+              <UseCaseCard
+                tag="LLM"
+                title="Domänenspezifisches Fine-Tuning"
+                description="Passe vortrainierte Sprachmodelle auf Fachsprache an – Medizin, Jura, Technik. Bessere Resultate als General-Purpose-Modelle bei spezialisierten Aufgaben."
+                keywords={['Domain Adaptation', 'QLoRA', 'HuggingFace']}
+              />
+              <UseCaseCard
+                tag="Research"
+                title="Forschungsprojekte & Experimente"
+                description="Reproduzierbare ML-Experimente ohne Cloud-Abhängigkeit. Volle Kontrolle über Hyperparameter, Checkpoints und Metriken für wissenschaftliche Publikationen."
+                keywords={['Reproducibility', 'Checkpointing', 'Gradient Checkpointing']}
+              />
+            </div>
+          </div>
+        </section>
+
         {/* FAQ Section */}
         <section className="py-24 px-4 relative" id="faq">
           <div className="max-w-4xl mx-auto">
@@ -341,6 +427,22 @@ export default function HomePage() {
               <FAQItem
                 question="Warum kostet FrameTrain nur 1,99€?"
                 answer="FrameTrain befindet sich aktuell in der Early-Access-Phase. Der Preis ist bewusst niedrig gehalten, damit möglichst viele Entwickler und Forscher Zugang bekommen. Der Preis wird mit zukünftigen Feature-Updates steigen."
+              />
+              <FAQItem
+                question="Läuft FrameTrain auf Apple M1/M2/M3/M4?"
+                answer="Ja. FrameTrain unterstützt Apple Silicon nativ über Metal Performance Shaders (MPS). Modelle werden auf der GPU des M-Chips beschleunigt, ohne CUDA zu benötigen."
+              />
+              <FAQItem
+                question="Welche Modellformate werden unterstützt?"
+                answer="FrameTrain unterstützt PyTorch-Modelle (.pt, .bin), SafeTensors sowie GGUF-Format. Modelle können direkt von HuggingFace Hub importiert oder lokal geladen werden."
+              />
+              <FAQItem
+                question="Kann ich meine eigenen Datensätze verwenden?"
+                answer="Ja. Du kannst eigene Datensätze im CSV-, JSON- oder JSONL-Format laden. FrameTrain unterstützt auch Datensätze direkt vom HuggingFace Datasets Hub."
+              />
+              <FAQItem
+                question="Unterstützt FrameTrain Mixed Precision und Gradient Checkpointing?"
+                answer="Ja. FP16 und BF16 Mixed Precision Training sind vollständig unterstützt, ebenso Gradient Checkpointing für speichereffizientes Training auf GPUs mit wenig VRAM."
               />
             </div>
           </div>
@@ -439,23 +541,54 @@ function StepCard({ number, icon, title, description }: any) {
   )
 }
 
+function ReasonCard({ icon, title, description }: { icon: string; title: string; description: string }) {
+  return (
+    <div className="glass-strong rounded-2xl p-8 hover:scale-105 transition-all duration-300">
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+      <p className="text-gray-400 leading-relaxed text-sm">{description}</p>
+    </div>
+  )
+}
+
+function UseCaseCard({ tag, title, description, keywords }: { tag: string; title: string; description: string; keywords: string[] }) {
+  return (
+    <div className="glass-strong rounded-2xl p-8 hover:scale-105 transition-all duration-300">
+      <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-4">
+        {tag}
+      </span>
+      <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+      <p className="text-gray-400 leading-relaxed text-sm mb-4">{description}</p>
+      <div className="flex flex-wrap gap-2">
+        {keywords.map((kw) => (
+          <span key={kw} className="text-xs px-2 py-1 rounded bg-white/5 text-gray-500 font-mono">{kw}</span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="glass-strong rounded-2xl overflow-hidden">
+    <div className="glass-strong rounded-2xl overflow-hidden" itemScope itemType="https://schema.org/Question">
       <button
         className="w-full text-left px-8 py-6 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
-        <h3 className="text-white font-semibold text-lg">{question}</h3>
+        <h3 className="text-white font-semibold text-lg" itemProp="name">{question}</h3>
         <span className={`text-purple-400 text-2xl transition-transform duration-300 flex-shrink-0 ${open ? 'rotate-45' : ''}`}>+</span>
       </button>
-      {open && (
-        <div className="px-8 pb-6 text-gray-400 leading-relaxed">
-          {answer}
-        </div>
-      )}
+      {/* Answer always in DOM for SEO – only visually hidden when closed */}
+      <div
+        itemScope
+        itemType="https://schema.org/Answer"
+        className={`px-8 overflow-hidden transition-all duration-300 ${open ? 'max-h-96 pb-6' : 'max-h-0'}`}
+        aria-hidden={!open}
+      >
+        <p className="text-gray-400 leading-relaxed" itemProp="text">{answer}</p>
+      </div>
     </div>
   )
 }
