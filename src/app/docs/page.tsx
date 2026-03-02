@@ -533,7 +533,7 @@ function SectionPlaceholder({ title, icon }: any) {
           Dieser Abschnitt wird bald erweitert.
         </p>
         <p className="text-gray-500 text-sm">
-          Weitere Informationen findest du auf unserer Community-Seite oder im Discord.
+          Weitere Informationen findest du auf unserer Community-Seite, auf der Support Seite oder im Discord.
         </p>
       </div>
     </div>
