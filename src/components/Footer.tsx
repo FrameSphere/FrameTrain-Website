@@ -20,9 +20,11 @@ export function Footer() {
             
             {/* Social badges */}
             <div className="flex gap-3 mt-6">
+              <a href="https://github.com/FrameSphere/FrameTrain-Website" target="_blank" rel="noopener noreferrer">
               <div className="glass px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-purple-400 transition cursor-pointer">
                 GitHub
               </div>
+              </a>
               <div className="glass px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-blue-400 transition cursor-pointer">
                 Twitter
               </div>
