@@ -25,6 +25,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'FrameTrain' }],
   creator: 'FrameTrain',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-touch-icon.svg',
+    shortcut: '/favicon.svg',
+  },
   openGraph: {
     type: 'website',
     locale: 'de_DE',
@@ -32,11 +39,14 @@ export const metadata: Metadata = {
     title: 'FrameTrain – KI-Modelle lokal trainieren | ML Training Desktop App',
     description: 'Fine-Tune HuggingFace Modelle lokal auf deiner GPU. Kein Cloud-Abo, maximale Datensicherheit. Einmalig 1,99€.',
     siteName: 'FrameTrain',
+    images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'FrameTrain – KI-Modelle lokal trainieren' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'FrameTrain – KI-Modelle lokal trainieren',
     description: 'Fine-Tune HuggingFace Modelle lokal auf deiner GPU. Kein Cloud-Abo, DSGVO-konform. Einmalig 1,99€.',
+    images: ['/og-image.svg'],
+    creator: '@FrameTrainApp',
   },
   robots: {
     index: true,

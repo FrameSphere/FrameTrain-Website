@@ -528,12 +528,32 @@ function SectionPlaceholder({ title, icon }: any) {
         {title}
       </h1>
       
-      <div className="glass border border-white/10 rounded-lg p-8 text-center">
-        <p className="text-gray-400 mb-4">
-          Dieser Abschnitt wird bald erweitert.
+      {/* Screenshot placeholder */}
+      <div className="glass border border-white/10 rounded-xl overflow-hidden mb-6">
+        <div className="bg-gray-900/80 px-4 py-3 border-b border-white/10 flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-red-500/60" />
+          <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+          <div className="w-3 h-3 rounded-full bg-green-500/60" />
+          <span className="ml-3 text-xs text-gray-500 font-mono">FrameTrain – {title}</span>
+        </div>
+        <div className="h-48 flex items-center justify-center bg-gradient-to-br from-purple-900/10 to-blue-900/10">
+          <div className="text-center">
+            <div className="w-12 h-12 bg-white/5 rounded-xl mx-auto mb-3 flex items-center justify-center">
+              {icon}
+            </div>
+            <p className="text-gray-500 text-sm">Screenshot folgt in Kürze</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="glass border border-white/10 rounded-lg p-6">
+        <p className="text-gray-400 mb-3">
+          Dieser Abschnitt wird mit dem nächsten Release erweitert.
         </p>
         <p className="text-gray-500 text-sm">
-          Weitere Informationen findest du auf unserer Community-Seite, auf der Support Seite oder im Discord.
+          In der Zwischenzeit findest du Hilfe im{' '}
+          <a href="https://github.com/FrameSphere/FrameTrain-Website" target="_blank" className="text-purple-400 hover:underline">GitHub Repository</a>
+          {' '}oder im Discord.
         </p>
       </div>
     </div>

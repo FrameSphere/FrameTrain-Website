@@ -371,24 +371,28 @@ export default function HomePage() {
                 title="Unternehmensinterne Chatbots & Assistenten"
                 description="Fine-Tune ein LLM (z.B. Llama oder Mistral) auf interne Dokumentation, Handbüher und FAQs. Erstelle einen Unternehmens-Chatbot, der vertrauliche Daten niemals verlässt."
                 keywords={['LLM Fine-Tuning', 'LoRA', 'DSGVO']}
+                href="/guides/lora-finetuning"
               />
               <UseCaseCard
                 tag="NLP"
                 title="Dokumenten-Klassifikation"
                 description="Trainiere ein Klassifikationsmodell auf eigene Dokumentenkategorien. Ideal für Branchen wie Recht, Medizin, Versicherung oder Buchhaltung."
                 keywords={['Text Classification', 'PyTorch', 'Transformer']}
+                href="/guides/local-vs-cloud"
               />
               <UseCaseCard
                 tag="LLM"
                 title="Domänenspezifisches Fine-Tuning"
                 description="Passe vortrainierte Sprachmodelle auf Fachsprache an – Medizin, Jura, Technik. Bessere Resultate als General-Purpose-Modelle bei spezialisierten Aufgaben."
                 keywords={['Domain Adaptation', 'QLoRA', 'HuggingFace']}
+                href="/guides/lora-finetuning"
               />
               <UseCaseCard
                 tag="Research"
                 title="Forschungsprojekte & Experimente"
                 description="Reproduzierbare ML-Experimente ohne Cloud-Abhängigkeit. Volle Kontrolle über Hyperparameter, Checkpoints und Metriken für wissenschaftliche Publikationen."
                 keywords={['Reproducibility', 'Checkpointing', 'Gradient Checkpointing']}
+                href="/guides/gpu-guide"
               />
             </div>
           </div>
@@ -551,21 +555,23 @@ function ReasonCard({ icon, title, description }: { icon: string; title: string;
   )
 }
 
-function UseCaseCard({ tag, title, description, keywords }: { tag: string; title: string; description: string; keywords: string[] }) {
-  return (
-    <div className="glass-strong rounded-2xl p-8 hover:scale-105 transition-all duration-300">
+function UseCaseCard({ tag, title, description, keywords, href }: { tag: string; title: string; description: string; keywords: string[]; href?: string }) {
+  const inner = (
+    <div className="glass-strong rounded-2xl p-8 hover:scale-105 transition-all duration-300 cursor-pointer group">
       <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-4">
         {tag}
       </span>
       <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
       <p className="text-gray-400 leading-relaxed text-sm mb-4">{description}</p>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 items-center">
         {keywords.map((kw) => (
           <span key={kw} className="text-xs px-2 py-1 rounded bg-white/5 text-gray-500 font-mono">{kw}</span>
         ))}
+        {href && <span className="ml-auto text-xs text-purple-400 group-hover:text-purple-300">Mehr erfahren →</span>}
       </div>
     </div>
   )
+  return href ? <Link href={href}>{inner}</Link> : inner
 }
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d1a"/>
+      <stop offset="100%" stop-color="#1a0d2e"/>
+    </linearGradient>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="30%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="70%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- Grid lines subtle -->
+  <g opacity="0.07" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Logo badge -->
+  <rect x="80" y="80" width="64" height="64" rx="16" fill="url(#grad1)"/>
+  <text x="112" y="124" font-family="Arial, sans-serif" font-size="40" font-weight="900" fill="white" text-anchor="middle">F</text>
+
+  <!-- Brand name -->
+  <text x="160" y="122" font-family="Arial, sans-serif" font-size="36" font-weight="700" fill="url(#grad1)">FrameTrain</text>
+
+  <!-- Main headline -->
+  <text x="80" y="270" font-family="Arial, sans-serif" font-size="72" font-weight="900" fill="url(#grad1)">KI-Modelle lokal</text>
+  <text x="80" y="360" font-family="Arial, sans-serif" font-size="72" font-weight="900" fill="url(#grad2)">trainieren &amp; fine-tunen.</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="430" font-family="Arial, sans-serif" font-size="28" fill="#9ca3af">HuggingFace · LoRA · PyTorch · GPU · Kein Cloud-Abo</text>
+
+  <!-- Price badge -->
+  <rect x="80" y="480" width="220" height="56" rx="28" fill="url(#grad1)" opacity="0.2"/>
+  <rect x="80" y="480" width="220" height="56" rx="28" fill="none" stroke="url(#grad1)" stroke-width="1.5"/>
+  <text x="190" y="515" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#c084fc" text-anchor="middle">Einmalig 1,99€</text>
+
+  <!-- Right side decorative element -->
+  <circle cx="950" cy="315" r="180" fill="none" stroke="url(#grad1)" stroke-width="1" opacity="0.3"/>
+  <circle cx="950" cy="315" r="130" fill="none" stroke="url(#grad2)" stroke-width="1" opacity="0.25"/>
+  <circle cx="950" cy="315" r="80" fill="url(#grad1)" opacity="0.1"/>
+  <text x="950" y="295" font-family="Arial, sans-serif" font-size="20" fill="#9ca3af" text-anchor="middle">100% Local</text>
+  <text x="950" y="330" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="white" text-anchor="middle">No Cloud</text>
+  <text x="950" y="360" font-family="Arial, sans-serif" font-size="20" fill="#9ca3af" text-anchor="middle">DSGVO-konform</text>
+</svg>

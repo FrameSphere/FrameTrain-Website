@@ -58,6 +58,11 @@ export function Footer() {
                   Changelog
                 </a>
               </li>
+              <li>
+                <a href="/guides" className="hover:text-purple-400 transition">
+                  Guides
+                </a>
+              </li>
             </ul>
           </div>
           
