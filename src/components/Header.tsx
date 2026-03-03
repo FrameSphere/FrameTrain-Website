@@ -115,6 +115,12 @@ export function Header() {
                         Guides
                       </Link>
                       <Link
+                        href="/about"
+                        className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden lg:block"
+                      >
+                        About
+                      </Link>
+                      <Link
                         href="/#pricing"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden sm:block"
                       >

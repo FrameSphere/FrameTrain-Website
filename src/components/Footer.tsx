@@ -59,8 +59,18 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/faq" className="hover:text-purple-400 transition">
+                  FAQ
+                </a>
+              </li>
+              <li>
                 <a href="/guides" className="hover:text-purple-400 transition">
                   Guides
+                </a>
+              </li>
+              <li>
+                <a href="/about" className="hover:text-purple-400 transition">
+                  About
                 </a>
               </li>
             </ul>
