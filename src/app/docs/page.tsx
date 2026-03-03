@@ -553,7 +553,7 @@ function SectionPlaceholder({ title, icon }: any) {
         <p className="text-gray-500 text-sm">
           In der Zwischenzeit findest du Hilfe im{' '}
           <a href="https://github.com/FrameSphere/FrameTrain-Website" target="_blank" className="text-purple-400 hover:underline">GitHub Repository</a>
-          {' '}oder im Discord.
+          {' '}Support oder im Discord.
         </p>
       </div>
     </div>
