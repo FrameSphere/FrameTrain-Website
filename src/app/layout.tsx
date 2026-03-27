@@ -5,9 +5,12 @@ import { AuthProvider } from '@/contexts/AuthContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const baseUrl = 'https://frame-train.vercel.app'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: 'FrameTrain – HuggingFace & LLM Modelle lokal trainieren (LoRA, PyTorch, GPU)',
-  description: 'FrameTrain ist die Desktop-App für lokales Machine Learning Training. Fine-Tune HuggingFace Modelle mit LoRA, PyTorch und GPU-Beschleunigung – ohne Cloud, ohne Abo. Einmalig 1,99€.',
+  description: 'FrameTrain ist die Desktop-App für lokales Machine Learning Training. Fine-Tune HuggingFace Modelle mit LoRA, PyTorch und GPU-Beschleunigung – ohne Cloud, ohne Abo, ohne laufende Kosten. Einmalig 1,99€ für unbegrenztes Training.',
   keywords: [
     'Machine Learning lokal trainieren',
     'KI Modell lokal trainieren',
@@ -15,16 +18,27 @@ export const metadata: Metadata = {
     'HuggingFace Modell trainieren',
     'ML Training Desktop App',
     'LoRA fine tuning',
+    'QLoRA Training',
     'PyTorch Desktop',
     'AI Training Software offline',
     'lokales KI Training',
     'GPU Training lokal',
+    'NVIDIA CUDA Training',
+    'Apple Metal M1 M2 M3',
     'DSGVO konformes ML Training',
     'Machine Learning ohne Cloud',
-    'FrameTrain',
+    'FrameTrain Preis',
+    'ML Tool kostengünstig',
   ],
   authors: [{ name: 'FrameTrain' }],
   creator: 'FrameTrain',
+  generator: 'Next.js',
+  referrer: 'strict-origin-when-cross-origin',
+  formatDetection: {
+    email: false,
+    telephone: false,
+    address: false,
+  },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
@@ -35,27 +49,46 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'de_DE',
-    url: 'https://frame-train.vercel.app',
+    url: baseUrl,
     title: 'FrameTrain – KI-Modelle lokal trainieren | ML Training Desktop App',
-    description: 'Fine-Tune HuggingFace Modelle lokal auf deiner GPU. Kein Cloud-Abo, maximale Datensicherheit. Einmalig 1,99€.',
+    description: 'Fine-Tune HuggingFace & LLM Modelle lokal auf deiner GPU. Kein Cloud-Abo, maximale Datensicherheit, DSGVO-konform. Einmalig 1,99€. Jetzt downloaden!',
     siteName: 'FrameTrain',
-    images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'FrameTrain – KI-Modelle lokal trainieren' }],
+    images: [
+      {
+        url: '/og-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'FrameTrain – KI-Modelle lokal trainieren',
+        type: 'image/svg+xml',
+      }
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'FrameTrain – KI-Modelle lokal trainieren',
-    description: 'Fine-Tune HuggingFace Modelle lokal auf deiner GPU. Kein Cloud-Abo, DSGVO-konform. Einmalig 1,99€.',
+    description: 'Fine-Tune HuggingFace Modelle lokal auf deiner GPU. Kein Cloud-Abo, DSGVO-konform, unbegrenzte Trainings. Einmalig 1,99€.',
     images: ['/og-image.svg'],
     creator: '@FrameTrainApp',
+    site: '@FrameTrainApp',
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
     },
+  },
+  verification: {
+    google: 'google7ef57c38ed213579',
+  },
+  alternates: {
+    canonical: baseUrl,
   },
 }
 

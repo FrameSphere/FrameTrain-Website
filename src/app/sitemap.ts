@@ -2,85 +2,141 @@ import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://frame-train.vercel.app'
+  const lastModified = new Date()
 
-  return [
+  // Main pages
+  const mainPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'weekly',
-      priority: 1,
+      priority: 1.0,
     },
     {
+      url: `${baseUrl}/about`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/download`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/faq`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+  ]
+
+  // Documentation pages
+  const docsPages: MetadataRoute.Sitemap = [
+    {
       url: `${baseUrl}/docs`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/install`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+  ]
+
+  // Guides & Tutorials
+  const guidesPages: MetadataRoute.Sitemap = [
+    {
       url: `${baseUrl}/guides`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/guides/lora-finetuning`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/guides/local-vs-cloud`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/guides/gpu-guide`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/guides/huggingface-integration`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/guides/qLora-vs-lora`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/guides/model-versioning`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/guides/batch-training`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+  ]
+
+  // Community & Resources
+  const resourcePages: MetadataRoute.Sitemap = [
+    {
       url: `${baseUrl}/changelog`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'weekly',
-      priority: 0.7,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/extensions`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
-    {
-      url: `${baseUrl}/download`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
+  ]
+
+  // Authentication pages (low priority but should be crawlable)
+  const authPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/register`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${baseUrl}/login`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.5,
     },
+  ]
+
+  return [
+    ...mainPages,
+    ...docsPages,
+    ...guidesPages,
+    ...resourcePages,
+    ...authPages,
   ]
 }
