@@ -626,6 +626,22 @@ function UseCaseCard({ tag, title, description, keywords, href }: { tag: string;
   return href ? <Link href={href}>{inner}</Link> : inner
 }
 
+function DocCard({ icon, title, description, href }: { icon: React.ReactNode; title: string; description: string; href: string }) {
+  return (
+    <Link href={href}>
+      <div className="glass-strong rounded-2xl p-8 hover:scale-105 transition-all duration-300 cursor-pointer group h-full">
+        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <div className="text-white">
+            {icon}
+          </div>
+        </div>
+        <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
+        <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+      </div>
+    </Link>
+  )
+}
+
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false)
   return (
