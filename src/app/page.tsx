@@ -9,7 +9,7 @@ import { Footer } from '@/components/Footer'
 import { 
   Sparkles, Lock, Rocket, Zap, Code2, Database, 
   BarChart3, Package, Shield, ArrowRight, Check,
-  Brain, Cpu, Cloud, Download
+  Brain, Cpu, Cloud, Download, Book
 } from 'lucide-react'
 
 export default function HomePage() {
@@ -448,6 +448,58 @@ export default function HomePage() {
                 question="Unterstützt FrameTrain Mixed Precision und Gradient Checkpointing?"
                 answer="Ja. FP16 und BF16 Mixed Precision Training sind vollständig unterstützt, ebenso Gradient Checkpointing für speichereffizientes Training auf GPUs mit wenig VRAM."
               />
+            </div>
+          </div>
+        </section>
+
+        {/* Documentation Preview Section */}
+        <section className="py-24 px-4 relative" id="docs">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Dokumentation & Guides
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                Umfassende Anleitungen für Installation, Training, Troubleshooting und mehr
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <DocCard
+                icon={<Rocket className="w-6 h-6" />}
+                title="Quick Start"
+                description="Trainiere dein erstes Modell in 5 Minuten"
+                href="/docs#quick-start"
+              />
+              <DocCard
+                icon={<Brain className="w-6 h-6" />}
+                title="LoRA Fine-Tuning"
+                description="Trainiere große Modelle mit weniger Speicher"
+                href="/docs#lora-training"
+              />
+              <DocCard
+                icon={<Database className="w-6 h-6" />}
+                title="Datasets Vorbereiten"
+                description="Richtige Formate und Best Practices"
+                href="/docs#datasets-format"
+              />
+              <DocCard
+                icon={<Zap className="w-6 h-6" />}
+                title="Performance Tuning"
+                description="Optimiere dein Training für Geschwindigkeit"
+                href="/docs#optimization"
+              />
+            </div>
+
+            <div className="text-center">
+              <Link
+                href="/docs"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all group"
+              >
+                <Book className="w-5 h-5" />
+                <span>Zur vollständigen Dokumentation</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
         </section>
