@@ -93,9 +93,23 @@ export default function DocsPage() {
               <h1 className="text-5xl md:text-6xl font-black text-white mb-6">
                 FrameTrain Dokumentation
               </h1>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
                 Alles was du brauchst, um mit FrameTrain zu starten, deine eigenen LLMs zu fine-tunen und professionelle ML-Modelle zu trainieren – ohne Cloud, ohne Abhängigkeiten
               </p>
+              {/* AI Training Coach Banner */}
+              <Link
+                href="/docs/ai-training-guide"
+                className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 border border-violet-400/30 rounded-2xl hover:border-violet-400/60 hover:from-violet-600/30 hover:to-fuchsia-600/30 transition-all group"
+              >
+                <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Brain className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <p className="text-white font-bold">Neu: Der ultimative KI-Training Coach ✨</p>
+                  <p className="text-gray-400 text-sm">Grundlagen, Loss-Kurven, Hyperparameter, LoRA, QLoRA und mehr – vollständig erklärt</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-violet-400 group-hover:translate-x-1 transition-transform ml-2" />
+              </Link>
             </div>
           </div>
         </section>

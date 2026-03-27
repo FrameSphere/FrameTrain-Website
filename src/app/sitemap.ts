@@ -41,6 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/docs/ai-training-guide`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.92,
+    },
+    {
       url: `${baseUrl}/install`,
       lastModified,
       changeFrequency: 'monthly',
