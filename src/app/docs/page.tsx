@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { DocSearch } from '@/components/DocSearch'
+import { AppDocSearch } from '@/components/AppDocSearch'
 import {
   Book, Code2, Zap, Download, Key, Settings, Database,
   Terminal, Rocket, ChevronRight, FileCode, Cpu, Cloud,
@@ -18,6 +18,7 @@ import {
 
 export default function DocsPage() {
   const [activeSection, setActiveSection] = useState('installation')
+  const navigateTo = (section: string) => setActiveSection(section)
 
   const navigation = [
     {
@@ -99,7 +100,7 @@ export default function DocsPage() {
               </p>
               {/* Search */}
               <div className="mb-6">
-                <DocSearch />
+                <AppDocSearch onNavigate={navigateTo} />
               </div>
 
               {/* AI Training Coach Banner */}
@@ -127,6 +128,21 @@ export default function DocsPage() {
               {/* Sidebar Navigation */}
               <aside className="lg:w-72 flex-shrink-0">
                 <div className="glass-strong rounded-2xl p-6 border border-white/10 sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
+                  {/* Sidebar Search */}
+                  <div className="mb-5">
+                    <AppDocSearch onNavigate={navigateTo} />
+                  </div>
+
+                  {/* AI Coach Link */}
+                  <Link href="/docs/ai-training-guide" className="flex items-center gap-2 w-full px-3 py-2.5 mb-5 rounded-xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-400/25 hover:border-violet-400/50 transition-all group">
+                    <Brain className="w-4 h-4 text-violet-400 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-violet-300 text-xs font-bold">KI-Training Coach</p>
+                      <p className="text-gray-500 text-xs">8 Kapitel – ML, LoRA, Diagnose…</p>
+                    </div>
+                    <ChevronRight className="w-3 h-3 text-violet-500 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+
                   <nav className="space-y-1">
                     {navigation.map((section) => (
                       <div key={section.id} className="mb-6">

@@ -128,6 +128,16 @@ export default function HomePage() {
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
+                <Link
+                  href="/docs/ai-training-guide"
+                  className="glass-strong px-8 py-4 rounded-2xl hover:bg-violet-500/10 border border-violet-400/20 hover:border-violet-400/50 transition-all duration-300 group"
+                >
+                  <div className="flex items-center gap-2 text-violet-300 font-semibold text-lg">
+                    <Brain className="w-5 h-5" />
+                    <span>KI Training Coach</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
               </div>
 
               {/* Stats */}
@@ -229,6 +239,89 @@ export default function HomePage() {
                 title="Train & Deploy"
                 description="Konfiguriere Parameter, starte das Training und beobachte den Fortschritt live."
               />
+            </div>
+          </div>
+        </section>
+
+        {/* ── KI Training Coach Section ── */}
+        <section className="py-24 px-4 relative" id="training-coach">
+          <div className="max-w-7xl mx-auto">
+            <div className="glass-strong rounded-3xl p-12 border border-white/10 relative overflow-hidden">
+              {/* Background glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 via-fuchsia-600/5 to-transparent pointer-events-none" />
+              <div className="relative flex flex-col lg:flex-row items-center gap-10">
+                {/* Left: text */}
+                <div className="flex-1">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-violet-500/15 border border-violet-400/25 rounded-full text-violet-300 text-xs font-semibold mb-5">
+                    <Brain className="w-3.5 h-3.5" />
+                    Kostenlose Ressource
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
+                    Der ultimative{' '}
+                    <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                      KI-Training Coach
+                    </span>
+                  </h2>
+                  <p className="text-gray-400 text-lg mb-6 leading-relaxed">
+                    Neu zu ML? Kämpfst du mit Overfitting, Loss-Spikes oder LoRA-Konfiguration? 
+                    Unser kostenloser Guide erklärt alles – von Grundlagen bis zu fortgeschrittenen Techniken.
+                  </p>
+                  <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                    {[
+                      '🧠 ML-Grundlagen & Transformer',
+                      '📈 Loss-Kurven lesen & verstehen',
+                      '🩺 Overfitting & Underfitting fixen',
+                      '🔧 LoRA & QLoRA im Detail',
+                      '⚙️ Hyperparameter-Coaching',
+                      '📦 Dataset-Mastery',
+                    ].map(item => (
+                      <div key={item} className="flex items-center gap-2 text-sm text-gray-300">
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    <Link
+                      href="/docs/ai-training-guide"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold rounded-xl hover:from-violet-500 hover:to-fuchsia-500 transition-all shadow-lg shadow-violet-500/30"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      Zum Training Coach
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <Link
+                      href="/docs/ai-training-guide/ml-grundlagen"
+                      className="inline-flex items-center gap-2 px-6 py-3 glass border border-white/15 text-gray-300 font-semibold rounded-xl hover:border-white/30 hover:text-white transition-all"
+                    >
+                      Kapitel 1 starten
+                    </Link>
+                  </div>
+                </div>
+                {/* Right: chapter pills */}
+                <div className="flex-shrink-0 w-full lg:w-72">
+                  <div className="space-y-2">
+                    {[
+                      { emoji: '🧠', title: 'ML Grundlagen', href: '/docs/ai-training-guide/ml-grundlagen', num: '01' },
+                      { emoji: '📊', title: 'Training verstehen', href: '/docs/ai-training-guide/training-verstehen', num: '02' },
+                      { emoji: '📈', title: 'Trainingsverlauf lesen', href: '/docs/ai-training-guide/trainingsverlauf', num: '03' },
+                      { emoji: '🩺', title: 'Diagnose & Fixes', href: '/docs/ai-training-guide/diagnose', num: '04' },
+                      { emoji: '⚙️', title: 'Hyperparameter', href: '/docs/ai-training-guide/hyperparameter', num: '05' },
+                      { emoji: '🔧', title: 'Fine-Tuning Methoden', href: '/docs/ai-training-guide/fine-tuning', num: '06' },
+                      { emoji: '📦', title: 'Dataset-Mastery', href: '/docs/ai-training-guide/dataset-mastery', num: '07' },
+                      { emoji: '🚀', title: 'Fortgeschrittene Techniken', href: '/docs/ai-training-guide/fortgeschrittene', num: '08' },
+                    ].map(ch => (
+                      <Link key={ch.href} href={ch.href}
+                        className="flex items-center gap-3 px-4 py-2.5 glass border border-white/8 rounded-xl hover:border-violet-400/30 hover:bg-violet-500/5 transition-all group"
+                      >
+                        <span className="text-gray-600 text-xs font-mono">{ch.num}</span>
+                        <span className="text-base">{ch.emoji}</span>
+                        <span className="text-gray-300 text-sm font-medium group-hover:text-white transition-colors">{ch.title}</span>
+                        <ArrowRight className="w-3 h-3 text-gray-600 ml-auto group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -490,6 +583,20 @@ export default function HomePage() {
                 href="/docs#optimization"
               />
             </div>
+
+            {/* Training Coach Banner */}
+            <Link href="/docs/ai-training-guide"
+              className="flex items-center gap-4 px-6 py-5 mb-8 glass-strong border border-violet-400/25 rounded-2xl hover:border-violet-400/50 hover:bg-violet-500/5 transition-all group"
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <Brain className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <p className="text-white font-bold">KI-Training Coach ✨ – Der komplette Guide</p>
+                <p className="text-gray-400 text-sm">8 Kapitel: ML-Grundlagen, Loss-Kurven, LoRA & QLoRA, Hyperparameter, Datasets und mehr</p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-violet-400 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+            </Link>
 
             <div className="text-center">
               <Link
