@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Brain, Sparkles, ArrowRight, BookOpen } from 'lucide-react'
+import { DocSearch } from '@/components/DocSearch'
 
 const chapters = [
   {
@@ -128,7 +131,7 @@ export default function AITrainingGuideHubPage() {
               Von den absoluten Grundlagen bis zu fortgeschrittenen Fine-Tuning-Techniken – 
               in 8 ausführlichen Kapiteln. Alles, was du brauchst, um KI-Modelle zu verstehen und zu optimieren.
             </p>
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
+            <div className="flex items-center justify-center gap-4 text-sm text-gray-500 mb-10">
               <span>8 Kapitel</span>
               <span>·</span>
               <span>38 Themen</span>
@@ -137,6 +140,7 @@ export default function AITrainingGuideHubPage() {
               <span>·</span>
               <span>Code-Beispiele</span>
             </div>
+            <DocSearch />
           </div>
         </section>
 

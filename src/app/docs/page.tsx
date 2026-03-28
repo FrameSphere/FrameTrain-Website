@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { DocSearch } from '@/components/DocSearch'
 import {
   Book, Code2, Zap, Download, Key, Settings, Database,
   Terminal, Rocket, ChevronRight, FileCode, Cpu, Cloud,
@@ -96,6 +97,11 @@ export default function DocsPage() {
               <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
                 Alles was du brauchst, um mit FrameTrain zu starten, deine eigenen LLMs zu fine-tunen und professionelle ML-Modelle zu trainieren – ohne Cloud, ohne Abhängigkeiten
               </p>
+              {/* Search */}
+              <div className="mb-6">
+                <DocSearch />
+              </div>
+
               {/* AI Training Coach Banner */}
               <Link
                 href="/docs/ai-training-guide"
@@ -105,8 +111,8 @@ export default function DocsPage() {
                   <Brain className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="text-white font-bold">Neu: Der ultimative KI-Training Coach ✨</p>
-                  <p className="text-gray-400 text-sm">Grundlagen, Loss-Kurven, Hyperparameter, LoRA, QLoRA und mehr – vollständig erklärt</p>
+                  <p className="text-white font-bold">KI-Training Coach – 8 Kapitel ✨</p>
+                  <p className="text-gray-400 text-sm">ML-Grundlagen, Loss-Kurven, LoRA & QLoRA, Hyperparameter, Datasets – vollständig erklärt</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-violet-400 group-hover:translate-x-1 transition-transform ml-2" />
               </Link>

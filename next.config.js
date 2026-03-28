@@ -98,11 +98,8 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
-        // Rewrite sitemap
-        {
-          source: '/sitemap.xml',
-          destination: '/api/sitemap',
-        },
+        // NOTE: sitemap.xml is handled automatically by Next.js App Router (src/app/sitemap.ts)
+        // Do NOT add a rewrite for /sitemap.xml here — it would override Next.js's built-in handler
       ],
     }
   },
