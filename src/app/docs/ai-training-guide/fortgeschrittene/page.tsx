@@ -191,7 +191,7 @@ Gradient Checkpointing:
       <P>
         In FrameTrain kannst du Gradient Checkpointing im Training-Panel aktivieren. 
         Es wird automatisch empfohlen wenn das System erkennt, dass VRAM knapp werden könnte. 
-        Als Faustregel: <Highlight>aktiviere es immer wenn VRAM < 12 GB</Highlight> und Modell > 1B Parameter.
+        Als Faustregel: <Highlight>aktiviere es immer wenn VRAM &lt; 12 GB</Highlight> und Modell &gt; 1B Parameter.
       </P>
 
       <InfoBox type="info" title="Wann Gradient Checkpointing lohnt sich">

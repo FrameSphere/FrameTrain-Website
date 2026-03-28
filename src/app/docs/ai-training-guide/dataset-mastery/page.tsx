@@ -48,7 +48,7 @@ function DatenQualitaetSection() {
       </div>
       <p className="text-gray-600 text-xs">Hinweis: Diese Werte gelten für Fine-Tuning auf starken vortrainierten Modellen. Training von Scratch benötigt 10–100× mehr Daten.</p>
 
-      <H2>Qualität > Quantität</H2>
+      <H2>Qualität &gt; Quantität</H2>
       <P>
         Bei LLMs ist <Highlight>Qualität deutlich wichtiger als Quantität</Highlight>. 
         100 perfekt kuratierte Beispiele schlagen oft 1.000 schlechte. 
@@ -478,7 +478,7 @@ balanced = pd.concat([majority_down, minority_up])`,
 
       <InfoBox type="success" title="FrameTrain Empfehlung">
         Nutze Class Weights als ersten Ansatz – es ist am einfachsten und meist ausreichend. 
-        Wenn Imbalance-Ratio > 20:1 und Class Weights nicht reichen: 
+        Wenn Imbalance-Ratio &gt; 20:1 und Class Weights nicht reichen: 
         zusätzlich Oversampling der Minderheitsklasse mit Data Augmentation (Back-Translation).
       </InfoBox>
     </div>
