@@ -107,7 +107,16 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-sm text-gray-500">
-            © {new Date().getFullYear()} FrameTrain. All rights reserved.
+            © {new Date().getFullYear()} FrameTrain · powered by{' '}
+            <a
+              href="https://frame-sphere.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 no-underline hover:text-gray-300 transition-colors"
+            >
+              FrameSphere
+            </a>
+            . All rights reserved.
           </div>
           
           <div className="flex items-center gap-2 text-xs text-gray-600">
