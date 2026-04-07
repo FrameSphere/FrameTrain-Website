@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
@@ -16,8 +16,6 @@ const OAUTH_ERRORS: Record<string, string> = {
 }
 
 function OAuthButtons() {
-  const [fsHover, setFsHover] = useState(false)
-
   return (
     <div className="space-y-3 mb-6">
       {/* Google */}
@@ -47,10 +45,8 @@ function OAuthButtons() {
 
       {/* FrameSphere (Placeholder) */}
       <button
-        onMouseEnter={() => setFsHover(true)}
-        onMouseLeave={() => setFsHover(false)}
         onClick={() => alert('FrameSphere OAuth – wird in Kürze eingerichtet.')}
-        className="w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/20 rounded-xl text-gray-400 hover:border-violet-400/40 hover:text-violet-300 hover:bg-violet-500/5 transition-all relative"
+        className="w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/20 rounded-xl text-gray-400 hover:border-violet-400/40 hover:text-violet-300 hover:bg-violet-500/5 transition-all"
       >
         <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
           <span className="text-white font-black text-[10px]">F</span>
@@ -64,7 +60,8 @@ function OAuthButtons() {
   )
 }
 
-export default function LoginPage() {
+// ─── Inner component uses useSearchParams → must be inside Suspense ──────────
+function LoginContent() {
   const { login } = useAuth()
   const searchParams = useSearchParams()
   const [formData, setFormData] = useState({ email: '', password: '' })
@@ -92,87 +89,100 @@ export default function LoginPage() {
   }
 
   return (
+    <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10">
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-4">
+          <LogIn className="w-8 h-8 text-white" />
+        </div>
+        <h1 className="text-3xl font-bold text-white mb-2">Willkommen zurück</h1>
+        <p className="text-gray-400">Melde dich mit deinem Account an</p>
+      </div>
+
+      <OAuthButtons />
+
+      <div className="flex items-center gap-3 mb-6">
+        <div className="flex-1 h-px bg-white/10" />
+        <span className="text-gray-600 text-xs font-medium">oder mit E-Mail</span>
+        <div className="flex-1 h-px bg-white/10" />
+      </div>
+
+      {error && (
+        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm">
+          {error}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+            E-Mail
+          </label>
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <input
+              id="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              placeholder="deine@email.de"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+            Passwort
+          </label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <input
+              id="password"
+              type="password"
+              required
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              placeholder="Dein Passwort"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {loading ? 'Lädt...' : 'Anmelden'}
+        </button>
+      </form>
+
+      <p className="mt-6 text-center text-sm text-gray-400">
+        Noch kein Konto?{' '}
+        <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium transition">
+          Jetzt registrieren
+        </Link>
+      </p>
+    </div>
+  )
+}
+
+// ─── Page wrapper with Suspense ───────────────────────────────────────────────
+export default function LoginPage() {
+  return (
     <div className="min-h-screen flex flex-col">
       <Header />
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
-          <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-4">
-                <LogIn className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-3xl font-bold text-white mb-2">Willkommen zurück</h1>
-              <p className="text-gray-400">Melde dich mit deinem Account an</p>
+          <Suspense fallback={
+            <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10 flex items-center justify-center min-h-[400px]">
+              <div className="text-gray-400">Lädt...</div>
             </div>
-
-            <OAuthButtons />
-
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex-1 h-px bg-white/10" />
-              <span className="text-gray-600 text-xs font-medium">oder mit E-Mail</span>
-              <div className="flex-1 h-px bg-white/10" />
-            </div>
-
-            {error && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm">
-                {error}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  E-Mail
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
-                    placeholder="deine@email.de"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-                  Passwort
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                  <input
-                    id="password"
-                    type="password"
-                    required
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
-                    placeholder="Dein Passwort"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Lädt...' : 'Anmelden'}
-              </button>
-            </form>
-
-            <p className="mt-6 text-center text-sm text-gray-400">
-              Noch kein Konto?{' '}
-              <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium transition">
-                Jetzt registrieren
-              </Link>
-            </p>
-          </div>
+          }>
+            <LoginContent />
+          </Suspense>
         </div>
       </main>
 
