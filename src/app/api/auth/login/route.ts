@@ -30,6 +30,15 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // OAuth-only user has no password
+    if (!user.passwordHash) {
+      const providerName = user.provider === 'google' ? 'Google' : user.provider === 'github' ? 'GitHub' : 'OAuth'
+      return NextResponse.json(
+        { error: `Dieser Account wurde über ${providerName} erstellt. Bitte melde dich mit ${providerName} an.` },
+        { status: 401 }
+      )
+    }
+
     // Check password
     const validPassword = await bcrypt.compare(password, user.passwordHash)
 
@@ -62,19 +71,17 @@ export async function POST(req: NextRequest) {
     })
   } catch (error) {
     console.error('Login error:', error)
-    
-    // Detaillierte Fehlermeldungen für Debugging
+
     if (error instanceof Error) {
       console.error('Error message:', error.message)
       console.error('Error stack:', error.stack)
-      
       if ('code' in error) {
         console.error('Error code:', (error as any).code)
       }
     }
-    
+
     return NextResponse.json(
-      { 
+      {
         error: 'Ein Fehler ist aufgetreten',
         details: process.env.NODE_ENV === 'development' ? String(error) : undefined
       },
