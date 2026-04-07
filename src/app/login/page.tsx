@@ -1,11 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { LogIn, Mail, Lock } from 'lucide-react'
+
+const OAUTH_ERRORS: Record<string, string> = {
+  oauth_cancelled: 'Anmeldung abgebrochen.',
+  oauth_failed: 'OAuth-Anmeldung fehlgeschlagen. Bitte versuche es erneut.',
+  no_email: 'Keine E-Mail-Adresse vom Anbieter erhalten. Bitte stelle sicher, dass deine E-Mail öffentlich ist.',
+  server_error: 'Serverfehler beim OAuth-Login. Bitte versuche es erneut.',
+}
 
 function OAuthButtons() {
   const [fsHover, setFsHover] = useState(false)
@@ -58,12 +66,17 @@ function OAuthButtons() {
 
 export default function LoginPage() {
   const { login } = useAuth()
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+  const searchParams = useSearchParams()
+  const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const oauthError = searchParams.get('error')
+    if (oauthError && OAUTH_ERRORS[oauthError]) {
+      setError(OAUTH_ERRORS[oauthError])
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -81,7 +94,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
+
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10">
@@ -93,16 +106,14 @@ export default function LoginPage() {
               <p className="text-gray-400">Melde dich mit deinem Account an</p>
             </div>
 
-            {/* OAuth */}
             <OAuthButtons />
 
-            {/* Divider */}
             <div className="flex items-center gap-3 mb-6">
               <div className="flex-1 h-px bg-white/10" />
               <span className="text-gray-600 text-xs font-medium">oder mit E-Mail</span>
               <div className="flex-1 h-px bg-white/10" />
             </div>
-            
+
             {error && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm">
                 {error}
