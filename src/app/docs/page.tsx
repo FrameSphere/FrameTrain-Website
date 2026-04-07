@@ -128,11 +128,6 @@ export default function DocsPage() {
               {/* Sidebar Navigation */}
               <aside className="lg:w-72 flex-shrink-0">
                 <div className="glass-strong rounded-2xl p-6 border border-white/10 sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
-                  {/* Sidebar Search */}
-                  <div className="mb-5">
-                    <AppDocSearch onNavigate={navigateTo} />
-                  </div>
-
                   {/* AI Coach Link */}
                   <Link href="/docs/ai-training-guide" className="flex items-center gap-2 w-full px-3 py-2.5 mb-5 rounded-xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-400/25 hover:border-violet-400/50 transition-all group">
                     <Brain className="w-4 h-4 text-violet-400 flex-shrink-0" />

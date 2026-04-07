@@ -82,6 +82,7 @@ export default function DashboardPage() {
   const [regenerating, setRegenerating] = useState(false)
   const [redirectingToPayment, setRedirectingToPayment] = useState(false)
   const [appVersion, setAppVersion] = useState('...')
+  const [supportBadge, setSupportBadge] = useState(0)
 
   // Support state
   const [supportOpen, setSupportOpen] = useState(false)
@@ -99,6 +100,32 @@ export default function DashboardPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const { getAll, add } = useStoredTickets(user?.id)
+
+  // ── Check for unread admin replies ──────────────────────────────
+  useEffect(() => {
+    async function checkBadge() {
+      const tickets = getAll()
+      if (!tickets.length) return
+      let unread = 0
+      for (const t of tickets) {
+        const lastSeenKey = `ft_ticket_seen_${t.ticket_id}`
+        const lastSeen = parseInt(typeof window !== 'undefined' ? localStorage.getItem(lastSeenKey) || '0' : '0', 10)
+        try {
+          const res = await fetch(`${MANAGER_API}/api/support/${t.ticket_id}/thread?token=${t.user_token}`)
+          if (!res.ok) continue
+          const data = await res.json()
+          const msgs: SupportMessage[] = data.messages || []
+          const adminMsgs = msgs.filter((m: SupportMessage) => m.sender === 'admin')
+          if (adminMsgs.length > 0) {
+            const lastAdmin = new Date(adminMsgs[adminMsgs.length - 1].created_at).getTime()
+            if (lastAdmin > lastSeen) unread++
+          }
+        } catch { /* ignore */ }
+      }
+      setSupportBadge(unread)
+    }
+    if (!authLoading && isAuthenticated) checkBadge()
+  }, [authLoading, isAuthenticated, getAll])
 
   // ── Auth redirect ──────────────────────────────────────────────
   useEffect(() => {
@@ -358,29 +385,49 @@ export default function DashboardPage() {
           </div>
 
           {/* ── CLI ───────────────────────────────────────────────── */}
-          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
-            <h2 className="text-2xl font-bold text-white mb-4">CLI Installation</h2>
-            <p className="text-gray-400 mb-4">Installiere die FrameTrain CLI für erweiterte Funktionen:</p>
-            <div className="bg-gray-900 rounded-lg p-4 mb-4">
+          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10 relative overflow-hidden">
+            {/* Coming Soon Overlay */}
+            <div className="absolute inset-0 bg-gray-950/70 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3 rounded-2xl">
+              <span className="text-4xl">🚧</span>
+              <span className="text-white font-black text-2xl">Coming Soon</span>
+              <span className="text-gray-400 text-sm text-center max-w-xs px-4">
+                Die CLI wird in einer der nächsten Versionen verfügbar sein.
+              </span>
+            </div>
+            {/* Blurred background preview */}
+            <h2 className="text-2xl font-bold text-white mb-4 blur-sm select-none">CLI Installation</h2>
+            <p className="text-gray-400 mb-4 blur-sm select-none">Installiere die FrameTrain CLI für erweiterte Funktionen:</p>
+            <div className="bg-gray-900 rounded-lg p-4 mb-4 blur-sm select-none">
               <code className="text-green-400 font-mono text-sm">pip install frametrain-cli</code>
             </div>
-            {activeKey && (
-              <div className="bg-gray-900 rounded-lg p-4 mb-4">
-                <code className="text-green-400 font-mono text-sm">frametrain verify-key {activeKey.key}</code>
-              </div>
-            )}
-            <a href="/docs" className="inline-flex items-center text-purple-400 hover:text-purple-300">
-              <ExternalLink className="w-4 h-4 mr-2" />Zur vollständigen Dokumentation
-            </a>
+            <div className="bg-gray-900 rounded-lg p-4 blur-sm select-none">
+              <code className="text-green-400 font-mono text-sm">frametrain verify-key ft_sk_xxxxxxxxxxxx</code>
+            </div>
           </div>
 
           {/* ── SUPPORT ──────────────────────────────────────────── */}
           <div className="glass-strong rounded-2xl shadow-lg border border-white/10 overflow-hidden">
-            {/* Header (always visible, clickable to toggle) */}
+            {/* Header */}
             <button
-              onClick={() => setSupportOpen(o => !o)}
-              className="w-full flex items-center justify-between px-8 py-6 hover:bg-white/5 transition-colors"
+              onClick={() => {
+                const opening = !supportOpen
+                setSupportOpen(opening)
+                if (opening) {
+                  // Mark all tickets seen
+                  getAll().forEach(t => {
+                    localStorage.setItem(`ft_ticket_seen_${t.ticket_id}`, Date.now().toString())
+                  })
+                  setSupportBadge(0)
+                }
+              }}
+              className="w-full flex items-center justify-between px-8 py-6 hover:bg-white/5 transition-colors relative"
             >
+              {/* Unread admin reply badge */}
+              {supportBadge > 0 && !supportOpen && (
+                <span className="absolute top-3 right-16 flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-[11px] font-black shadow-lg shadow-red-500/40 animate-pulse">
+                  {supportBadge}
+                </span>
+              )}
               <div className="flex items-center gap-3">
                 <MessageCircle className="w-6 h-6 text-purple-400" />
                 <h2 className="text-2xl font-bold text-white">Support</h2>
