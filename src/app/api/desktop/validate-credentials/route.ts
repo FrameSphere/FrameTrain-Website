@@ -126,7 +126,17 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // 5. Verify password
+    // 5. Verify password — OAuth users have no password
+    if (!apiKeyRecord.user.passwordHash) {
+      return NextResponse.json(
+        {
+          error: 'Dieser Account verwendet OAuth (Google/GitHub). Passwort-Login nicht möglich.',
+          isValid: false
+        },
+        { status: 401 }
+      )
+    }
+
     const passwordValid = await bcrypt.compare(password, apiKeyRecord.user.passwordHash)
     
     if (!passwordValid) {
@@ -167,7 +177,6 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Credential validation error:', error)
     
-    // Don't expose internal errors to client
     return NextResponse.json(
       { 
         error: 'Ein interner Fehler ist aufgetreten',
