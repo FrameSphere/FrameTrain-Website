@@ -4,8 +4,8 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 // GitHub Repository Info
-const GITHUB_OWNER = process.env.GITHUB_OWNER || 'KarolP-tech';
-const GITHUB_REPO = process.env.GITHUB_REPO || 'FrameTrain';
+const GITHUB_OWNER = process.env.GITHUB_OWNER || 'FrameSphere';
+const GITHUB_REPO = process.env.GITHUB_REPO || 'FrameTrain-App';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 interface GitHubRelease {
