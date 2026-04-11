@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
     })
 
     // Step 4: Create JWT cookie for FrameTrain session
-    const token = signToken({ userId: user.id, email: user.email })
+    const token = signToken({ userId: user.id, email: user.email! })
 
     const response = NextResponse.redirect(`${appUrl}/dashboard`)
 
