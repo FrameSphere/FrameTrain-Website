@@ -12,12 +12,11 @@ export async function GET(req: NextRequest) {
 
   const appUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:5001'
 
-  // User denied or error from FrameSphere
   if (error || !code) {
     return NextResponse.redirect(`${appUrl}/login?error=framesphere_cancelled`)
   }
 
-  // Verify CSRF state
+  // CSRF check
   const storedState = req.cookies.get('fs_sso_state')?.value
   if (!storedState || storedState !== state) {
     return NextResponse.redirect(`${appUrl}/login?error=framesphere_state_mismatch`)
@@ -33,7 +32,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.redirect(`${appUrl}/login?error=framesphere_misconfigured`)
     }
 
-    // Exchange code for FrameSphere user info
+    // Exchange code for FrameSphere user
     const tokenRes = await fetch(`${framesphereApiUrl}/sso/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -46,24 +45,19 @@ export async function GET(req: NextRequest) {
     }
 
     const { user: fsUser } = await tokenRes.json()
-    // fsUser = { id, name, email, role, avatarUrl }
 
-    // Email is required – FrameSphere always provides it
-    if (!fsUser.email) {
+    if (!fsUser?.email) {
       console.error('FrameSphere returned user without email')
       return NextResponse.redirect(`${appUrl}/login?error=framesphere_failed`)
     }
 
-    // Find or create FrameTrain user
-    let user = await prisma.user.findFirst({
-      where: { framesphereUserId: fsUser.id },
-    })
+    // Find or create local FrameTrain user
+    let user = await prisma.user.findFirst({ where: { framesphereUserId: fsUser.id } })
 
     if (!user) {
-      // Check by email → link existing account
       user = await prisma.user.findUnique({ where: { email: fsUser.email } })
-
       if (user) {
+        // Link existing FrameTrain account to FrameSphere
         user = await prisma.user.update({
           where: { id: user.id },
           data: {
@@ -73,10 +67,10 @@ export async function GET(req: NextRequest) {
           },
         })
       } else {
-        // Brand new FrameTrain user
+        // Brand new user via FrameSphere SSO
         user = await prisma.user.create({
           data: {
-            email: fsUser.email,           // always a string here
+            email: fsUser.email,
             name: fsUser.name || null,
             provider: 'framesphere',
             providerAccountId: fsUser.id,
@@ -86,12 +80,11 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    // Sign JWT and set session cookie
+    // Sign JWT
     const token = signToken({ userId: user.id, email: user.email })
 
-    const response = NextResponse.redirect(
-      user.hasPaid ? `${appUrl}/dashboard` : `${appUrl}/payment`
-    )
+    // Always go to /sso-welcome — the page decides based on hasPaid
+    const response = NextResponse.redirect(`${appUrl}/sso-welcome`)
 
     response.cookies.set('auth-token', token, {
       httpOnly: true,
