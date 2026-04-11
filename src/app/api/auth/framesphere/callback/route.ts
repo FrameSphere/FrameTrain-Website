@@ -24,7 +24,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Exchange code for user data at FrameSphere
     const framesphereApiUrl = process.env.FRAMESPHERE_API_URL || 'https://framesphere-backend.vercel.app/api'
     const clientId = process.env.FRAMESPHERE_CLIENT_ID || 'frametrain'
     const clientSecret = process.env.FRAMESPHERE_CLIENT_SECRET
@@ -34,7 +33,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.redirect(`${appUrl}/login?error=framesphere_misconfigured`)
     }
 
-    // Step 1: Exchange code → get FrameSphere user info
+    // Exchange code for FrameSphere user info
     const tokenRes = await fetch(`${framesphereApiUrl}/sso/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -42,69 +41,58 @@ export async function GET(req: NextRequest) {
     })
 
     if (!tokenRes.ok) {
-      const err = await tokenRes.json().catch(() => ({}))
-      console.error('FrameSphere token exchange failed:', err)
+      console.error('FrameSphere token exchange failed:', await tokenRes.text())
       return NextResponse.redirect(`${appUrl}/login?error=framesphere_failed`)
     }
 
     const { user: fsUser } = await tokenRes.json()
     // fsUser = { id, name, email, role, avatarUrl }
 
-    // Step 2: Find or create FrameTrain user linked to this FrameSphere account
+    // Email is required – FrameSphere always provides it
+    if (!fsUser.email) {
+      console.error('FrameSphere returned user without email')
+      return NextResponse.redirect(`${appUrl}/login?error=framesphere_failed`)
+    }
+
+    // Find or create FrameTrain user
     let user = await prisma.user.findFirst({
       where: { framesphereUserId: fsUser.id },
     })
 
-    if (!user && fsUser.email) {
-      // Check if a user with this email already exists → link them
+    if (!user) {
+      // Check by email → link existing account
       user = await prisma.user.findUnique({ where: { email: fsUser.email } })
 
       if (user) {
-        // Link existing account to FrameSphere
         user = await prisma.user.update({
           where: { id: user.id },
           data: {
             framesphereUserId: fsUser.id,
-            name: user.name || fsUser.name,
+            name: user.name || fsUser.name || null,
             provider: user.provider || 'framesphere',
+          },
+        })
+      } else {
+        // Brand new FrameTrain user
+        user = await prisma.user.create({
+          data: {
+            email: fsUser.email,           // always a string here
+            name: fsUser.name || null,
+            provider: 'framesphere',
+            providerAccountId: fsUser.id,
+            framesphereUserId: fsUser.id,
           },
         })
       }
     }
 
-    if (!user) {
-      // Create brand new FrameTrain user from FrameSphere data
-      user = await prisma.user.create({
-        data: {
-          email: fsUser.email,
-          name: fsUser.name || fsUser.email,
-          provider: 'framesphere',
-          providerAccountId: fsUser.id,
-          framesphereUserId: fsUser.id,
-        },
-      })
-    }
+    // Sign JWT and set session cookie
+    const token = signToken({ userId: user.id, email: user.email })
 
-    // Step 3: Now that we have the FrameTrain user ID, tell FrameSphere to record the link
-    await fetch(`${framesphereApiUrl}/sso/token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        code,               // code is already used – we pass product_user_id directly via a link endpoint
-        client_id: clientId,
-        client_secret: clientSecret,
-        product_user_id: user.id,
-      }),
-    }).catch(() => {
-      // Non-critical: connection recording failed, but login still works
-    })
+    const response = NextResponse.redirect(
+      user.hasPaid ? `${appUrl}/dashboard` : `${appUrl}/payment`
+    )
 
-    // Step 4: Create JWT cookie for FrameTrain session
-    const token = signToken({ userId: user.id, email: user.email! })
-
-    const response = NextResponse.redirect(`${appUrl}/dashboard`)
-
-    // Set auth cookie
     response.cookies.set('auth-token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -113,7 +101,6 @@ export async function GET(req: NextRequest) {
       path: '/',
     })
 
-    // Clear CSRF state cookie
     response.cookies.delete('fs_sso_state')
 
     return response
