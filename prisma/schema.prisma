@@ -11,11 +11,12 @@ datasource db {
 
 model User {
   id                String    @id @default(cuid())
-  email             String    @unique
+  email             String?   @unique
   name              String?
   passwordHash      String?   @map("password_hash")
-  provider          String?                          // "email" | "google" | "github"
+  provider          String?                          // "email" | "google" | "github" | "framesphere"
   providerAccountId String?   @map("provider_account_id")
+  framesphereUserId String?   @unique @map("framesphere_user_id") // FrameSphere UUID
   hasPaid           Boolean   @default(false) @map("has_paid")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")

@@ -13,6 +13,12 @@ const OAUTH_ERRORS: Record<string, string> = {
   oauth_failed: 'OAuth-Anmeldung fehlgeschlagen. Bitte versuche es erneut.',
   no_email: 'Keine E-Mail-Adresse vom Anbieter erhalten. Bitte stelle sicher, dass deine E-Mail öffentlich ist.',
   server_error: 'Serverfehler beim OAuth-Login. Bitte versuche es erneut.',
+  // FrameSphere SSO errors
+  framesphere_cancelled: 'FrameSphere-Anmeldung abgebrochen.',
+  framesphere_failed: 'FrameSphere-Anmeldung fehlgeschlagen. Bitte versuche es erneut.',
+  framesphere_state_mismatch: 'Sicherheitsfehler bei der Anmeldung. Bitte versuche es erneut.',
+  framesphere_misconfigured: 'FrameSphere SSO ist nicht konfiguriert. Bitte wende dich an den Support.',
+  framesphere_server_error: 'Serverfehler beim FrameSphere-Login. Bitte versuche es erneut.',
 }
 
 function OAuthButtons() {
@@ -43,19 +49,21 @@ function OAuthButtons() {
         <span className="font-medium text-sm">Mit GitHub anmelden</span>
       </a>
 
-      {/* FrameSphere (Placeholder) */}
-      <button
-        onClick={() => alert('FrameSphere OAuth – wird in Kürze eingerichtet.')}
-        className="w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/20 rounded-xl text-gray-400 hover:border-violet-400/40 hover:text-violet-300 hover:bg-violet-500/5 transition-all"
+      {/* FrameSphere SSO */}
+      <a
+        href="/api/auth/framesphere"
+        className="w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/30 rounded-xl text-gray-300 hover:border-violet-400/60 hover:text-white hover:bg-violet-500/5 transition-all group"
       >
-        <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-          <span className="text-white font-black text-[10px]">F</span>
+        <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25">
+          <span className="text-white font-black text-[10px]">FS</span>
         </div>
-        <span className="font-medium text-sm">Mit FrameSphere anmelden</span>
-        <span className="ml-auto text-[10px] font-bold text-violet-500 border border-violet-500/30 px-1.5 py-0.5 rounded bg-violet-500/10">
-          bald
+        <span className="font-medium text-sm group-hover:text-violet-300 transition-colors">
+          Mit FrameSphere anmelden
         </span>
-      </button>
+        <span className="ml-auto text-[10px] font-semibold text-violet-400 border border-violet-500/40 px-1.5 py-0.5 rounded bg-violet-500/10">
+          SSO
+        </span>
+      </a>
     </div>
   )
 }
@@ -163,6 +171,14 @@ function LoginContent() {
         <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium transition">
           Jetzt registrieren
         </Link>
+      </p>
+
+      <p className="mt-3 text-center text-xs text-gray-600">
+        Mit FrameSphere anmelden = einloggen mit deinem FrameSphere-Account.{' '}
+        <a href="https://frame-sphere.vercel.app/register" target="_blank" rel="noopener noreferrer"
+          className="text-violet-500 hover:text-violet-400 transition">
+          Noch kein FrameSphere-Konto?
+        </a>
       </p>
     </div>
   )
