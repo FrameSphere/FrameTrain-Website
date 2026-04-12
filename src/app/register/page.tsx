@@ -36,19 +36,21 @@ function OAuthButtons() {
         <span className="font-medium text-sm">Mit GitHub registrieren</span>
       </a>
 
-      {/* FrameSphere (Placeholder) */}
-      <button
-        onClick={() => alert('FrameSphere OAuth – wird in Kürze eingerichtet.')}
-        className="w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/20 rounded-xl text-gray-400 hover:border-violet-400/40 hover:text-violet-300 hover:bg-violet-500/5 transition-all"
+      {/* FrameSphere SSO – identisch mit Login-Seite */}
+      <a
+        href="/api/auth/framesphere"
+        className="w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/30 rounded-xl text-gray-300 hover:border-violet-400/60 hover:text-white hover:bg-violet-500/5 transition-all group"
       >
-        <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-          <span className="text-white font-black text-[10px]">F</span>
+        <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25">
+          <span className="text-white font-black text-[10px]">FS</span>
         </div>
-        <span className="font-medium text-sm">Mit FrameSphere registrieren</span>
-        <span className="ml-auto text-[10px] font-bold text-violet-500 border border-violet-500/30 px-1.5 py-0.5 rounded bg-violet-500/10">
-          bald
+        <span className="font-medium text-sm group-hover:text-violet-300 transition-colors">
+          Mit FrameSphere registrieren
         </span>
-      </button>
+        <span className="ml-auto text-[10px] font-semibold text-violet-400 border border-violet-500/40 px-1.5 py-0.5 rounded bg-violet-500/10">
+          SSO
+        </span>
+      </a>
     </div>
   )
 }
@@ -192,6 +194,14 @@ export default function RegisterPage() {
               <Link href="/login" className="text-purple-400 hover:text-purple-300 font-medium transition">
                 Jetzt anmelden
               </Link>
+            </p>
+
+            <p className="mt-3 text-center text-xs text-gray-600">
+              Mit FrameSphere registrieren = einloggen mit deinem FrameSphere-Account.{' '}
+              <a href="https://frame-sphere.vercel.app/register" target="_blank" rel="noopener noreferrer"
+                className="text-violet-500 hover:text-violet-400 transition">
+                Noch kein FrameSphere-Konto?
+              </a>
             </p>
           </div>
         </div>
