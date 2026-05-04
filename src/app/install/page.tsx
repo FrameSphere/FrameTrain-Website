@@ -97,7 +97,7 @@ export default function InstallPage() {
                   <div className="ml-11 space-y-2 text-gray-300">
                     <p>• Lade die <code className="text-purple-400 bg-black/30 px-2 py-1 rounded">.dmg</code> Datei herunter</p>
                     <p>• Öffne die <code className="text-purple-400 bg-black/30 px-2 py-1 rounded">.dmg</code> Datei</p>
-                    <p>• Ziehe <strong>FrameTrain 2</strong> in den <strong>Applications</strong> Ordner</p>
+                    <p>• Ziehe <strong>FrameTrain</strong> in den <strong>Applications</strong> Ordner</p>
                   </div>
                 </div>
 
@@ -117,7 +117,7 @@ export default function InstallPage() {
                     
                     <div className="bg-gray-900 rounded-lg p-4 border border-white/10">
                       <code className="text-green-400 text-sm font-mono block">
-                        sudo xattr -cr "/Applications/FrameTrain 2.app"
+                        sudo xattr -cr "/Applications/FrameTrain.app"
                       </code>
                     </div>
 
