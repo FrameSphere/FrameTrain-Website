@@ -88,6 +88,7 @@ export async function POST(req: NextRequest) {
             id: true,
             email: true,
             passwordHash: true,
+            desktopPasswordHash: true,
             hasPaid: true,
           }
         }
@@ -126,30 +127,42 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // 5. Verify password — OAuth users have no password hash, API-Key alone is sufficient
-    if (!apiKeyRecord.user.passwordHash) {
-      // OAuth user: skip password check, API key is the credential
-      // Still check hasPaid below
-    } else {
-      if (!password) {
-        return NextResponse.json(
-          {
-            error: 'Passwort ist erforderlich',
-            isValid: false
-          },
-          { status: 400 }
-        )
-      }
-      const passwordValid = await bcrypt.compare(password, apiKeyRecord.user.passwordHash)
-      if (!passwordValid) {
-        return NextResponse.json(
-          {
-            error: 'Falsches Passwort',
-            isValid: false
-          },
-          { status: 401 }
-        )
-      }
+    // 5. Verify password
+    // Priorität: desktopPasswordHash (gesetzt via Dashboard) > passwordHash (Email-Accounts)
+    const { desktopPasswordHash, passwordHash } = apiKeyRecord.user
+    const hashToCheck = desktopPasswordHash || passwordHash
+
+    if (!hashToCheck) {
+      // OAuth-User ohne gesetztes Desktop-Passwort
+      return NextResponse.json(
+        {
+          error: 'Kein Desktop-Passwort gesetzt. Bitte besuche frametrain.ai/dashboard und setze ein Desktop-Passwort unter "Desktop-App".',
+          isValid: false,
+          needsDesktopPassword: true,
+        },
+        { status: 403 }
+      )
+    }
+
+    if (!password) {
+      return NextResponse.json(
+        {
+          error: 'Passwort ist erforderlich',
+          isValid: false
+        },
+        { status: 400 }
+      )
+    }
+
+    const passwordValid = await bcrypt.compare(password, hashToCheck)
+    if (!passwordValid) {
+      return NextResponse.json(
+        {
+          error: 'Falsches Passwort',
+          isValid: false
+        },
+        { status: 401 }
+      )
     }
 
     // 6. Check if user has paid
@@ -174,7 +187,6 @@ export async function POST(req: NextRequest) {
       isValid: true,
       userId: apiKeyRecord.user.id,
       email: apiKeyRecord.user.email,
-      isOAuthUser: !apiKeyRecord.user.passwordHash,
       message: 'Validierung erfolgreich'
     })
 

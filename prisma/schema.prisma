@@ -14,6 +14,7 @@ model User {
   email             String    @unique                  // always required – SSO users always have email
   name              String?
   passwordHash      String?   @map("password_hash")
+  desktopPasswordHash String? @map("desktop_password_hash") // separates Passwort für Desktop-App (OAuth-User)
   provider          String?                            // "email" | "google" | "github" | "framesphere"
   providerAccountId String?   @map("provider_account_id")
   framesphereUserId String?   @unique @map("framesphere_user_id")

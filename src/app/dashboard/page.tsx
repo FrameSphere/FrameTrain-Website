@@ -7,7 +7,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
-  Lightbulb, MessageCircle, Send, ChevronDown, Plus,
+  Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
 } from 'lucide-react'
 
 const MANAGER_API = process.env.NEXT_PUBLIC_MANAGER_API_URL || 'https://webcontrol-hq-api.karol-paschek.workers.dev'
@@ -83,6 +83,14 @@ export default function DashboardPage() {
   const [redirectingToPayment, setRedirectingToPayment] = useState(false)
   const [appVersion, setAppVersion] = useState('...')
   const [supportBadge, setSupportBadge] = useState(0)
+
+  // Desktop-Passwort State
+  const [desktopPassword, setDesktopPassword] = useState('')
+  const [desktopPasswordConfirm, setDesktopPasswordConfirm] = useState('')
+  const [showDesktopPassword, setShowDesktopPassword] = useState(false)
+  const [settingDesktopPassword, setSettingDesktopPassword] = useState(false)
+  const [desktopPasswordSuccess, setDesktopPasswordSuccess] = useState('')
+  const [desktopPasswordError, setDesktopPasswordError] = useState('')
 
   // Support state
   const [supportOpen, setSupportOpen] = useState(false)
@@ -188,6 +196,37 @@ export default function DashboardPage() {
       const data = await res.json()
       if (data.url) window.location.href = data.url
     } catch { alert('❌ Fehler beim Weiterleiten zur Zahlung'); setRedirectingToPayment(false) }
+  }
+
+  const setDesktopPasswordHandler = async () => {
+    setDesktopPasswordError('')
+    setDesktopPasswordSuccess('')
+    if (desktopPassword.length < 6) {
+      setDesktopPasswordError('Passwort muss mindestens 6 Zeichen lang sein')
+      return
+    }
+    if (desktopPassword !== desktopPasswordConfirm) {
+      setDesktopPasswordError('Passwörter stimmen nicht überein')
+      return
+    }
+    setSettingDesktopPassword(true)
+    try {
+      const res = await fetch('/api/desktop-password/set', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: desktopPassword }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Fehler')
+      setDesktopPasswordSuccess('Desktop-Passwort erfolgreich gesetzt! Du kannst dich jetzt in der Desktop-App anmelden.')
+      setDesktopPassword('')
+      setDesktopPasswordConfirm('')
+    } catch (err: any) {
+      setDesktopPasswordError(err.message || 'Fehler beim Setzen des Passworts')
+    } finally {
+      setSettingDesktopPassword(false)
+    }
   }
 
   const downloadApp = async (platform: 'windows' | 'mac' | 'linux') => {
@@ -381,6 +420,70 @@ export default function DashboardPage() {
                   <a href="/install" className="text-purple-400 hover:text-purple-300 underline ml-1">Siehe Installations-Guide</a> für Details.
                 </span>
               </p>
+            </div>
+          </div>
+
+          {/* ── Desktop-App Passwort ────────────────────────────────── */}
+          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+            <div className="flex items-center mb-2">
+              <Lock className="w-6 h-6 text-purple-400 mr-3" />
+              <h2 className="text-2xl font-bold text-white">Desktop-App Passwort</h2>
+            </div>
+            <p className="text-gray-400 text-sm mb-6">
+              Setze ein Passwort für die Anmeldung in der Desktop-App. Bei Anmeldung per Google oder GitHub ist dies erforderlich,
+              da kein Account-Passwort existiert. E-Mail-Accounts können ihr normales Passwort oder ein separates Desktop-Passwort verwenden.
+            </p>
+            <div className="max-w-md space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Neues Desktop-Passwort</label>
+                <div className="relative">
+                  <input
+                    type={showDesktopPassword ? 'text' : 'password'}
+                    value={desktopPassword}
+                    onChange={e => { setDesktopPassword(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
+                    placeholder="Mindestens 6 Zeichen"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowDesktopPassword(p => !p)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    {showDesktopPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Passwort bestätigen</label>
+                <input
+                  type={showDesktopPassword ? 'text' : 'password'}
+                  value={desktopPasswordConfirm}
+                  onChange={e => { setDesktopPasswordConfirm(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
+                  placeholder="Passwort wiederholen"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                />
+              </div>
+              {desktopPasswordError && (
+                <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                  <X className="w-4 h-4 text-red-400 flex-shrink-0" />
+                  <p className="text-sm text-red-300">{desktopPasswordError}</p>
+                </div>
+              )}
+              {desktopPasswordSuccess && (
+                <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                  <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                  <p className="text-sm text-green-300">{desktopPasswordSuccess}</p>
+                </div>
+              )}
+              <button
+                onClick={setDesktopPasswordHandler}
+                disabled={settingDesktopPassword || !desktopPassword || !desktopPasswordConfirm}
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {settingDesktopPassword
+                  ? <><RefreshCw className="w-4 h-4 animate-spin" /><span>Speichert...</span></>
+                  : <><Lock className="w-4 h-4" /><span>Passwort setzen</span></>}
+              </button>
             </div>
           </div>
 
