@@ -83,6 +83,8 @@ export default function DashboardPage() {
   const [redirectingToPayment, setRedirectingToPayment] = useState(false)
   const [appVersion, setAppVersion] = useState('...')
   const [supportBadge, setSupportBadge] = useState(0)
+  const [isOAuthUser, setIsOAuthUser] = useState(false)
+  const [hasDesktopPassword, setHasDesktopPassword] = useState(false)
 
   // Desktop-Passwort State
   const [desktopPassword, setDesktopPassword] = useState('')
@@ -161,6 +163,8 @@ export default function DashboardPage() {
       if (!res.ok) throw new Error()
       const data = await res.json()
       setApiKeys(data.apiKeys || [])
+      setIsOAuthUser(!!data.isOAuthUser)
+      setHasDesktopPassword(!!data.hasDesktopPassword)
     } catch { /* silent */ } finally { setDataLoading(false) }
   }
 
@@ -222,6 +226,7 @@ export default function DashboardPage() {
       setDesktopPasswordSuccess('Desktop-Passwort erfolgreich gesetzt! Du kannst dich jetzt in der Desktop-App anmelden.')
       setDesktopPassword('')
       setDesktopPasswordConfirm('')
+      setHasDesktopPassword(true)
     } catch (err: any) {
       setDesktopPasswordError(err.message || 'Fehler beim Setzen des Passworts')
     } finally {
@@ -369,9 +374,15 @@ export default function DashboardPage() {
                         <div className="flex items-center space-x-4 text-sm text-gray-400">
                           <span>Erstellt: {new Date(apiKey.createdAt).toLocaleDateString('de-DE')}</span>
                           {apiKey.lastUsedAt && <span>Zuletzt genutzt: {new Date(apiKey.lastUsedAt).toLocaleDateString('de-DE')}</span>}
-                          <span className={`flex items-center gap-1 ${apiKey.isActive ? 'text-green-400' : 'text-red-400'}`}>
-                            {apiKey.isActive ? <><Check className="w-4 h-4" /><span>Aktiv</span></> : <><X className="w-4 h-4" /><span>Inaktiv</span></>}
-                          </span>
+                          {apiKey.isActive && isOAuthUser && !hasDesktopPassword ? (
+                            <span className="flex items-center gap-1 text-amber-400">
+                              <Lock className="w-4 h-4" /><span>Passwort fehlt noch</span>
+                            </span>
+                          ) : (
+                            <span className={`flex items-center gap-1 ${apiKey.isActive ? 'text-green-400' : 'text-red-400'}`}>
+                              {apiKey.isActive ? <><Check className="w-4 h-4" /><span>Aktiv</span></> : <><X className="w-4 h-4" /><span>Inaktiv</span></>}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -423,69 +434,71 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* ── Desktop-App Passwort ────────────────────────────────── */}
-          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
-            <div className="flex items-center mb-2">
-              <Lock className="w-6 h-6 text-purple-400 mr-3" />
-              <h2 className="text-2xl font-bold text-white">Desktop-App Passwort</h2>
-            </div>
-            <p className="text-gray-400 text-sm mb-6">
-              Setze ein Passwort für die Anmeldung in der Desktop-App. Bei Anmeldung per Google oder GitHub ist dies erforderlich,
-              da kein Account-Passwort existiert. E-Mail-Accounts können ihr normales Passwort oder ein separates Desktop-Passwort verwenden.
-            </p>
-            <div className="max-w-md space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Neues Desktop-Passwort</label>
-                <div className="relative">
+          {/* ── Desktop-App Passwort – nur für OAuth-User ────────────── */}
+          {isOAuthUser && (
+            <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+              <div className="flex items-center mb-2">
+                <Lock className="w-6 h-6 text-purple-400 mr-3" />
+                <h2 className="text-2xl font-bold text-white">Desktop-App Passwort</h2>
+              </div>
+              <p className="text-gray-400 text-sm mb-6">
+                Da du dich über Google oder GitHub angemeldet hast, brauchst du ein separates Passwort für die Desktop-App.
+                Setze es einmalig hier und nutze es dann beim Login in der App.
+              </p>
+              <div className="max-w-md space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Neues Desktop-Passwort</label>
+                  <div className="relative">
+                    <input
+                      type={showDesktopPassword ? 'text' : 'password'}
+                      value={desktopPassword}
+                      onChange={e => { setDesktopPassword(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
+                      placeholder="Mindestens 6 Zeichen"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowDesktopPassword(p => !p)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                    >
+                      {showDesktopPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Passwort bestätigen</label>
                   <input
                     type={showDesktopPassword ? 'text' : 'password'}
-                    value={desktopPassword}
-                    onChange={e => { setDesktopPassword(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
-                    placeholder="Mindestens 6 Zeichen"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                    value={desktopPasswordConfirm}
+                    onChange={e => { setDesktopPasswordConfirm(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
+                    placeholder="Passwort wiederholen"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowDesktopPassword(p => !p)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                  >
-                    {showDesktopPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
                 </div>
+                {desktopPasswordError && (
+                  <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                    <X className="w-4 h-4 text-red-400 flex-shrink-0" />
+                    <p className="text-sm text-red-300">{desktopPasswordError}</p>
+                  </div>
+                )}
+                {desktopPasswordSuccess && (
+                  <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                    <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                    <p className="text-sm text-green-300">{desktopPasswordSuccess}</p>
+                  </div>
+                )}
+                <button
+                  onClick={setDesktopPasswordHandler}
+                  disabled={settingDesktopPassword || !desktopPassword || !desktopPasswordConfirm}
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {settingDesktopPassword
+                    ? <><RefreshCw className="w-4 h-4 animate-spin" /><span>Speichert...</span></>
+                    : <><Lock className="w-4 h-4" /><span>{hasDesktopPassword ? 'Passwort ändern' : 'Passwort setzen'}</span></>}
+                </button>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Passwort bestätigen</label>
-                <input
-                  type={showDesktopPassword ? 'text' : 'password'}
-                  value={desktopPasswordConfirm}
-                  onChange={e => { setDesktopPasswordConfirm(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
-                  placeholder="Passwort wiederholen"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
-                />
-              </div>
-              {desktopPasswordError && (
-                <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                  <X className="w-4 h-4 text-red-400 flex-shrink-0" />
-                  <p className="text-sm text-red-300">{desktopPasswordError}</p>
-                </div>
-              )}
-              {desktopPasswordSuccess && (
-                <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                  <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                  <p className="text-sm text-green-300">{desktopPasswordSuccess}</p>
-                </div>
-              )}
-              <button
-                onClick={setDesktopPasswordHandler}
-                disabled={settingDesktopPassword || !desktopPassword || !desktopPasswordConfirm}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {settingDesktopPassword
-                  ? <><RefreshCw className="w-4 h-4 animate-spin" /><span>Speichert...</span></>
-                  : <><Lock className="w-4 h-4" /><span>Passwort setzen</span></>}
-              </button>
             </div>
-          </div>
+          )}
 
           {/* ── CLI ───────────────────────────────────────────────── */}
           <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10 relative overflow-hidden">

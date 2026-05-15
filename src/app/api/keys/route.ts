@@ -16,26 +16,38 @@ export async function GET(req: NextRequest) {
       )
     }
 
-    // Hole alle API Keys des Users
-    const apiKeys = await prisma.apiKey.findMany({
-      where: {
-        userId: user.userId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
+    // User-Details + Keys zusammen laden
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.userId },
       select: {
-        id: true,
-        key: true,
-        isActive: true,
-        createdAt: true,
-        lastUsedAt: true,
+        provider: true,
+        passwordHash: true,
+        desktopPasswordHash: true,
+        apiKeys: {
+          orderBy: { createdAt: 'desc' },
+          select: {
+            id: true,
+            key: true,
+            isActive: true,
+            createdAt: true,
+            lastUsedAt: true,
+          },
+        },
       },
     })
 
+    if (!dbUser) {
+      return NextResponse.json({ error: 'User nicht gefunden' }, { status: 404 })
+    }
+
+    const isOAuthUser = dbUser.provider !== 'email' && !dbUser.passwordHash
+    const hasDesktopPassword = !!dbUser.desktopPasswordHash
+
     return NextResponse.json({
-      apiKeys,
-      hasPaid: true, // User ist eingeloggt, also hat bezahlt
+      apiKeys: dbUser.apiKeys,
+      hasPaid: true,
+      isOAuthUser,
+      hasDesktopPassword,
     })
   } catch (error) {
     console.error('Get keys error:', error)
