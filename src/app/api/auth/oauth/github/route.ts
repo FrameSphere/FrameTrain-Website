@@ -11,10 +11,15 @@ export async function GET(req: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:5001'
   const redirectUri = `${baseUrl}/api/auth/oauth/github/callback`
 
+  // Quelle (login | register) für Fehler-Redirect merken
+  const source = req.nextUrl.searchParams.get('source') || 'login'
+  const state = Buffer.from(JSON.stringify({ source, ts: Date.now() })).toString('base64url')
+
   const params = new URLSearchParams({
     client_id: clientId,
     redirect_uri: redirectUri,
     scope: 'read:user user:email',
+    state,
   })
 
   return NextResponse.redirect(

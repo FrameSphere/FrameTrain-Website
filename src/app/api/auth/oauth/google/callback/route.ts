@@ -4,6 +4,17 @@ import { signToken } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
+// State-Param parsen: { source: 'login' | 'register', ts: number }
+function parseState(state: string | null): { source: string } {
+  try {
+    if (!state) return { source: 'login' }
+    const decoded = JSON.parse(Buffer.from(state, 'base64url').toString('utf-8'))
+    return { source: decoded.source === 'register' ? 'register' : 'login' }
+  } catch {
+    return { source: 'login' }
+  }
+}
+
 export async function GET(req: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:5001'
   const redirectUri = `${baseUrl}/api/auth/oauth/google/callback`
@@ -12,9 +23,11 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url)
     const code = searchParams.get('code')
     const error = searchParams.get('error')
+    const { source } = parseState(searchParams.get('state'))
+    const errorBase = `${baseUrl}/${source}`
 
     if (error || !code) {
-      return NextResponse.redirect(`${baseUrl}/login?error=oauth_cancelled`)
+      return NextResponse.redirect(`${errorBase}?error=oauth_cancelled`)
     }
 
     // Exchange code for tokens
@@ -32,7 +45,7 @@ export async function GET(req: NextRequest) {
 
     if (!tokenRes.ok) {
       console.error('Google token exchange failed:', await tokenRes.text())
-      return NextResponse.redirect(`${baseUrl}/login?error=oauth_failed`)
+      return NextResponse.redirect(`${errorBase}?error=oauth_failed`)
     }
 
     const tokens = await tokenRes.json()
@@ -43,14 +56,14 @@ export async function GET(req: NextRequest) {
     })
 
     if (!userRes.ok) {
-      return NextResponse.redirect(`${baseUrl}/login?error=oauth_failed`)
+      return NextResponse.redirect(`${errorBase}?error=oauth_failed`)
     }
 
     const googleUser = await userRes.json()
     // googleUser: { sub, email, name, picture, ... }
 
     if (!googleUser.email) {
-      return NextResponse.redirect(`${baseUrl}/login?error=no_email`)
+      return NextResponse.redirect(`${errorBase}?error=no_email`)
     }
 
     // Upsert user: find by provider+id or by email
@@ -64,8 +77,9 @@ export async function GET(req: NextRequest) {
     })
 
     if (user) {
-      // Update provider info if not set yet (e.g. was email user before)
-      if (!user.provider || user.provider === 'email') {
+      // Update provider info falls noch nicht gesetzt ODER die providerAccountId noch nicht stimmt
+      // (verhindert Ghost-Sessions bei mehrfachem OAuth-Login)
+      if (user.provider !== 'google' || user.providerAccountId !== googleUser.sub) {
         user = await prisma.user.update({
           where: { id: user.id },
           data: {
@@ -99,6 +113,8 @@ export async function GET(req: NextRequest) {
     })
   } catch (err) {
     console.error('Google OAuth callback error:', err)
+    // source ist hier nicht verfügbar, fallback auf /login
+    const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:5001'
     return NextResponse.redirect(`${baseUrl}/login?error=server_error`)
   }
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getCurrentUser } from '@/lib/auth'
+import { generateApiKey } from '@/lib/api-key'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -16,17 +17,15 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Lösche alle alten Keys komplett aus der Datenbank
+    // Lösche ALLE Keys dieses Users (aktive & inaktive)
     await prisma.apiKey.deleteMany({
-      where: {
-        userId: user.userId,
-      },
+      where: { userId: user.userId },
     })
 
-    // Generiere neuen Key
-    const newKey = `ft_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`
+    // Generiere neuen Key im korrekten Format (ft_ + 64 hex chars)
+    const newKey = generateApiKey()
 
-    // Erstelle neuen Key
+    // Erstelle neuen Key (plaintext – für Dashboard-Anzeige)
     const apiKey = await prisma.apiKey.create({
       data: {
         userId: user.userId,

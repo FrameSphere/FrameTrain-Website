@@ -40,11 +40,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { apiKey, password } = body
 
-    // Validate input
-    if (!apiKey || !password) {
+    // API-Key ist immer erforderlich; Passwort nur für Email-Accounts
+    if (!apiKey) {
       return NextResponse.json(
         { 
-          error: 'API-Key und Passwort sind erforderlich',
+          error: 'API-Key ist erforderlich',
           isValid: false 
         },
         { status: 400 }
@@ -126,27 +126,30 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // 5. Verify password — OAuth users have no password
+    // 5. Verify password — OAuth users have no password hash, API-Key alone is sufficient
     if (!apiKeyRecord.user.passwordHash) {
-      return NextResponse.json(
-        {
-          error: 'Dieser Account verwendet OAuth (Google/GitHub). Passwort-Login nicht möglich.',
-          isValid: false
-        },
-        { status: 401 }
-      )
-    }
-
-    const passwordValid = await bcrypt.compare(password, apiKeyRecord.user.passwordHash)
-    
-    if (!passwordValid) {
-      return NextResponse.json(
-        { 
-          error: 'Falsches Passwort',
-          isValid: false 
-        },
-        { status: 401 }
-      )
+      // OAuth user: skip password check, API key is the credential
+      // Still check hasPaid below
+    } else {
+      if (!password) {
+        return NextResponse.json(
+          {
+            error: 'Passwort ist erforderlich',
+            isValid: false
+          },
+          { status: 400 }
+        )
+      }
+      const passwordValid = await bcrypt.compare(password, apiKeyRecord.user.passwordHash)
+      if (!passwordValid) {
+        return NextResponse.json(
+          {
+            error: 'Falsches Passwort',
+            isValid: false
+          },
+          { status: 401 }
+        )
+      }
     }
 
     // 6. Check if user has paid
@@ -171,6 +174,7 @@ export async function POST(req: NextRequest) {
       isValid: true,
       userId: apiKeyRecord.user.id,
       email: apiKeyRecord.user.email,
+      isOAuthUser: !apiKeyRecord.user.passwordHash,
       message: 'Validierung erfolgreich'
     })
 

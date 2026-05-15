@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getCurrentUser } from '@/lib/auth'
-import { generateApiKey, hashApiKey } from '@/lib/api-key'
+import { generateApiKey } from '@/lib/api-key'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Check if user already has a valid key
+    // Check if user already has a valid key (active only)
     const existingKey = await prisma.apiKey.findFirst({
       where: {
         userId: currentUser.userId,
@@ -33,15 +33,19 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Generate new API key
+    // Generate new API key (plaintext stored – dashboard needs to display it)
     const apiKey = generateApiKey()
-    const hashedKey = hashApiKey(apiKey)
 
-    // Save to database
+    // Deactivate any stale inactive keys first (cleanup)
+    await prisma.apiKey.deleteMany({
+      where: { userId: currentUser.userId, isActive: false },
+    })
+
+    // Save to database as plaintext
     await prisma.apiKey.create({
       data: {
         userId: currentUser.userId,
-        key: hashedKey,
+        key: apiKey,
         isActive: true,
       },
     })

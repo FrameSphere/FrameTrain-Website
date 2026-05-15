@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { hashApiKey, validateApiKeyFormat } from '@/lib/api-key'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -17,20 +16,17 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Validate format
-    if (!validateApiKeyFormat(key)) {
+    // Grundlegende Format-Prüfung
+    if (!key.startsWith('ft_') || key.length < 24) {
       return NextResponse.json(
         { error: 'Ungültiges Key-Format', valid: false },
         { status: 400 }
       )
     }
 
-    // Hash the key
-    const hashedKey = hashApiKey(key)
-
-    // Check if key exists and is valid
+    // Direkter Lookup (Keys werden als Plaintext gespeichert)
     const apiKey = await prisma.apiKey.findUnique({
-      where: { key: hashedKey },
+      where: { key },
       include: {
         user: {
           select: {

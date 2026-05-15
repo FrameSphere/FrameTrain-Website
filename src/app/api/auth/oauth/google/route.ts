@@ -11,6 +11,10 @@ export async function GET(req: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:5001'
   const redirectUri = `${baseUrl}/api/auth/oauth/google/callback`
 
+  // Quelle (login | register) für Fehler-Redirect merken
+  const source = req.nextUrl.searchParams.get('source') || 'login'
+  const state = Buffer.from(JSON.stringify({ source, ts: Date.now() })).toString('base64url')
+
   const params = new URLSearchParams({
     client_id: clientId,
     redirect_uri: redirectUri,
@@ -18,6 +22,7 @@ export async function GET(req: NextRequest) {
     scope: 'openid email profile',
     access_type: 'offline',
     prompt: 'select_account',
+    state,
   })
 
   return NextResponse.redirect(
