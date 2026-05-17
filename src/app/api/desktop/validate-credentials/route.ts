@@ -136,7 +136,7 @@ export async function POST(req: NextRequest) {
       // OAuth-User ohne gesetztes Desktop-Passwort
       return NextResponse.json(
         {
-          error: 'Kein Desktop-Passwort gesetzt. Bitte besuche frametrain.ai/dashboard und setze ein Desktop-Passwort unter "Desktop-App".',
+          error: 'Kein Desktop-Passwort gesetzt. Bitte besuche https://frame-train.vercel.app/dashboard und setze ein Desktop-Passwort unter "Desktop-App".',
           isValid: false,
           needsDesktopPassword: true,
         },
