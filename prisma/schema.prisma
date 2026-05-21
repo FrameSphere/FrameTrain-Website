@@ -78,6 +78,28 @@ model ModelVersion {
   @@map("model_versions")
 }
 
+model LibraryScript {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  author      String
+  model_type  String    @map("model_type")
+  task_type   String    @map("task_type")
+  framework   String
+  script      String    @db.Text
+  verified    Boolean   @default(false)
+  downloads   Int       @default(0)
+  stars       Int       @default(0)
+  tags        String[]  @default([])
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@index([verified])
+  @@index([model_type])
+  @@index([framework])
+  @@map("library_scripts")
+}
+
 model Payment {
   id              String    @id @default(cuid())
   userId          String?   @map("user_id")

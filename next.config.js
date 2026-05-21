@@ -59,6 +59,15 @@ const nextConfig = {
           },
         ],
       },
+      // CORS for Library API (accessed from Tauri desktop app)
+      {
+        source: '/api/library/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Origin',  value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET, POST, OPTIONS' },
+          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' },
+        ],
+      },
       // Cache static assets for 1 year
       {
         source: '/static/:path*',
