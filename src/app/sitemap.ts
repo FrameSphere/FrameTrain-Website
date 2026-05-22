@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/install`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/changelog`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/extensions`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/library`, lastModified, changeFrequency: 'daily', priority: 0.88 },
     { url: `${baseUrl}/register`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/login`, lastModified, changeFrequency: 'monthly', priority: 0.5 },
   ]

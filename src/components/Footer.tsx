@@ -69,6 +69,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/library" className="hover:text-purple-400 transition">
+                  Open Library
+                </a>
+              </li>
+              <li>
                 <a href="/about" className="hover:text-purple-400 transition">
                   About
                 </a>

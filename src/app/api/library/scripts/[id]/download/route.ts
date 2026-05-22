@@ -17,11 +17,12 @@ export async function OPTIONS() {
 // Erhöht den Download-Zähler um 1 und gibt das vollständige Skript zurück
 export async function POST(
   _req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const { id } = await params;
     const updated = await prisma.libraryScript.update({
-      where: { id: params.id },
+      where: { id },
       data:  { downloads: { increment: 1 } },
     });
 

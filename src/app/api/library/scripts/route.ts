@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, description, author, model_type, task_type, framework, tags, script } = body ?? {};
+    const { name, description, author, model_type, task_type, framework, script_type, tags, script } = body ?? {};
 
     // Pflichtfeld-Validierung
     if (!name?.trim() || !description?.trim() || !author?.trim() || !script?.trim()) {
