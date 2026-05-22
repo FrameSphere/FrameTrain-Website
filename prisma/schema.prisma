@@ -87,6 +87,7 @@ model LibraryScript {
   task_type   String    @map("task_type")
   framework   String
   script      String    @db.Text
+  script_type String    @default("train") @map("script_type")  // "train" | "test"
   verified    Boolean   @default(false)
   downloads   Int       @default(0)
   stars       Int       @default(0)
@@ -97,6 +98,7 @@ model LibraryScript {
   @@index([verified])
   @@index([model_type])
   @@index([framework])
+  @@index([script_type])
   @@map("library_scripts")
 }
 

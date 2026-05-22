@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
     const task_type    = searchParams.get('task_type') ?? '';
     const framework    = searchParams.get('framework') ?? '';
     const verifiedOnly = searchParams.get('verified_only') === 'true';
+    const script_type  = searchParams.get('script_type') ?? '';   // 'train' | 'test' | ''
     const limit  = Math.min(100, parseInt(searchParams.get('limit')  ?? '50', 10));
     const offset =              parseInt(searchParams.get('offset') ?? '0',  10);
 
@@ -32,6 +33,7 @@ export async function GET(req: NextRequest) {
       model_type?: string;
       task_type?: string;
       framework?: string;
+      script_type?: string;
       OR?: Array<{
         name?: { contains: string; mode: 'insensitive' };
         description?: { contains: string; mode: 'insensitive' };
@@ -42,10 +44,11 @@ export async function GET(req: NextRequest) {
 
     const where: WhereClause = {};
 
-    if (verifiedOnly) where.verified   = true;
-    if (model_type)   where.model_type = model_type;
-    if (task_type)    where.task_type  = task_type;
-    if (framework)    where.framework  = framework;
+    if (verifiedOnly)  where.verified    = true;
+    if (model_type)    where.model_type  = model_type;
+    if (task_type)     where.task_type   = task_type;
+    if (framework)     where.framework   = framework;
+    if (script_type)   where.script_type = script_type;
 
     if (search) {
       where.OR = [
@@ -108,6 +111,7 @@ export async function POST(req: NextRequest) {
         model_type:  (model_type  ?? 'Custom').slice(0, 50),
         task_type:   (task_type   ?? 'Fine-Tuning').slice(0, 100),
         framework:   (framework   ?? 'transformers').slice(0, 50),
+        script_type: (['train', 'test'].includes(script_type) ? script_type : 'train'),
         tags: Array.isArray(tags)
           ? tags.map((t: string) => String(t).toLowerCase().slice(0, 30)).slice(0, 20)
           : [],
