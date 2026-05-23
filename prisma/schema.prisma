@@ -79,21 +79,25 @@ model ModelVersion {
 }
 
 model LibraryScript {
-  id          String    @id @default(cuid())
-  name        String
-  description String
-  author      String
-  model_type  String    @map("model_type")
-  task_type   String    @map("task_type")
-  framework   String
-  script      String    @db.Text
-  script_type String    @default("train") @map("script_type")  // "train" | "test"
-  verified    Boolean   @default(false)
-  downloads   Int       @default(0)
-  stars       Int       @default(0)
-  tags        String[]  @default([])
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  id             String    @id @default(cuid())
+  name           String
+  description    String
+  author         String
+  model_type     String    @map("model_type")
+  task_type      String    @map("task_type")
+  framework      String
+  script         String    @db.Text
+  script_type    String    @default("train") @map("script_type")
+  verified       Boolean   @default(false)
+  downloads      Int       @default(0)
+  stars          Int       @default(0)
+  tags           String[]  @default([])
+  aiCheckResult  String?   @db.Text @map("ai_check_result")
+  aiCheckedAt    DateTime? @map("ai_checked_at")
+  rejectedAt     DateTime? @map("rejected_at")
+  rejectedReason String?   @map("rejected_reason")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
 
   @@index([verified])
   @@index([model_type])
