@@ -47,6 +47,30 @@ const API_BASE = '/api/library'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+// ── Helper: Author-Name speichern/laden ──────────────────────────────────────
+
+function getOrCreateAuthorName(userEmail?: string): string {
+  if (!userEmail) return 'anonymous';
+  
+  const AUTHOR_STORAGE_KEY = `ft_author_${userEmail}`;
+  const stored = localStorage.getItem(AUTHOR_STORAGE_KEY);
+  
+  if (stored) {
+    return stored;
+  }
+  
+  // Beim ersten Upload: Author-Name aus Email generieren
+  const generatedName = userEmail
+    .split('@')[0]
+    .replace(/[^a-z0-9_-]/gi, '_')
+    .slice(0, 20);
+  
+  // Speichern für alle zukünftigen Uploads
+  localStorage.setItem(AUTHOR_STORAGE_KEY, generatedName);
+  
+  return generatedName;
+}
+
 function parseDate(iso: string | null | undefined): Date {
   if (!iso) return new Date(0)
   // Konvertiere "2026-05-23 18:36:20.857+00" zu "2026-05-23T18:36:20.857Z"
@@ -372,7 +396,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
-          author: user?.email?.split('@')[0] ?? 'anonymous',
+          author: getOrCreateAuthorName(user?.email),
           tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
         }),
       })
