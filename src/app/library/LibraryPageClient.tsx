@@ -41,112 +41,7 @@ interface UploadForm {
   script: string
 }
 
-// ── Mock-Daten (Fallback wenn DB leer) ────────────────────────────────────────
 
-const MOCK_SCRIPTS: LibraryScript[] = [
-  {
-    id: 'mock_1',
-    name: 'LoRA Fine-Tuning für Textklassifikation',
-    description: 'Vollständiges LoRA Fine-Tuning Skript für BERT-basierte Modelle auf eigenen Textklassifikations-Datensätzen mit HuggingFace Trainer API.',
-    author: 'frametrain_team',
-    model_type: 'Classifier',
-    task_type: 'Fine-Tuning',
-    framework: 'transformers',
-    script_type: 'train',
-    script: '',
-    verified: true,
-    downloads: 342,
-    stars: 89,
-    tags: ['lora', 'bert', 'classification', 'huggingface'],
-    created_at: new Date(Date.now() - 14 * 86400000).toISOString(),
-    updated_at: new Date(Date.now() - 2 * 86400000).toISOString(),
-  },
-  {
-    id: 'mock_2',
-    name: 'QLoRA LLM Fine-Tuning (4-bit)',
-    description: 'Speichereffizientes 4-bit QLoRA Fine-Tuning für Large Language Models. Trainiert Llama, Mistral oder Phi auf eigenen Datensätzen mit minimalem VRAM-Bedarf.',
-    author: 'ml_dev_alex',
-    model_type: 'LLM',
-    task_type: 'Fine-Tuning',
-    framework: 'transformers',
-    script_type: 'train',
-    script: '',
-    verified: true,
-    downloads: 521,
-    stars: 143,
-    tags: ['qlora', 'llm', '4bit', 'bitsandbytes', 'llama'],
-    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
-    updated_at: new Date(Date.now() - 1 * 86400000).toISOString(),
-  },
-  {
-    id: 'mock_3',
-    name: 'Vision Transformer (ViT) Training',
-    description: 'Training eines Vision Transformers für Image Classification. Unterstützt CLIP-Preprocessing und custom Datasets im ImageFolder-Format.',
-    author: 'vision_engineer',
-    model_type: 'Vision',
-    task_type: 'Fine-Tuning',
-    framework: 'pytorch',
-    script_type: 'train',
-    script: '',
-    verified: false,
-    downloads: 178,
-    stars: 41,
-    tags: ['vision', 'vit', 'clip', 'image-classification'],
-    created_at: new Date(Date.now() - 21 * 86400000).toISOString(),
-    updated_at: new Date(Date.now() - 5 * 86400000).toISOString(),
-  },
-  {
-    id: 'mock_test_1',
-    name: 'BERT Inference & Evaluation',
-    description: 'Lädt ein finetuned BERT-Modell und führt Text-Klassifikation auf einem Testdatensatz durch. Gibt Predictions, Classification Report und Accuracy aus.',
-    author: 'frametrain_team',
-    model_type: 'Classifier',
-    task_type: 'Evaluation',
-    framework: 'transformers',
-    script_type: 'test',
-    script: '',
-    verified: true,
-    downloads: 189,
-    stars: 47,
-    tags: ['bert', 'inference', 'evaluation', 'sklearn'],
-    created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
-    updated_at: new Date(Date.now() - 1 * 86400000).toISOString(),
-  },
-  {
-    id: 'mock_test_2',
-    name: 'LLM Text-Generierung Pipeline',
-    description: 'Schnelles Test-Skript für LLMs: lädt das Modell, führt Batch-Generierung auf Prompts aus und speichert die Ergebnisse als JSON.',
-    author: 'ml_dev_kai',
-    model_type: 'LLM',
-    task_type: 'Inference',
-    framework: 'transformers',
-    script_type: 'test',
-    script: '',
-    verified: false,
-    downloads: 73,
-    stars: 18,
-    tags: ['llm', 'generation', 'pipeline', 'inference'],
-    created_at: new Date(Date.now() - 4 * 86400000).toISOString(),
-    updated_at: new Date(Date.now() - 0.5 * 86400000).toISOString(),
-  },
-  {
-    id: 'mock_test_3',
-    name: 'Modell-Benchmark: Latenz & Durchsatz',
-    description: 'Misst Inferenz-Latenz (ms/sample) und Durchsatz (samples/s) für verschiedene Batch-Größen. Ideal für Hardware-Vergleiche vor dem Training.',
-    author: 'torch_wizard',
-    model_type: 'Custom',
-    task_type: 'Benchmark',
-    framework: 'pytorch',
-    script_type: 'test',
-    script: '',
-    verified: true,
-    downloads: 112,
-    stars: 29,
-    tags: ['benchmark', 'latency', 'throughput', 'pytorch'],
-    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
-    updated_at: new Date(Date.now() - 2 * 86400000).toISOString(),
-  },
-]
 
 const API_BASE = '/api/library'
 
@@ -593,9 +488,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
 export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryScript[] }) {
   const { isAuthenticated } = useAuth()
 
-  const [scripts, setScripts] = useState<LibraryScript[]>(
-    initialScripts.length > 0 ? initialScripts : MOCK_SCRIPTS
-  )
+  const [scripts, setScripts] = useState<LibraryScript[]>(initialScripts)
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<'all' | 'train' | 'test'>('all')
@@ -620,18 +513,10 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
       if (!res.ok) throw new Error()
       const data = await res.json()
       const list: LibraryScript[] = Array.isArray(data) ? data : (data.scripts ?? [])
-      setScripts(list.length > 0 ? list : MOCK_SCRIPTS.filter(
-        (s) => (typeFilter === 'all' || s.script_type === typeFilter) &&
-               (!frameworkFilter || s.framework === frameworkFilter)
-      ))
+      setScripts(list)
     } catch {
-      // Fallback auf gefilterte Mocks
-      setScripts(MOCK_SCRIPTS.filter(
-        (s) => (typeFilter === 'all' || s.script_type === typeFilter) &&
-               (!frameworkFilter || s.framework === frameworkFilter) &&
-               (!search || s.name.toLowerCase().includes(search.toLowerCase()) ||
-                s.description.toLowerCase().includes(search.toLowerCase()))
-      ))
+      // Bei Fehler leeres Array zeigen
+      setScripts([])
     } finally {
       setLoading(false)
     }
