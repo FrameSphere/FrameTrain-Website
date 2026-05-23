@@ -47,13 +47,15 @@ const API_BASE = '/api/library'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function parseDate(iso: string): Date {
+function parseDate(iso: string | null | undefined): Date {
+  if (!iso) return new Date(0)
   // Konvertiere "2026-05-23 18:36:20.857+00" zu "2026-05-23T18:36:20.857Z"
   const normalized = iso.replace(' ', 'T').replace('+00', 'Z')
   return new Date(normalized)
 }
 
-function timeAgo(iso: string) {
+function timeAgo(iso: string | null | undefined) {
+  if (!iso) return '–'
   const diff = Date.now() - parseDate(iso).getTime()
   const d = Math.floor(diff / 86400000)
   if (d === 0) return 'heute'

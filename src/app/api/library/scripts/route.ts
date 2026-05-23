@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
       ];
     }
 
-    const [scripts, total] = await Promise.all([
+    const [rawScripts, total] = await Promise.all([
       prisma.libraryScript.findMany({
         where,
         orderBy: [{ downloads: 'desc' }, { createdAt: 'desc' }],
@@ -68,6 +68,14 @@ export async function GET(req: NextRequest) {
       }),
       prisma.libraryScript.count({ where }),
     ]);
+
+    // camelCase -> snake_case damit Frontend-Interface stimmt
+    const scripts = rawScripts.map((s) => ({
+      ...s,
+      script: undefined, // Script-Inhalt nicht im Listing mitschicken (spart Bandbreite)
+      created_at: s.createdAt.toISOString(),
+      updated_at: s.updatedAt.toISOString(),
+    }));
 
     return NextResponse.json(
       { scripts, total, limit, offset },
