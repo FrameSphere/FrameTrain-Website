@@ -3,11 +3,16 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin':  '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Token',
+  'Access-Control-Max-Age':       '86400',
 };
+
+function corsHeaders() {
+  return new Headers(CORS_HEADERS);
+}
 
 function checkAuth(req: NextRequest) {
   const token = req.headers.get('x-admin-token');
@@ -15,7 +20,7 @@ function checkAuth(req: NextRequest) {
 }
 
 export async function OPTIONS() {
-  return new NextResponse(null, { status: 204, headers: CORS });
+  return new NextResponse(null, { status: 204, headers: corsHeaders() });
 }
 
 // GET /api/library/admin/pending
@@ -53,9 +58,9 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ scripts, count: scripts.length }, { headers: CORS });
+    return NextResponse.json({ scripts, count: scripts.length }, { headers: corsHeaders() });
   } catch (err) {
     console.error('[GET /api/library/admin/pending]', err);
-    return NextResponse.json({ error: 'Interner Fehler' }, { status: 500, headers: CORS });
+    return NextResponse.json({ error: 'Interner Fehler' }, { status: 500, headers: corsHeaders() });
   }
 }

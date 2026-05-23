@@ -3,46 +3,43 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin':  '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Token',
+  'Access-Control-Max-Age':       '86400',
 };
 
+function corsHeaders() { return new Headers(CORS_HEADERS); }
 function checkAuth(req: NextRequest) {
   return req.headers.get('x-admin-token') === process.env.LIBRARY_ADMIN_SECRET;
 }
 
 export async function OPTIONS() {
-  return new NextResponse(null, { status: 204, headers: CORS });
+  return new NextResponse(null, { status: 204, headers: corsHeaders() });
 }
 
-// POST /api/library/admin/approve
-// Body: { id: string }
+// POST /api/library/admin/approve  { id }
 export async function POST(req: NextRequest) {
   if (!checkAuth(req)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: CORS });
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders() });
   }
 
   try {
     const { id } = await req.json();
-    if (!id) return NextResponse.json({ error: 'id fehlt' }, { status: 400, headers: CORS });
+    if (!id) return NextResponse.json({ error: 'id fehlt' }, { status: 400, headers: corsHeaders() });
 
     const updated = await prisma.libraryScript.update({
       where: { id },
-      data: {
-        verified: true,
-        rejectedAt: null,
-        rejectedReason: null,
-      },
+      data: { verified: true, rejectedAt: null, rejectedReason: null },
     });
 
-    return NextResponse.json({ success: true, id: updated.id, verified: true }, { headers: CORS });
+    return NextResponse.json({ success: true, id: updated.id, verified: true }, { headers: corsHeaders() });
   } catch (err: unknown) {
     if ((err as { code?: string })?.code === 'P2025') {
-      return NextResponse.json({ error: 'Skript nicht gefunden' }, { status: 404, headers: CORS });
+      return NextResponse.json({ error: 'Skript nicht gefunden' }, { status: 404, headers: corsHeaders() });
     }
     console.error('[POST /api/library/admin/approve]', err);
-    return NextResponse.json({ error: 'Interner Fehler' }, { status: 500, headers: CORS });
+    return NextResponse.json({ error: 'Interner Fehler' }, { status: 500, headers: corsHeaders() });
   }
 }

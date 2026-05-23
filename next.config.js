@@ -68,6 +68,16 @@ const nextConfig = {
           { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' },
         ],
       },
+      // CORS for Admin API (accessed from framespheremanager.pages.dev)
+      {
+        source: '/api/library/admin/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Origin',  value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET, POST, OPTIONS' },
+          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, X-Admin-Token' },
+          { key: 'Access-Control-Max-Age',       value: '86400' },
+        ],
+      },
       // Cache static assets for 1 year
       {
         source: '/static/:path*',
