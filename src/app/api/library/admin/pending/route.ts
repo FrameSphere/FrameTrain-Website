@@ -27,7 +27,7 @@ export async function OPTIONS() {
 // ?status=pending|rejected|approved|all  (default: pending)
 export async function GET(req: NextRequest) {
   if (!checkAuth(req)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: CORS });
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders() });
   }
 
   try {
