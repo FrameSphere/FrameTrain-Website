@@ -22,9 +22,9 @@ export async function GET(req: NextRequest) {
     const userId = searchParams.get('userId')?.trim();
 
     if (!userId) {
-      return NextResponse.json(
-        { error: 'userId is required' },
-        { status: 400, headers: CORS }
+      return new NextResponse(
+        JSON.stringify({ error: 'userId is required' }),
+        { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -34,21 +34,21 @@ export async function GET(req: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404, headers: CORS }
+      return new NextResponse(
+        JSON.stringify({ error: 'User not found' }),
+        { status: 404, headers: { ...CORS, 'Content-Type': 'application/json' } }
       );
     }
 
-    return NextResponse.json(
-      { communityName: user.communityName ?? null },
-      { status: 200, headers: CORS }
+    return new NextResponse(
+      JSON.stringify({ communityName: user.communityName ?? null }),
+      { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
     console.error('[GET /api/user/community-name]', err);
-    return NextResponse.json(
-      { error: 'Failed to fetch community name' },
-      { status: 500, headers: CORS }
+    return new NextResponse(
+      JSON.stringify({ error: 'Failed to fetch community name' }),
+      { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } }
     );
   }
 }
@@ -65,8 +65,8 @@ export async function PATCH(req: NextRequest) {
     console.log('[PATCH /api/user/community-name] Request:', { userId, communityName });
 
     if (!userId?.trim() || !communityName?.trim()) {
-      return NextResponse.json(
-        { error: 'userId and communityName are required' },
+      return new NextResponse(
+        JSON.stringify({ error: 'userId and communityName are required' }),
         { status: 400, headers: CORS }
       );
     }
@@ -78,8 +78,8 @@ export async function PATCH(req: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json(
-        { error: 'User not found' },
+      return new NextResponse(
+        JSON.stringify({ error: 'User not found' }),
         { status: 404, headers: CORS }
       );
     }
@@ -109,8 +109,8 @@ export async function PATCH(req: NextRequest) {
 
       if (existingUser) {
         console.log('[PATCH /api/user/community-name] Name already taken');
-        return NextResponse.json(
-          { error: 'Community name is already taken by another user' },
+        return new NextResponse(
+          JSON.stringify({ error: 'Community name is already taken by another user' }),
           { status: 409, headers: CORS }
         );
       }
@@ -127,7 +127,6 @@ export async function PATCH(req: NextRequest) {
     console.log('[PATCH /api/user/community-name] User updated:', updatedUser);
 
     // Aktualisiere alle Scripts des Users auf den neuen Namen
-    // Suche nach ALLEN Scripts dieses Users und aktualisiere deren author Feld
     let updatedCount = 0;
     const userScripts = await prisma.libraryScript.findMany({
       where: {
@@ -139,7 +138,6 @@ export async function PATCH(req: NextRequest) {
     console.log('[PATCH /api/user/community-name] Found scripts:', userScripts.length);
 
     if (userScripts.length > 0) {
-      // Update alle Scripts auf den neuen Namen
       const result = await prisma.libraryScript.updateMany({
         where: {
           userId: userId.trim(),
@@ -152,19 +150,19 @@ export async function PATCH(req: NextRequest) {
       console.log('[PATCH /api/user/community-name] Scripts updated:', updatedCount);
     }
 
-    return NextResponse.json(
-      {
+    return new NextResponse(
+      JSON.stringify({
         success: true,
         message: `Community name updated${updatedCount > 0 ? ` and ${updatedCount} scripts updated` : ''}`,
         updatedCount,
-      },
-      { status: 200, headers: CORS }
+      }),
+      { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
     console.error('[PATCH /api/user/community-name] Error:', err);
-    return NextResponse.json(
-      { error: 'Failed to update community name', details: String(err) },
-      { status: 500, headers: CORS }
+    return new NextResponse(
+      JSON.stringify({ error: 'Failed to update community name', details: String(err) }),
+      { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } }
     );
   }
 }
