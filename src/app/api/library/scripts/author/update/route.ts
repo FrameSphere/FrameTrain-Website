@@ -37,29 +37,23 @@ export async function PATCH(req: NextRequest) {
     }
 
     // Prüfe, ob newAuthor bereits verwendet wird (außer vom gleichen User)
-    const existingWithNewName = await prisma.libraryScript.findFirst({
+    const allScriptsWithNewName = await prisma.libraryScript.findMany({
       where: {
-        AND: [
-          {
-            author: {
-              equals: newAuthor.trim(),
-              mode: 'insensitive',
-            },
-          },
-          {
-            author: {
-              not: {
-                equals: oldAuthor.trim(),
-                mode: 'insensitive',
-              },
-            },
-          },
-        ],
+        author: {
+          equals: newAuthor.trim(),
+          mode: 'insensitive',
+        },
       },
-      select: { id: true },
+      select: { author: true },
+      take: 1,
     });
 
-    if (existingWithNewName) {
+    // Wenn newAuthor existiert und NICHT oldAuthor ist, dann ist er vergeben
+    if (
+      allScriptsWithNewName.length > 0 &&
+      allScriptsWithNewName[0].author.toLowerCase() !==
+        oldAuthor.trim().toLowerCase()
+    ) {
       return NextResponse.json(
         { error: 'newAuthor is already taken by another user' },
         { status: 409, headers: CORS }
