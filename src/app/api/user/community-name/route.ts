@@ -115,21 +115,28 @@ export async function PATCH(req: NextRequest) {
 
     // Update User mit neuem communityName
     const oldName = user.communityName;
-    await prisma.user.update({
+    
+    const updatedUser = await prisma.user.update({
       where: { id: userId.trim() },
       data: { communityName: newName },
+      select: { communityName: true },
     });
 
-    // Aktualisiere alle Scripts des Users, falls Name sich geändert hat
+    // Aktualisiere alle Scripts des Users auf den neuen Namen
+    // Suche nach ALLEN Scripts dieses Users und aktualisiere deren author Feld
     let updatedCount = 0;
-    if (oldName && oldName !== newName) {
+    const userScripts = await prisma.libraryScript.findMany({
+      where: {
+        userId: userId.trim(),
+      },
+      select: { id: true, author: true },
+    });
+
+    if (userScripts.length > 0) {
+      // Update alle Scripts auf den neuen Namen
       const result = await prisma.libraryScript.updateMany({
         where: {
           userId: userId.trim(),
-          author: {
-            equals: oldName,
-            mode: 'insensitive',
-          },
         },
         data: {
           author: newName,
