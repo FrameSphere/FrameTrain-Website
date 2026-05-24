@@ -388,6 +388,11 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
       setError('Name und Skript sind Pflichtfelder.')
       return
     }
+
+    if (!user?.id) {
+      setError('Du musst angemeldet sein, um ein Skript hochzuladen.')
+      return
+    }
     
     const authorName = getOrCreateAuthorName(user?.email)
     
@@ -410,6 +415,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
         body: JSON.stringify({
           ...form,
           author: authorName,
+          userId: user.id, // WICHTIG: Sende userId mit!
           tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
         }),
       })

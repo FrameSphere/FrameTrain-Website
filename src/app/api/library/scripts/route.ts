@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Prüfe ob User existiert und setze sein communityName wenn nicht vorhanden
+    // Prüfe ob User existiert
     const user = await prisma.user.findUnique({
       where: { id: userId.trim() },
       select: { id: true, communityName: true },
@@ -125,9 +125,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Setze communityName beim ersten Upload wenn nicht vorhanden
+    // Dies ist KRITISCH für die spätere Name-Synchronisation!
     let userCommunityName = user.communityName;
     if (!userCommunityName) {
-      // Prüfe ob author schon verwendet wird
+      // Prüfe ob dieser Author-Name bereits vergeben ist
       const existingAuthor = await prisma.libraryScript.findFirst({
         where: {
           author: {
@@ -145,12 +146,19 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // Update User mit communityName
-      await prisma.user.update({
-        where: { id: userId.trim() },
-        data: { communityName: author.trim() },
-      });
-      userCommunityName = author.trim();
+      // WICHTIG: Setze den communityName beim ersten Upload
+      try {
+        const updatedUser = await prisma.user.update({
+          where: { id: userId.trim() },
+          data: { communityName: author.trim() },
+          select: { communityName: true },
+        });
+        userCommunityName = updatedUser.communityName;
+      } catch (err) {
+        // Falls Update fehlschlägt (zB weil Feld nicht existiert), nutze den Author-Namen direkt
+        console.warn('Could not set communityName, falling back to author', err);
+        userCommunityName = author.trim();
+      }
     }
 
     const created = await prisma.libraryScript.create({
@@ -158,7 +166,7 @@ export async function POST(req: NextRequest) {
         userId:      userId.trim(),
         name:        name.trim().slice(0, 200),
         description: description.trim().slice(0, 2000),
-        author:      userCommunityName!.slice(0, 100), // Nutze den User.communityName
+        author:      userCommunityName!.slice(0, 100), // Nutze immer den User.communityName
         model_type:  (model_type  ?? 'Custom').slice(0, 50),
         task_type:   (task_type   ?? 'Fine-Tuning').slice(0, 100),
         framework:   (framework   ?? 'transformers').slice(0, 50),
