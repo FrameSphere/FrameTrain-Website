@@ -196,7 +196,7 @@ function ScriptCard({
           </span>
           <span className="flex items-center gap-1">
             <Clock className="w-3 h-3" />
-            {timeAgo(script.updated_at)}
+            {timeAgo(script.created_at)}
           </span>
         </div>
         <div className="flex items-center gap-3 text-xs text-gray-500">
@@ -349,7 +349,7 @@ function ScriptDetailModal({
         {/* Footer – Download-Button */}
         <div className="flex items-center justify-between gap-4 px-6 py-4 border-t border-white/8 bg-white/2">
           <p className="text-xs text-gray-500">
-            Zuletzt aktualisiert: {timeAgo(script.updated_at)} · Lizenz: MIT
+            Erstellt: {timeAgo(script.created_at)} · Lizenz: MIT
           </p>
           <div className="flex gap-2">
             <button onClick={onClose} className="px-4 py-2 rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition-all">
@@ -585,7 +585,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
   const sorted = [...scripts].sort((a, b) => {
     if (sortBy === 'downloads') return b.downloads - a.downloads
     if (sortBy === 'stars') return b.stars - a.stars
-    return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   })
 
   const totalTrain = scripts.filter((s) => s.script_type === 'train').length
