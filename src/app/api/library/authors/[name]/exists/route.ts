@@ -14,7 +14,7 @@ export async function OPTIONS() {
 }
 
 // ── GET /api/library/authors/[name]/exists ────────────────────────────────
-// Prüft, ob ein Author-Name bereits existiert (Duplikat-Check)
+// Prüft, ob ein Community-Name bereits als User.communityName verwendet wird
 export async function GET(req: NextRequest, { params }: { params: { name: string } }) {
   try {
     const { name } = params;
@@ -25,10 +25,10 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
 
     const decodedName = decodeURIComponent(name).trim();
     
-    // Prüfe, ob ein Script mit diesem Author existiert
-    const existingScript = await prisma.libraryScript.findFirst({
+    // Prüfe, ob ein User mit diesem communityName bereits existiert
+    const existingUser = await prisma.user.findFirst({
       where: {
-        author: {
+        communityName: {
           equals: decodedName,
           mode: 'insensitive',
         },
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
     });
 
     return NextResponse.json(
-      { exists: !!existingScript },
+      { exists: !!existingUser },
       { status: 200, headers: CORS }
     );
   } catch (err) {

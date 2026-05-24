@@ -91,16 +91,16 @@ export async function GET(req: NextRequest) {
 }
 
 // ── POST /api/library/scripts ────────────────────────────────────────────
-// Body: { name, description, author, model_type, task_type, framework, tags, script }
+// Body: { name, description, author, userId, model_type, task_type, framework, tags, script }
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, description, author, model_type, task_type, framework, script_type, tags, script } = body ?? {};
+    const { name, description, author, userId, model_type, task_type, framework, script_type, tags, script } = body ?? {};
 
     // Pflichtfeld-Validierung
-    if (!name?.trim() || !description?.trim() || !author?.trim() || !script?.trim()) {
+    if (!name?.trim() || !description?.trim() || !author?.trim() || !script?.trim() || !userId?.trim()) {
       return NextResponse.json(
-        { error: 'Fehlende Pflichtfelder: name, description, author, script' },
+        { error: 'Fehlende Pflichtfelder: name, description, author, userId, script' },
         { status: 400, headers: CORS },
       );
     }
@@ -111,11 +111,54 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Prüfe ob User existiert und setze sein communityName wenn nicht vorhanden
+    const user = await prisma.user.findUnique({
+      where: { id: userId.trim() },
+      select: { id: true, communityName: true },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'User nicht gefunden' },
+        { status: 404, headers: CORS },
+      );
+    }
+
+    // Setze communityName beim ersten Upload wenn nicht vorhanden
+    let userCommunityName = user.communityName;
+    if (!userCommunityName) {
+      // Prüfe ob author schon verwendet wird
+      const existingAuthor = await prisma.libraryScript.findFirst({
+        where: {
+          author: {
+            equals: author.trim(),
+            mode: 'insensitive',
+          },
+        },
+        select: { id: true },
+      });
+
+      if (existingAuthor) {
+        return NextResponse.json(
+          { error: 'Community-Name ist bereits vergeben' },
+          { status: 409, headers: CORS },
+        );
+      }
+
+      // Update User mit communityName
+      await prisma.user.update({
+        where: { id: userId.trim() },
+        data: { communityName: author.trim() },
+      });
+      userCommunityName = author.trim();
+    }
+
     const created = await prisma.libraryScript.create({
       data: {
+        userId:      userId.trim(),
         name:        name.trim().slice(0, 200),
         description: description.trim().slice(0, 2000),
-        author:      author.trim().slice(0, 100),
+        author:      userCommunityName!.slice(0, 100), // Nutze den User.communityName
         model_type:  (model_type  ?? 'Custom').slice(0, 50),
         task_type:   (task_type   ?? 'Fine-Tuning').slice(0, 100),
         framework:   (framework   ?? 'transformers').slice(0, 50),

@@ -13,6 +13,7 @@ model User {
   id                String    @id @default(cuid())
   email             String    @unique                  // always required – SSO users always have email
   name              String?
+  communityName     String?   @unique @map("community_name") // Eindeutiger Name für Open Library Scripts
   passwordHash      String?   @map("password_hash")
   desktopPasswordHash String? @map("desktop_password_hash") // separates Passwort für Desktop-App (OAuth-User)
   provider          String?                            // "email" | "google" | "github" | "framesphere"
@@ -22,9 +23,10 @@ model User {
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")
 
-  apiKeys      ApiKey[]
-  models       Model[]
-  payments     Payment[]
+  apiKeys         ApiKey[]
+  models          Model[]
+  payments        Payment[]
+  libraryScripts  LibraryScript[]
 
   @@map("users")
 }
@@ -80,9 +82,10 @@ model ModelVersion {
 
 model LibraryScript {
   id             String    @id @default(cuid())
+  userId         String?   @map("user_id")            // Verknüpfung zum User (Owner des Scripts)
   name           String
   description    String
-  author         String
+  author         String                               // Legacy: für Anzeige und historische Daten
   model_type     String    @map("model_type")
   task_type      String    @map("task_type")
   framework      String
@@ -99,10 +102,13 @@ model LibraryScript {
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
 
+  user           User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
   @@index([verified])
   @@index([model_type])
   @@index([framework])
   @@index([script_type])
+  @@index([userId])
   @@map("library_scripts")
 }
 
