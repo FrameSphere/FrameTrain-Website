@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, PATCH, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
@@ -53,21 +53,21 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// ── PATCH /api/user/community-name ──────────────────────────────────────
+// ── POST /api/user/community-name (Update) ──────────────────────────────
 // Body: { userId: string, communityName: string }
 // Updates the communityName and ALL related scripts immediately
 // Returns: { success: boolean, message: string, updatedCount: number }
-export async function PATCH(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { userId, communityName } = body;
 
-    console.log('[PATCH /api/user/community-name] Request:', { userId, communityName });
+    console.log('[POST /api/user/community-name] Request:', { userId, communityName });
 
     if (!userId?.trim() || !communityName?.trim()) {
       return new NextResponse(
         JSON.stringify({ error: 'userId and communityName are required' }),
-        { status: 400, headers: CORS }
+        { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -80,7 +80,7 @@ export async function PATCH(req: NextRequest) {
     if (!user) {
       return new NextResponse(
         JSON.stringify({ error: 'User not found' }),
-        { status: 404, headers: CORS }
+        { status: 404, headers: { ...CORS, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -108,23 +108,23 @@ export async function PATCH(req: NextRequest) {
       });
 
       if (existingUser) {
-        console.log('[PATCH /api/user/community-name] Name already taken');
+        console.log('[POST /api/user/community-name] Name already taken');
         return new NextResponse(
           JSON.stringify({ error: 'Community name is already taken by another user' }),
-          { status: 409, headers: CORS }
+          { status: 409, headers: { ...CORS, 'Content-Type': 'application/json' } }
         );
       }
     }
 
-    // Update User mit neuem communityName – FORCE UPDATE
-    console.log('[PATCH /api/user/community-name] Updating user with new name:', newName);
+    // Update User mit neuem communityName
+    console.log('[POST /api/user/community-name] Updating user with new name:', newName);
     const updatedUser = await prisma.user.update({
       where: { id: userId.trim() },
       data: { communityName: newName },
       select: { id: true, communityName: true },
     });
 
-    console.log('[PATCH /api/user/community-name] User updated:', updatedUser);
+    console.log('[POST /api/user/community-name] User updated:', updatedUser);
 
     // Aktualisiere alle Scripts des Users auf den neuen Namen
     let updatedCount = 0;
@@ -135,7 +135,7 @@ export async function PATCH(req: NextRequest) {
       select: { id: true, author: true },
     });
 
-    console.log('[PATCH /api/user/community-name] Found scripts:', userScripts.length);
+    console.log('[POST /api/user/community-name] Found scripts:', userScripts.length);
 
     if (userScripts.length > 0) {
       const result = await prisma.libraryScript.updateMany({
@@ -147,7 +147,7 @@ export async function PATCH(req: NextRequest) {
         },
       });
       updatedCount = result.count;
-      console.log('[PATCH /api/user/community-name] Scripts updated:', updatedCount);
+      console.log('[POST /api/user/community-name] Scripts updated:', updatedCount);
     }
 
     return new NextResponse(
@@ -159,7 +159,7 @@ export async function PATCH(req: NextRequest) {
       { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
-    console.error('[PATCH /api/user/community-name] Error:', err);
+    console.error('[POST /api/user/community-name] Error:', err);
     return new NextResponse(
       JSON.stringify({ error: 'Failed to update community name', details: String(err) }),
       { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } }
