@@ -388,6 +388,19 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
       setError('Name und Skript sind Pflichtfelder.')
       return
     }
+    
+    const authorName = getOrCreateAuthorName(user?.email)
+    
+    // Duplikat-Check für Community-Namen
+    try {
+      const res = await fetch(`${API_BASE}/authors/${encodeURIComponent(authorName)}/exists`)
+      const data = await res.json()
+      if (data.exists) {
+        setError(`Der Community-Name "${authorName}" ist bereits vergeben.`)
+        return
+      }
+    } catch { /* ignore - fallback ohne Check */ }
+    
     setLoading(true)
     setError('')
     try {
@@ -396,7 +409,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
-          author: getOrCreateAuthorName(user?.email),
+          author: authorName,
           tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
         }),
       })
