@@ -556,7 +556,11 @@ export default function DashboardPage() {
                 <div className="flex gap-2">
                   <input
                     value={communityNameInput}
-                    onChange={(e) => setCommunityNameInput(e.target.value.replace(/[^a-z0-9_\-. ]/gi, ''))}
+                    onChange={(e) => {
+                      let val = e.target.value.replace(/[^a-z0-9_\-.]/gi, '').slice(0, 40)
+                      if (val.startsWith('@')) val = val.slice(1)
+                      setCommunityNameInput(val)
+                    }}
                     placeholder="z. B. ai_enthusiast"
                     maxLength={40}
                     className="flex-1 px-4 py-2.5 glass border border-purple-500/30 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50"

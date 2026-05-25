@@ -57,7 +57,17 @@ function getStoredAuthorName(userId?: string): string {
 
 function saveAuthorName(userId: string, name: string): void {
   if (typeof window === 'undefined') return
-  localStorage.setItem(AUTHOR_KEY(userId), name.trim().slice(0, 40))
+  // Validate: remove invalid chars, no @ at start
+  let val = name.trim().slice(0, 40).replace(/[^a-z0-9_\-.]/gi, '')
+  if (val.startsWith('@')) val = val.slice(1)
+  localStorage.setItem(AUTHOR_KEY(userId), val)
+}
+
+// Helper for direct validation
+function validateAuthorName(name: string): string {
+  let val = name.replace(/[^a-z0-9_\-.]/gi, '').slice(0, 40)
+  if (val.startsWith('@')) val = val.slice(1)
+  return val
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
