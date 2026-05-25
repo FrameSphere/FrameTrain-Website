@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer'
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
+  Globe, AlertCircle, Pencil, Loader2,
 } from 'lucide-react'
 
 const MANAGER_API = process.env.NEXT_PUBLIC_MANAGER_API_URL || 'https://webcontrol-hq-api.karol-paschek.workers.dev'
@@ -72,6 +73,45 @@ function useStoredTickets(userId: string | undefined) {
   return { getAll, add }
 }
 
+// ── DuplicateNameError Modal ──────────────────────────────────────────────
+
+function CommunityNameErrorModal({ name, onClose }: { name: string; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="glass-strong rounded-2xl border border-red-500/20 max-w-sm w-full p-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
+            <AlertCircle className="w-6 h-6 text-red-400" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-white">Name bereits vergeben</h3>
+            <p className="text-sm text-gray-400 mt-1">Dieser Community-Name ist schon in Verwendung.</p>
+          </div>
+        </div>
+        
+        <div className="bg-red-500/8 border border-red-500/20 rounded-lg p-3">
+          <p className="text-sm text-red-200">
+            Der Name <strong className="text-red-300">@{name}</strong> wird bereits von jemandem anderem verwendet.
+          </p>
+        </div>
+
+        <div className="bg-blue-500/8 border border-blue-500/20 rounded-lg p-3">
+          <p className="text-xs text-blue-200">
+            💡 <strong>Tipp:</strong> Versuche einen anderen Community-Namen, z. B. mit Zahlen oder Unterstrichen.
+          </p>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition-all hover:from-purple-500 hover:to-pink-500"
+        >
+          Einen anderen Namen versuchen
+        </button>
+      </div>
+    </div>
+  )
+}
+
 // ── Main Dashboard ─────────────────────────────────────────────────
 export default function DashboardPage() {
   const router = useRouter()
@@ -93,6 +133,15 @@ export default function DashboardPage() {
   const [settingDesktopPassword, setSettingDesktopPassword] = useState(false)
   const [desktopPasswordSuccess, setDesktopPasswordSuccess] = useState('')
   const [desktopPasswordError, setDesktopPasswordError] = useState('')
+
+  // Community-Name State
+  const [communityNameInput, setCommunityNameInput] = useState(() => {
+    if (typeof window === 'undefined') return ''
+    return localStorage.getItem(`ft_author_${user?.id}`) ?? ''
+  })
+  const [editingCommunityName, setEditingCommunityName] = useState(false)
+  const [savingCommunityName, setSavingCommunityName] = useState(false)
+  const [communityNameError, setCommunityNameError] = useState<string | null>(null)
 
   // Support state
   const [supportOpen, setSupportOpen] = useState(false)
@@ -173,6 +222,48 @@ export default function DashboardPage() {
       const res = await fetch('/api/app-version')
       if (res.ok) { const d = await res.json(); setAppVersion(d.version || '1.0.0') }
     } catch { setAppVersion('1.0.0') }
+  }
+
+  const handleSaveCommunityName = async () => {
+    if (!communityNameInput.trim() || !user?.id) return
+    
+    setSavingCommunityName(true)
+    setCommunityNameError(null)
+    
+    try {
+      // Check for duplicates
+      const checkRes = await fetch(`/api/library/authors/${encodeURIComponent(communityNameInput.trim())}/exists`)
+      const checkData = await checkRes.json()
+      if (checkData.exists) {
+        setCommunityNameError(communityNameInput.trim())
+        setSavingCommunityName(false)
+        return
+      }
+
+      // Save to backend
+      const res = await fetch('/api/user/community-name', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id, communityName: communityNameInput.trim() }),
+      })
+
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.error || 'Fehler beim Speichern')
+      }
+
+      // Save to localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(`ft_author_${user.id}`, communityNameInput.trim())
+      }
+
+      setEditingCommunityName(false)
+    } catch (err: any) {
+      setCommunityNameError(err.message)
+    } finally {
+      setSavingCommunityName(false)
+    }
   }
 
   const regenerateKey = async () => {
@@ -326,6 +417,58 @@ export default function DashboardPage() {
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
             <p className="text-gray-400">Willkommen, {user?.email}</p>
+          </div>
+
+          {/* ── Community Name ────────────────────────────────── */}
+          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+            <div className="flex items-center gap-3 mb-4">
+              <Globe className="w-5 h-5 text-purple-400" />
+              <h2 className="text-2xl font-bold text-white">Community-Name</h2>
+            </div>
+            <p className="text-gray-400 text-sm mb-4">Dein öffentlicher Name in der Open Script Library</p>
+            
+            {communityNameInput && !editingCommunityName && (
+              <div className="flex items-center gap-2 px-4 py-3 mb-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                <p className="text-sm text-green-300">Community-Name gespeichert. Künftige Uploads werden als <strong>@{communityNameInput}</strong> veröffentlicht.</p>
+              </div>
+            )}
+
+            {!communityNameInput || editingCommunityName ? (
+              <div className="space-y-3">
+                <div className="flex items-start gap-2 p-3 bg-blue-500/8 border border-blue-500/20 rounded-lg">
+                  <Lightbulb className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-blue-300">{!communityNameInput ? 'Lege deinen Community-Namen fest, um Skripte hochzuladen.' : 'Ändere deinen Community-Namen — alle künftigen Uploads verwenden den neuen Namen.'}</p>
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    value={communityNameInput}
+                    onChange={(e) => setCommunityNameInput(e.target.value.replace(/[^a-z0-9_\-. ]/gi, ''))}
+                    placeholder="z. B. ai_enthusiast"
+                    maxLength={40}
+                    className="flex-1 px-4 py-2.5 glass border border-purple-500/30 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50"
+                  />
+                  <button
+                    onClick={handleSaveCommunityName}
+                    disabled={savingCommunityName || !communityNameInput.trim()}
+                    className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition-all hover:from-purple-500 hover:to-pink-500 disabled:opacity-60"
+                  >
+                    {savingCommunityName ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Speichern'}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between px-4 py-3 glass border border-white/10 rounded-lg">
+                <span className="text-white text-sm">@{communityNameInput}</span>
+                <button
+                  onClick={() => setEditingCommunityName(true)}
+                  className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                  title="Namen ändern"
+                >
+                  <Pencil className="w-4 h-4" />
+                </button>
+              </div>
+            )}
           </div>
 
           {/* ── API Keys ─────────────────────────────────────────── */}
@@ -749,6 +892,14 @@ export default function DashboardPage() {
 
         </div>
       </main>
+
+      {/* Community Name Error Modal */}
+      {communityNameError && (
+        <CommunityNameErrorModal
+          name={communityNameError}
+          onClose={() => setCommunityNameError(null)}
+        />
+      )}
 
       <Footer />
     </div>

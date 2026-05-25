@@ -45,6 +45,21 @@ interface UploadForm {
 
 const API_BASE = '/api/library'
 
+// ── Helper: Author-Name speichern/laden ──────────────────────────────────
+
+const AUTHOR_KEY = (userId: string) => `ft_author_${userId}`
+
+function getStoredAuthorName(userId?: string): string {
+  if (!userId) return ''
+  if (typeof window === 'undefined') return ''
+  return localStorage.getItem(AUTHOR_KEY(userId)) ?? ''
+}
+
+function saveAuthorName(userId: string, name: string): void {
+  if (typeof window === 'undefined') return
+  localStorage.setItem(AUTHOR_KEY(userId), name.trim().slice(0, 40))
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 // ── Helper: Author-Name speichern/laden ──────────────────────────────────────
@@ -369,6 +384,45 @@ function ScriptDetailModal({
   )
 }
 
+// ── DuplicateNameError Modal ──────────────────────────────────────────────────
+
+function DuplicateNameErrorModal({ name, onClose }: { name: string; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="glass-strong rounded-2xl border border-red-500/20 max-w-sm w-full p-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
+            <AlertCircle className="w-6 h-6 text-red-400" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-white">Name bereits vergeben</h3>
+            <p className="text-sm text-gray-400 mt-1">Dieser Community-Name ist schon in Verwendung.</p>
+          </div>
+        </div>
+        
+        <div className="bg-red-500/8 border border-red-500/20 rounded-lg p-3">
+          <p className="text-sm text-red-200">
+            Der Name <strong className="text-red-300">@{name}</strong> wird bereits von jemandem anderem verwendet.
+          </p>
+        </div>
+
+        <div className="bg-blue-500/8 border border-blue-500/20 rounded-lg p-3">
+          <p className="text-xs text-blue-200">
+            💡 <strong>Tipp:</strong> Versuche einen anderen Community-Namen, z. B. mit Zahlen oder Unterstrichen.
+          </p>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition-all hover:from-purple-500 hover:to-pink-500"
+        >
+          Einen anderen Namen versuchen
+        </button>
+      </div>
+    </div>
+  )
+}
+
 // ── UploadModal ────────────────────────────────────────────────────────────────
 
 function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
@@ -377,11 +431,39 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
     name: '', description: '', model_type: '', task_type: '',
     framework: 'transformers', script_type: 'train', tags: '', script: '',
   })
+  const [authorInput, setAuthorInput] = useState(() => getStoredAuthorName(user?.id) || '')
+  const [authorLocked, setAuthorLocked] = useState(() => (getStoredAuthorName(user?.id) || '') !== '')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [duplicateNameError, setDuplicateNameError] = useState<string | null>(null)
 
   const set = (k: keyof UploadForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((p) => ({ ...p, [k]: e.target.value }))
+
+  const checkAuthorNameExists = async (name: string): Promise<boolean> => {
+    try {
+      const res = await fetch(`${API_BASE}/authors/${encodeURIComponent(name)}/exists`)
+      const data = await res.json()
+      return data.exists ?? false
+    } catch {
+      return false
+    }
+  }
+
+  const updateUserCommunityName = async (newName: string): Promise<void> => {
+    try {
+      const response = await fetch(`/api/user/community-name`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user?.id, communityName: newName }),
+      })
+      if (!response.ok) {
+        console.error('Error updating community name:', await response.json())
+      }
+    } catch (err) {
+      console.error('Error updating community name:', err)
+    }
+  }
 
   const handleSubmit = async () => {
     if (!form.name.trim() || !form.script.trim()) {
@@ -393,29 +475,39 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
       setError('Du musst angemeldet sein, um ein Skript hochzuladen.')
       return
     }
-    
-    const authorName = getOrCreateAuthorName(user?.email)
-    
-    // Duplikat-Check für Community-Namen
-    try {
-      const res = await fetch(`${API_BASE}/authors/${encodeURIComponent(authorName)}/exists`)
-      const data = await res.json()
-      if (data.exists) {
-        setError(`Der Community-Name "${authorName}" ist bereits vergeben.`)
-        return
-      }
-    } catch { /* ignore - fallback ohne Check */ }
+
+    if (!authorInput.trim()) {
+      setError('Community-Name erforderlich.')
+      return
+    }
     
     setLoading(true)
     setError('')
     try {
+      // Check for duplicates (only on first upload)
+      if (!authorLocked) {
+        const exists = await checkAuthorNameExists(authorInput.trim())
+        if (exists) {
+          setDuplicateNameError(authorInput.trim())
+          setLoading(false)
+          return
+        }
+      }
+
+      // Auto-save author name on first upload
+      if (!authorLocked && user?.id && authorInput.trim()) {
+        saveAuthorName(user.id, authorInput.trim())
+        setAuthorLocked(true)
+        await updateUserCommunityName(authorInput.trim())
+      }
+
       const res = await fetch(`${API_BASE}/scripts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
-          author: authorName,
-          userId: user.id, // WICHTIG: Sende userId mit!
+          author: authorInput.trim(),
+          userId: user.id,
           tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
         }),
       })
@@ -451,6 +543,28 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
           )}
 
           <div className="grid grid-cols-2 gap-4">
+            {/* Community Name Input */}
+            <div className="col-span-2">
+              <label className="block text-xs font-medium text-gray-400 mb-1.5">Community-Name *</label>
+              {!authorLocked ? (
+                <input
+                  value={authorInput}
+                  onChange={(e) => setAuthorInput(e.target.value.replace(/[^a-z0-9_\-. ]/gi, ''))}
+                  placeholder="z.B. ai_enthusiast"
+                  maxLength={40}
+                  className="w-full px-4 py-2.5 rounded-xl glass border border-purple-500/30 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50"
+                />
+              ) : (
+                <div className="flex items-center gap-2 px-4 py-2.5 glass border border-white/10 rounded-xl">
+                  <span className="text-white text-sm flex-1">@{authorInput}</span>
+                  <span className="text-[10px] text-gray-600">gespeichert</span>
+                </div>
+              )}
+              <p className="text-[10px] text-gray-400 mt-1.5">
+                {!authorLocked ? 'Der Name wird beim Absenden des Skripts gespeichert.' : 'Ändern in Profil möglich.'}
+              </p>
+            </div>
+
             <div className="col-span-2">
               <label className="block text-xs font-medium text-gray-400 mb-1.5">Name *</label>
               <input
@@ -529,11 +643,18 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
             Hochladen
           </button>
         </div>
+
+        {/* Duplicate Name Error Modal */}
+        {duplicateNameError && (
+          <DuplicateNameErrorModal
+            name={duplicateNameError}
+            onClose={() => setDuplicateNameError(null)}
+          />
+        )}
       </div>
     </div>
   )
 }
-
 // ── Main Client Component ──────────────────────────────────────────────────────
 
 export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryScript[] }) {
