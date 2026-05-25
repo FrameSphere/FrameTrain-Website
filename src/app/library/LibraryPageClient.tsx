@@ -431,11 +431,19 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
     name: '', description: '', model_type: '', task_type: '',
     framework: 'transformers', script_type: 'train', tags: '', script: '',
   })
-  const [authorInput, setAuthorInput] = useState(() => getStoredAuthorName(user?.id) || '')
-  const [authorLocked, setAuthorLocked] = useState(() => (getStoredAuthorName(user?.id) || '') !== '')
+  const [authorInput, setAuthorInput] = useState('')
+  const [authorLocked, setAuthorLocked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [duplicateNameError, setDuplicateNameError] = useState<string | null>(null)
+
+  // Load community name from user data (backend) on mount
+  useEffect(() => {
+    if (user?.communityName) {
+      setAuthorInput(user.communityName)
+      setAuthorLocked(true)
+    }
+  }, [user?.communityName])
 
   const set = (k: keyof UploadForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((p) => ({ ...p, [k]: e.target.value }))
