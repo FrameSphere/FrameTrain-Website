@@ -12,10 +12,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Nicht authentifiziert' }, { status: 401 })
     }
 
-    // Fetch full user from DB to include hasPaid
+    // Fetch full user from DB to include hasPaid and communityName
     const user = await prisma.user.findUnique({
       where: { id: currentUser.userId },
-      select: { id: true, email: true, name: true, hasPaid: true, provider: true },
+      select: { id: true, email: true, name: true, hasPaid: true, provider: true, communityName: true },
     })
 
     if (!user) {
@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
         name: user.name,
         hasPaid: user.hasPaid,
         provider: user.provider,
+        communityName: user.communityName || undefined,
       },
     })
   } catch (error) {
