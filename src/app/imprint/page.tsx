@@ -41,8 +41,8 @@ export default function ImprintPage() {
               <div className="glass border border-white/10 rounded-xl px-6 py-5 space-y-2 text-sm">
                 <p>
                   E-Mail:{' '}
-                  <a href="mailto:support@frametrain.app" className="text-violet-400 hover:text-violet-300">
-                    support@frametrain.app
+                  <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">
+                    framesphere@gmx.net
                   </a>
                 </p>
                 <p>
