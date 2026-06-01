@@ -35,7 +35,7 @@ export default function PrivacyPage() {
               <div className="mt-3 glass border border-white/10 rounded-xl px-5 py-4 text-sm">
                 <p className="text-white font-semibold">Karol Paschek</p>
                 <p>Mainz, Deutschland</p>
-                <p>E-Mail: <a href="mailto:support@frametrain.app" className="text-violet-400 hover:text-violet-300">support@frametrain.app</a></p>
+                <p>E-Mail: <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">framesphere@gmx.net</a></p>
               </div>
             </section>
 
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
                 <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
               </ul>
               <p className="mt-3 text-sm">
-                Zur Ausübung deiner Rechte wende dich an: <a href="mailto:support@frametrain.app" className="text-violet-400 hover:text-violet-300">support@frametrain.app</a>
+                Zur Ausübung deiner Rechte wende dich an: <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">framesphere@gmx.net</a>
               </p>
             </section>
 
@@ -124,7 +124,7 @@ export default function PrivacyPage() {
               <h2 className="text-xl font-bold text-white mb-3">8. Kontakt & Beschwerden</h2>
               <p className="text-sm">
                 Bei Fragen oder Beschwerden zu dieser Datenschutzerklärung wende dich an{' '}
-                <a href="mailto:support@frametrain.app" className="text-violet-400 hover:text-violet-300">support@frametrain.app</a>.
+                <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">framesphere@gmx.net</a>.
                 Du hast außerdem das Recht, dich bei deiner zuständigen Datenschutzbehörde zu beschweren.
               </p>
             </section>
