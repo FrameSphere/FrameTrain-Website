@@ -71,7 +71,7 @@ export default function TermsPage() {
                 sofern du ausdrücklich zugestimmt hast, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen wird.
               </p>
               <p className="text-sm">
-                Kontaktiere uns bei Fragen: <a href="mailto:support@frametrain.app" className="text-violet-400 hover:text-violet-300">support@frametrain.app</a>
+                Kontaktiere uns bei Fragen: <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">framesphere@gmx.net</a>
               </p>
             </section>
 
@@ -126,7 +126,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-xl font-bold text-white mb-3">10. Kontakt</h2>
               <p className="text-sm">
-                Karol Paschek, Mainz · <a href="mailto:support@frametrain.app" className="text-violet-400 hover:text-violet-300">support@frametrain.app</a>
+                Karol Paschek, Mainz · <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">framesphere@gmx.net</a>
               </p>
             </section>
 
