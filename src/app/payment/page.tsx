@@ -348,12 +348,12 @@ export default function PaymentPage() {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}>
-                  für immer frei.
+                  jetzt frei.
                 </span>
               </h1>
               <p style={{ color: '#64748b', fontSize: 16, margin: 0, lineHeight: 1.6 }}>
                 Willkommen, {user?.email?.split('@')[0] || 'Trainer'}. <br />
-                Einmalige Zahlung — du zahlst nie wieder.
+                4,99 €/Monat · Early Access · jederzeit kündbar.
               </p>
             </div>
 
@@ -490,7 +490,7 @@ export default function PaymentPage() {
                   ) : (
                     <>
                       <Lock size={18} />
-                      Jetzt freischalten · 1,99 €
+                      Jetzt freischalten · 4,99 €/Monat
                       <ArrowRight size={18} style={{ marginLeft: 4 }} />
                     </>
                   )}

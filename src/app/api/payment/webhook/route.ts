@@ -11,6 +11,24 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20',
 })
 
+// Helper: API Key generieren und für User anlegen (idempotent)
+async function ensureApiKey(userId: string, email: string) {
+  const existing = await prisma.apiKey.findFirst({
+    where: { userId, isActive: true },
+  })
+  if (existing) return existing
+
+  const apiKeyString = `ft_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`
+  return prisma.apiKey.create({
+    data: {
+      userId,
+      key: apiKeyString,
+      isActive: true,
+      createdAt: new Date(),
+    },
+  })
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')!
@@ -31,61 +49,152 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // Handle the event
   switch (event.type) {
-    case 'checkout.session.completed':
+
+    // ── Abo wurde gestartet (Checkout erfolgreich) ──────────────────────────
+    case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session
 
+      // Bei subscriptions gibt es keine payment_intent, dafür eine subscription ID
+      const subscriptionId = session.subscription as string | null
+
       try {
-        // Find user by email
         const user = await prisma.user.findUnique({
           where: { email: session.customer_email! },
         })
 
-        if (user) {
-          // Update user: mark as paid
-          await prisma.user.update({
-            where: { id: user.id },
-            data: { 
-              hasPaid: true,
-              updatedAt: new Date(),
-            },
-          })
-
-          // Create payment record
-          await prisma.payment.create({
-            data: {
-              userId: user.id,
-              email: session.customer_email!,
-              amount: session.amount_total!,
-              currency: session.currency!,
-              stripePaymentId: session.payment_intent as string || session.id,
-              stripeSessionId: session.id,
-              status: 'completed',
-              completedAt: new Date(),
-            },
-          })
-
-          // Generate API Key
-          const apiKeyString = `ft_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`
-          
-          await prisma.apiKey.create({
-            data: {
-              userId: user.id,
-              key: apiKeyString,
-              isActive: true,
-              createdAt: new Date(),
-            },
-          })
-
-          console.log('✅ Payment completed & API Key created for:', session.customer_email)
-        } else {
+        if (!user) {
           console.error('❌ User not found for email:', session.customer_email)
+          break
         }
+
+        // User aktivieren + Stripe IDs speichern
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            hasPaid: true,
+            stripeCustomerId: session.customer as string,
+            stripeSubscriptionId: subscriptionId ?? undefined,
+            updatedAt: new Date(),
+          },
+        })
+
+        // Payment-Datensatz anlegen
+        await prisma.payment.create({
+          data: {
+            userId: user.id,
+            email: session.customer_email!,
+            amount: session.amount_total ?? 499,
+            currency: session.currency ?? 'eur',
+            stripePaymentId: null,          // bei subscription kein payment_intent
+            stripeSessionId: session.id,
+            stripeSubscriptionId: subscriptionId,
+            status: 'completed',
+            completedAt: new Date(),
+          },
+        })
+
+        // API Key erstellen (idempotent)
+        await ensureApiKey(user.id, session.customer_email!)
+
+        console.log('✅ Subscription started & API Key created for:', session.customer_email)
       } catch (dbError) {
-        console.error('❌ Database error in webhook:', dbError)
+        console.error('❌ Database error in checkout.session.completed:', dbError)
       }
       break
+    }
+
+    // ── Abo wurde gekündigt oder ist abgelaufen ─────────────────────────────
+    case 'customer.subscription.deleted': {
+      const sub = event.data.object as Stripe.Subscription
+
+      try {
+        // User über stripeSubscriptionId finden (zuverlässiger als E-Mail)
+        const user = await prisma.user.findFirst({
+          where: { stripeSubscriptionId: sub.id },
+        })
+
+        if (!user) {
+          // Fallback: über stripeCustomerId suchen
+          const userByCustomer = await prisma.user.findFirst({
+            where: { stripeCustomerId: sub.customer as string },
+          })
+          if (userByCustomer) {
+            await prisma.user.update({
+              where: { id: userByCustomer.id },
+              data: {
+                hasPaid: false,
+                stripeSubscriptionId: null,
+                updatedAt: new Date(),
+              },
+            })
+            // API Key deaktivieren
+            await prisma.apiKey.updateMany({
+              where: { userId: userByCustomer.id, isActive: true },
+              data: { isActive: false },
+            })
+            console.log('⛔ Subscription cancelled for customer:', sub.customer)
+          } else {
+            console.error('❌ No user found for subscription:', sub.id)
+          }
+          break
+        }
+
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            hasPaid: false,
+            stripeSubscriptionId: null,
+            updatedAt: new Date(),
+          },
+        })
+
+        // Alle aktiven API Keys deaktivieren
+        await prisma.apiKey.updateMany({
+          where: { userId: user.id, isActive: true },
+          data: { isActive: false },
+        })
+
+        console.log('⛔ Subscription cancelled for:', user.email)
+      } catch (dbError) {
+        console.error('❌ Database error in customer.subscription.deleted:', dbError)
+      }
+      break
+    }
+
+    // ── Zahlung fehlgeschlagen (z.B. Karte abgelaufen) ─────────────────────
+    case 'invoice.payment_failed': {
+      const invoice = event.data.object as Stripe.Invoice
+      console.warn('⚠️ Payment failed for customer:', invoice.customer, '| attempt:', (invoice as any).attempt_count)
+      // hasPaid bleibt true bis customer.subscription.deleted feuert
+      // Stripe schickt automatisch Retry-E-Mails
+      break
+    }
+
+    // ── Zahlung erfolgreich erneuert ────────────────────────────────────────
+    case 'invoice.payment_succeeded': {
+      const invoice = event.data.object as Stripe.Invoice
+      const subscriptionId = (invoice as any).subscription as string | null
+      if (!subscriptionId) break
+
+      try {
+        const user = await prisma.user.findFirst({
+          where: { stripeSubscriptionId: subscriptionId },
+        })
+        if (user && !user.hasPaid) {
+          // Reaktivieren falls es zwischenzeitlich deaktiviert wurde
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { hasPaid: true, updatedAt: new Date() },
+          })
+          await ensureApiKey(user.id, user.email)
+          console.log('✅ Subscription reactivated for:', user.email)
+        }
+      } catch (dbError) {
+        console.error('❌ Database error in invoice.payment_succeeded:', dbError)
+      }
+      break
+    }
 
     case 'checkout.session.expired':
       console.log('⚠️ Checkout session expired:', event.data.object.id)

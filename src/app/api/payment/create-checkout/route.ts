@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     // Ensure the URL has a proper schema
     const fullBaseUrl = baseUrl.startsWith('http') ? baseUrl : `https://${baseUrl}`
     
-    // Erstelle Stripe Checkout Session
+    // Erstelle Stripe Checkout Session (Subscription)
     const session = await stripe.checkout.sessions.create({
       customer_email: user.email,
       payment_method_types: ['card'],
@@ -41,7 +41,13 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      mode: 'payment',
+      mode: 'subscription',
+      subscription_data: {
+        metadata: {
+          userId: user.userId,
+          email: user.email,
+        },
+      },
       success_url: `${fullBaseUrl}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${fullBaseUrl}/payment/cancel`,
       metadata: {

@@ -50,10 +50,10 @@ export function PaymentForm({ email, onSuccess }: PaymentFormProps) {
       
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">FrameTrain Lizenz</span>
-          <span className="font-semibold">2,00 €</span>
+          <span className="text-gray-600">FrameTrain Early Access</span>
+          <span className="font-semibold">4,99 € / Monat</span>
         </div>
-        <p className="text-sm text-gray-500">Einmalige Zahlung, lebenslanger Zugang</p>
+        <p className="text-sm text-gray-500">Abo · jederzeit kündbar · Preis steigt nach 100 Nutzern</p>
       </div>
 
       {error && (
