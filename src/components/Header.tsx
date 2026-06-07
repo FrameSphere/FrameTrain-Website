@@ -1,35 +1,40 @@
 'use client'
 
 import Link from 'next/link'
-import { Home, Sparkles } from 'lucide-react'
+import { Home, Sparkles, Bell } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import { ChangelogModal, useChangelogBadge } from '@/components/ChangelogModal'
 
 export function Header() {
   const { user, logout, isAuthenticated, loading } = useAuth()
   const [scrolled, setScrolled] = useState(false)
+  const [changelogOpen, setChangelogOpen] = useState(false)
+  const { count: badgeCount, refresh: refreshBadge } = useChangelogBadge()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handleBellClick = useCallback(() => setChangelogOpen(true), [])
+  const handleModalClose = useCallback(() => setChangelogOpen(false), [])
+  const handleRead = useCallback(() => refreshBadge(), [refreshBadge])
 
   return (
     <>
       {/* Spacer for fixed header */}
       <div className="h-20" />
-      
+
       {/* Dynamic Island Header */}
-      <header 
+      <header
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
           scrolled ? 'scale-95' : 'scale-100'
         }`}
       >
         <div className={`
-          glass-strong rounded-[2rem] px-6 py-3.5 
+          glass-strong rounded-[2rem] px-6 py-3.5
           transition-all duration-500
           border border-white/10
           shadow-2xl shadow-purple-500/20
@@ -37,10 +42,7 @@ export function Header() {
         `}>
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link 
-              href="/" 
-              className="flex items-center gap-3 group"
-            >
+            <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur-md opacity-75 group-hover:opacity-100 transition" />
                 <div className="relative bg-gradient-to-br from-purple-600 to-pink-600 p-2 rounded-xl">
@@ -51,7 +53,7 @@ export function Header() {
                 FrameTrain
               </span>
             </Link>
-            
+
             {/* Navigation */}
             <nav className="flex items-center gap-2">
               {!loading && (
@@ -90,6 +92,21 @@ export function Header() {
                       >
                         Docs
                       </Link>
+
+                      {/* ── Bell / Changelog ── */}
+                      <button
+                        onClick={handleBellClick}
+                        title="Was ist neu?"
+                        className="relative p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
+                      >
+                        <Bell className="w-5 h-5" />
+                        {badgeCount > 0 && (
+                          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-purple-500 text-[10px] font-black text-white shadow-lg shadow-purple-500/50 animate-pulse">
+                            {badgeCount > 9 ? '9+' : badgeCount}
+                          </span>
+                        )}
+                      </button>
+
                       <div className="hidden md:flex items-center px-3 py-1.5 glass rounded-lg text-sm text-gray-400 ml-2">
                         {user?.email}
                       </div>
@@ -138,21 +155,28 @@ export function Header() {
                       >
                         Pricing
                       </Link>
-                      <Link
-                        href="/login"
-                        className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
+
+                      {/* Bell auch für nicht-eingeloggte User (öffentlicher Feed) */}
+                      <button
+                        onClick={handleBellClick}
+                        title="Was ist neu?"
+                        className="relative p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
                       >
+                        <Bell className="w-5 h-5" />
+                        {badgeCount > 0 && (
+                          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-purple-500 text-[10px] font-black text-white shadow-lg shadow-purple-500/50 animate-pulse">
+                            {badgeCount > 9 ? '9+' : badgeCount}
+                          </span>
+                        )}
+                      </button>
+
+                      <Link href="/login" className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300">
                         Login
                       </Link>
-                      <Link
-                        href="/register"
-                        className="relative group px-5 py-2 rounded-xl overflow-hidden"
-                      >
+                      <Link href="/register" className="relative group px-5 py-2 rounded-xl overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient" />
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 opacity-0 group-hover:opacity-100 blur transition-opacity" />
-                        <span className="relative text-white font-semibold">
-                          Starten
-                        </span>
+                        <span className="relative text-white font-semibold">Starten</span>
                       </Link>
                     </>
                   )}
@@ -162,6 +186,13 @@ export function Header() {
           </div>
         </div>
       </header>
+
+      {/* Changelog Modal */}
+      <ChangelogModal
+        open={changelogOpen}
+        onClose={handleModalClose}
+        onRead={handleRead}
+      />
     </>
   )
 }

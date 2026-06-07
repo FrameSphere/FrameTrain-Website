@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { Sparkles, Zap, Bug, Shield, Rocket, RefreshCw } from 'lucide-react'
+import {
+  Sparkles, Zap, Bug, Shield, Rocket, RefreshCw,
+  GitCommit, Milestone, Flame, Code2,
+} from 'lucide-react'
+import type { StatusUpdate } from '@/components/ChangelogModal'
 
 const MANAGER_API = process.env.NEXT_PUBLIC_MANAGER_API_URL || 'https://webcontrol-hq-api.karol-paschek.workers.dev'
 
@@ -18,7 +22,7 @@ interface ChangelogEntry {
   created_at: string
 }
 
-// ── Icon / style helpers ──────────────────────────────────────────
+// ── Stil-Helfer ───────────────────────────────────────────────────
 function getChangeIcon(type: string) {
   const cls = 'w-4 h-4 flex-shrink-0 mt-0.5'
   switch (type) {
@@ -47,11 +51,52 @@ const TYPE_COLOR: Record<string, string> = {
   breaking:    'text-red-400 bg-red-500/10 border-red-500/20',
 }
 
+const STATUS_TYPE_META: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
+  status:    { label: 'Status',     color: 'text-blue-400 bg-blue-500/10 border-blue-500/20',       icon: <GitCommit className="w-3.5 h-3.5" /> },
+  milestone: { label: 'Milestone',  color: 'text-purple-400 bg-purple-500/10 border-purple-500/20', icon: <Milestone className="w-3.5 h-3.5" /> },
+  hotfix:    { label: 'Hotfix',     color: 'text-orange-400 bg-orange-500/10 border-orange-500/20', icon: <Flame className="w-3.5 h-3.5" /> },
+  dev:       { label: 'Dev-Update', color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',       icon: <Code2 className="w-3.5 h-3.5" /> },
+}
+
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
-// ── Static fallback releases (shown while API loads / on error) ───
+// Einfacher Markdown-Renderer für Status-Update-Body
+function SimpleMarkdown({ text }: { text: string }) {
+  const lines = text.split('\n')
+  return (
+    <div className="space-y-1.5">
+      {lines.map((line, i) => {
+        if (line.startsWith('### ')) return <p key={i} className="text-white font-bold text-sm mt-3 mb-1">{line.slice(4)}</p>
+        if (line.startsWith('## '))  return <p key={i} className="text-white font-bold mt-3 mb-1">{line.slice(3)}</p>
+        if (line.startsWith('- ') || line.startsWith('• ')) {
+          const content = line.slice(2)
+          return (
+            <div key={i} className="flex items-start gap-2">
+              <span className="text-purple-400 mt-1 flex-shrink-0">·</span>
+              <span className="text-gray-300 text-sm leading-relaxed">
+                {content.split(/\*\*(.*?)\*\*/g).map((p, j) =>
+                  j % 2 === 1 ? <strong key={j} className="text-white">{p}</strong> : p
+                )}
+              </span>
+            </div>
+          )
+        }
+        if (line.trim() === '') return <div key={i} className="h-1" />
+        return (
+          <p key={i} className="text-gray-400 text-sm leading-relaxed">
+            {line.split(/\*\*(.*?)\*\*/g).map((p, j) =>
+              j % 2 === 1 ? <strong key={j} className="text-white">{p}</strong> : p
+            )}
+          </p>
+        )
+      })}
+    </div>
+  )
+}
+
+// ── Statische Fallback-Releases ───────────────────────────────────
 const STATIC_RELEASES = [
   {
     version: '0.9.2',
@@ -93,25 +138,30 @@ const STATIC_RELEASES = [
   },
 ]
 
+// ── Seite ─────────────────────────────────────────────────────────
 export default function ChangelogPage() {
-  const [apiEntries, setApiEntries] = useState<ChangelogEntry[] | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+  const [apiEntries, setApiEntries]   = useState<ChangelogEntry[] | null>(null)
+  const [statusUpdates, setStatusUpdates] = useState<StatusUpdate[]>([])
+  const [loadingChangelog, setLoadingChangelog] = useState(true)
+  const [loadingStatus, setLoadingStatus]       = useState(true)
 
   useEffect(() => {
+    // Changelog-Einträge vom Manager-API
     fetch(`${MANAGER_API}/api/changelog/published?site_id=frametrain`)
       .then(r => r.json())
-      .then((data: ChangelogEntry[]) => {
-        setApiEntries(Array.isArray(data) ? data : [])
-        setLoading(false)
-      })
-      .catch(() => {
-        setError(true)
-        setLoading(false)
-      })
+      .then((data: ChangelogEntry[]) => setApiEntries(Array.isArray(data) ? data : []))
+      .catch(() => setApiEntries([]))
+      .finally(() => setLoadingChangelog(false))
+
+    // Status-Updates von der eigenen API
+    fetch('/api/status-updates?limit=30')
+      .then(r => r.json())
+      .then(d => setStatusUpdates(Array.isArray(d.updates) ? d.updates : []))
+      .catch(() => setStatusUpdates([]))
+      .finally(() => setLoadingStatus(false))
   }, [])
 
-  // Group API entries by version
+  // Changelog nach Version gruppieren
   const grouped: Record<string, ChangelogEntry[]> = {}
   if (apiEntries) {
     apiEntries.forEach(e => {
@@ -120,13 +170,14 @@ export default function ChangelogPage() {
     })
   }
   const versions = Object.keys(grouped).sort((a, b) => {
-    // Sort by newest created_at within that version group
-    const dateA = grouped[a][0].created_at
-    const dateB = grouped[b][0].created_at
-    return new Date(dateB).getTime() - new Date(dateA).getTime()
+    const da = grouped[a][0].created_at
+    const db = grouped[b][0].created_at
+    return new Date(db).getTime() - new Date(da).getTime()
   })
 
-  const hasApiData = apiEntries && apiEntries.length > 0
+  const hasApiData   = apiEntries && apiEntries.length > 0
+  const hasStatusData = statusUpdates.length > 0
+  const loading      = loadingChangelog || loadingStatus
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -146,10 +197,11 @@ export default function ChangelogPage() {
             </p>
             <div className="mt-8 flex gap-6 justify-center text-sm text-gray-500 flex-wrap">
               {[
-                { icon: <Sparkles className="w-4 h-4 text-purple-400" />, label: 'New Feature' },
+                { icon: <Sparkles className="w-4 h-4 text-purple-400" />,  label: 'New Feature' },
                 { icon: <Zap       className="w-4 h-4 text-blue-400" />,   label: 'Improvement' },
                 { icon: <Bug       className="w-4 h-4 text-orange-400" />, label: 'Bugfix' },
                 { icon: <Shield    className="w-4 h-4 text-green-400" />,  label: 'Security' },
+                { icon: <GitCommit className="w-4 h-4 text-cyan-400" />,   label: 'Dev-Status' },
               ].map(({ icon, label }) => (
                 <div key={label} className="flex items-center gap-2">{icon}<span>{label}</span></div>
               ))}
@@ -157,96 +209,151 @@ export default function ChangelogPage() {
           </div>
         </section>
 
-        {/* Releases */}
         <section className="py-16 px-4">
-          <div className="max-w-4xl mx-auto space-y-12">
+          <div className="max-w-4xl mx-auto space-y-16">
 
-            {/* Loading state */}
+            {/* Lade-Spinner */}
             {loading && (
-              <div className="flex items-center justify-center py-20 gap-3 text-gray-400">
+              <div className="flex items-center justify-center py-16 gap-3 text-gray-400">
                 <RefreshCw className="w-5 h-5 animate-spin text-purple-400" />
-                <span>Lade neueste Releases…</span>
+                <span>Lade neueste Updates…</span>
               </div>
             )}
 
-            {/* API entries */}
-            {!loading && hasApiData && versions.map(version => {
-              const entries = grouped[version]
-              const latest = entries[0]
-              return (
-                <article key={version}>
-                  <div className="flex items-center gap-4 mb-6 flex-wrap">
-                    <div className="glass-strong rounded-2xl px-6 py-4 border border-white/10">
-                      <div className="flex items-center gap-3 mb-1">
-                        <span className="text-2xl font-black text-white">v{version}</span>
-                        <span className="text-xs font-bold px-3 py-1 rounded-full border text-purple-400 bg-purple-500/10 border-purple-500/20">
-                          Release
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-500">{fmtDate(latest.created_at)}</div>
-                    </div>
+            {/* ── Status-Updates (Codex-Automatisierung) ── */}
+            {!loadingStatus && hasStatusData && (
+              <div>
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="flex items-center gap-2">
+                    <GitCommit className="w-5 h-5 text-cyan-400" />
+                    <h2 className="text-2xl font-black text-white">Entwicklungsstand</h2>
                   </div>
+                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                    Live-Updates von Codex
+                  </span>
+                </div>
 
-                  <div className="glass-strong rounded-2xl border border-white/10 overflow-hidden">
-                    <div className="divide-y divide-white/5">
-                      {entries.map(e => (
-                        <div key={e.id} className="flex items-start gap-4 px-6 py-4 hover:bg-white/[0.02] transition-colors">
-                          {getChangeIcon(e.type)}
-                          <span className={`text-xs font-bold px-2 py-0.5 rounded border flex-shrink-0 mt-0.5 ${TYPE_COLOR[e.type] || TYPE_COLOR.feature}`}>
-                            {TYPE_LABEL[e.type] || e.type}
-                          </span>
-                          <div>
-                            <p className="text-white text-sm font-semibold">{e.title}</p>
-                            {e.description && <p className="text-gray-400 text-sm mt-1 leading-relaxed">{e.description}</p>}
+                <div className="space-y-4">
+                  {statusUpdates.map(update => {
+                    const meta = STATUS_TYPE_META[update.type] || STATUS_TYPE_META.status
+                    return (
+                      <article key={update.id} className="glass-strong rounded-2xl border border-white/10 overflow-hidden">
+                        {/* Kopfzeile */}
+                        <div className="flex items-center justify-between px-6 py-4 border-b border-white/8">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full border ${meta.color}`}>
+                              {meta.icon}
+                              {meta.label}
+                            </span>
+                            {update.appVersion && (
+                              <span className="text-xs font-mono text-gray-500">v{update.appVersion}</span>
+                            )}
+                            <h3 className="text-white font-semibold">{update.title}</h3>
+                          </div>
+                          <div className="text-right flex-shrink-0 ml-4">
+                            <div className="text-xs text-gray-500">{fmtDate(update.createdAt)}</div>
+                            <div className="text-[11px] text-gray-600 mt-0.5">— {update.author}</div>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              )
-            })}
-
-            {/* Static fallback (no API data or error) */}
-            {!loading && !hasApiData && STATIC_RELEASES.map(release => (
-              <article key={release.version}>
-                <div className="flex items-center gap-4 mb-6 flex-wrap">
-                  <div className="glass-strong rounded-2xl px-6 py-4 border border-white/10">
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="text-2xl font-black text-white">v{release.version}</span>
-                      <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
-                        release.tagColor === 'green'
-                          ? 'text-green-400 bg-green-500/10 border-green-500/20'
-                          : 'text-purple-400 bg-purple-500/10 border-purple-500/20'
-                      }`}>
-                        {release.tag}
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-500">{fmtDate(release.date)}</div>
-                  </div>
+                        {/* Body */}
+                        <div className="px-6 py-5">
+                          <SimpleMarkdown text={update.body} />
+                        </div>
+                      </article>
+                    )
+                  })}
                 </div>
+              </div>
+            )}
 
-                <div className="glass-strong rounded-2xl border border-white/10 overflow-hidden">
-                  <div className="divide-y divide-white/5">
-                    {release.entries.map((change, i) => (
-                      <div key={i} className="flex items-start gap-4 px-6 py-4 hover:bg-white/[0.02] transition-colors">
-                        {getChangeIcon(change.type)}
-                        <span className={`text-xs font-bold px-2 py-0.5 rounded border flex-shrink-0 mt-0.5 ${TYPE_COLOR[change.type] || TYPE_COLOR.feature}`}>
-                          {TYPE_LABEL[change.type] || change.type}
-                        </span>
-                        <p className="text-gray-300 text-sm leading-relaxed">{change.text}</p>
+            {/* ── Release-Einträge (Manager-API) ── */}
+            {!loadingChangelog && (
+              <div>
+                {hasStatusData && (
+                  <div className="flex items-center gap-3 mb-8">
+                    <Rocket className="w-5 h-5 text-purple-400" />
+                    <h2 className="text-2xl font-black text-white">Releases</h2>
+                  </div>
+                )}
+
+                {/* API-Einträge */}
+                {hasApiData && versions.map(version => {
+                  const entries = grouped[version]
+                  const latest  = entries[0]
+                  return (
+                    <article key={version} className="mb-12">
+                      <div className="flex items-center gap-4 mb-6 flex-wrap">
+                        <div className="glass-strong rounded-2xl px-6 py-4 border border-white/10">
+                          <div className="flex items-center gap-3 mb-1">
+                            <span className="text-2xl font-black text-white">v{version}</span>
+                            <span className="text-xs font-bold px-3 py-1 rounded-full border text-purple-400 bg-purple-500/10 border-purple-500/20">
+                              Release
+                            </span>
+                          </div>
+                          <div className="text-sm text-gray-500">{fmtDate(latest.created_at)}</div>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
+                      <div className="glass-strong rounded-2xl border border-white/10 overflow-hidden">
+                        <div className="divide-y divide-white/5">
+                          {entries.map(e => (
+                            <div key={e.id} className="flex items-start gap-4 px-6 py-4 hover:bg-white/[0.02] transition-colors">
+                              {getChangeIcon(e.type)}
+                              <span className={`text-xs font-bold px-2 py-0.5 rounded border flex-shrink-0 mt-0.5 ${TYPE_COLOR[e.type] || TYPE_COLOR.feature}`}>
+                                {TYPE_LABEL[e.type] || e.type}
+                              </span>
+                              <div>
+                                <p className="text-white text-sm font-semibold">{e.title}</p>
+                                {e.description && <p className="text-gray-400 text-sm mt-1 leading-relaxed">{e.description}</p>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </article>
+                  )
+                })}
 
-            {/* Empty API response */}
-            {!loading && !error && apiEntries && apiEntries.length === 0 && (
-              <div className="text-center py-16 text-gray-500">
-                <div className="text-4xl mb-4">🚀</div>
-                <p>Noch keine Releases veröffentlicht – bald gibt's Neues!</p>
+                {/* Statische Fallback-Releases */}
+                {!hasApiData && STATIC_RELEASES.map(release => (
+                  <article key={release.version} className="mb-12">
+                    <div className="flex items-center gap-4 mb-6 flex-wrap">
+                      <div className="glass-strong rounded-2xl px-6 py-4 border border-white/10">
+                        <div className="flex items-center gap-3 mb-1">
+                          <span className="text-2xl font-black text-white">v{release.version}</span>
+                          <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
+                            release.tagColor === 'green'
+                              ? 'text-green-400 bg-green-500/10 border-green-500/20'
+                              : 'text-purple-400 bg-purple-500/10 border-purple-500/20'
+                          }`}>
+                            {release.tag}
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-500">{fmtDate(release.date)}</div>
+                      </div>
+                    </div>
+                    <div className="glass-strong rounded-2xl border border-white/10 overflow-hidden">
+                      <div className="divide-y divide-white/5">
+                        {release.entries.map((change, i) => (
+                          <div key={i} className="flex items-start gap-4 px-6 py-4 hover:bg-white/[0.02] transition-colors">
+                            {getChangeIcon(change.type)}
+                            <span className={`text-xs font-bold px-2 py-0.5 rounded border flex-shrink-0 mt-0.5 ${TYPE_COLOR[change.type] || TYPE_COLOR.feature}`}>
+                              {TYPE_LABEL[change.type] || change.type}
+                            </span>
+                            <p className="text-gray-300 text-sm leading-relaxed">{change.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                ))}
+
+                {/* Leer */}
+                {!hasApiData && !loadingChangelog && (
+                  <div className="text-center py-16 text-gray-500">
+                    <div className="text-4xl mb-4">🚀</div>
+                    <p>Noch keine Releases veröffentlicht – bald gibt's Neues!</p>
+                  </div>
+                )}
               </div>
             )}
           </div>

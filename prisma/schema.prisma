@@ -114,6 +114,22 @@ model LibraryScript {
   @@map("library_scripts")
 }
 
+// Tägliche Status-Updates von Codex (Automatisierung)
+model StatusUpdate {
+  id          String   @id @default(cuid())
+  title       String                           // Kurze Überschrift, z. B. "Synapse Builder: Canvas-Fixes"
+  body        String   @db.Text               // Markdown-fähiger Fließtext
+  type        String   @default("status")     // "status" | "milestone" | "hotfix" | "dev"
+  appVersion  String?  @map("app_version")    // Optional: z. B. "0.9.3-dev"
+  author      String   @default("Codex")      // Wer hat gepostet
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([published])
+  @@index([createdAt])
+  @@map("status_updates")
+}
+
 model Payment {
   id              String    @id @default(cuid())
   userId          String?   @map("user_id")
