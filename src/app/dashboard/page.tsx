@@ -10,6 +10,9 @@ import {
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
   Globe, AlertCircle, Pencil, Loader2,
 } from 'lucide-react'
+/* Temporäre UI Anfang, bald herausnehmen */
+import { DownloadLockCountdown, isAppReleased } from '@/components/ReleaseCountdown'
+/* Temporäre UI Ende */
 
 const MANAGER_API = process.env.NEXT_PUBLIC_MANAGER_API_URL || 'https://webcontrol-hq-api.karol-paschek.workers.dev'
 
@@ -496,7 +499,14 @@ export default function DashboardPage() {
               <Download className="w-6 h-6 text-purple-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Desktop-App herunterladen</h2>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            {/* Temporäre UI Anfang, bald herausnehmen */}
+            <DownloadLockCountdown />
+            {/* Temporäre UI Ende */}
+            <div className={`grid md:grid-cols-3 gap-6${
+              /* Temporäre UI Anfang, bald herausnehmen */
+              !isAppReleased() ? ' opacity-40 pointer-events-none select-none' : ''
+              /* Temporäre UI Ende */
+            }`}>
               {[
                 { platform: 'windows' as const, label: 'Windows', ext: '.exe', gradient: 'from-blue-500 to-cyan-500' },
                 { platform: 'mac' as const, label: 'macOS', ext: '.dmg', gradient: 'from-purple-500 to-pink-500' },

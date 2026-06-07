@@ -360,29 +360,114 @@ function PaymentSuccessContent() {
   const router = useRouter()
   const sessionId = searchParams.get('session_id')
 
-  // 'check' → 'showcase' → 'tutorial' | 'done'
-  const [view, setView] = useState<'check' | 'showcase' | 'tutorial' | 'done'>('check')
+  // 'verifying' → 'check' → 'showcase' → 'tutorial'
+  const [view, setView] = useState<'verifying' | 'check' | 'showcase' | 'tutorial' | 'invalid'>('verifying')
   const [successVisible, setSuccessVisible] = useState(false)
+
+  // Schritt 1: session_id prüfen + auf hasPaid warten
+  useEffect(() => {
+    // Keine session_id in der URL → sofort raus
+    if (!sessionId) {
+      router.replace('/payment')
+      return
+    }
+
+    let attempts = 0
+    const MAX_ATTEMPTS = 10   // max ~10 Sekunden warten
+    const INTERVAL_MS = 1000
+
+    const verify = async () => {
+      try {
+        // Session gegen Stripe verifizieren
+        const res = await fetch(`/api/payment/verify-session?session_id=${sessionId}`, {
+          credentials: 'include',
+        })
+
+        if (!res.ok) {
+          // 403 / 404 → ungültige Session
+          setView('invalid')
+          return
+        }
+
+        const data = await res.json()
+
+        if (data.valid && data.hasPaid) {
+          // Zahlung bestätigt + DB aktualisiert → Animation starten
+          setView('check')
+          return
+        }
+
+        if (data.valid && !data.hasPaid && attempts < MAX_ATTEMPTS) {
+          // Stripe OK, aber Webhook noch nicht angekommen → polling
+          attempts++
+          setTimeout(verify, INTERVAL_MS)
+          return
+        }
+
+        // Timeout oder ungültig
+        setView('invalid')
+      } catch {
+        setView('invalid')
+      }
+    }
+
+    verify()
+  }, [sessionId, router])
 
   function handleCheckDone() {
     setTimeout(() => setSuccessVisible(true), 100)
     setTimeout(() => setView('showcase'), 2200)
   }
 
-  function handleSkip() {
-    router.push('/dashboard')
+  const bgClass = 'min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950'
+
+  // Verifizierung läuft noch
+  if (view === 'verifying') {
+    return (
+      <div className={bgClass}>
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-12 h-12 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-6" />
+            <p className="text-gray-400 text-lg">Zahlung wird verifiziert…</p>
+          </div>
+        </main>
+      </div>
+    )
   }
 
-  function handleTutorial() {
-    setView('tutorial')
-  }
-
-  function handleTutorialDone() {
-    router.push('/dashboard')
+  // Ungültige oder fehlende Session
+  if (view === 'invalid') {
+    return (
+      <div className={bgClass}>
+        <Header />
+        <main className="flex-1 flex items-center justify-center px-4">
+          <div className="text-center max-w-md">
+            <div className="text-5xl mb-6">⚠️</div>
+            <h1 className="text-2xl font-black text-white mb-3">Keine gültige Zahlung gefunden</h1>
+            <p className="text-gray-400 mb-8">Diese Seite ist nur nach einer erfolgreichen Zahlung zugänglich. Hast du bereits bezahlt? Gehe ins Dashboard.</p>
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={() => router.push('/payment')}
+                className="px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-bold"
+              >
+                Zur Zahlung
+              </button>
+              <button
+                onClick={() => router.push('/dashboard')}
+                className="px-6 py-3 glass border border-white/15 text-gray-300 rounded-xl font-semibold"
+              >
+                Zum Dashboard
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
+    <div className={bgClass}>
       <Header />
 
       <main className="flex-1 flex items-center justify-center px-4 py-16">
@@ -407,12 +492,15 @@ function PaymentSuccessContent() {
 
           {/* ── Feature showcase ── */}
           {view === 'showcase' && (
-            <FeatureShowcase onSkip={handleSkip} onTutorial={handleTutorial} />
+            <FeatureShowcase
+              onSkip={() => router.push('/dashboard')}
+              onTutorial={() => setView('tutorial')}
+            />
           )}
 
           {/* ── Tutorial ── */}
           {view === 'tutorial' && (
-            <TutorialView onDone={handleTutorialDone} />
+            <TutorialView onDone={() => router.push('/dashboard')} />
           )}
 
         </div>

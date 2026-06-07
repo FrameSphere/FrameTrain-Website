@@ -47,8 +47,8 @@ export default function ImprintPage() {
                 </p>
                 <p>
                   Website:{' '}
-                  <a href="https://frametrain.app" className="text-violet-400 hover:text-violet-300">
-                    frametrain.app
+                  <a href="https://frametrain.vercel.app" className="text-violet-400 hover:text-violet-300">
+                    frametrain.vercel.app
                   </a>
                 </p>
               </div>

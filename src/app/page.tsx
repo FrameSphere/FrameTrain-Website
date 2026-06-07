@@ -11,6 +11,9 @@ import {
   BarChart3, Package, Shield, ArrowRight, Check,
   Brain, Cpu, Cloud, Download, Book
 } from 'lucide-react'
+/* Temporäre UI Anfang, bald herausnehmen */
+import { ReleaseBanner, ComingSoonBadge, ReleasePromoSection } from '@/components/ReleaseCountdown'
+/* Temporäre UI Ende */
 
 export default function HomePage() {
   const router = useRouter()
@@ -71,7 +74,14 @@ export default function HomePage() {
                 <Lock className="w-4 h-4" />
                 <span>100% Local</span>
               </div>
+              {/* Temporäre UI Anfang, bald herausnehmen */}
+              <ComingSoonBadge />
+              {/* Temporäre UI Ende */}
             </div>
+
+            {/* Temporäre UI Anfang, bald herausnehmen */}
+            <ReleaseBanner />
+            {/* Temporäre UI Ende */}
 
             {/* Main headline */}
             <div className="text-center max-w-5xl mx-auto">
@@ -325,6 +335,10 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Temporäre UI Anfang, bald herausnehmen */}
+        <ReleasePromoSection />
+        {/* Temporäre UI Ende */}
 
         {/* Pricing Section */}
         <section className="py-32 px-4 relative" id="pricing">
