@@ -145,7 +145,7 @@ export default function HomePage() {
                 <StatCard number="100%" label="Local" color="purple" />
                 <StatCard number="0ms" label="Latency" color="blue" />
                 <StatCard number="∞" label="Models" color="pink" />
-                <StatCard number="3,99€" label="Early Access" color="green" />
+                <StatCard number="4,99€" label="Early Access" color="green" />
               </div>
             </div>
           </div>
