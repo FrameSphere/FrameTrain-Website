@@ -22,7 +22,12 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const priceId = process.env.STRIPE_PRICE_ID!
+    const body = await req.json().catch(() => ({}))
+    const plan: 'monthly' | 'yearly' = body.plan === 'yearly' ? 'yearly' : 'monthly'
+
+    const priceId = plan === 'yearly'
+      ? process.env.STRIPE_PRICE_ID_YEARLY!
+      : process.env.STRIPE_PRICE_ID_MONTHLY!
     
     // Get the base URL from the request or environment variable
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 

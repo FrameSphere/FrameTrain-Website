@@ -40,9 +40,10 @@ const FEATURES = [
 const PERKS = [
   'Voller Zugang zur Desktop-App',
   'Unbegrenzte Modelle & Trainings',
-  'Lebenslange Updates – kostenlos',
+  'Alle Updates während des Abos inklusive',
   'API-Key sofort nach Zahlung',
-  'Alle zukünftigen Features inklusive',
+  'Preis steigt auf 9,99 € nach 100 Nutzern',
+  'Jederzeit kündbar · kein Risiko',
 ]
 
 // ─── Animated background orbs ─────────────────────────────────────────────────
@@ -158,15 +159,61 @@ function FeatureChip({ icon: Icon, label, color, glow, delay }: {
   )
 }
 
-// ─── Animated price counter ────────────────────────────────────────────────────
-function PriceDisplay({ visible }: { visible: boolean }) {
+// ─── Plan Selector + Price Display ───────────────────────────────────────────
+type Plan = 'monthly' | 'yearly'
+
+function PriceDisplay({ visible, plan, onPlanChange }: { visible: boolean; plan: Plan; onPlanChange: (p: Plan) => void }) {
   const [shown, setShown] = useState(false)
   useEffect(() => {
     if (visible) setTimeout(() => setShown(true), 100)
   }, [visible])
 
+  const isYearly = plan === 'yearly'
+  const price = isYearly ? '39,99' : '4,99'
+  const sub = isYearly ? 'pro Jahr' : 'pro Monat'
+
   return (
     <div style={{ textAlign: 'center', marginBottom: 8 }}>
+      {/* Plan toggle */}
+      <div style={{
+        display: 'inline-flex',
+        background: 'rgba(255,255,255,0.05)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        borderRadius: 100,
+        padding: 4,
+        marginBottom: 20,
+        gap: 4,
+      }}>
+        {(['monthly', 'yearly'] as Plan[]).map(p => (
+          <button
+            key={p}
+            onClick={() => onPlanChange(p)}
+            style={{
+              padding: '7px 20px',
+              borderRadius: 100,
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: 13,
+              fontWeight: 600,
+              transition: 'all 0.2s ease',
+              background: plan === p ? 'linear-gradient(135deg, #7c3aed, #a855f7)' : 'transparent',
+              color: plan === p ? 'white' : '#64748b',
+              boxShadow: plan === p ? '0 2px 12px rgba(139,92,246,0.4)' : 'none',
+            }}
+          >
+            {p === 'monthly' ? 'Monatlich' : 'Jährlich'}
+            {p === 'yearly' && (
+              <span style={{
+                marginLeft: 6, fontSize: 10,
+                background: 'rgba(52,211,153,0.2)', color: '#34d399',
+                border: '1px solid rgba(52,211,153,0.3)',
+                borderRadius: 100, padding: '1px 6px',
+              }}>−20%</span>
+            )}
+          </button>
+        ))}
+      </div>
+      {/* Price number */}
       <div
         style={{
           opacity: shown ? 1 : 0,
@@ -187,12 +234,16 @@ function PriceDisplay({ visible }: { visible: boolean }) {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             letterSpacing: '-4px',
+            transition: 'all 0.3s ease',
           }}
         >
-          1,99
+          {price}
         </span>
       </div>
-      <div style={{ color: '#94a3b8', fontSize: 15, marginTop: 4 }}>Einmalig · kein Abo · kein Risiko</div>
+      <div style={{ color: '#94a3b8', fontSize: 15, marginTop: 4 }}>{sub} · Early Access</div>
+      <div style={{ marginTop: 6, fontSize: 12, fontWeight: 600, color: isYearly ? '#34d399' : '#64748b' }}>
+        {isYearly ? 'Spare 20 % vs. monatlich' : 'Monatlich kündbar'}
+      </div>
     </div>
   )
 }
@@ -204,6 +255,7 @@ export default function PaymentPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [mounted, setMounted] = useState(false)
+  const [plan, setPlan] = useState<Plan>('monthly')
   const [btnHovered, setBtnHovered] = useState(false)
   const [btnPressed, setBtnPressed] = useState(false)
 
@@ -222,7 +274,9 @@ export default function PaymentPage() {
     try {
       const res = await fetch('/api/payment/create-checkout', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
+        body: JSON.stringify({ plan }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Fehler beim Erstellen der Checkout-Session')
@@ -371,8 +425,8 @@ export default function PaymentPage() {
                 boxShadow: '0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
               }}
             >
-              {/* Price */}
-              <PriceDisplay visible={mounted} />
+              {/* Price + plan selector */}
+              <PriceDisplay visible={mounted} plan={plan} onPlanChange={setPlan} />
 
               {/* Divider */}
               <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)', margin: '28px 0' }} />
@@ -490,7 +544,7 @@ export default function PaymentPage() {
                   ) : (
                     <>
                       <Lock size={18} />
-                      Jetzt freischalten · 4,99 €/Monat
+                      {plan === 'yearly' ? 'Jetzt freischalten · 39,99 €/Jahr' : 'Jetzt freischalten · 4,99 €/Monat'}
                       <ArrowRight size={18} style={{ marginLeft: 4 }} />
                     </>
                   )}

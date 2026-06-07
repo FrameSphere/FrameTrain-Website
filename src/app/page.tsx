@@ -145,7 +145,7 @@ export default function HomePage() {
                 <StatCard number="100%" label="Local" color="purple" />
                 <StatCard number="0ms" label="Latency" color="blue" />
                 <StatCard number="∞" label="Models" color="pink" />
-                <StatCard number="1,99€" label="One-time" color="green" />
+                <StatCard number="3,99€" label="Early Access" color="green" />
               </div>
             </div>
           </div>
@@ -225,7 +225,7 @@ export default function HomePage() {
                 number="01"
                 icon={<Download className="w-8 h-8" />}
                 title="Install & Register"
-                description="Registriere dich, zahle einmalig 1,99€ und lade die Desktop-App herunter."
+                description="Registriere dich, starte für 4,99 €/Monat und lade die Desktop-App herunter."
               />
               <StepCard
                 number="02"
@@ -330,48 +330,71 @@ export default function HomePage() {
         <section className="py-32 px-4 relative" id="pricing">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-              Simple Pricing
+              Early Access Pricing
             </h2>
-            <p className="text-xl text-gray-400 mb-16">
-              Einmalige Zahlung. Lebenslanger Zugang. Keine Abos.
+            <p className="text-xl text-gray-400 mb-4">
+              Jetzt einsteigen bevor der Preis steigt.
             </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-sm font-semibold mb-16">
+              ⚡ Preis steigt auf 9,99 € nach 100 Nutzern
+            </div>
 
-            <div className="glass-strong neon-border rounded-3xl p-12 max-w-md mx-auto hover:scale-105 transition-transform duration-500">
-              <div className="mb-8">
-                <div className="text-7xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
-                  1,99€
+            <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
+              {/* Monthly */}
+              <div className="glass-strong neon-border rounded-3xl p-10 flex-1 hover:scale-105 transition-transform duration-500">
+                <div className="text-sm font-bold text-purple-400 uppercase tracking-widest mb-4">Monatlich</div>
+                <div className="mb-6">
+                  <div className="text-6xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">
+                    4,99€
+                  </div>
+                  <div className="text-gray-400 text-sm">pro Monat · jederzeit kündbar</div>
                 </div>
-                <div className="text-gray-400">One-time payment</div>
+                <ul className="space-y-3 mb-8 text-left">
+                  {['Voller App-Zugang', 'Unbegrenzte Modelle & Trainings', 'API-Key sofort', 'Community Support'].map((f, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-300 text-sm">
+                      <div className="flex-shrink-0 w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href={isAuthenticated ? "/payment" : "/register"}
+                  className="group relative block w-full py-3 rounded-2xl overflow-hidden text-center"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient" />
+                  <span className="relative text-white font-bold">Jetzt starten</span>
+                </Link>
               </div>
-
-              <ul className="space-y-4 mb-8 text-left">
-                {[
-                  'Voller Zugang zur Desktop-App',
-                  'Unbegrenzte Modelle & Trainings',
-                  'Alle zukünftigen Updates',
-                  'Community Support',
-                  'GPU Acceleration',
-                  'Lokale Datenverarbeitung'
-                ].map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-300">
-                    <div className="flex-shrink-0 w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                      <Check className="w-4 h-4 text-white" />
-                    </div>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                href={isAuthenticated ? "/dashboard" : "/register"}
-                className="group relative block w-full py-4 rounded-2xl overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient" />
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
-                <span className="relative text-white font-bold text-lg">
-                  {isAuthenticated ? 'Zum Dashboard' : 'Get FrameTrain Now'}
-                </span>
-              </Link>
+              {/* Yearly */}
+              <div className="glass-strong rounded-3xl p-10 flex-1 hover:scale-105 transition-transform duration-500 border-2 border-green-400/30 relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-green-500 text-white text-xs font-bold rounded-full">
+                  SPARE 20 %
+                </div>
+                <div className="text-sm font-bold text-green-400 uppercase tracking-widest mb-4">Jährlich</div>
+                <div className="mb-6">
+                  <div className="text-6xl font-black bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-1">
+                    39,99€
+                  </div>
+                  <div className="text-gray-400 text-sm">pro Jahr · entspricht 3,33 €/Monat</div>
+                </div>
+                <ul className="space-y-3 mb-8 text-left">
+                  {['Voller App-Zugang', 'Unbegrenzte Modelle & Trainings', 'API-Key sofort', 'Community Support', 'Jahres-Priorisierung'].map((f, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-300 text-sm">
+                      <div className="flex-shrink-0 w-5 h-5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href={isAuthenticated ? "/payment" : "/register"}
+                  className="group relative block w-full py-3 rounded-2xl overflow-hidden text-center"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600" />
+                  <span className="relative text-white font-bold">Jahresplan wählen</span>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -415,8 +438,8 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <ReasonCard
                 icon="💰"
-                title="Keine laufenden Kosten"
-                description="Cloud-GPU-Instanzen kosten 0,50€ bis 10€+ pro Stunde. Mit FrameTrain zahlst du einmalig 1,99€ und trainierst unbegrenzt auf deiner eigenen Hardware."
+                title="Günstig einsteigen"
+                description="Cloud-GPU-Instanzen kosten 0,50 € bis 10 €+ pro Stunde. Mit FrameTrain zahlst du 4,99 €/Monat und trainierst unbegrenzt auf deiner eigenen Hardware."
               />
               <ReasonCard
                 icon="🔒"
@@ -522,8 +545,8 @@ export default function HomePage() {
                 answer="Ja, LoRA (Low-Rank Adaptation) ist vollständig integriert. Du kannst LoRA-Rank, Alpha und Target-Module direkt in der App konfigurieren, was das Fine-Tuning auch auf GPUs mit wenig VRAM ermöglicht."
               />
               <FAQItem
-                question="Warum kostet FrameTrain nur 1,99€?"
-                answer="FrameTrain befindet sich aktuell in der Early-Access-Phase. Der Preis ist bewusst niedrig gehalten, damit möglichst viele Entwickler und Forscher Zugang bekommen. Der Preis wird mit zukünftigen Feature-Updates steigen."
+                question="Warum kostet FrameTrain nur 4,99 €/Monat?"
+                answer="FrameTrain befindet sich im Early Access. Der Preis ist bewusst niedrig, damit möglichst viele Entwickler und Forscher früh Zugang bekommen. Der Preis steigt auf 9,99 € nach den ersten 100 Nutzern – wer jetzt einsteigt, ist dauerhaft günstiger."
               />
               <FAQItem
                 question="Läuft FrameTrain auf Apple M1/M2/M3/M4?"
