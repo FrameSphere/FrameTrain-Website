@@ -173,7 +173,7 @@ function PriceDisplay({ visible, plan, onPlanChange }: { visible: boolean; plan:
   const sub = isYearly ? 'pro Jahr' : 'pro Monat'
 
   return (
-    <div style={{ textAlign: 'center', marginBottom: 8 }}>
+    <div style={{ textAlign: 'center', marginBottom: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {/* Plan toggle */}
       <div style={{
         display: 'inline-flex',
