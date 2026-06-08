@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -118,6 +118,7 @@ function CommunityNameErrorModal({ name, onClose }: { name: string; onClose: () 
 // ── Main Dashboard ─────────────────────────────────────────────────
 export default function DashboardPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { user, isAuthenticated, loading: authLoading } = useAuth()
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
@@ -206,6 +207,17 @@ export default function DashboardPage() {
   }, [isAuthenticated, user])
 
   useEffect(() => { fetchAppVersion() }, [])
+
+  // ?support=open → Support-Sektion direkt aufklappen
+  useEffect(() => {
+    if (searchParams.get('support') === 'open') {
+      setSupportOpen(true)
+      // Sanft zur Support-Sektion scrollen
+      setTimeout(() => {
+        document.getElementById('support-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 400)
+    }
+  }, [searchParams])
 
   useEffect(() => {
     if (supportOpen) setStoredTickets(getAll())
@@ -686,7 +698,7 @@ export default function DashboardPage() {
           </div>
 
           {/* ── SUPPORT ──────────────────────────────────────────── */}
-          <div className="glass-strong rounded-2xl shadow-lg border border-white/10 overflow-hidden">
+          <div id="support-section" className="glass-strong rounded-2xl shadow-lg border border-white/10 overflow-hidden">
             {/* Header */}
             <button
               onClick={() => {

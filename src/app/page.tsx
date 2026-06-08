@@ -402,7 +402,7 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <Link href={isAuthenticated ? "/payment" : "/register"}
+                <Link href={isAuthenticated ? "/payment?plan=yearly" : "/register"}
                   className="group relative block w-full py-3 rounded-2xl overflow-hidden text-center"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600" />

@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState, useRef, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import {
@@ -249,15 +249,25 @@ function PriceDisplay({ visible, plan, onPlanChange }: { visible: boolean; plan:
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
-export default function PaymentPage() {
+function PaymentPageInner() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { user, isAuthenticated, loading: authLoading } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [mounted, setMounted] = useState(false)
-  const [plan, setPlan] = useState<Plan>('monthly')
+  const [plan, setPlan] = useState<Plan>(() => {
+    // Wird während SSR immer 'monthly' sein; useSearchParams läuft nur client-side
+    return 'monthly'
+  })
   const [btnHovered, setBtnHovered] = useState(false)
   const [btnPressed, setBtnPressed] = useState(false)
+
+  // Plan aus URL-Param setzen (z. B. /payment?plan=yearly)
+  useEffect(() => {
+    const param = searchParams.get('plan')
+    if (param === 'yearly') setPlan('yearly')
+  }, [searchParams])
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) router.push('/login')
@@ -613,5 +623,14 @@ export default function PaymentPage() {
         </main>
       </div>
     </>
+  )
+}
+
+// useSearchParams benötigt Suspense-Boundary in Next.js
+export default function PaymentPage() {
+  return (
+    <Suspense>
+      <PaymentPageInner />
+    </Suspense>
   )
 }
