@@ -20,6 +20,8 @@ export async function GET(req: NextRequest) {
     const dbUser = await prisma.user.findUnique({
       where: { id: user.userId },
       select: {
+        hasPaid: true,
+        subscriptionCancelAt: true,
         provider: true,
         passwordHash: true,
         desktopPasswordHash: true,
@@ -45,7 +47,8 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       apiKeys: dbUser.apiKeys,
-      hasPaid: true,
+      hasPaid: dbUser.hasPaid,
+      subscriptionCancelAt: dbUser.subscriptionCancelAt?.toISOString() ?? null,
       isOAuthUser,
       hasDesktopPassword,
     })

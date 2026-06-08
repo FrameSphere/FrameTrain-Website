@@ -1,10 +1,45 @@
 'use client'
 
 import Link from 'next/link'
-import { Home, Sparkles, Bell } from 'lucide-react'
+import { Home, Sparkles, Bell, Languages } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEffect, useState, useCallback } from 'react'
 import { ChangelogModal, useChangelogBadge } from '@/components/ChangelogModal'
+
+function LangSwitcher() {
+  const [lang, setLang] = useState<'de' | 'en'>('de')
+
+  useEffect(() => {
+    const stored = localStorage.getItem('ft_lang') as 'de' | 'en' | null
+    if (stored) setLang(stored)
+    // TODO next-intl: replace with useRouter().locale
+  }, [])
+
+  const toggle = (l: 'de' | 'en') => {
+    setLang(l)
+    localStorage.setItem('ft_lang', l)
+    // TODO next-intl: router.push(pathname, { locale: l })
+  }
+
+  return (
+    <div className="flex items-center gap-0.5 p-1 rounded-xl"
+      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+      {(['de', 'en'] as const).map(l => (
+        <button
+          key={l}
+          onClick={() => toggle(l)}
+          className={`px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-200 ${
+            lang === l
+              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-sm'
+              : 'text-gray-500 hover:text-gray-300'
+          }`}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 export function Header() {
   const { user, logout, isAuthenticated, loading } = useAuth()
@@ -93,6 +128,8 @@ export function Header() {
                         Docs
                       </Link>
 
+                      <LangSwitcher />
+
                       {/* ── Bell / Changelog ── */}
                       <button
                         onClick={handleBellClick}
@@ -156,7 +193,9 @@ export function Header() {
                         Pricing
                       </Link>
 
-                      {/* Bell auch für nicht-eingeloggte User (öffentlicher Feed) */}
+                      <LangSwitcher />
+
+                      {/* Bell auch für nicht-eingeloggte User */}
                       <button
                         onClick={handleBellClick}
                         title="Was ist neu?"

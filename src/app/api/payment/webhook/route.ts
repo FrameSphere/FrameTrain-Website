@@ -104,6 +104,43 @@ export async function POST(req: NextRequest) {
       break
     }
 
+    // ── Abo wurde geändert (z.B. Kündigung zum Periodenende) ────────────────
+    case 'customer.subscription.updated': {
+      const sub = event.data.object as Stripe.Subscription
+
+      try {
+        const user = await prisma.user.findFirst({
+          where: { stripeSubscriptionId: sub.id },
+        })
+        if (!user) break
+
+        if (sub.cancel_at_period_end && sub.cancel_at) {
+          // User hat gekündigt — Abo läuft bis Periodenende
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              subscriptionCancelAt: new Date(sub.cancel_at * 1000),
+              updatedAt: new Date(),
+            },
+          })
+          console.log('⚠️ Subscription will cancel at:', new Date(sub.cancel_at * 1000), 'for:', user.email)
+        } else if (!sub.cancel_at_period_end) {
+          // Kündigung wurde rückgängig gemacht (Reaktivierung)
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              subscriptionCancelAt: null,
+              updatedAt: new Date(),
+            },
+          })
+          console.log('✅ Subscription cancellation reversed for:', user.email)
+        }
+      } catch (dbError) {
+        console.error('❌ Database error in customer.subscription.updated:', dbError)
+      }
+      break
+    }
+
     // ── Abo wurde gekündigt oder ist abgelaufen ─────────────────────────────
     case 'customer.subscription.deleted': {
       const sub = event.data.object as Stripe.Subscription
@@ -125,6 +162,7 @@ export async function POST(req: NextRequest) {
               data: {
                 hasPaid: false,
                 stripeSubscriptionId: null,
+                subscriptionCancelAt: null,
                 updatedAt: new Date(),
               },
             })
@@ -145,6 +183,7 @@ export async function POST(req: NextRequest) {
           data: {
             hasPaid: false,
             stripeSubscriptionId: null,
+            subscriptionCancelAt: null,
             updatedAt: new Date(),
           },
         })

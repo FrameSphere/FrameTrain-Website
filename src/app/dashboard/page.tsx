@@ -121,6 +121,8 @@ function DashboardPageInner() {
   const searchParams = useSearchParams()
   const { user, isAuthenticated, loading: authLoading } = useAuth()
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
+  const [hasPaid, setHasPaid] = useState(true)
+  const [subscriptionCancelAt, setSubscriptionCancelAt] = useState<string | null>(null)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const [dataLoading, setDataLoading] = useState(true)
   const [regenerating, setRegenerating] = useState(false)
@@ -234,6 +236,8 @@ function DashboardPageInner() {
       if (!res.ok) throw new Error()
       const data = await res.json()
       setApiKeys(data.apiKeys || [])
+      setHasPaid(data.hasPaid ?? true)
+      setSubscriptionCancelAt(data.subscriptionCancelAt ?? null)
       setIsOAuthUser(!!data.isOAuthUser)
       setHasDesktopPassword(!!data.hasDesktopPassword)
     } catch { /* silent */ } finally { setDataLoading(false) }
@@ -441,6 +445,65 @@ function DashboardPageInner() {
             <p className="text-gray-400">Willkommen, {user?.email}</p>
           </div>
 
+          {/* ── Abo-Status-Banner (nur wenn abgelaufen) ───────────── */}
+          {!hasPaid && (
+            <div className="mb-8 p-5 rounded-2xl border border-red-500/30 bg-red-500/10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-5 h-5 text-red-400" />
+                </div>
+                <div>
+                  <p className="text-white font-bold">Dein Abo ist nicht mehr aktiv</p>
+                  <p className="text-red-300 text-sm mt-0.5">Dein API-Key wurde deaktiviert. Erneuere dein Abo um wieder vollen Zugang zu erhalten.</p>
+                </div>
+              </div>
+              <button
+                onClick={handlePayment}
+                disabled={redirectingToPayment}
+                className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm"
+              >
+                {redirectingToPayment
+                  ? <><RefreshCw className="w-4 h-4 animate-spin" /> Weiterleitung...</>
+                  : <>Abo erneuern →</>}
+              </button>
+            </div>
+          )}
+
+          {/* ── Kündigung läuft noch ───────────────────────────────── */}
+          {hasPaid && subscriptionCancelAt && (() => {
+            const cancelDate = new Date(subscriptionCancelAt)
+            const now = new Date()
+            const diffMs = cancelDate.getTime() - now.getTime()
+            const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
+            const formattedDate = cancelDate.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
+            return (
+              <div className="mb-8 p-5 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">
+                      Dein Abo läuft in {diffDays} {diffDays === 1 ? 'Tag' : 'Tagen'} aus
+                    </p>
+                    <p className="text-amber-300 text-sm mt-0.5">
+                      Aktiv bis {formattedDate} · Danach wird dein API-Key deaktiviert. Schließe jetzt wieder ein Abo ab, um den Key weiterhin zu nutzen.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={handlePayment}
+                  disabled={redirectingToPayment}
+                  className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm"
+                >
+                  {redirectingToPayment
+                    ? <><RefreshCw className="w-4 h-4 animate-spin" /> Weiterleitung...</>
+                    : <>Abo fortsetzen →</>}
+                </button>
+              </div>
+            )
+          })()}
+
           {/* ── API Keys ─────────────────────────────────────────── */}
           <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
             <div className="flex items-center justify-between mb-6">
@@ -475,14 +538,22 @@ function DashboardPageInner() {
             ) : (
               <div className="space-y-4">
                 {apiKeys.map((apiKey) => (
-                  <div key={apiKey.id} className={`glass rounded-lg p-4 border ${apiKey.isActive ? 'border-green-400/20' : 'border-white/10'}`}>
+                  <div key={apiKey.id} className={`glass rounded-lg p-4 border ${
+                    apiKey.isActive ? 'border-green-400/20' : 'border-red-500/20 bg-red-500/5'
+                  }`}>
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
-                          <code className="text-purple-400 font-mono text-sm bg-black/30 px-3 py-1 rounded border border-white/10">{apiKey.key}</code>
-                          <button onClick={() => copyToClipboard(apiKey.key)} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-                            {copiedKey === apiKey.key ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
-                          </button>
+                          <code className={`font-mono text-sm px-3 py-1 rounded border ${
+                            apiKey.isActive
+                              ? 'text-purple-400 bg-black/30 border-white/10'
+                              : 'text-gray-500 bg-black/30 border-white/5 line-through'
+                          }`}>{apiKey.key}</code>
+                          {apiKey.isActive && (
+                            <button onClick={() => copyToClipboard(apiKey.key)} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
+                              {copiedKey === apiKey.key ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
+                            </button>
+                          )}
                         </div>
                         <div className="flex items-center space-x-4 text-sm text-gray-400">
                           <span>Erstellt: {new Date(apiKey.createdAt).toLocaleDateString('de-DE')}</span>
@@ -493,7 +564,9 @@ function DashboardPageInner() {
                             </span>
                           ) : (
                             <span className={`flex items-center gap-1 ${apiKey.isActive ? 'text-green-400' : 'text-red-400'}`}>
-                              {apiKey.isActive ? <><Check className="w-4 h-4" /><span>Aktiv</span></> : <><X className="w-4 h-4" /><span>Inaktiv</span></>}
+                              {apiKey.isActive
+                                ? <><Check className="w-4 h-4" /><span>Aktiv</span></>
+                                : <><X className="w-4 h-4" /><span>Deaktiviert · Abo abgelaufen</span></>}
                             </span>
                           )}
                         </div>
