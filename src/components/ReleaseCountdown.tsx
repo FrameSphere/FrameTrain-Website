@@ -2,7 +2,7 @@
 
 /* ============================================================
    Temporäre UI Anfang, bald herausnehmen
-   Release: 29. Juni 2026, 12:00 UTC
+   Release: 6. Juli 2026, 12:00 UTC
    Zum Entfernen: Diese Datei löschen + alle Imports davon entfernen
    ============================================================ */
 
@@ -10,7 +10,7 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { Rocket, Sparkles, PartyPopper, Clock } from 'lucide-react'
 
 // ── Konfiguration ───────────────────────────────────────────────
-const RELEASE_DATE = new Date('2026-06-29T12:00:00Z')
+const RELEASE_DATE = new Date('2026-07-06T12:00:00Z')
 const CONFETTI_DAYS = 7 // Konfetti für N Tage nach Release
 const CONFETTI_END = new Date(RELEASE_DATE.getTime() + CONFETTI_DAYS * 24 * 60 * 60 * 1000)
 
@@ -181,7 +181,7 @@ export function DownloadLockCountdown() {
     <div className="p-5 bg-amber-500/8 border border-amber-500/25 rounded-xl mb-6">
       <div className="flex items-center gap-2 mb-3">
         <Clock className="w-4 h-4 text-amber-400" />
-        <p className="text-amber-300 font-semibold text-sm">Download verfügbar ab 29. Juni 2026</p>
+        <p className="text-amber-300 font-semibold text-sm">Download verfügbar ab 6. Juli 2026</p>
       </div>
       <div className="flex gap-3">
         {[
@@ -268,7 +268,7 @@ export function ReleaseBanner() {
             ))}
           </div>
           <p className="text-center text-gray-400 text-sm">
-            <span className="text-purple-400 font-semibold">29. Juni 2026</span> · Du kannst schon jetzt zahlen & registrieren.
+            <span className="text-purple-400 font-semibold">6. Juli 2026</span> · Du kannst schon jetzt zahlen & registrieren.
             <br />
             <span className="text-gray-500 text-xs">Der Download wird automatisch am Release-Tag freigeschaltet.</span>
           </p>
@@ -290,7 +290,7 @@ export function ComingSoonBadge() {
         <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
       </span>
       <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-        Desktop-App – Release 29. Juni
+        Desktop-App – Release 6. Juli
       </span>
     </div>
   )
@@ -317,11 +317,11 @@ export function ReleasePromoSection() {
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
               Die Desktop-App{' '}
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-                kommt am 29. Juni
+                kommt am 6. Juli
               </span>
             </h2>
             <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-              FrameTrain Desktop wird am <strong className="text-white">29. Juni 2026</strong> offiziell released.
+              FrameTrain Desktop wird am <strong className="text-white">6. Juli 2026</strong> offiziell released.
               Melde dich jetzt an, zahle den Early-Access-Preis und erhalte{' '}
               <strong className="text-purple-300">sofortigen Download-Zugang</strong> am Release-Tag.
             </p>
@@ -342,7 +342,7 @@ export function ReleasePromoSection() {
 
             <div className="flex items-center justify-center gap-2 text-gray-500 text-sm">
               <Clock className="w-4 h-4" />
-              <span>Registrierung &amp; Zahlung jetzt möglich · Download ab 29. Juni 12:00 UTC</span>
+              <span>Registrierung &amp; Zahlung jetzt möglich · Download ab 6. Juli 12:00 UTC</span>
             </div>
           </div>
         </div>
