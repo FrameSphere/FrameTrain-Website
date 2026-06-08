@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
@@ -116,7 +116,7 @@ function CommunityNameErrorModal({ name, onClose }: { name: string; onClose: () 
 }
 
 // ── Main Dashboard ─────────────────────────────────────────────────
-export default function DashboardPage() {
+function DashboardPageInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user, isAuthenticated, loading: authLoading } = useAuth()
@@ -936,5 +936,13 @@ export default function DashboardPage() {
 
       <Footer />
     </div>
+  )
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense>
+      <DashboardPageInner />
+    </Suspense>
   )
 }
