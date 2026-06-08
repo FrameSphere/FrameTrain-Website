@@ -8,7 +8,7 @@ import { Footer } from '@/components/Footer'
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
-  Globe, AlertCircle, Pencil, Loader2,
+  Globe, AlertCircle, Pencil, Loader2, CreditCard,
 } from 'lucide-react'
 /* Temporäre UI Anfang, bald herausnehmen */
 import { DownloadLockCountdown, isAppReleased } from '@/components/ReleaseCountdown'
@@ -127,6 +127,7 @@ function DashboardPageInner() {
   const [dataLoading, setDataLoading] = useState(true)
   const [regenerating, setRegenerating] = useState(false)
   const [redirectingToPayment, setRedirectingToPayment] = useState(false)
+  const [redirectingToPortal, setRedirectingToPortal] = useState(false)
   const [appVersion, setAppVersion] = useState('...')
   const [supportBadge, setSupportBadge] = useState(0)
   const [isOAuthUser, setIsOAuthUser] = useState(false)
@@ -317,6 +318,22 @@ function DashboardPageInner() {
       const data = await res.json()
       if (data.url) window.location.href = data.url
     } catch { alert('❌ Fehler beim Weiterleiten zur Zahlung'); setRedirectingToPayment(false) }
+  }
+
+  const handlePortal = async () => {
+    setRedirectingToPortal(true)
+    try {
+      const res = await fetch('/api/payment/portal', { method: 'POST', credentials: 'include' })
+      if (!res.ok) {
+        const e = await res.json()
+        throw new Error(e.error || 'Fehler')
+      }
+      const data = await res.json()
+      if (data.url) window.location.href = data.url
+    } catch (err: any) {
+      alert(`❌ ${err.message || 'Fehler beim Öffnen des Portals'}`)
+      setRedirectingToPortal(false)
+    }
   }
 
   const setDesktopPasswordHandler = async () => {
@@ -746,6 +763,63 @@ function DashboardPageInner() {
                     : <><Lock className="w-4 h-4" /><span>{hasDesktopPassword ? 'Passwort ändern' : 'Passwort setzen'}</span></>}
                 </button>
               </div>
+            </div>
+          )}
+
+          {/* ── Abo verwalten ──────────────────────────────────────── */}
+          {hasPaid && (
+            <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+              <div className="flex items-center gap-3 mb-6">
+                <CreditCard className="w-6 h-6 text-purple-400" />
+                <h2 className="text-2xl font-bold text-white">Abo verwalten</h2>
+              </div>
+
+              {/* Status */}
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border ${
+                  subscriptionCancelAt
+                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                    : 'bg-green-500/10 border-green-500/30 text-green-300'
+                }`}>
+                  <span className={`w-2 h-2 rounded-full ${
+                    subscriptionCancelAt ? 'bg-amber-400' : 'bg-green-400'
+                  }`} />
+                  {subscriptionCancelAt ? 'Kündigung zum Periodenende' : 'Aktiv'}
+                </div>
+                {subscriptionCancelAt && (() => {
+                  const d = new Date(subscriptionCancelAt)
+                  const days = Math.ceil((d.getTime() - Date.now()) / 86400000)
+                  return (
+                    <span className="text-sm text-amber-400 font-medium">
+                      Läuft aus am {d.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })} ({days} {days === 1 ? 'Tag' : 'Tage'})
+                    </span>
+                  )
+                })()}
+              </div>
+
+              {/* Info-Kacheln */}
+              <div className="grid sm:grid-cols-2 gap-3 mb-6">
+                <div className="glass rounded-xl p-4 border border-white/10">
+                  <p className="text-xs text-gray-500 mb-1">Was ist enthalten</p>
+                  <p className="text-sm text-gray-300">Voller App-Zugang · API-Key · Alle Updates</p>
+                </div>
+                <div className="glass rounded-xl p-4 border border-white/10">
+                  <p className="text-xs text-gray-500 mb-1">Im Stripe-Portal kannst du</p>
+                  <p className="text-sm text-gray-300">Zahlungsmethode ändern · Rechnungen · Abo kündigen</p>
+                </div>
+              </div>
+
+              <button
+                onClick={handlePortal}
+                disabled={redirectingToPortal}
+                className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/25 text-white font-semibold rounded-xl transition-all disabled:opacity-50"
+              >
+                {redirectingToPortal
+                  ? <><RefreshCw className="w-4 h-4 animate-spin" /> Weiterleitung...</>
+                  : <><ExternalLink className="w-4 h-4" /> Abo im Stripe-Portal verwalten</>
+                }
+              </button>
+              <p className="text-xs text-gray-600 mt-3">Du wirst zu Stripe weitergeleitet und danach automatisch hierher zurückgeführt.</p>
             </div>
           )}
 
