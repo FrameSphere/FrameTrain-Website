@@ -25,9 +25,11 @@ export function Footer() {
                 GitHub
               </div>
               </a>
+              <a href="https://www.reddit.com/r/FrameTrain/" target="_blank" rel="noopener noreferrer">
               <div className="glass px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-blue-400 transition cursor-pointer">
-                Twitter
+                Reddit
               </div>
+              </a>
               <div className="glass px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-pink-400 transition cursor-pointer">
                 Discord
               </div>
