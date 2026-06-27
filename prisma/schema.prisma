@@ -122,6 +122,9 @@ model StatusUpdate {
   body        String   @db.Text               // Markdown-fähiger Fließtext
   type        String   @default("status")     // "status" | "milestone" | "hotfix" | "dev"
   appVersion  String?  @map("app_version")    // Optional: z. B. "0.9.3-dev"
+  source      String?  @map("source")         // Optional: z. B. "desktop-app"
+  sourceRef   String?  @map("source_ref")     // Optional: Commit, Tag oder sonstige Referenz
+  scope       String?  @map("scope")          // Optional: z. B. "changelog"
   author      String   @default("Codex")      // Wer hat gepostet
   published   Boolean  @default(true)
   createdAt   DateTime @default(now()) @map("created_at")

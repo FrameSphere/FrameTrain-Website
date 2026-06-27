@@ -22,6 +22,9 @@ export async function GET(req: NextRequest) {
         body: true,
         type: true,
         appVersion: true,
+        source: true,
+        sourceRef: true,
+        scope: true,
         author: true,
         createdAt: true,
       },
@@ -43,6 +46,9 @@ export async function GET(req: NextRequest) {
 //   "body":  "### Was wurde gemacht\n- Canvas-Nodes bleiben jetzt...",
 //   "type":  "hotfix",           // optional, default "status"
 //   "appVersion": "0.9.3-dev",   // optional
+//   "source": "desktop-app",     // optional
+//   "sourceRef": "v1.2.5",        // optional
+//   "scope": "changelog",        // optional
 //   "author": "Codex"            // optional
 // }
 //
@@ -56,7 +62,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json()
-    const { title, body: text, type, appVersion, author } = body
+    const { title, body: text, type, appVersion, source, sourceRef, scope, author } = body
 
     if (!title || typeof title !== 'string' || !text || typeof text !== 'string') {
       return NextResponse.json({ error: 'title and body are required' }, { status: 400 })
@@ -71,6 +77,9 @@ export async function POST(req: NextRequest) {
         body: text.trim().slice(0, 5000),
         type: safeType,
         appVersion: appVersion ? String(appVersion).slice(0, 30) : null,
+        source: source ? String(source).slice(0, 60) : null,
+        sourceRef: sourceRef ? String(sourceRef).slice(0, 120) : null,
+        scope: scope ? String(scope).slice(0, 60) : null,
         author: author ? String(author).slice(0, 60) : 'Codex',
         published: true,
       },

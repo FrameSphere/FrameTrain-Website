@@ -71,6 +71,23 @@ CREATE TABLE IF NOT EXISTS "payments" (
     CONSTRAINT "payments_pkey" PRIMARY KEY ("id")
 );
 
+-- Create status_updates table
+CREATE TABLE IF NOT EXISTS "status_updates" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "body" TEXT NOT NULL,
+    "type" TEXT NOT NULL DEFAULT 'status',
+    "app_version" TEXT,
+    "source" TEXT,
+    "source_ref" TEXT,
+    "scope" TEXT,
+    "author" TEXT NOT NULL DEFAULT 'Codex',
+    "published" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "status_updates_pkey" PRIMARY KEY ("id")
+);
+
 -- Create unique indexes
 CREATE UNIQUE INDEX IF NOT EXISTS "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX IF NOT EXISTS "api_keys_key_key" ON "api_keys"("key");
@@ -85,6 +102,8 @@ CREATE INDEX IF NOT EXISTS "models_user_id_idx" ON "models"("user_id");
 CREATE INDEX IF NOT EXISTS "model_versions_model_id_idx" ON "model_versions"("model_id");
 CREATE INDEX IF NOT EXISTS "payments_email_idx" ON "payments"("email");
 CREATE INDEX IF NOT EXISTS "payments_user_id_idx" ON "payments"("user_id");
+CREATE INDEX IF NOT EXISTS "status_updates_published_idx" ON "status_updates"("published");
+CREATE INDEX IF NOT EXISTS "status_updates_created_at_idx" ON "status_updates"("created_at");
 
 -- Add foreign key constraints
 ALTER TABLE "api_keys" DROP CONSTRAINT IF EXISTS "api_keys_user_id_fkey";
