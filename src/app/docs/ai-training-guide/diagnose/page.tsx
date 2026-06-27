@@ -446,14 +446,11 @@ function LossSpikeSection() {
 
 export default function DiagnosePage() {
   const [activeSection, setActiveSection] = useState(sections[0].id)
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'overfitting-fix': return <OverfittingFixSection />
-      case 'underfitting-fix': return <UnderfittingFixSection />
-      case 'lr-probleme': return <LRProblemeSection />
-      case 'loss-spike': return <LossSpikeSection />
-      default: return <OverfittingFixSection />
-    }
+  const sectionContent = {
+    'overfitting-fix': <OverfittingFixSection />,
+    'underfitting-fix': <UnderfittingFixSection />,
+    'lr-probleme': <LRProblemeSection />,
+    'loss-spike': <LossSpikeSection />,
   }
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
@@ -469,9 +466,7 @@ export default function DiagnosePage() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto">
-          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection}>
-            {renderSection()}
-          </SubPageLayout>
+          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection} sections={sectionContent} />
         </div>
       </main>
       <Footer />

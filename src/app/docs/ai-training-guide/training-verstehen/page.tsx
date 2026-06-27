@@ -448,14 +448,11 @@ function TrainValTestSection() {
 
 export default function TrainingVerstehenPage() {
   const [activeSection, setActiveSection] = useState(sections[0].id)
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'training-loop': return <TrainingLoopSection />
-      case 'loss-funktionen': return <LossFunktionenSection />
-      case 'metriken': return <MetrikenSection />
-      case 'train-val-test': return <TrainValTestSection />
-      default: return <TrainingLoopSection />
-    }
+  const sectionContent = {
+    'training-loop': <TrainingLoopSection />,
+    'loss-funktionen': <LossFunktionenSection />,
+    'metriken': <MetrikenSection />,
+    'train-val-test': <TrainValTestSection />,
   }
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
@@ -471,9 +468,7 @@ export default function TrainingVerstehenPage() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto">
-          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection}>
-            {renderSection()}
-          </SubPageLayout>
+          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection} sections={sectionContent} />
         </div>
       </main>
       <Footer />

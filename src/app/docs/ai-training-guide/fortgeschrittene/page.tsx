@@ -483,14 +483,11 @@ meta_model = LogisticRegression().fit(meta_features, y_val)`,
 
 export default function FortgeschrittenePage() {
   const [activeSection, setActiveSection] = useState(sections[0].id)
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'mixed-precision': return <MixedPrecisionSection />
-      case 'gradient-checkpointing': return <GradientCheckpointingSection />
-      case 'early-stopping': return <EarlyStoppingSection />
-      case 'ensembles': return <EnsemblesSection />
-      default: return <MixedPrecisionSection />
-    }
+  const sectionContent = {
+    'mixed-precision': <MixedPrecisionSection />,
+    'gradient-checkpointing': <GradientCheckpointingSection />,
+    'early-stopping': <EarlyStoppingSection />,
+    'ensembles': <EnsemblesSection />,
   }
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
@@ -506,9 +503,7 @@ export default function FortgeschrittenePage() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto">
-          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection}>
-            {renderSection()}
-          </SubPageLayout>
+          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection} sections={sectionContent} />
         </div>
       </main>
       <Footer />

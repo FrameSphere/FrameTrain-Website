@@ -487,14 +487,11 @@ balanced = pd.concat([majority_down, minority_up])`,
 
 export default function DatasetMasteryPage() {
   const [activeSection, setActiveSection] = useState(sections[0].id)
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'daten-qualitaet': return <DatenQualitaetSection />
-      case 'preprocessing': return <PreprocessingSection />
-      case 'augmentation': return <AugmentationSection />
-      case 'balancing': return <BalancingSection />
-      default: return <DatenQualitaetSection />
-    }
+  const sectionContent = {
+    'daten-qualitaet': <DatenQualitaetSection />,
+    'preprocessing': <PreprocessingSection />,
+    'augmentation': <AugmentationSection />,
+    'balancing': <BalancingSection />,
   }
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
@@ -510,9 +507,7 @@ export default function DatasetMasteryPage() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto">
-          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection}>
-            {renderSection()}
-          </SubPageLayout>
+          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection} sections={sectionContent} />
         </div>
       </main>
       <Footer />

@@ -508,15 +508,12 @@ function RegularisierungSection() {
 
 export default function HyperparameterPage() {
   const [activeSection, setActiveSection] = useState(sections[0].id)
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'learning-rate-deep': return <LearningRateDeepSection />
-      case 'lr-scheduler': return <LRSchedulerSection />
-      case 'batch-size-deep': return <BatchSizeDeepSection />
-      case 'optimizer-vergleich': return <OptimizerVergleichSection />
-      case 'regularisierung': return <RegularisierungSection />
-      default: return <LearningRateDeepSection />
-    }
+  const sectionContent = {
+    'learning-rate-deep': <LearningRateDeepSection />,
+    'lr-scheduler': <LRSchedulerSection />,
+    'batch-size-deep': <BatchSizeDeepSection />,
+    'optimizer-vergleich': <OptimizerVergleichSection />,
+    'regularisierung': <RegularisierungSection />,
   }
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
@@ -532,9 +529,7 @@ export default function HyperparameterPage() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto">
-          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection}>
-            {renderSection()}
-          </SubPageLayout>
+          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection} sections={sectionContent} />
         </div>
       </main>
       <Footer />

@@ -13,8 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/changelog`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/extensions`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/library`, lastModified, changeFrequency: 'daily', priority: 0.88 },
-    { url: `${baseUrl}/register`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${baseUrl}/login`, lastModified, changeFrequency: 'monthly', priority: 0.5 },
+  ]
+
+  const legalPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/imprint`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${baseUrl}/privacy`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${baseUrl}/terms`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
   ]
 
   const docsPages: MetadataRoute.Sitemap = [
@@ -37,11 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/guides/lora-finetuning`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/guides/local-vs-cloud`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/guides/gpu-guide`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/guides/huggingface-integration`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/guides/qLora-vs-lora`, lastModified, changeFrequency: 'monthly', priority: 0.75 },
-    { url: `${baseUrl}/guides/model-versioning`, lastModified, changeFrequency: 'monthly', priority: 0.75 },
-    { url: `${baseUrl}/guides/batch-training`, lastModified, changeFrequency: 'monthly', priority: 0.75 },
   ]
 
-  return [...mainPages, ...docsPages, ...guidesPages]
+  return [...mainPages, ...docsPages, ...guidesPages, ...legalPages]
 }

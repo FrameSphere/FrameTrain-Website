@@ -169,28 +169,30 @@ export default function DocsPage() {
               {/* Content Area */}
               <div className="flex-1 max-w-4xl">
                 <div className="glass-strong rounded-2xl p-8 md:p-12 border border-white/10 prose prose-invert max-w-none">
-                  {activeSection === 'installation' && <InstallationSection />}
-                  {activeSection === 'quick-start' && <QuickStartSection />}
-                  {activeSection === 'first-training' && <FirstTrainingSection />}
-                  {activeSection === 'model-manager' && <ModelManagerSection />}
-                  {activeSection === 'training-panel' && <TrainingPanelSection />}
-                  {activeSection === 'dataset-upload' && <DatasetUploadSection />}
-                  {activeSection === 'analysis' && <AnalysisSection />}
-                  {activeSection === 'testing' && <TestingSection />}
-                  {activeSection === 'versioning' && <VersioningSection />}
-                  {activeSection === 'training-basics' && <TrainingBasicsSection />}
-                  {activeSection === 'hyperparameters' && <HyperparametersSection />}
-                  {activeSection === 'lora-training' && <LoRASection />}
-                  {activeSection === 'datasets-format' && <DatasetsFormatSection />}
-                  {activeSection === 'monitoring' && <MonitoringSection />}
-                  {activeSection === 'optimization' && <OptimizationSection />}
-                  {activeSection === 'gpu-setup' && <GPUSetupSection />}
-                  {activeSection === 'export' && <ExportSection />}
-                  {activeSection === 'troubleshooting' && <TroubleshootingSection />}
-                  {activeSection === 'settings' && <SettingsSection />}
-                  {activeSection === 'themes' && <ThemesSection />}
-                  {activeSection === 'presets' && <PresetsSection />}
-                  {activeSection === 'updates' && <UpdatesSection />}
+                  {/* SEO: alle Sections bleiben im DOM, nur die inaktive wird per CSS (hidden) ausgeblendet,
+                      damit Googlebot den gesamten Doku-Inhalt sieht statt nur den aktiven Tab. */}
+                  <div className={activeSection === 'installation' ? '' : 'hidden'}><InstallationSection /></div>
+                  <div className={activeSection === 'quick-start' ? '' : 'hidden'}><QuickStartSection /></div>
+                  <div className={activeSection === 'first-training' ? '' : 'hidden'}><FirstTrainingSection /></div>
+                  <div className={activeSection === 'model-manager' ? '' : 'hidden'}><ModelManagerSection /></div>
+                  <div className={activeSection === 'training-panel' ? '' : 'hidden'}><TrainingPanelSection /></div>
+                  <div className={activeSection === 'dataset-upload' ? '' : 'hidden'}><DatasetUploadSection /></div>
+                  <div className={activeSection === 'analysis' ? '' : 'hidden'}><AnalysisSection /></div>
+                  <div className={activeSection === 'testing' ? '' : 'hidden'}><TestingSection /></div>
+                  <div className={activeSection === 'versioning' ? '' : 'hidden'}><VersioningSection /></div>
+                  <div className={activeSection === 'training-basics' ? '' : 'hidden'}><TrainingBasicsSection /></div>
+                  <div className={activeSection === 'hyperparameters' ? '' : 'hidden'}><HyperparametersSection /></div>
+                  <div className={activeSection === 'lora-training' ? '' : 'hidden'}><LoRASection /></div>
+                  <div className={activeSection === 'datasets-format' ? '' : 'hidden'}><DatasetsFormatSection /></div>
+                  <div className={activeSection === 'monitoring' ? '' : 'hidden'}><MonitoringSection /></div>
+                  <div className={activeSection === 'optimization' ? '' : 'hidden'}><OptimizationSection /></div>
+                  <div className={activeSection === 'gpu-setup' ? '' : 'hidden'}><GPUSetupSection /></div>
+                  <div className={activeSection === 'export' ? '' : 'hidden'}><ExportSection /></div>
+                  <div className={activeSection === 'troubleshooting' ? '' : 'hidden'}><TroubleshootingSection /></div>
+                  <div className={activeSection === 'settings' ? '' : 'hidden'}><SettingsSection /></div>
+                  <div className={activeSection === 'themes' ? '' : 'hidden'}><ThemesSection /></div>
+                  <div className={activeSection === 'presets' ? '' : 'hidden'}><PresetsSection /></div>
+                  <div className={activeSection === 'updates' ? '' : 'hidden'}><UpdatesSection /></div>
                 </div>
               </div>
             </div>

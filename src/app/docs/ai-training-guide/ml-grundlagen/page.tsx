@@ -495,14 +495,11 @@ Beispiel:
 export default function MLGrundlagenPage() {
   const [activeSection, setActiveSection] = useState(sections[0].id)
 
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'was-ist-ml': return <WasIstMLSection />
-      case 'neuronale-netze': return <NeuronaleNetzeSection />
-      case 'transformer': return <TransformerSection />
-      case 'wie-ki-lernt': return <WieKILerntSection />
-      default: return <WasIstMLSection />
-    }
+  const sectionContent = {
+    'was-ist-ml': <WasIstMLSection />,
+    'neuronale-netze': <NeuronaleNetzeSection />,
+    'transformer': <TransformerSection />,
+    'wie-ki-lernt': <WieKILerntSection />,
   }
 
   return (
@@ -525,9 +522,8 @@ export default function MLGrundlagenPage() {
             currentChapterId={CHAPTER_ID}
             activeSection={activeSection}
             setActiveSection={setActiveSection}
-          >
-            {renderSection()}
-          </SubPageLayout>
+            sections={sectionContent}
+          />
         </div>
       </main>
       <Footer />

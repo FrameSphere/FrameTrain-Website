@@ -126,10 +126,17 @@ interface SubPageLayoutProps {
   currentChapterId: string
   activeSection: string
   setActiveSection: (id: string) => void
-  children: React.ReactNode
+  /**
+   * Map von section-id -> Inhalt. WICHTIG fuer SEO: Wir rendern hier ALLE
+   * Sections gleichzeitig ins DOM und blenden nur die inaktiven per CSS aus.
+   * Googlebot sieht so den vollstaendigen Kapitel-Inhalt, nicht nur die
+   * gerade aktive Sub-Section (vorher: nur 1 von ~4 Abschnitten war je im
+   * DOM vorhanden, der Rest wurde von React gar nicht gerendert).
+   */
+  sections: Record<string, React.ReactNode>
 }
 
-export function SubPageLayout({ currentChapterId, activeSection, setActiveSection, children }: SubPageLayoutProps) {
+export function SubPageLayout({ currentChapterId, activeSection, setActiveSection, sections }: SubPageLayoutProps) {
   const currentIdx = CHAPTERS.findIndex(c => c.id === currentChapterId)
   const current = CHAPTERS[currentIdx]
   const prev = currentIdx > 0 ? CHAPTERS[currentIdx - 1] : null
@@ -186,7 +193,11 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
       {/* ── Main Content ── */}
       <div className="flex-1 min-w-0">
         <div className="glass-strong rounded-2xl p-8 md:p-12 border border-white/10">
-          {children}
+          {Object.entries(sections).map(([id, node]) => (
+            <div key={id} className={id === activeSection ? '' : 'hidden'}>
+              {node}
+            </div>
+          ))}
         </div>
 
         {/* Prev / Next */}

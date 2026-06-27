@@ -481,15 +481,12 @@ function WannWasSection() {
 
 export default function FineTuningPage() {
   const [activeSection, setActiveSection] = useState(sections[0].id)
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'full-finetuning': return <FullFineTuningSection />
-      case 'lora-deep': return <LoRADeepSection />
-      case 'qlora': return <QLoRASection />
-      case 'peft-methoden': return <PEFTMethodenSection />
-      case 'wann-was': return <WannWasSection />
-      default: return <FullFineTuningSection />
-    }
+  const sectionContent = {
+    'full-finetuning': <FullFineTuningSection />,
+    'lora-deep': <LoRADeepSection />,
+    'qlora': <QLoRASection />,
+    'peft-methoden': <PEFTMethodenSection />,
+    'wann-was': <WannWasSection />,
   }
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
@@ -505,9 +502,7 @@ export default function FineTuningPage() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto">
-          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection}>
-            {renderSection()}
-          </SubPageLayout>
+          <SubPageLayout currentChapterId={CHAPTER_ID} activeSection={activeSection} setActiveSection={setActiveSection} sections={sectionContent} />
         </div>
       </main>
       <Footer />
