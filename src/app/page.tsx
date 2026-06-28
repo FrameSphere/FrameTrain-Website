@@ -17,7 +17,7 @@ import { ReleaseBanner, ComingSoonBadge, ReleasePromoSection } from '@/component
 
 export default function HomePage() {
   const router = useRouter()
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated } = useAuth()
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -28,18 +28,12 @@ export default function HomePage() {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="glass px-8 py-4 rounded-2xl">
-          <div className="flex items-center gap-3">
-            <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-gray-300">Loading...</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  // WICHTIG fuer SEO/Performance: Die Seite wird NIE mehr komplett hinter
+  // einem Auth-Check versteckt. isAuthenticated startet sicher auf false,
+  // das CTA zeigt also zunaechst "Jetzt starten" und wechselt erst nach dem
+  // Auth-Check ggf. zu "Zum Dashboard". So ist der gesamte Content (Hero,
+  // Features, FAQ etc.) sofort im SSR-HTML vorhanden statt hinter einem
+  // "Loading..."-Spinner zu verschwinden.
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -64,15 +58,15 @@ export default function HomePage() {
             <div className="flex justify-center gap-4 mb-8 flex-wrap">
               <div className="glass px-4 py-2 rounded-full text-sm text-gray-300 animate-float flex items-center gap-2">
                 <Rocket className="w-4 h-4" />
-                <span>ML Training reimagined</span>
+                <span>ML-Training neu gedacht</span>
               </div>
               <div className="glass px-4 py-2 rounded-full text-sm text-gray-300 animate-float flex items-center gap-2" style={{ animationDelay: '1s' }}>
                 <Zap className="w-4 h-4" />
-                <span>Lightning fast</span>
+                <span>Blitzschnell</span>
               </div>
               <div className="glass px-4 py-2 rounded-full text-sm text-gray-300 animate-float flex items-center gap-2" style={{ animationDelay: '2s' }}>
                 <Lock className="w-4 h-4" />
-                <span>100% Local</span>
+                <span>100% Lokal</span>
               </div>
               {/* Temporäre UI Anfang, bald herausnehmen */}
               <ComingSoonBadge />
@@ -123,7 +117,7 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
                     <div className="relative flex items-center gap-2 text-white font-bold text-lg">
                       <Sparkles className="w-5 h-5" />
-                      <span>Get Started</span>
+                      <span>Jetzt starten</span>
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Link>
@@ -134,7 +128,7 @@ export default function HomePage() {
                   className="glass-strong px-8 py-4 rounded-2xl hover:bg-white/10 transition-all duration-300 group"
                 >
                   <div className="flex items-center gap-2 text-gray-200 font-semibold text-lg">
-                    <span>Explore Features</span>
+                    <span>Funktionen entdecken</span>
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
@@ -170,7 +164,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
               <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Powerful Features
+                Leistungsstarke Funktionen
               </h2>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
                 Alles was du brauchst für professionelles ML-Training in einer App
@@ -223,7 +217,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
               <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                How It Works
+                So funktioniert's
               </h2>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
                 Von Installation bis zum Training in wenigen Minuten
@@ -234,19 +228,19 @@ export default function HomePage() {
               <StepCard
                 number="01"
                 icon={<Download className="w-8 h-8" />}
-                title="Install & Register"
+                title="Installieren & Registrieren"
                 description="Registriere dich, starte für 4,99 €/Monat und lade die Desktop-App herunter."
               />
               <StepCard
                 number="02"
                 icon={<Database className="w-8 h-8" />}
-                title="Import Model & Data"
+                title="Modell & Daten importieren"
                 description="Wähle ein Modell von HuggingFace oder lokal und lade deinen Datensatz hoch."
               />
               <StepCard
                 number="03"
                 icon={<Rocket className="w-8 h-8" />}
-                title="Train & Deploy"
+                title="Trainieren & Einsetzen"
                 description="Konfiguriere Parameter, starte das Training und beobachte den Fortschritt live."
               />
             </div>
@@ -655,10 +649,10 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20" />
               <div className="relative">
                 <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
-                  Ready to transform your ML workflow?
+                  Bereit, deinen ML-Workflow zu transformieren?
                 </h2>
                 <p className="text-xl text-gray-300 mb-8">
-                  Join hundreds of ML engineers training locally with FrameTrain
+                  Schließ dich Hunderten von ML Engineers an, die lokal mit FrameTrain trainieren.
                 </p>
                 <Link
                   href={isAuthenticated ? "/dashboard" : "/register"}
@@ -668,7 +662,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
                   <div className="relative flex items-center gap-3 text-white font-bold text-xl">
                     <Sparkles className="w-6 h-6" />
-                    <span>{isAuthenticated ? 'Zum Dashboard' : 'Start Training Now'}</span>
+                    <span>{isAuthenticated ? 'Zum Dashboard' : 'Jetzt trainieren'}</span>
                     <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>

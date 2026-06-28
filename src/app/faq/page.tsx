@@ -70,18 +70,18 @@ const categories: Category[] = [
     color: 'green',
     faqs: [
       {
-        q: 'Warum kostet FrameTrain nur 1,99€?',
-        a: 'FrameTrain befindet sich in der Early-Access-Phase. Der bewusst niedrige Preis soll sicherstellen, dass möglichst viele Entwickler, Studenten und Forscher Zugang erhalten – unabhängig vom Budget. Als Gegenleistung helfen frühe Nutzer dabei, das Produkt durch Feedback und reale Use Cases zu verbessern. Der Preis wird mit zukünftigen Feature-Updates und dem Übergang aus dem Early Access steigen.',
-        tags: ['Preis', 'Early Access', 'Günstig'],
+        q: 'Was kostet FrameTrain?',
+        a: 'FrameTrain kostet 4,99€ pro Monat oder 39,99€ pro Jahr (entspricht 3,33€/Monat, 20% Ersparnis). Das ist der Early-Access-Preis: Er steigt auf 9,99€, sobald die ersten 100 Nutzer erreicht sind. Wer jetzt einsteigt, sichert sich den günstigeren Preis dauerhaft.',
+        tags: ['Preis', 'Early Access', 'Abo'],
       },
       {
-        q: 'Ist die Zahlung wirklich einmalig? Kein verstecktes Abo?',
-        a: 'Ja, vollständig einmalig. Du bezahlst 1,99€ und erhältst lebenslangen Zugang zu allen aktuellen und zukünftigen Updates der App. Es gibt keine monatliche Gebühr, kein Abo, keine Per-Training-Abrechnung. Das ist einer der Kernunterschiede zu Cloud-Diensten.',
-        tags: ['Einmalig', 'Kein Abo', 'Lifetime'],
+        q: 'Ist FrameTrain ein Abo? Kann ich jederzeit kündigen?',
+        a: 'Ja, FrameTrain ist ein Abo-Modell (monatlich oder jährlich), jederzeit kündbar. Es gibt keine versteckten Gebühren oder Zusatzkosten pro Training – mit aktivem Abo trainierst du unbegrenzt auf deiner eigenen Hardware.',
+        tags: ['Abo', 'Kündigung', 'Monatlich', 'Jährlich'],
       },
       {
         q: 'Was passiert, wenn ich bezahle – bekomme ich sofort Zugang?',
-        a: 'Ja. Nach der Registrierung und dem Zahlungsabschluss erhältst du sofort deinen API-Key und Zugang zum Download-Bereich für die Desktop-App. Es gibt keine manuelle Freischaltung oder Wartezeit.',
+        a: 'Ja. Nach der Registrierung und dem ersten erfolgreichen Abo-Abschluss erhältst du sofort deinen API-Key und Zugang zum Download-Bereich für die Desktop-App. Es gibt keine manuelle Freischaltung oder Wartezeit.',
         tags: ['Zahlung', 'Sofortzugang'],
       },
       {
@@ -91,8 +91,8 @@ const categories: Category[] = [
       },
       {
         q: 'Gibt es eine Rückerstattungsrichtlinie?',
-        a: 'Da FrameTrain digitale Software ist, sind Rückerstattungen in der Regel nicht möglich – außer bei nachgewiesenen technischen Problemen, bei denen die Software gar nicht funktioniert. Wir empfehlen, vor dem Kauf die Systemanforderungen zu prüfen. Bei Fragen helfen wir gerne vorher weiter.',
-        tags: ['Refund', 'Rückerstattung'],
+        a: 'Du kannst dein Abo jederzeit zum Ende der laufenden Abrechnungsperiode kündigen. Bei nachgewiesenen technischen Problemen, bei denen die Software gar nicht funktioniert, helfen wir außerdem gerne individuell weiter – sprich uns einfach an.',
+        tags: ['Refund', 'Kündigung', 'Rückerstattung'],
       },
       {
         q: 'Gilt die Lizenz für mehrere Geräte?',
@@ -385,7 +385,7 @@ const categories: Category[] = [
     faqs: [
       {
         q: 'Wie installiere ich FrameTrain?',
-        a: 'Registriere dich auf der Website, zahle einmalig 1,99€ und lade die Desktop-App für dein Betriebssystem herunter. Auf Windows: Setup-Installer (.exe) ausführen. Auf macOS: .dmg öffnen, App in Applications ziehen. Auf Linux: AppImage herunterladen und ausführbar machen (chmod +x). Beim ersten Start wirst du nach deinem API-Key gefragt.',
+        a: 'Registriere dich auf der Website, schließe das Abo ab (4,99€/Monat oder 39,99€/Jahr) und lade die Desktop-App für dein Betriebssystem herunter. Auf Windows: Setup-Installer (.exe) ausführen. Auf macOS: .dmg öffnen, App in Applications ziehen. Auf Linux: AppImage herunterladen und ausführbar machen (chmod +x). Beim ersten Start wirst du nach deinem API-Key gefragt.',
         tags: ['Installation', 'Setup', 'Erster Start'],
       },
       {
@@ -626,41 +626,44 @@ export default function FAQPage() {
                 </div>
               </aside>
 
-              {/* FAQ List */}
+              {/* FAQ List – SEO: ALLE Kategorien bleiben im DOM, nur die inaktive wird per CSS
+                  (hidden) ausgeblendet. So sieht Googlebot alle ~50 FAQs, nicht nur die 6
+                  der aktuell ausgewählten Kategorie. */}
               <div className="flex-1 min-w-0">
-                {/* Category header */}
-                <div className={`flex items-center gap-3 mb-6 pb-5 border-b border-white/10`}>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${colorAccents[activecat.color].badge}`}>
-                    {activecat.icon}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-black text-white">{activecat.label}</h2>
-                    <p className="text-gray-500 text-sm">{activecat.faqs.length} Fragen</p>
-                  </div>
-                </div>
+                {categories.map((cat, catIdx) => (
+                  <div key={cat.id} className={cat.id === activeCategory ? '' : 'hidden'}>
+                    <div className="flex items-center gap-3 mb-6 pb-5 border-b border-white/10">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${colorAccents[cat.color].badge}`}>
+                        {cat.icon}
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-black text-white">{cat.label}</h2>
+                        <p className="text-gray-500 text-sm">{cat.faqs.length} Fragen</p>
+                      </div>
+                    </div>
 
-                <div className="space-y-3">
-                  {activecat.faqs.map((faq, i) => (
-                    <FAQAccordion key={i} faq={faq} accent={colorAccents[activecat.color]} />
-                  ))}
-                </div>
+                    <div className="space-y-3">
+                      {cat.faqs.map((faq, i) => (
+                        <FAQAccordion key={i} faq={faq} accent={colorAccents[cat.color]} />
+                      ))}
+                    </div>
 
-                {/* Link to next category */}
-                {categories.findIndex((c) => c.id === activeCategory) < categories.length - 1 && (
-                  <div className="mt-8 flex justify-end">
-                    <button
-                      onClick={() => {
-                        const idx = categories.findIndex((c) => c.id === activeCategory)
-                        setActiveCategory(categories[idx + 1].id)
-                        window.scrollTo({ top: 0, behavior: 'smooth' })
-                      }}
-                      className="flex items-center gap-2 text-sm text-gray-500 hover:text-purple-400 transition"
-                    >
-                      <span>Nächste Kategorie: {categories[categories.findIndex((c) => c.id === activeCategory) + 1].label}</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
+                    {catIdx < categories.length - 1 && (
+                      <div className="mt-8 flex justify-end">
+                        <button
+                          onClick={() => {
+                            setActiveCategory(categories[catIdx + 1].id)
+                            window.scrollTo({ top: 0, behavior: 'smooth' })
+                          }}
+                          className="flex items-center gap-2 text-sm text-gray-500 hover:text-purple-400 transition"
+                        >
+                          <span>Nächste Kategorie: {categories[catIdx + 1].label}</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
             </div>
           </section>
@@ -690,7 +693,7 @@ export default function FAQPage() {
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600" />
                   <div className="relative flex items-center gap-2 text-white font-semibold">
                     <Sparkles className="w-4 h-4" />
-                    <span>Jetzt starten – 1,99€</span>
+                    <span>Jetzt starten – ab 4,99€/Monat</span>
                   </div>
                 </Link>
               </div>

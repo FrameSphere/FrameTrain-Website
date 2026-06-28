@@ -43,28 +43,48 @@ export default function TermsPage() {
                 Der Dienst umfasst:
               </p>
               <ul className="space-y-1 text-sm list-disc list-inside text-gray-400">
-                <li>Einmalige Lizenzgebühr von 1,99 € für lebenslangen Zugang</li>
-                <li>Zugang zur Desktop-App (Windows, macOS, Linux)</li>
-                <li>Kostenloses Empfangen zukünftiger Updates</li>
+                <li>Zugang im Abo-Modell: 4,99€/Monat oder 39,99€/Jahr (Early-Access-Preis, steigt auf 9,99€ nach den ersten 100 Nutzern)</li>
+                <li>Zugang zur Desktop-App (Windows, macOS, Linux) für die Dauer des aktiven Abos</li>
+                <li>Kostenloses Empfangen aller Updates während der Abo-Laufzeit</li>
                 <li>Zugang zur Online-Dokumentation</li>
                 <li>E-Mail-Support</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">3. Vertragsschluss & Zahlung</h2>
+              <h2 className="text-xl font-bold text-white mb-3">3. Vertragsschluss, Zahlung & Laufzeit</h2>
               <p className="text-sm mb-3">
-                Ein Vertrag kommt zustande, wenn du dich registrierst und die einmalige Zahlung von 1,99 € erfolgreich abschließt.
-                Die Zahlung wird von Stripe verarbeitet. Nach erfolgreicher Zahlung wird dir ein API-Key zur Verfügung gestellt,
-                der als Lizenzschlüssel dient.
+                Ein Vertrag kommt zustande, wenn du dich registrierst und ein Zahlungsmittel für das gewählte
+                Abo (monatlich oder jährlich) hinterlegst. Die Zahlung wird von Stripe verarbeitet und zu Beginn
+                jeder Abrechnungsperiode automatisch eingezogen. Nach erfolgreicher Zahlung wird dir ein API-Key
+                zur Verfügung gestellt, der als Lizenzschlüssel für die Dauer des aktiven Abos dient.
               </p>
               <p className="text-sm">
-                Es handelt sich um eine einmalige, nicht wiederkehrende Zahlung – kein Abonnement.
+                Das Abo verlängert sich automatisch um die jeweils gewählte Abrechnungsperiode (Monat bzw. Jahr),
+                sofern es nicht vor Ablauf der laufenden Periode gekündigt wird.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">4. Widerrufsrecht</h2>
+              {/* TODO/ANWALT PRÜFEN: Als laufendes Abo-Verhältnis unterliegt FrameTrain seit Juli 2022 dem
+                  Kuendigungsbutton-Erfordernis nach § 312k BGB – ein jederzeit leicht auffindbarer,
+                  eindeutig beschrifteter Kuendigungs-Button (z.B. im Dashboard) ist gesetzlich vorgeschrieben.
+                  Bitte rechtlich pruefen lassen, ob das aktuell so umgesetzt ist. */}
+              <h2 className="text-xl font-bold text-white mb-3">4. Kündigung</h2>
+              <p className="text-sm">
+                Das Abo ist jederzeit zum Ende der laufenden Abrechnungsperiode kündbar, ohne Angabe von Gründen.
+                Die Kündigung kann über das Dashboard oder per E-Mail an{' '}
+                <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">framesphere@gmx.net</a>{' '}
+                erfolgen. Mit Wirksamwerden der Kündigung endet der Zugang zur Desktop-App zum Ende der bereits
+                bezahlten Abrechnungsperiode.
+              </p>
+            </section>
+
+            <section>
+              {/* TODO/ANWALT PRUEFEN: Das Widerrufsrecht bei Abos/Dauerschuldverhaeltnissen unterscheidet sich
+                  von dem bei einmaligen digitalen Inhalten. Diese Klausel sollte juristisch an das neue
+                  Abo-Modell angepasst werden. */}
+              <h2 className="text-xl font-bold text-white mb-3">5. Widerrufsrecht</h2>
               <p className="text-sm mb-3">
                 Da es sich um digitale Inhalte handelt, die nach Vertragsschluss sofort bereitgestellt werden,
                 erlischt das Widerrufsrecht gemäß § 356 Abs. 5 BGB mit Beginn der Vertragserfüllung,
@@ -76,7 +96,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">5. Nutzungslizenz</h2>
+              <h2 className="text-xl font-bold text-white mb-3">6. Nutzungslizenz</h2>
               <p className="text-sm mb-3">
                 Mit dem Kauf erhältst du eine nicht-exklusive, nicht-übertragbare Lizenz zur privaten und kommerziellen Nutzung
                 der FrameTrain Desktop-Applikation auf deinen eigenen Geräten.
@@ -90,7 +110,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">6. Verfügbarkeit</h2>
+              <h2 className="text-xl font-bold text-white mb-3">7. Verfügbarkeit</h2>
               <p className="text-sm">
                 Wir bemühen uns um eine hohe Verfügbarkeit des Dienstes, können jedoch keine 100%ige Uptime garantieren.
                 Die Desktop-App funktioniert vollständig lokal – ein Internetausfall beeinflusst das Training nicht.
@@ -99,16 +119,18 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">7. Haftungsbeschränkung</h2>
+              {/* TODO/ANWALT PRUEFEN: Haftungsobergrenze an das Abo-Modell angepasst (gezahlte Gebuehren der
+                  letzten 12 Monate statt fixer 1,99 Euro). Bitte rechtlich gegenpruefen. */}
+              <h2 className="text-xl font-bold text-white mb-3">8. Haftungsbeschränkung</h2>
               <p className="text-sm">
                 Der Betreiber haftet nicht für mittelbare Schäden, entgangene Gewinne oder Datenverluste,
-                die durch die Nutzung von FrameTrain entstehen. Die Haftung ist auf den Betrag der gezahlten
-                Lizenzgebühr (1,99 €) begrenzt, soweit gesetzlich zulässig.
+                die durch die Nutzung von FrameTrain entstehen. Die Haftung ist auf die Summe der in den
+                letzten 12 Monaten gezahlten Abo-Gebühren begrenzt, soweit gesetzlich zulässig.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">8. Änderungen der AGB</h2>
+              <h2 className="text-xl font-bold text-white mb-3">9. Änderungen der AGB</h2>
               <p className="text-sm">
                 Wir behalten uns vor, diese AGB zu ändern. Wesentliche Änderungen werden dir per E-Mail mitgeteilt.
                 Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten geänderter AGB gilt als Zustimmung.
@@ -116,7 +138,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">9. Anwendbares Recht</h2>
+              <h2 className="text-xl font-bold text-white mb-3">10. Anwendbares Recht</h2>
               <p className="text-sm">
                 Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts.
                 Gerichtsstand ist Mainz, soweit gesetzlich zulässig.
@@ -124,7 +146,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">10. Kontakt</h2>
+              <h2 className="text-xl font-bold text-white mb-3">11. Kontakt</h2>
               <p className="text-sm">
                 Karol Paschek, Mainz · <a href="mailto:framesphere@gmx.net" className="text-violet-400 hover:text-violet-300">framesphere@gmx.net</a>
               </p>

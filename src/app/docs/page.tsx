@@ -220,7 +220,7 @@ function InstallationSection() {
         <div>
           <h2 className="text-2xl font-bold text-white mb-4">Schritt 1: Account erstellen</h2>
           <p className="text-gray-400 mb-4">
-            Registriere dich auf unserer Website. Die einmalige Gebühr von <span className="text-green-400 font-semibold">1,99€</span> gibt dir lebenslangen Zugang.
+            Registriere dich auf unserer Website. Mit dem Abo (ab <span className="text-green-400 font-semibold">4,99€/Monat</span>) erhältst du vollen Zugang zur App.
           </p>
           <Link href="/register" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all">
             <Rocket className="w-4 h-4" />

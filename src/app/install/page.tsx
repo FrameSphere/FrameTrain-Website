@@ -60,9 +60,9 @@ export default function InstallPage() {
             </button>
           </div>
 
-          {/* macOS Installation */}
-          {selectedPlatform === 'macos' && (
-            <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
+          {/* macOS Installation – SEO: bleibt immer im DOM, nur per CSS (hidden) ausgeblendet */}
+          <div className={selectedPlatform === 'macos' ? '' : 'hidden'}>
+          <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
                 <Download className="w-8 h-8 text-purple-400" />
                 macOS Installation
@@ -150,11 +150,11 @@ export default function InstallPage() {
                 </p>
               </div>
             </div>
-          )}
+          </div>
 
-          {/* Windows Installation */}
-          {selectedPlatform === 'windows' && (
-            <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
+          {/* Windows Installation – SEO: bleibt immer im DOM, nur per CSS (hidden) ausgeblendet */}
+          <div className={selectedPlatform === 'windows' ? '' : 'hidden'}>
+          <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
                 <Download className="w-8 h-8 text-purple-400" />
                 Windows Installation
@@ -246,11 +246,11 @@ export default function InstallPage() {
                 </p>
               </div>
             </div>
-          )}
+          </div>
 
-          {/* Linux Installation */}
-          {selectedPlatform === 'linux' && (
-            <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
+          {/* Linux Installation – SEO: bleibt immer im DOM, nur per CSS (hidden) ausgeblendet */}
+          <div className={selectedPlatform === 'linux' ? '' : 'hidden'}>
+          <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
                 <Download className="w-8 h-8 text-purple-400" />
                 Linux Installation
@@ -380,7 +380,7 @@ export default function InstallPage() {
                 </div>
               </div>
             </div>
-          )}
+          </div>
 
           {/* System Requirements */}
           <div className="glass rounded-xl p-6 border border-white/10 mb-8">

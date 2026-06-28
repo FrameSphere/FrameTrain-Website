@@ -10,7 +10,7 @@ const baseUrl = 'https://frame-train.vercel.app'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: 'FrameTrain – HuggingFace & LLM Modelle lokal trainieren (LoRA, PyTorch, GPU)',
-  description: 'FrameTrain ist die Desktop-App für lokales Machine Learning Training. Fine-Tune HuggingFace Modelle mit LoRA, PyTorch und GPU-Beschleunigung – ohne Cloud, ohne Abo, ohne laufende Kosten. Einmalig 1,99€ für unbegrenztes Training.',
+  description: 'FrameTrain ist die Desktop-App für lokales Machine Learning Training. Fine-Tune HuggingFace Modelle mit LoRA, PyTorch und GPU-Beschleunigung – ohne Cloud, ohne laufende Zusatzkosten. Ab 4,99€/Monat im Early Access für unbegrenztes Training.',
   keywords: [
     'Machine Learning lokal trainieren',
     'KI Modell lokal trainieren',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     locale: 'de_DE',
     url: baseUrl,
     title: 'FrameTrain – KI-Modelle lokal trainieren | ML Training Desktop App',
-    description: 'Fine-Tune HuggingFace & LLM Modelle lokal auf deiner GPU. Kein Cloud-Abo, maximale Datensicherheit, DSGVO-konform. Einmalig 1,99€. Jetzt downloaden!',
+    description: 'Fine-Tune HuggingFace & LLM Modelle lokal auf deiner GPU. Kein Cloud-Zwang, maximale Datensicherheit, DSGVO-konform. Ab 4,99€/Monat im Early Access. Jetzt downloaden!',
     siteName: 'FrameTrain',
     images: [
       {
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'FrameTrain – KI-Modelle lokal trainieren',
-    description: 'Fine-Tune HuggingFace Modelle lokal auf deiner GPU. Kein Cloud-Abo, DSGVO-konform, unbegrenzte Trainings. Einmalig 1,99€.',
+    description: 'Fine-Tune HuggingFace Modelle lokal auf deiner GPU. DSGVO-konform, unbegrenzte Trainings. Ab 4,99€/Monat im Early Access.',
     images: ['/og-image.svg'],
     creator: '@FrameTrainApp',
     site: '@FrameTrainApp',
@@ -108,13 +108,14 @@ export default function RootLayout({
         description: 'Desktop-App für lokales Machine Learning Training. Fine-Tune HuggingFace Modelle mit LoRA, PyTorch und GPU-Beschleunigung – ohne Cloud.',
         offers: {
           '@type': 'Offer',
-          price: '1.99',
+          price: '4.99',
           priceCurrency: 'EUR',
           priceSpecification: {
             '@type': 'UnitPriceSpecification',
-            price: '1.99',
+            price: '4.99',
             priceCurrency: 'EUR',
-            name: 'Einmalige Zahlung, lebenslanger Zugang',
+            unitText: 'MONTH',
+            name: 'Early-Access-Preis, monatlich kündbar (jährlich 39,99€)',
           },
         },
         featureList: [
@@ -159,8 +160,8 @@ export default function RootLayout({
           },
           {
             '@type': 'Question',
-            name: 'Warum kostet FrameTrain nur 1,99€?',
-            acceptedAnswer: { '@type': 'Answer', text: 'FrameTrain befindet sich in der Early-Access-Phase. Der Preis ist bewusst niedrig gehalten, damit möglichst viele Entwickler und Forscher Zugang bekommen. Der Preis steigt mit zukünftigen Feature-Updates.' },
+            name: 'Warum kostet FrameTrain nur 4,99€/Monat?',
+            acceptedAnswer: { '@type': 'Answer', text: 'FrameTrain befindet sich im Early Access. Der Preis ist bewusst niedrig, damit möglichst viele Entwickler und Forscher früh Zugang bekommen. Der Preis steigt auf 9,99€ nach den ersten 100 Nutzern – wer jetzt einsteigt, ist dauerhaft günstiger.' },
           },
         ],
       },

@@ -266,9 +266,10 @@ export default function ChangelogPage() {
               </div>
             )}
 
-            {/* ── Release-Einträge (Manager-API) ── */}
-            {!loadingChangelog && (
-              <div>
+            {/* ── Release-Einträge (Manager-API) ── SEO: nicht mehr hinter loadingChangelog versteckt,
+                 die statischen Fallback-Releases sind sofort im DOM und werden bei Bedarf durch
+                 echte API-Daten ersetzt. */}
+            <div>
                 {hasStatusData && (
                   <div className="flex items-center gap-3 mb-8">
                     <Rocket className="w-5 h-5 text-purple-400" />
@@ -355,7 +356,6 @@ export default function ChangelogPage() {
                   </div>
                 )}
               </div>
-            )}
           </div>
         </section>
 

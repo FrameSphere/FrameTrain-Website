@@ -35,7 +35,7 @@ const values = [
   {
     icon: <Globe className="w-7 h-7" />,
     title: 'Zugänglichkeit',
-    description: 'Der Early-Access-Preis von 1,99€ ist kein Zufall. Wir wollen, dass Studenten, Forscher und Indie-Entwickler dieselben Werkzeuge haben wie große Unternehmen.',
+    description: 'Der Early-Access-Preis von 4,99€/Monat ist kein Zufall. Wir wollen, dass Studenten, Forscher und Indie-Entwickler dieselben Werkzeuge haben wie große Unternehmen.',
     color: 'from-green-500 to-cyan-500',
   },
   {
@@ -173,8 +173,8 @@ export default function AboutPage() {
                   </p>
                   <p>
                     Und weil wir wollen, dass das möglichst viele Menschen nutzen können:
-                    einmalig <span className="text-green-400 font-semibold">1,99€</span>. Kein Abo,
-                    kein per-Stunde-Preis, keine Überraschungen.
+                    ab <span className="text-green-400 font-semibold">4,99€/Monat</span>. Jederzeit
+                    kündbar, keine versteckten Gebühren, keine Überraschungen.
                   </p>
                 </div>
               </div>
@@ -360,7 +360,7 @@ export default function AboutPage() {
                 { number: '100%', label: 'Lokal & Offline', icon: <Lock className="w-5 h-5" />, color: 'purple' },
                 { number: '3', label: 'Betriebssysteme', icon: <Globe className="w-5 h-5" />, color: 'blue' },
                 { number: '10+', label: 'GPU-Architekturen', icon: <Cpu className="w-5 h-5" />, color: 'green' },
-                { number: '1,99€', label: 'Einmalig für immer', icon: <Sparkles className="w-5 h-5" />, color: 'pink' },
+                { number: '4,99€', label: 'Pro Monat im Early Access', icon: <Sparkles className="w-5 h-5" />, color: 'pink' },
               ].map(({ number, label, icon, color }) => {
                 const cs: Record<string, string> = {
                   purple: 'from-purple-500 to-pink-500',
@@ -398,7 +398,7 @@ export default function AboutPage() {
                   Bereit, lokal zu trainieren?
                 </h2>
                 <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
-                  Einmalig 1,99€. Kein Abo. Keine Cloud. Volle Kontrolle über deine Modelle und Daten.
+                  Ab 4,99€/Monat. Jederzeit kündbar. Keine Cloud. Volle Kontrolle über deine Modelle und Daten.
                 </p>
                 <div className="flex gap-4 justify-center flex-wrap">
                   <Link href="/register" className="relative group inline-block px-8 py-4 rounded-2xl overflow-hidden">
