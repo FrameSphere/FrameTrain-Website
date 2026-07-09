@@ -9,12 +9,19 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { email, password } = body
+    const { email, password, acceptedTerms, diagnosticsConsent } = body
 
     // Validation
     if (!email || !password) {
       return NextResponse.json(
         { error: 'E-Mail und Passwort sind erforderlich' },
+        { status: 400 }
+      )
+    }
+
+    if (!acceptedTerms) {
+      return NextResponse.json(
+        { error: 'Du musst den AGB und der Datenschutzerklärung zustimmen' },
         { status: 400 }
       )
     }
@@ -42,10 +49,14 @@ export async function POST(req: NextRequest) {
     const passwordHash = await bcrypt.hash(password, 10)
 
     // Create user
+    const now = new Date()
     const user = await prisma.user.create({
       data: {
         email,
         passwordHash,
+        termsAcceptedAt: now,
+        diagnosticsConsent: !!diagnosticsConsent,
+        diagnosticsConsentAt: diagnosticsConsent ? now : null,
       },
     })
 

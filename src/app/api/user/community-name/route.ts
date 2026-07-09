@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getCurrentUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,26 +55,40 @@ export async function GET(req: NextRequest) {
 }
 
 // ── POST /api/user/community-name (Update) ──────────────────────────────
-// Body: { userId: string, communityName: string }
+// Body: { communityName: string }
+// SICHERHEIT: Die userId kommt AUSSCHLIESSLICH aus dem authentifizierten
+// JWT-Cookie, niemals aus dem Client-Body. Andernfalls könnte jeder
+// unauthentifizierte Aufrufer per beliebiger userId im Body den
+// Community-Namen JEDES ANDEREN Users ändern (Broken Access Control /
+// IDOR) – genau das war hier zuvor der Fall.
 // Updates the communityName and ALL related scripts immediately
 // Returns: { success: boolean, message: string, updatedCount: number }
 export async function POST(req: NextRequest) {
   try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      return new NextResponse(
+        JSON.stringify({ error: 'Nicht authentifiziert' }),
+        { status: 401, headers: { ...CORS, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const userId = currentUser.userId;
     const body = await req.json();
-    const { userId, communityName } = body;
+    const { communityName } = body;
 
     console.log('[POST /api/user/community-name] Request:', { userId, communityName });
 
-    if (!userId?.trim() || !communityName?.trim()) {
+    if (!communityName?.trim()) {
       return new NextResponse(
-        JSON.stringify({ error: 'userId and communityName are required' }),
+        JSON.stringify({ error: 'communityName is required' }),
         { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } }
       );
     }
 
     // Überprüfe, dass User existiert
     const user = await prisma.user.findUnique({
-      where: { id: userId.trim() },
+      where: { id: userId },
       select: { id: true, communityName: true },
     });
 
@@ -99,7 +114,7 @@ export async function POST(req: NextRequest) {
             },
             {
               id: {
-                not: userId.trim(),
+                not: userId,
               },
             },
           ],
@@ -119,7 +134,7 @@ export async function POST(req: NextRequest) {
     // Update User mit neuem communityName
     console.log('[POST /api/user/community-name] Updating user with new name:', newName);
     const updatedUser = await prisma.user.update({
-      where: { id: userId.trim() },
+      where: { id: userId },
       data: { communityName: newName },
       select: { id: true, communityName: true },
     });
@@ -130,7 +145,7 @@ export async function POST(req: NextRequest) {
     let updatedCount = 0;
     const userScripts = await prisma.libraryScript.findMany({
       where: {
-        userId: userId.trim(),
+        userId: userId,
       },
       select: { id: true, author: true },
     });
@@ -140,7 +155,7 @@ export async function POST(req: NextRequest) {
     if (userScripts.length > 0) {
       const result = await prisma.libraryScript.updateMany({
         where: {
-          userId: userId.trim(),
+          userId: userId,
         },
         data: {
           author: newName,

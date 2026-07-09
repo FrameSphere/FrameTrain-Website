@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getCurrentUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -94,13 +95,22 @@ export async function GET(req: NextRequest) {
 // Body: { name, description, author, userId, model_type, task_type, framework, tags, script }
 export async function POST(req: NextRequest) {
   try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      return NextResponse.json(
+        { error: 'Nicht authentifiziert' },
+        { status: 401, headers: CORS },
+      );
+    }
+    const userId = currentUser.userId;
+
     const body = await req.json();
-    const { name, description, author, userId, model_type, task_type, framework, script_type, tags, script } = body ?? {};
+    const { name, description, author, model_type, task_type, framework, script_type, tags, script } = body ?? {};
 
     // Pflichtfeld-Validierung
-    if (!name?.trim() || !description?.trim() || !author?.trim() || !script?.trim() || !userId?.trim()) {
+    if (!name?.trim() || !description?.trim() || !author?.trim() || !script?.trim()) {
       return NextResponse.json(
-        { error: 'Fehlende Pflichtfelder: name, description, author, userId, script' },
+        { error: 'Fehlende Pflichtfelder: name, description, author, script' },
         { status: 400, headers: CORS },
       );
     }
@@ -113,7 +123,7 @@ export async function POST(req: NextRequest) {
 
     // Prüfe ob User existiert
     const user = await prisma.user.findUnique({
-      where: { id: userId.trim() },
+      where: { id: userId },
       select: { id: true, communityName: true },
     });
 
@@ -149,7 +159,7 @@ export async function POST(req: NextRequest) {
       // WICHTIG: Setze den communityName beim ersten Upload
       try {
         const updatedUser = await prisma.user.update({
-          where: { id: userId.trim() },
+          where: { id: userId },
           data: { communityName: author.trim() },
           select: { communityName: true },
         });
@@ -163,7 +173,7 @@ export async function POST(req: NextRequest) {
 
     const created = await prisma.libraryScript.create({
       data: {
-        userId:      userId.trim(),
+        userId:      userId,
         name:        name.trim().slice(0, 200),
         description: description.trim().slice(0, 2000),
         author:      userCommunityName!.slice(0, 100), // Nutze immer den User.communityName

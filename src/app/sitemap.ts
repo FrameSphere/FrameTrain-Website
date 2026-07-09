@@ -1,46 +1,63 @@
 import type { MetadataRoute } from 'next'
+import { routing } from '@/i18n/routing'
+
+const baseUrl = 'https://frame-train.vercel.app'
+
+type PageDef = {
+  path: string // ohne führenden Slash der Locale, z.B. '' oder '/about'
+  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
+  priority: number
+}
+
+const pages: PageDef[] = [
+  { path: '', changeFrequency: 'weekly', priority: 1.0 },
+  { path: '/about', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/download', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/faq', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/install', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/changelog', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/library', changeFrequency: 'daily', priority: 0.88 },
+  { path: '/imprint', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/privacy', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/terms', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/cookies', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/docs', changeFrequency: 'weekly', priority: 0.92 },
+  { path: '/docs/ai-training-guide', changeFrequency: 'monthly', priority: 0.92 },
+  { path: '/docs/ai-training-guide/ml-grundlagen', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/docs/ai-training-guide/training-verstehen', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/docs/ai-training-guide/trainingsverlauf', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/docs/ai-training-guide/diagnose', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/docs/ai-training-guide/hyperparameter', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/docs/ai-training-guide/fine-tuning', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/docs/ai-training-guide/dataset-mastery', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/docs/ai-training-guide/fortgeschrittene', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/guides', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/guides/lora-finetuning', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/guides/local-vs-cloud', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/guides/gpu-guide', changeFrequency: 'monthly', priority: 0.8 },
+]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://frame-train.vercel.app'
   const lastModified = new Date()
 
-  const mainPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified, changeFrequency: 'weekly', priority: 1.0 },
-    { url: `${baseUrl}/about`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${baseUrl}/download`, lastModified, changeFrequency: 'weekly', priority: 0.95 },
-    { url: `${baseUrl}/faq`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${baseUrl}/install`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${baseUrl}/changelog`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/library`, lastModified, changeFrequency: 'daily', priority: 0.88 },
-  ]
+  const entries: MetadataRoute.Sitemap = []
 
-  const legalPages: MetadataRoute.Sitemap = [
-    { url: `${baseUrl}/imprint`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${baseUrl}/privacy`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${baseUrl}/terms`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
-  ]
+  for (const page of pages) {
+    for (const locale of routing.locales) {
+      entries.push({
+        url: `${baseUrl}/${locale}${page.path}`,
+        lastModified,
+        changeFrequency: page.changeFrequency,
+        priority: page.priority,
+        alternates: {
+          languages: {
+            de: `${baseUrl}/de${page.path}`,
+            en: `${baseUrl}/en${page.path}`,
+          },
+        },
+      })
+    }
+  }
 
-  const docsPages: MetadataRoute.Sitemap = [
-    { url: `${baseUrl}/docs`, lastModified, changeFrequency: 'weekly', priority: 0.92 },
-    // AI Training Guide Hub
-    { url: `${baseUrl}/docs/ai-training-guide`, lastModified, changeFrequency: 'monthly', priority: 0.92 },
-    // 8 Chapters
-    { url: `${baseUrl}/docs/ai-training-guide/ml-grundlagen`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-    { url: `${baseUrl}/docs/ai-training-guide/training-verstehen`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-    { url: `${baseUrl}/docs/ai-training-guide/trainingsverlauf`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-    { url: `${baseUrl}/docs/ai-training-guide/diagnose`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-    { url: `${baseUrl}/docs/ai-training-guide/hyperparameter`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-    { url: `${baseUrl}/docs/ai-training-guide/fine-tuning`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-    { url: `${baseUrl}/docs/ai-training-guide/dataset-mastery`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-    { url: `${baseUrl}/docs/ai-training-guide/fortgeschrittene`, lastModified, changeFrequency: 'monthly', priority: 0.88 },
-  ]
-
-  const guidesPages: MetadataRoute.Sitemap = [
-    { url: `${baseUrl}/guides`, lastModified, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${baseUrl}/guides/lora-finetuning`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${baseUrl}/guides/local-vs-cloud`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/guides/gpu-guide`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-  ]
-
-  return [...mainPages, ...docsPages, ...guidesPages, ...legalPages]
+  return entries
 }

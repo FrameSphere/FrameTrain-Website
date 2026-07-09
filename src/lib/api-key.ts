@@ -5,9 +5,15 @@ export function generateApiKey(): string {
 }
 
 export function hashApiKey(key: string): string {
+  const salt = process.env.API_KEY_SALT
+  if (!salt) {
+    // Kein Fallback-Salt: ein hartcodierter Default würde die Hashes
+    // wertlos machen, sobald der Quellcode bekannt ist.
+    throw new Error('API_KEY_SALT ist nicht gesetzt. Bitte in den Umgebungsvariablen konfigurieren.')
+  }
   return crypto
     .createHash('sha256')
-    .update(key + (process.env.API_KEY_SALT || 'default-salt'))
+    .update(key + salt)
     .digest('hex')
 }
 

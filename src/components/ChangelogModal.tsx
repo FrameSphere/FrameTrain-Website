@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
+import { useTranslations, useLocale } from 'next-intl'
 import {
   X, Sparkles, Zap, Bug, Shield, Rocket,
   Bell, GitCommit, Milestone, Flame, Code2, ArrowRight,
@@ -64,30 +65,34 @@ export function useChangelogBadge() {
   return { count, refresh }
 }
 
-// ── Stil-Helfer ──────────────────────────────────────────────────
-const STATUS_TYPE_META: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-  status:    { label: 'Status',     color: 'text-blue-400 bg-blue-500/10 border-blue-500/25',    icon: <GitCommit className="w-3.5 h-3.5" /> },
-  milestone: { label: 'Milestone',  color: 'text-purple-400 bg-purple-500/10 border-purple-500/25', icon: <Milestone className="w-3.5 h-3.5" /> },
-  hotfix:    { label: 'Hotfix',     color: 'text-orange-400 bg-orange-500/10 border-orange-500/25', icon: <Flame className="w-3.5 h-3.5" /> },
-  dev:       { label: 'Dev-Update', color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/25',    icon: <Code2 className="w-3.5 h-3.5" /> },
+// ── Stil-Helfer (nur Farbe/Icon, Labels kommen aus next-intl) ────
+const STATUS_TYPE_STYLE: Record<string, { color: string; icon: React.ReactNode }> = {
+  status:    { color: 'text-blue-400 bg-blue-500/10 border-blue-500/25',    icon: <GitCommit className="w-3.5 h-3.5" /> },
+  milestone: { color: 'text-purple-400 bg-purple-500/10 border-purple-500/25', icon: <Milestone className="w-3.5 h-3.5" /> },
+  hotfix:    { color: 'text-orange-400 bg-orange-500/10 border-orange-500/25', icon: <Flame className="w-3.5 h-3.5" /> },
+  dev:       { color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/25',    icon: <Code2 className="w-3.5 h-3.5" /> },
 }
 
-const RELEASE_TYPE_META: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-  feature:     { label: 'New',      color: 'text-purple-400 bg-purple-500/10 border-purple-500/25', icon: <Sparkles className="w-3.5 h-3.5" /> },
-  improvement: { label: 'Improved', color: 'text-blue-400 bg-blue-500/10 border-blue-500/25',    icon: <Zap className="w-3.5 h-3.5" /> },
-  fix:         { label: 'Fixed',    color: 'text-orange-400 bg-orange-500/10 border-orange-500/25', icon: <Bug className="w-3.5 h-3.5" /> },
-  security:    { label: 'Security', color: 'text-green-400 bg-green-500/10 border-green-500/25', icon: <Shield className="w-3.5 h-3.5" /> },
-  breaking:    { label: 'Breaking', color: 'text-red-400 bg-red-500/10 border-red-500/25',       icon: <span className="text-xs">💥</span> },
+const RELEASE_TYPE_STYLE: Record<string, { color: string; icon: React.ReactNode }> = {
+  feature:     { color: 'text-purple-400 bg-purple-500/10 border-purple-500/25', icon: <Sparkles className="w-3.5 h-3.5" /> },
+  improvement: { color: 'text-blue-400 bg-blue-500/10 border-blue-500/25',    icon: <Zap className="w-3.5 h-3.5" /> },
+  fix:         { color: 'text-orange-400 bg-orange-500/10 border-orange-500/25', icon: <Bug className="w-3.5 h-3.5" /> },
+  security:    { color: 'text-green-400 bg-green-500/10 border-green-500/25', icon: <Shield className="w-3.5 h-3.5" /> },
+  breaking:    { color: 'text-red-400 bg-red-500/10 border-red-500/25',       icon: <span className="text-xs">💥</span> },
 }
 
-function fmtDate(iso: string) {
+function fmtDate(
+  iso: string,
+  locale: string,
+  labels: { justNow: string; hoursAgo: string; yesterday: string }
+) {
   const d = new Date(iso)
   const now = new Date()
   const diffH = (now.getTime() - d.getTime()) / 3_600_000
-  if (diffH < 1)    return 'Gerade eben'
-  if (diffH < 24)   return `vor ${Math.floor(diffH)} Std`
-  if (diffH < 48)   return 'Gestern'
-  return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' })
+  if (diffH < 1)  return labels.justNow
+  if (diffH < 24) return labels.hoursAgo.replace('{h}', String(Math.floor(diffH)))
+  if (diffH < 48) return labels.yesterday
+  return d.toLocaleDateString(locale === 'en' ? 'en-US' : 'de-DE', { day: 'numeric', month: 'short' })
 }
 
 // Einfaches Markdown → JSX (nur Fettdruck, Aufzählungen, Zeilenumbrüche)
@@ -140,9 +145,17 @@ interface Props {
 }
 
 export function ChangelogModal({ open, onClose, onRead }: Props) {
+  const t = useTranslations('ChangelogModal')
+  const locale = useLocale()
   const [feed, setFeed] = useState<FeedItem[]>([])
   const [loading, setLoading] = useState(true)
   const [lastSeen, setLastSeen] = useState(0)
+
+  const dateLabels = {
+    justNow: t('justNow'),
+    hoursAgo: t('hoursAgo'),
+    yesterday: t('yesterday'),
+  }
 
   useEffect(() => {
     if (!open) return
@@ -206,8 +219,8 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
               <Rocket className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h2 className="text-white font-bold text-lg leading-none">Was ist neu?</h2>
-              <p className="text-gray-500 text-xs mt-0.5">Updates &amp; Entwicklungsstand</p>
+              <h2 className="text-white font-bold text-lg leading-none">{t('title')}</h2>
+              <p className="text-gray-500 text-xs mt-0.5">{t('subtitle')}</p>
             </div>
           </div>
           <button
@@ -223,14 +236,14 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
           {loading && (
             <div className="flex items-center justify-center py-12 gap-3 text-gray-500">
               <div className="w-5 h-5 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
-              <span className="text-sm">Lade Updates…</span>
+              <span className="text-sm">{t('loadingText')}</span>
             </div>
           )}
 
           {!loading && feed.length === 0 && (
             <div className="text-center py-12 text-gray-500">
               <Bell className="w-10 h-10 mx-auto mb-3 opacity-30" />
-              <p className="text-sm">Noch keine Updates vorhanden.</p>
+              <p className="text-sm">{t('emptyText')}</p>
             </div>
           )}
 
@@ -239,7 +252,8 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
             const isNew = ts > lastSeen
 
             if (item.kind === 'status') {
-              const meta = STATUS_TYPE_META[item.data.type] || STATUS_TYPE_META.status
+              const style = STATUS_TYPE_STYLE[item.data.type] || STATUS_TYPE_STYLE.status
+              const label = t(`statusTypeLabels.${item.data.type}` as any) || item.data.type
               return (
                 <div
                   key={`s-${item.data.id}`}
@@ -251,12 +265,12 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
                     <div className="flex items-center gap-2 flex-wrap">
                       {isNew && (
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
-                          Neu
+                          {t('newBadge')}
                         </span>
                       )}
-                      <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full border ${meta.color}`}>
-                        {meta.icon}
-                        {meta.label}
+                      <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full border ${style.color}`}>
+                        {style.icon}
+                        {label}
                       </span>
                       {item.data.appVersion && (
                         <span className="text-[11px] text-gray-600 font-mono">
@@ -264,7 +278,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
                         </span>
                       )}
                     </div>
-                    <span className="text-[11px] text-gray-600 flex-shrink-0">{fmtDate(item.data.createdAt)}</span>
+                    <span className="text-[11px] text-gray-600 flex-shrink-0">{fmtDate(item.data.createdAt, locale, dateLabels)}</span>
                   </div>
                   <p className="text-white font-semibold text-sm mb-2">{item.data.title}</p>
                   <SimpleMarkdown text={item.data.body} />
@@ -274,7 +288,8 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
             }
 
             // release entry
-            const meta = RELEASE_TYPE_META[item.data.type] || RELEASE_TYPE_META.feature
+            const style = RELEASE_TYPE_STYLE[item.data.type] || RELEASE_TYPE_STYLE.feature
+            const label = t(`typeLabels.${item.data.type}` as any) || item.data.type
             return (
               <div
                 key={`r-${item.data.id}`}
@@ -286,16 +301,16 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
                   <div className="flex items-center gap-2 flex-wrap">
                     {isNew && (
                       <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
-                        Neu
+                        {t('newBadge')}
                       </span>
                     )}
-                    <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full border ${meta.color}`}>
-                      {meta.icon}
-                      {meta.label}
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full border ${style.color}`}>
+                      {style.icon}
+                      {label}
                     </span>
                     <span className="text-[11px] text-gray-600 font-mono">v{item.data.version}</span>
                   </div>
-                  <span className="text-[11px] text-gray-600 flex-shrink-0">{fmtDate(item.data.created_at)}</span>
+                  <span className="text-[11px] text-gray-600 flex-shrink-0">{fmtDate(item.data.created_at, locale, dateLabels)}</span>
                 </div>
                 <p className="text-white font-semibold text-sm">{item.data.title}</p>
                 {item.data.description && (
@@ -313,7 +328,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
             onClick={onClose}
             className="flex items-center justify-center gap-2 w-full py-2.5 glass border border-white/10 rounded-xl text-gray-300 hover:text-white hover:border-purple-500/30 transition-all text-sm font-semibold group"
           >
-            Vollständiger Changelog
+            {t('viewFull')}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>

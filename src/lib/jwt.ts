@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key';
+// KEIN Fallback-Secret – siehe lib/auth.ts für Begründung.
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET ist nicht gesetzt. Bitte in den Umgebungsvariablen konfigurieren.');
+}
 
 export interface JWTPayload {
   userId: string;

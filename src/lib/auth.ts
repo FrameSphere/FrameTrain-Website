@@ -1,7 +1,14 @@
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key'
+// KEIN Fallback-Secret: Ein hartcodierter Default wäre ein kritisches
+// Sicherheitsrisiko (jeder, der den Quellcode kennt, könnte gültige
+// Auth-Tokens fälschen, falls JWT_SECRET in der Deployment-Umgebung
+// fehlt). Lieber beim Start hart fehlschlagen als leise unsicher laufen.
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET ist nicht gesetzt. Bitte in den Umgebungsvariablen konfigurieren.')
+}
 
 export interface JWTPayload {
   userId: string

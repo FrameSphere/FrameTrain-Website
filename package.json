@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "FrameTrain Website - Landing, Registration, Payment & Dashboard",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev -p 5001",
     "build": "next build",
@@ -21,6 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.263.1",
     "next": "14.2.35",
+    "next-intl": "^3.25.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "stripe": "^15.0.0",

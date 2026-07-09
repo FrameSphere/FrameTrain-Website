@@ -4,14 +4,17 @@ import { signToken } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
-// State-Param parsen: { source: 'login' | 'register', ts: number }
-function parseState(state: string | null): { source: string } {
+// State-Param parsen: { source: 'login' | 'register', nonce: string }
+function parseState(state: string | null): { source: string; nonce: string | null } {
   try {
-    if (!state) return { source: 'login' }
+    if (!state) return { source: 'login', nonce: null }
     const decoded = JSON.parse(Buffer.from(state, 'base64url').toString('utf-8'))
-    return { source: decoded.source === 'register' ? 'register' : 'login' }
+    return {
+      source: decoded.source === 'register' ? 'register' : 'login',
+      nonce: typeof decoded.nonce === 'string' ? decoded.nonce : null,
+    }
   } catch {
-    return { source: 'login' }
+    return { source: 'login', nonce: null }
   }
 }
 
@@ -23,10 +26,17 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url)
     const code = searchParams.get('code')
     const error = searchParams.get('error')
-    const { source } = parseState(searchParams.get('state'))
+    const rawState = searchParams.get('state')
+    const { source, nonce } = parseState(rawState)
     const errorBase = `${baseUrl}/${source}`
 
     if (error || !code) {
+      return NextResponse.redirect(`${errorBase}?error=oauth_cancelled`)
+    }
+
+    // CSRF check: siehe google/callback für Begründung.
+    const storedNonce = req.cookies.get('oauth_state')?.value
+    if (!storedNonce || !nonce || storedNonce !== nonce) {
       return NextResponse.redirect(`${errorBase}?error=oauth_cancelled`)
     }
 
@@ -133,9 +143,11 @@ export async function GET(req: NextRequest) {
 
     const destination = user.hasPaid ? '/dashboard' : '/payment'
 
-    return NextResponse.redirect(`${baseUrl}${destination}`, {
+    const response = NextResponse.redirect(`${baseUrl}${destination}`, {
       headers: { 'Set-Cookie': cookieValue },
     })
+    response.cookies.delete('oauth_state')
+    return response
   } catch (err) {
     console.error('GitHub OAuth callback error:', err)
     // source ist hier nicht verfügbar, fallback auf /login

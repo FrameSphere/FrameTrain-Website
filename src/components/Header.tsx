@@ -1,24 +1,19 @@
 'use client'
 
-import Link from 'next/link'
-import { Home, Sparkles, Bell, Languages } from 'lucide-react'
+import { Home, Sparkles, Bell } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEffect, useState, useCallback } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
+import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { ChangelogModal, useChangelogBadge } from '@/components/ChangelogModal'
 
 function LangSwitcher() {
-  const [lang, setLang] = useState<'de' | 'en'>('de')
-
-  useEffect(() => {
-    const stored = localStorage.getItem('ft_lang') as 'de' | 'en' | null
-    if (stored) setLang(stored)
-    // TODO next-intl: replace with useRouter().locale
-  }, [])
+  const locale = useLocale()
+  const pathname = usePathname()
+  const router = useRouter()
 
   const toggle = (l: 'de' | 'en') => {
-    setLang(l)
-    localStorage.setItem('ft_lang', l)
-    // TODO next-intl: router.push(pathname, { locale: l })
+    router.replace(pathname, { locale: l })
   }
 
   return (
@@ -29,7 +24,7 @@ function LangSwitcher() {
           key={l}
           onClick={() => toggle(l)}
           className={`px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-200 ${
-            lang === l
+            locale === l
               ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-sm'
               : 'text-gray-500 hover:text-gray-300'
           }`}
@@ -46,6 +41,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [changelogOpen, setChangelogOpen] = useState(false)
   const { count: badgeCount, refresh: refreshBadge } = useChangelogBadge()
+  const t = useTranslations('Nav')
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -98,34 +94,34 @@ export function Header() {
                       <Link
                         href="/"
                         className="flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
-                        title="Zur Startseite"
+                        title={t('homeTitle')}
                       >
                         <Home className="w-4 h-4" />
-                        <span className="hidden sm:inline">Home</span>
+                        <span className="hidden sm:inline">{t('home')}</span>
                       </Link>
                       <Link
                         href="/dashboard"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
                       >
-                        Dashboard
+                        {t('dashboard')}
                       </Link>
                       <Link
                         href="/library"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
                       >
-                        Library
+                        {t('library')}
                       </Link>
                       <Link
                         href="/extensions"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
                       >
-                        Extensions
+                        {t('extensions')}
                       </Link>
                       <Link
                         href="/docs"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden md:block"
                       >
-                        Docs
+                        {t('docs')}
                       </Link>
 
                       <LangSwitcher />
@@ -133,7 +129,7 @@ export function Header() {
                       {/* ── Bell / Changelog ── */}
                       <button
                         onClick={handleBellClick}
-                        title="Was ist neu?"
+                        title={t('whatsNew')}
                         className="relative p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
                       >
                         <Bell className="w-5 h-5" />
@@ -151,7 +147,7 @@ export function Header() {
                         onClick={logout}
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
                       >
-                        Abmelden
+                        {t('logout')}
                       </button>
                     </>
                   ) : (
@@ -160,37 +156,37 @@ export function Header() {
                         href="/#features"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden sm:block"
                       >
-                        Features
+                        {t('features')}
                       </Link>
                       <Link
                         href="/extensions"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden sm:block"
                       >
-                        Extensions
+                        {t('extensions')}
                       </Link>
                       <Link
                         href="/library"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden sm:block"
                       >
-                        Library
+                        {t('library')}
                       </Link>
                       <Link
                         href="/guides"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden md:block"
                       >
-                        Guides
+                        {t('guides')}
                       </Link>
                       <Link
                         href="/about"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden lg:block"
                       >
-                        About
+                        {t('about')}
                       </Link>
                       <Link
                         href="/#pricing"
                         className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 hidden sm:block"
                       >
-                        Pricing
+                        {t('pricing')}
                       </Link>
 
                       <LangSwitcher />
@@ -198,7 +194,7 @@ export function Header() {
                       {/* Bell auch für nicht-eingeloggte User */}
                       <button
                         onClick={handleBellClick}
-                        title="Was ist neu?"
+                        title={t('whatsNew')}
                         className="relative p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300"
                       >
                         <Bell className="w-5 h-5" />
@@ -210,12 +206,12 @@ export function Header() {
                       </button>
 
                       <Link href="/login" className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300">
-                        Login
+                        {t('login')}
                       </Link>
                       <Link href="/register" className="relative group px-5 py-2 rounded-xl overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient" />
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 opacity-0 group-hover:opacity-100 blur transition-opacity" />
-                        <span className="relative text-white font-semibold">Starten</span>
+                        <span className="relative text-white font-semibold">{t('start')}</span>
                       </Link>
                     </>
                   )}

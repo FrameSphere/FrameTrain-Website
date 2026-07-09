@@ -19,10 +19,13 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: '/',
         disallow: [
-          '/dashboard',      // privater Nutzer-Bereich, kein öffentlicher Content
-          '/api/',           // reine Backend-Endpunkte
-          '/payment/',       // Checkout/Success/Cancel, kein Content, teils session-spezifisch
-          '/admin/',         // Admin-Funktionen
+          '/de/dashboard',   // privater Nutzer-Bereich, kein öffentlicher Content
+          '/en/dashboard',
+          '/api/',           // reine Backend-Endpunkte (liegen außerhalb des Locale-Präfixes)
+          '/de/payment/',    // Checkout/Success/Cancel, kein Content, teils session-spezifisch
+          '/en/payment/',
+          '/de/admin/',      // Admin-Funktionen
+          '/en/admin/',
         ],
       },
     ],

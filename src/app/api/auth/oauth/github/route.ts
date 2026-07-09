@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import crypto from 'crypto'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,7 +14,11 @@ export async function GET(req: NextRequest) {
 
   // Quelle (login | register) für Fehler-Redirect merken
   const source = req.nextUrl.searchParams.get('source') || 'login'
-  const state = Buffer.from(JSON.stringify({ source, ts: Date.now() })).toString('base64url')
+
+  // CSRF state: kryptographisch zufälliges Nonce, gespeichert in httpOnly-
+  // Cookie und im Callback verifiziert (gleiches Muster wie framesphere).
+  const nonce = crypto.randomBytes(16).toString('hex')
+  const state = Buffer.from(JSON.stringify({ source, nonce })).toString('base64url')
 
   const params = new URLSearchParams({
     client_id: clientId,
@@ -22,7 +27,17 @@ export async function GET(req: NextRequest) {
     state,
   })
 
-  return NextResponse.redirect(
+  const response = NextResponse.redirect(
     `https://github.com/login/oauth/authorize?${params.toString()}`
   )
+
+  response.cookies.set('oauth_state', nonce, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 60 * 10,
+    path: '/',
+  })
+
+  return response
 }

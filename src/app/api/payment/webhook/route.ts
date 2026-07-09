@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { prisma } from '@/lib/prisma'
+import { generateApiKey } from '@/lib/api-key'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -12,17 +13,20 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 // Helper: API Key generieren und für User anlegen (idempotent)
+// WICHTIG: generateApiKey() nutzt crypto.randomBytes (kryptographisch
+// sicher). Math.random() darf hier NIE verwendet werden, da der Key
+// als Authentifizierungs-Credential für die Desktop-App dient und mit
+// Math.random() theoretisch vorhersagbar/erratbar wäre.
 async function ensureApiKey(userId: string, email: string) {
   const existing = await prisma.apiKey.findFirst({
     where: { userId, isActive: true },
   })
   if (existing) return existing
 
-  const apiKeyString = `ft_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`
   return prisma.apiKey.create({
     data: {
       userId,
-      key: apiKeyString,
+      key: generateApiKey(),
       isActive: true,
       createdAt: new Date(),
     },
