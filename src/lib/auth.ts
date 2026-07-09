@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 // Sicherheitsrisiko (jeder, der den Quellcode kennt, könnte gültige
 // Auth-Tokens fälschen, falls JWT_SECRET in der Deployment-Umgebung
 // fehlt). Lieber beim Start hart fehlschlagen als leise unsicher laufen.
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET as string
 if (!JWT_SECRET) {
   throw new Error('JWT_SECRET ist nicht gesetzt. Bitte in den Umgebungsvariablen konfigurieren.')
 }
