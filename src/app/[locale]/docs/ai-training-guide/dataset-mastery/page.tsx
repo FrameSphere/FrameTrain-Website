@@ -14,10 +14,11 @@ import {
 const CHAPTER_ID = 'dataset-mastery' as const
 const CHAPTER = CHAPTER_META.find(c => c.id === CHAPTER_ID)!
 
-function qualityColor(key: string): 'green' | 'yellow' | 'orange' {
+function qualityColor(key: string): 'green' | 'yellow' | 'red' | 'blue' {
   if (key === 'veryHigh') return 'green'
   if (key === 'high') return 'yellow'
-  return 'orange'
+  if (key === 'medium') return 'blue'
+  return 'red'
 }
 
 const STRATEGY_COLORS: Record<string, string> = {
