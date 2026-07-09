@@ -153,7 +153,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
 
   const dateLabels = {
     justNow: t('justNow'),
-    hoursAgo: t('hoursAgo'),
+    hoursAgo: t.raw('hoursAgo'),
     yesterday: t('yesterday'),
   }
 
