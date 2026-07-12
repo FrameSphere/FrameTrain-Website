@@ -298,6 +298,21 @@
         "redeeming": "Redeeming code…"
       }
     },
+    "redeem": {
+      "topLabel": "REDEEM CODE",
+      "headingLine1": "Your code for",
+      "headingLine2": "FrameTrain.",
+      "subtitle": "Enter your promo code and unlock your benefit.",
+      "inputLabel": "PROMO CODE",
+      "validateCta": "Check code",
+      "choosePlan": "CHOOSE YOUR PLAN",
+      "planMonthly": "Monthly",
+      "planYearly": "Yearly",
+      "redeemLifetimeCta": "Redeem now & unlock",
+      "redeemCheckoutCta": "Continue to checkout",
+      "redirectingStripe": "Redirecting to Stripe…",
+      "backToPayment": "Back to payment page"
+    },
     "cancel": {
       "heading": "Payment cancelled",
       "subtitleLine1": "The payment was not completed.",

@@ -525,6 +525,21 @@
         "redeeming": "Code wird eingelöst…"
       }
     },
+    "redeem": {
+      "topLabel": "GUTSCHEIN EINLÖSEN",
+      "headingLine1": "Dein Code für",
+      "headingLine2": "FrameTrain.",
+      "subtitle": "Gib deinen Gutschein-Code ein und schalte deinen Vorteil frei.",
+      "inputLabel": "GUTSCHEIN-CODE",
+      "validateCta": "Code prüfen",
+      "choosePlan": "WÄHLE DEINEN PLAN",
+      "planMonthly": "Monatlich",
+      "planYearly": "Jährlich",
+      "redeemLifetimeCta": "Jetzt einlösen & freischalten",
+      "redeemCheckoutCta": "Weiter zur Kasse",
+      "redirectingStripe": "Weiterleitung zu Stripe…",
+      "backToPayment": "Zurück zur Zahlungsseite"
+    },
     "cancel": {
       "heading": "Zahlung abgebrochen",
       "subtitleLine1": "Die Zahlung wurde nicht abgeschlossen.",

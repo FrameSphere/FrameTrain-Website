@@ -46,10 +46,27 @@ export async function POST(req: NextRequest) {
     // race-sicherer Slot-Verbrauch + Freischaltung — alles oder nichts.
     try {
       await prisma.$transaction(async (tx) => {
-        await tx.promoCodeRedemption.create({
-          data: {
+        // Upsert statt create: eine "pending"-Einlösung (abgebrochener Checkout
+        // mit demselben Code) darf das Einlösen nicht blockieren — nur eine
+        // bereits abgeschlossene.
+        const existing = await tx.promoCodeRedemption.findUnique({
+          where: { promoCodeId_userId: { promoCodeId: promo.id, userId: user.userId } },
+        })
+        if (existing?.status === 'completed') {
+          throw new Prisma.PrismaClientKnownRequestError('Already redeemed', {
+            code: 'P2002',
+            clientVersion: Prisma.prismaVersion.client,
+          })
+        }
+        await tx.promoCodeRedemption.upsert({
+          where: { promoCodeId_userId: { promoCodeId: promo.id, userId: user.userId } },
+          create: {
             promoCodeId: promo.id,
             userId: user.userId,
+            status: 'completed',
+            completedAt: new Date(),
+          },
+          update: {
             status: 'completed',
             completedAt: new Date(),
           },

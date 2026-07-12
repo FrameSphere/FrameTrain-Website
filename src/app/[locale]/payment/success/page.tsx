@@ -312,6 +312,8 @@ function PaymentSuccessContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const sessionId = searchParams.get('session_id')
+  // Kommt von der Gutschein-Seite (/redeem, Lifetime-Code ohne Stripe)
+  const promoRedeemed = searchParams.get('promo') === 'redeemed'
   const t = useTranslations('Payment.success')
 
   // 'verifying' → 'check' → 'showcase' → 'tutorial'
@@ -320,6 +322,36 @@ function PaymentSuccessContent() {
 
   // Schritt 1: session_id prüfen + auf hasPaid warten
   useEffect(() => {
+    // ── Gutschein-Einlösung (kein Stripe): Freischaltung über /api/auth/me prüfen ──
+    // Die Seite zeigt die Animation NUR, wenn der Server hasPaid bestätigt —
+    // der URL-Param allein schaltet nichts frei.
+    if (promoRedeemed) {
+      let attempts = 0
+      const MAX_ATTEMPTS = 10
+      const checkAccess = async () => {
+        try {
+          const res = await fetch('/api/auth/me', { credentials: 'include' })
+          if (res.ok) {
+            const data = await res.json()
+            if (data.user?.hasPaid) {
+              setView('check')
+              return
+            }
+          }
+          if (attempts < MAX_ATTEMPTS) {
+            attempts++
+            setTimeout(checkAccess, 1000)
+            return
+          }
+          setView('invalid')
+        } catch {
+          setView('invalid')
+        }
+      }
+      checkAccess()
+      return
+    }
+
     // Keine session_id in der URL → sofort raus
     if (!sessionId) {
       router.replace('/payment')
@@ -366,7 +398,7 @@ function PaymentSuccessContent() {
     }
 
     verify()
-  }, [sessionId, router])
+  }, [sessionId, promoRedeemed, router])
 
   function handleCheckDone() {
     setTimeout(() => setSuccessVisible(true), 100)
