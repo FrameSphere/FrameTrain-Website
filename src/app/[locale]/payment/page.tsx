@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import {
   CreditCard, Shield, Zap, Brain, BarChart3, Layers,
-  Lock, Sparkles, ArrowRight, CheckCircle2
+  Lock, Sparkles, ArrowRight, CheckCircle2, Ticket, X
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -221,6 +221,14 @@ function PriceDisplay({ visible, plan, onPlanChange }: { visible: boolean; plan:
   )
 }
 
+// ─── Promo code types ─────────────────────────────────────────────────────────
+interface AppliedPromo {
+  code: string
+  type: 'percent' | 'free_months' | 'lifetime'
+  percentOff?: number
+  freeMonths?: number
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 function PaymentPageInner() {
   const router = useRouter()
@@ -237,6 +245,13 @@ function PaymentPageInner() {
   })
   const [btnHovered, setBtnHovered] = useState(false)
   const [btnPressed, setBtnPressed] = useState(false)
+
+  // ── Promo code state ──
+  const [showPromoInput, setShowPromoInput] = useState(false)
+  const [promoInput, setPromoInput] = useState('')
+  const [promo, setPromo] = useState<AppliedPromo | null>(null)
+  const [promoLoading, setPromoLoading] = useState(false)
+  const [promoError, setPromoError] = useState('')
 
   const PERKS = t.raw('perks') as string[]
 
@@ -255,18 +270,83 @@ function PaymentPageInner() {
     return () => clearTimeout(t)
   }, [])
 
+  // Code prüfen (löst noch nichts ein)
+  const handleApplyPromo = async () => {
+    const code = promoInput.trim().toUpperCase()
+    if (!code) return
+    setPromoLoading(true)
+    setPromoError('')
+    try {
+      const res = await fetch('/api/promo/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ code }),
+      })
+      if (res.status === 429) {
+        setPromoError(t('promo.rateLimited'))
+        return
+      }
+      const data = await res.json()
+      if (!res.ok || !data.valid) {
+        setPromoError(
+          data.reason === 'already_redeemed' ? t('promo.alreadyRedeemed') : t('promo.invalid')
+        )
+        return
+      }
+      setPromo(data.promo as AppliedPromo)
+      setPromoInput('')
+      setShowPromoInput(false)
+    } catch {
+      setPromoError(t('promo.invalid'))
+    } finally {
+      setPromoLoading(false)
+    }
+  }
+
+  const handleRemovePromo = () => {
+    setPromo(null)
+    setPromoError('')
+  }
+
   const handlePayment = async () => {
     setLoading(true)
     setError('')
     try {
+      // Lifetime-Code: kein Stripe-Checkout nötig — direkt einlösen
+      if (promo?.type === 'lifetime') {
+        const res = await fetch('/api/promo/redeem', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ code: promo.code }),
+        })
+        const data = await res.json()
+        if (!res.ok || !data.success) {
+          setPromo(null)
+          throw new Error(
+            data.reason === 'already_redeemed' ? t('promo.alreadyRedeemed') : t('promo.invalid')
+          )
+        }
+        // Voller Reload, damit der Auth-Context den neuen hasPaid-Status lädt
+        window.location.href = '/dashboard'
+        return
+      }
+
       const res = await fetch('/api/payment/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ plan }),
+        body: JSON.stringify({ plan, ...(promo ? { promoCode: promo.code } : {}) }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('errorFallback'))
+      if (!res.ok) {
+        if (data.error === 'promo_invalid') {
+          setPromo(null)
+          throw new Error(t('promo.invalid'))
+        }
+        throw new Error(data.error || t('errorFallback'))
+      }
       if (data.url) window.location.href = data.url
     } catch (err: any) {
       setError(err.message)
@@ -456,6 +536,118 @@ function PaymentPageInner() {
                 ))}
               </div>
 
+              {/* ── Promo code ── */}
+              <div style={{ marginBottom: 24 }}>
+                {promo ? (
+                  // Aktiver Code: Badge mit Vorteil + Entfernen-Button
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 12,
+                    padding: '12px 16px',
+                    background: 'rgba(52,211,153,0.1)',
+                    border: '1px solid rgba(52,211,153,0.35)',
+                    borderRadius: 12,
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+                      <Ticket size={16} color="#34d399" style={{ flexShrink: 0 }} />
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ color: '#34d399', fontSize: 14, fontWeight: 700 }}>
+                          {promo.type === 'percent' && t('promo.appliedPercent', { percent: promo.percentOff ?? 0 })}
+                          {promo.type === 'free_months' && t('promo.appliedFreeMonths', { months: promo.freeMonths ?? 0 })}
+                          {promo.type === 'lifetime' && t('promo.appliedLifetime')}
+                        </div>
+                        <div style={{ color: '#64748b', fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {t('promo.codeLabel', { code: promo.code })}
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleRemovePromo}
+                      aria-label={t('promo.remove')}
+                      style={{
+                        background: 'none', border: 'none', cursor: 'pointer',
+                        color: '#64748b', display: 'flex', alignItems: 'center', padding: 4, flexShrink: 0,
+                      }}
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                ) : showPromoInput ? (
+                  // Eingabefeld
+                  <div>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <input
+                        type="text"
+                        value={promoInput}
+                        onChange={e => { setPromoInput(e.target.value.toUpperCase()); setPromoError('') }}
+                        onKeyDown={e => { if (e.key === 'Enter') handleApplyPromo() }}
+                        placeholder={t('promo.placeholder')}
+                        maxLength={32}
+                        autoFocus
+                        spellCheck={false}
+                        autoComplete="off"
+                        style={{
+                          flex: 1,
+                          padding: '12px 14px',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: `1px solid ${promoError ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.12)'}`,
+                          borderRadius: 12,
+                          color: '#e2e8f0',
+                          fontSize: 14,
+                          fontWeight: 600,
+                          letterSpacing: '0.08em',
+                          outline: 'none',
+                          fontFamily: "'DM Sans', sans-serif",
+                          textTransform: 'uppercase',
+                        }}
+                      />
+                      <button
+                        onClick={handleApplyPromo}
+                        disabled={promoLoading || !promoInput.trim()}
+                        style={{
+                          padding: '12px 20px',
+                          borderRadius: 12,
+                          border: '1px solid rgba(167,139,250,0.35)',
+                          background: 'rgba(167,139,250,0.12)',
+                          color: '#c4b5fd',
+                          fontSize: 14,
+                          fontWeight: 700,
+                          cursor: promoLoading || !promoInput.trim() ? 'not-allowed' : 'pointer',
+                          opacity: promoLoading || !promoInput.trim() ? 0.5 : 1,
+                          fontFamily: "'DM Sans', sans-serif",
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {promoLoading ? t('promo.checking') : t('promo.apply')}
+                      </button>
+                    </div>
+                    {promoError && (
+                      <div style={{ marginTop: 8, color: '#fca5a5', fontSize: 13 }}>{promoError}</div>
+                    )}
+                  </div>
+                ) : (
+                  // Toggle-Link
+                  <button
+                    onClick={() => setShowPromoInput(true)}
+                    style={{
+                      background: 'none', border: 'none', cursor: 'pointer',
+                      color: '#64748b', fontSize: 13, fontWeight: 600,
+                      display: 'flex', alignItems: 'center', gap: 6,
+                      padding: 0,
+                      fontFamily: "'DM Sans', sans-serif",
+                      transition: 'color 0.2s',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#a78bfa')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}
+                  >
+                    <Ticket size={14} />
+                    {t('promo.toggle')}
+                  </button>
+                )}
+              </div>
+
               {/* Error */}
               {error && (
                 <div style={{
@@ -526,12 +718,14 @@ function PaymentPageInner() {
                         borderRadius: '50%',
                         animation: 'spin 0.7s linear infinite',
                       }} />
-                      {t('redirecting')}
+                      {promo?.type === 'lifetime' ? t('promo.redeeming') : t('redirecting')}
                     </>
                   ) : (
                     <>
                       <Lock size={18} />
-                      {plan === 'yearly' ? t('ctaYearly') : t('ctaMonthly')}
+                      {promo?.type === 'lifetime'
+                        ? t('promo.ctaLifetime')
+                        : plan === 'yearly' ? t('ctaYearly') : t('ctaMonthly')}
                       <ArrowRight size={18} style={{ marginLeft: 4 }} />
                     </>
                   )}

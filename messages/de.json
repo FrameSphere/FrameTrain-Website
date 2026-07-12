@@ -507,7 +507,23 @@
         "instantAccess": "Sofortzugang"
       },
       "skipLink": "Später bezahlen",
-      "trustedBy": "Bereits von Entwicklern weltweit genutzt"
+      "trustedBy": "Bereits von Entwicklern weltweit genutzt",
+      "promo": {
+        "toggle": "Du hast einen Gutschein-Code?",
+        "placeholder": "CODE EINGEBEN",
+        "apply": "Einlösen",
+        "checking": "Prüfe…",
+        "invalid": "Dieser Code ist ungültig oder abgelaufen.",
+        "alreadyRedeemed": "Du hast diesen Code bereits eingelöst.",
+        "rateLimited": "Zu viele Versuche. Bitte warte ein paar Minuten.",
+        "appliedPercent": "{percent} % Rabatt aktiviert",
+        "appliedFreeMonths": "{months, plural, one {1 Monat gratis} other {# Monate gratis}} aktiviert",
+        "appliedLifetime": "Lifetime-Zugang aktiviert",
+        "codeLabel": "Code: {code}",
+        "remove": "Code entfernen",
+        "ctaLifetime": "Code einlösen & freischalten",
+        "redeeming": "Code wird eingelöst…"
+      }
     },
     "cancel": {
       "heading": "Zahlung abgebrochen",

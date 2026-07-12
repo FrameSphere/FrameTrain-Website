@@ -20,6 +20,7 @@ model User {
   providerAccountId String?   @map("provider_account_id")
   framesphereUserId String?   @unique @map("framesphere_user_id")
   hasPaid              Boolean   @default(false) @map("has_paid")
+  lifetimeAccess       Boolean   @default(false) @map("lifetime_access") // Zugang via Lifetime-Promo-Code — darf nie durch Abo-Events deaktiviert werden
   stripeCustomerId     String?   @unique @map("stripe_customer_id")
   stripeSubscriptionId String?   @unique @map("stripe_subscription_id")
   subscriptionCancelAt DateTime? @map("subscription_cancel_at")
@@ -29,12 +30,55 @@ model User {
   createdAt            DateTime  @default(now()) @map("created_at")
   updatedAt            DateTime  @updatedAt @map("updated_at")
 
-  apiKeys         ApiKey[]
-  models          Model[]
-  payments        Payment[]
-  libraryScripts  LibraryScript[]
+  apiKeys          ApiKey[]
+  models           Model[]
+  payments         Payment[]
+  libraryScripts   LibraryScript[]
+  promoRedemptions PromoCodeRedemption[]
 
   @@map("users")
+}
+
+// Promo-Codes (werden von der Admin-Webseite aus angelegt und verwaltet)
+model PromoCode {
+  id                    String    @id @default(cuid())
+  code                  String    @unique                        // immer normalisiert: GROSSBUCHSTABEN, A-Z 0-9 und "-"
+  type                  String                                   // "percent" | "free_months" | "lifetime"
+  percentOff            Int?      @map("percent_off")            // 1–100, nur bei type=percent
+  percentDuration       String?   @map("percent_duration")       // "once" | "forever" | "repeating" (Stripe-Coupon-Duration)
+  percentDurationMonths Int?      @map("percent_duration_months") // nur bei percentDuration=repeating
+  freeMonths            Int?      @map("free_months")            // nur bei type=free_months
+  maxRedemptions        Int?      @map("max_redemptions")        // null = unbegrenzt einlösbar
+  redemptionCount       Int       @default(0) @map("redemption_count")
+  expiresAt             DateTime? @map("expires_at")             // null = kein Ablaufdatum
+  isActive              Boolean   @default(true) @map("is_active")
+  stripeCouponId        String?   @map("stripe_coupon_id")       // wird beim ersten Checkout lazy angelegt (nur type=percent)
+  note                  String?                                  // interne Admin-Notiz, wird Usern nie angezeigt
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  redemptions PromoCodeRedemption[]
+
+  @@index([isActive])
+  @@map("promo_codes")
+}
+
+model PromoCodeRedemption {
+  id              String    @id @default(cuid())
+  promoCodeId     String    @map("promo_code_id")
+  userId          String    @map("user_id")
+  status          String    @default("pending")      // "pending" (Checkout gestartet) | "completed" (Checkout abgeschlossen / Lifetime eingelöst)
+  plan            String?                            // "monthly" | "yearly" | null (lifetime)
+  stripeSessionId String?   @map("stripe_session_id")
+  redeemedAt      DateTime  @default(now()) @map("redeemed_at")
+  completedAt     DateTime? @map("completed_at")
+
+  promoCode PromoCode @relation(fields: [promoCodeId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([promoCodeId, userId])                    // jeder User kann jeden Code nur 1× einlösen
+  @@index([userId])
+  @@map("promo_code_redemptions")
 }
 
 model ApiKey {

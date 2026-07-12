@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { prisma } from '@/lib/prisma'
 import { generateApiKey } from '@/lib/api-key'
+import { consumeRedemptionSlot } from '@/lib/promo'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -31,6 +32,48 @@ async function ensureApiKey(userId: string, email: string) {
       createdAt: new Date(),
     },
   })
+}
+
+// Helper: Promo-Einlösung nach erfolgreichem Checkout finalisieren.
+// Erst hier wird der Code wirklich "verbraucht" — abgebrochene Checkouts
+// verbrennen so keine Einlösungen.
+async function finalizePromoRedemption(session: Stripe.Checkout.Session, userId: string) {
+  const promoCodeId = session.metadata?.promoCodeId
+  if (!promoCodeId) return
+
+  try {
+    const redemption = await prisma.promoCodeRedemption.findUnique({
+      where: { promoCodeId_userId: { promoCodeId, userId } },
+    })
+    if (redemption?.status === 'completed') return // Webhook-Retry → idempotent
+
+    const consumed = await consumeRedemptionSlot(prisma, promoCodeId)
+    if (!consumed) {
+      // Race: Code wurde zwischen Checkout-Start und -Abschluss ausgeschöpft.
+      // Stripe hat den Rabatt bereits gewährt — nur loggen für Admin-Sichtbarkeit.
+      console.warn('⚠️ Promo code exhausted between checkout start and completion:', promoCodeId)
+    }
+
+    await prisma.promoCodeRedemption.upsert({
+      where: { promoCodeId_userId: { promoCodeId, userId } },
+      create: {
+        promoCodeId,
+        userId,
+        status: 'completed',
+        stripeSessionId: session.id,
+        completedAt: new Date(),
+      },
+      update: {
+        status: 'completed',
+        stripeSessionId: session.id,
+        completedAt: new Date(),
+      },
+    })
+
+    console.log('✅ Promo redemption completed:', session.metadata?.promoCode, 'for user', userId)
+  } catch (err) {
+    console.error('❌ Error finalizing promo redemption:', err)
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -63,9 +106,15 @@ export async function POST(req: NextRequest) {
       const subscriptionId = session.subscription as string | null
 
       try {
-        const user = await prisma.user.findUnique({
-          where: { email: session.customer_email! },
-        })
+        let user = session.customer_email
+          ? await prisma.user.findUnique({ where: { email: session.customer_email } })
+          : null
+
+        // Fallback: über die userId aus den Session-Metadaten (robuster,
+        // falls der User seine E-Mail zwischenzeitlich geändert hat)
+        if (!user && session.metadata?.userId) {
+          user = await prisma.user.findUnique({ where: { id: session.metadata.userId } })
+        }
 
         if (!user) {
           console.error('❌ User not found for email:', session.customer_email)
@@ -87,7 +136,7 @@ export async function POST(req: NextRequest) {
         await prisma.payment.create({
           data: {
             userId: user.id,
-            email: session.customer_email!,
+            email: session.customer_email ?? user.email,
             amount: session.amount_total ?? 499,
             currency: session.currency ?? 'eur',
             stripePaymentId: null,          // bei subscription kein payment_intent
@@ -99,9 +148,12 @@ export async function POST(req: NextRequest) {
         })
 
         // API Key erstellen (idempotent)
-        await ensureApiKey(user.id, session.customer_email!)
+        await ensureApiKey(user.id, user.email)
 
-        console.log('✅ Subscription started & API Key created for:', session.customer_email)
+        // Falls ein Promo-Code im Spiel war: Einlösung jetzt final verbuchen
+        await finalizePromoRedemption(session, user.id)
+
+        console.log('✅ Subscription started & API Key created for:', user.email)
       } catch (dbError) {
         console.error('❌ Database error in checkout.session.completed:', dbError)
       }
@@ -161,20 +213,23 @@ export async function POST(req: NextRequest) {
             where: { stripeCustomerId: sub.customer as string },
           })
           if (userByCustomer) {
+            // Lifetime-User behalten Zugang & API Keys — nur Abo-Felder aufräumen
             await prisma.user.update({
               where: { id: userByCustomer.id },
               data: {
-                hasPaid: false,
+                hasPaid: userByCustomer.lifetimeAccess ? true : false,
                 stripeSubscriptionId: null,
                 subscriptionCancelAt: null,
                 updatedAt: new Date(),
               },
             })
-            // API Key deaktivieren
-            await prisma.apiKey.updateMany({
-              where: { userId: userByCustomer.id, isActive: true },
-              data: { isActive: false },
-            })
+            if (!userByCustomer.lifetimeAccess) {
+              // API Key deaktivieren
+              await prisma.apiKey.updateMany({
+                where: { userId: userByCustomer.id, isActive: true },
+                data: { isActive: false },
+              })
+            }
             console.log('⛔ Subscription cancelled for customer:', sub.customer)
           } else {
             console.error('❌ No user found for subscription:', sub.id)
@@ -182,21 +237,24 @@ export async function POST(req: NextRequest) {
           break
         }
 
+        // Lifetime-User behalten Zugang & API Keys — nur Abo-Felder aufräumen
         await prisma.user.update({
           where: { id: user.id },
           data: {
-            hasPaid: false,
+            hasPaid: user.lifetimeAccess ? true : false,
             stripeSubscriptionId: null,
             subscriptionCancelAt: null,
             updatedAt: new Date(),
           },
         })
 
-        // Alle aktiven API Keys deaktivieren
-        await prisma.apiKey.updateMany({
-          where: { userId: user.id, isActive: true },
-          data: { isActive: false },
-        })
+        if (!user.lifetimeAccess) {
+          // Alle aktiven API Keys deaktivieren
+          await prisma.apiKey.updateMany({
+            where: { userId: user.id, isActive: true },
+            data: { isActive: false },
+          })
+        }
 
         console.log('⛔ Subscription cancelled for:', user.email)
       } catch (dbError) {

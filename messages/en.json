@@ -280,7 +280,23 @@
         "instantAccess": "Instant access"
       },
       "skipLink": "Pay later",
-      "trustedBy": "Already trusted by developers worldwide"
+      "trustedBy": "Already trusted by developers worldwide",
+      "promo": {
+        "toggle": "Have a promo code?",
+        "placeholder": "ENTER CODE",
+        "apply": "Apply",
+        "checking": "Checking…",
+        "invalid": "This code is invalid or has expired.",
+        "alreadyRedeemed": "You have already redeemed this code.",
+        "rateLimited": "Too many attempts. Please wait a few minutes.",
+        "appliedPercent": "{percent}% discount applied",
+        "appliedFreeMonths": "{months, plural, one {1 month free} other {# months free}} applied",
+        "appliedLifetime": "Lifetime access activated",
+        "codeLabel": "Code: {code}",
+        "remove": "Remove code",
+        "ctaLifetime": "Redeem code & unlock",
+        "redeeming": "Redeeming code…"
+      }
     },
     "cancel": {
       "heading": "Payment cancelled",
