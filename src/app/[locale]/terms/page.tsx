@@ -4,13 +4,18 @@ import { Footer } from '@/components/Footer'
 import { FileText } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
+import { pageAlternates } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Terms' })
-  return { title: t('metaTitle'), description: t('metaDescription') }
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: pageAlternates(locale, '/terms'),
+  }
 }
 
 export default function TermsPage() {

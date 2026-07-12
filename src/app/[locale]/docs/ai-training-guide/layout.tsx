@@ -1,21 +1,23 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('AICoach.meta')
+const path = '/docs/ai-training-guide'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'AICoach.meta' })
   return {
     title: t('title'),
     description: t('description'),
-    keywords: t.raw('keywords') as string[],
-    openGraph: {
+    alternates: pageAlternates(locale, path),
+    openGraph: pageOpenGraph({
+      locale,
+      path,
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: 'https://frame-train.vercel.app/docs/ai-training-guide',
       type: 'article',
-    },
-    alternates: {
-      canonical: 'https://frame-train.vercel.app/docs/ai-training-guide',
-    },
+    }),
   }
 }
 

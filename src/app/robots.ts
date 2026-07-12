@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next'
+import { siteUrl } from '@/lib/seo'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://frame-train.vercel.app'
+  const baseUrl = siteUrl
 
   // WICHTIG: '/_next/' darf hier NICHT in disallow stehen.
   // Next.js liefert darüber CSS und JS-Chunks aus (z.B. /_next/static/css/...).

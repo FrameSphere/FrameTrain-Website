@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -7,12 +8,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: `https://frame-train.vercel.app/${locale}/install` },
-    openGraph: {
+    alternates: pageAlternates(locale, '/install'),
+    openGraph: pageOpenGraph({
+      locale,
+      path: '/install',
       title: t('metaTitle'),
       description: t('metaDescription'),
-      url: `https://frame-train.vercel.app/${locale}/install`,
-    },
+    }),
   }
 }
 

@@ -6,10 +6,11 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import '../globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
+import { siteUrl, pageAlternates, pageOpenGraph } from '@/lib/seo'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const baseUrl = 'https://frame-train.vercel.app'
+const baseUrl = siteUrl
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -46,25 +47,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(baseUrl),
     title: copy.title,
     description: copy.description,
-    keywords: [
-      'Machine Learning lokal trainieren',
-      'KI Modell lokal trainieren',
-      'LLM fine tuning lokal',
-      'HuggingFace Modell trainieren',
-      'ML Training Desktop App',
-      'LoRA fine tuning',
-      'QLoRA Training',
-      'PyTorch Desktop',
-      'AI Training Software offline',
-      'lokales KI Training',
-      'GPU Training lokal',
-      'NVIDIA CUDA Training',
-      'Apple Metal M1 M2 M3',
-      'DSGVO konformes ML Training',
-      'Machine Learning ohne Cloud',
-      'FrameTrain Preis',
-      'ML Tool kostengünstig',
-    ],
     authors: [{ name: 'FrameTrain' }],
     creator: 'FrameTrain',
     generator: 'Next.js',
@@ -79,28 +61,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       apple: '/apple-touch-icon.svg',
       shortcut: '/favicon.svg',
     },
-    openGraph: {
-      type: 'website',
-      locale: locale === 'en' ? 'en_US' : 'de_DE',
-      url: `${baseUrl}/${locale}`,
+    openGraph: pageOpenGraph({
+      locale,
       title: copy.ogTitle,
       description: copy.ogDescription,
-      siteName: 'FrameTrain',
-      images: [
-        {
-          url: '/og-image.svg',
-          width: 1200,
-          height: 630,
-          alt: copy.ogTitle,
-          type: 'image/svg+xml',
-        },
-      ],
-    },
+    }),
+    // Bewusst ohne title/description/images: X/Twitter fällt auf die og:*-Tags
+    // zurück – so bleiben die Twitter-Cards auf Unterseiten seitenspezifisch,
+    // statt die hier gesetzten Startseiten-Werte zu erben.
     twitter: {
       card: 'summary_large_image',
-      title: copy.ogTitle,
-      description: copy.ogDescription,
-      images: ['/og-image.svg'],
       creator: '@FrameTrainApp',
       site: '@FrameTrainApp',
     },
@@ -120,14 +90,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     verification: {
       google: 'google7ef57c38ed213579',
     },
-    alternates: {
-      canonical: `${baseUrl}/${locale}`,
-      languages: {
-        de: `${baseUrl}/de`,
-        en: `${baseUrl}/en`,
-        'x-default': `${baseUrl}/de`,
-      },
-    },
+    // Gilt nur für die Startseite – jede Unterseite MUSS eigene alternates
+    // via pageAlternates() setzen, sonst erbt sie das Startseiten-Canonical.
+    alternates: pageAlternates(locale),
   }
 }
 

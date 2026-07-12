@@ -4,6 +4,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 import {
   Sparkles, Heart, Shield, Zap, Brain, Globe, Lock,
   Code2, Cpu, ArrowRight, Github, Users, Rocket, Star,
@@ -18,12 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    keywords: t.raw('keywords') as string[],
-    openGraph: {
+    alternates: pageAlternates(locale, '/about'),
+    openGraph: pageOpenGraph({
+      locale,
+      path: '/about',
       title: t('ogTitle'),
       description: t('ogDescription'),
-      images: ['/og-image.svg'],
-    },
+    }),
   }
 }
 

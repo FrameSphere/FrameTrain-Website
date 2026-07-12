@@ -4,8 +4,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { prisma } from '@/lib/prisma'
 import { getTranslations } from 'next-intl/server'
-
-const baseUrl = 'https://frame-train.vercel.app'
+import { pageAlternates, pageOpenGraph, siteUrl as baseUrl } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -15,18 +14,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    keywords: t.raw('keywords') as string[],
-    alternates: {
-      canonical: `${baseUrl}/${locale}/library`,
-    },
-    openGraph: {
-      type: 'website',
-      locale: locale === 'en' ? 'en_US' : 'de_DE',
-      url: `${baseUrl}/${locale}/library`,
+    alternates: pageAlternates(locale, '/library'),
+    openGraph: pageOpenGraph({
+      locale,
+      path: '/library',
       title: t('ogTitle'),
       description: t('ogDescription'),
-      siteName: 'FrameTrain',
-    },
+    }),
     twitter: {
       card: 'summary_large_image',
       title: t('metaTitle'),

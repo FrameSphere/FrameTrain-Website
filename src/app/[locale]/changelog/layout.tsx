@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 
 type Props = { children: React.ReactNode; params: Promise<{ locale: string }> }
 
@@ -9,12 +10,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: `https://frame-train.vercel.app/${locale}/changelog` },
-    openGraph: {
+    alternates: pageAlternates(locale, '/changelog'),
+    openGraph: pageOpenGraph({
+      locale,
+      path: '/changelog',
       title: t('metaTitle'),
       description: t('metaDescription'),
-      url: `https://frame-train.vercel.app/${locale}/changelog`,
-    },
+    }),
   }
 }
 

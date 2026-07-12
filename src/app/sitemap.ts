@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { routing } from '@/i18n/routing'
+import { siteUrl } from '@/lib/seo'
 
-const baseUrl = 'https://frame-train.vercel.app'
+const baseUrl = siteUrl
 
 type PageDef = {
   path: string // ohne führenden Slash der Locale, z.B. '' oder '/about'
@@ -53,6 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             de: `${baseUrl}/de${page.path}`,
             en: `${baseUrl}/en${page.path}`,
+            'x-default': `${baseUrl}${page.path || '/'}`,
           },
         },
       })

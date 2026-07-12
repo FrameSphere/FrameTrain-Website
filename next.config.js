@@ -58,7 +58,7 @@ const nextConfig = {
           // Preconnect for faster loading
           {
             key: 'Link',
-            value: '</fonts.googleapis.com>; rel=preconnect, <https://fonts.gstatic.com>; rel=preconnect'
+            value: '<https://fonts.googleapis.com>; rel=preconnect, <https://fonts.gstatic.com>; rel=preconnect'
           },
         ],
       },

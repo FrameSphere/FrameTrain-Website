@@ -4,6 +4,7 @@ import { Footer } from '@/components/Footer'
 import { Shield } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
+import { pageAlternates } from '@/lib/seo'
 import { Link } from '@/i18n/navigation'
 
 type Props = { params: Promise<{ locale: string }> }
@@ -11,7 +12,11 @@ type Props = { params: Promise<{ locale: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Privacy' })
-  return { title: t('metaTitle'), description: t('metaDescription') }
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: pageAlternates(locale, '/privacy'),
+  }
 }
 
 type ItemWithDesc = { name: string; desc: string }

@@ -4,13 +4,18 @@ import { Footer } from '@/components/Footer'
 import { Info } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
+import { pageAlternates } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Imprint' })
-  return { title: t('metaTitle'), description: t('metaDescription') }
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: pageAlternates(locale, '/imprint'),
+  }
 }
 
 export default function ImprintPage() {

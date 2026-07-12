@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer'
 import { Brain, Zap, Check, ArrowRight, Code2, Cpu, ChevronRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -14,12 +15,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    keywords: t.raw('keywords') as string[],
-    openGraph: {
+    alternates: pageAlternates(locale, '/guides/lora-finetuning'),
+    openGraph: pageOpenGraph({
+      locale,
+      path: '/guides/lora-finetuning',
       title: t('ogTitle'),
       description: t('ogDescription'),
-      images: ['/og-image.svg'],
-    },
+      type: 'article',
+    }),
   }
 }
 
