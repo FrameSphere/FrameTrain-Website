@@ -633,16 +633,16 @@ function PaymentPageInner() {
                     onClick={() => setShowPromoInput(true)}
                     style={{
                       background: 'none', border: 'none', cursor: 'pointer',
-                      color: '#64748b', fontSize: 13, fontWeight: 600,
-                      display: 'flex', alignItems: 'center', gap: 6,
+                      color: '#94a3b8', fontSize: 15, fontWeight: 600,
+                      display: 'flex', alignItems: 'center', gap: 8,
                       padding: 0,
                       fontFamily: "'DM Sans', sans-serif",
                       transition: 'color 0.2s',
                     }}
                     onMouseEnter={e => (e.currentTarget.style.color = '#a78bfa')}
-                    onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
                   >
-                    <Ticket size={14} />
+                    <Ticket size={17} />
                     {t('promo.toggle')}
                   </button>
                 )}
