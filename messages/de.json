@@ -5138,7 +5138,7 @@
   },
   "ReleaseCountdown": {
     "downloadLock": {
-      "availableFrom": "Download verfügbar ab 13. Juli 2026",
+      "availableFrom": "Download verfügbar ab 20. Juli 2026",
       "days": "Tage",
       "hours": "Std",
       "minutes": "Min",
@@ -5153,26 +5153,26 @@
       "hours": "Stunden",
       "minutes": "Minuten",
       "seconds": "Sekunden",
-      "date": "13. Juli 2026",
+      "date": "20. Juli 2026",
       "note1": "Du kannst schon jetzt zahlen & registrieren.",
       "note2": "Der Download wird automatisch am Release-Tag freigeschaltet.",
       "liveTitle": "FrameTrain ist live!",
       "liveDesc": "Die Desktop-App ist jetzt im Dashboard verfügbar."
     },
     "badge": {
-      "text": "Desktop-App – Release 13. Juli"
+      "text": "Desktop-App – Release 20. Juli"
     },
     "promo": {
       "tag": "Bald verfügbar",
       "titlePre": "Die Desktop-App",
-      "titleHighlight": "kommt am 13. Juli",
-      "paragraph": "FrameTrain Desktop wird am <b>13. Juli 2026</b> offiziell released. Melde dich jetzt an, zahle den Early-Access-Preis und erhalte <b>sofortigen Download-Zugang</b> am Release-Tag.",
+      "titleHighlight": "kommt am 20. Juli",
+      "paragraph": "FrameTrain Desktop wird am <b>20. Juli 2026</b> offiziell released. Melde dich jetzt an, zahle den Early-Access-Preis und erhalte <b>sofortigen Download-Zugang</b> am Release-Tag.",
       "features": [
         { "emoji": "🔒", "text": "Preis sichern – steigt nach 100 Nutzern" },
         { "emoji": "⚡", "text": "Sofort-Zugang ab Release" },
         { "emoji": "🎁", "text": "Early Adopter Vorteile" }
       ],
-      "footer": "Registrierung & Zahlung jetzt möglich · Download ab 13. Juli 12:00 UTC"
+      "footer": "Registrierung & Zahlung jetzt möglich · Download ab 20. Juli 12:00 UTC"
     }
   },
   "ChangelogModal": {

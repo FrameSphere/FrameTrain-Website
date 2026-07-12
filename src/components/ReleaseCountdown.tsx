@@ -2,7 +2,7 @@
 
 /* ============================================================
    Temporäre UI Anfang, bald herausnehmen
-   Release: 13. Juli 2026, 12:00 UTC
+   Release: 20. Juli 2026, 12:00 UTC
    Zum Entfernen: Diese Datei löschen + alle Imports davon entfernen
    ============================================================ */
 
@@ -11,7 +11,7 @@ import { useTranslations } from 'next-intl'
 import { Rocket, Sparkles, PartyPopper, Clock } from 'lucide-react'
 
 // ── Konfiguration ───────────────────────────────────────────────
-const RELEASE_DATE = new Date('2026-07-13T12:00:00Z')
+const RELEASE_DATE = new Date('2026-07-20T12:00:00Z')
 const CONFETTI_DAYS = 7 // Konfetti für N Tage nach Release
 const CONFETTI_END = new Date(RELEASE_DATE.getTime() + CONFETTI_DAYS * 24 * 60 * 60 * 1000)
 

@@ -2002,7 +2002,7 @@
   },
   "ReleaseCountdown": {
     "downloadLock": {
-      "availableFrom": "Download available from July 13, 2026",
+      "availableFrom": "Download available from July 20, 2026",
       "days": "Days",
       "hours": "Hrs",
       "minutes": "Min",
@@ -2017,26 +2017,26 @@
       "hours": "Hours",
       "minutes": "Minutes",
       "seconds": "Seconds",
-      "date": "July 13, 2026",
+      "date": "July 20, 2026",
       "note1": "You can pay & register right now.",
       "note2": "The download unlocks automatically on release day.",
       "liveTitle": "FrameTrain is live!",
       "liveDesc": "The desktop app is now available in the dashboard."
     },
     "badge": {
-      "text": "Desktop App – Release July 13"
+      "text": "Desktop App – Release July 20"
     },
     "promo": {
       "tag": "Coming soon",
       "titlePre": "The desktop app",
-      "titleHighlight": "arrives on July 13",
-      "paragraph": "FrameTrain Desktop officially releases on <b>July 13, 2026</b>. Sign up now, pay the Early Access price, and get <b>instant download access</b> on release day.",
+      "titleHighlight": "arrives on July 20",
+      "paragraph": "FrameTrain Desktop officially releases on <b>July 20, 2026</b>. Sign up now, pay the Early Access price, and get <b>instant download access</b> on release day.",
       "features": [
         { "emoji": "🔒", "text": "Lock in your price – increases after 100 users" },
         { "emoji": "⚡", "text": "Instant access on release" },
         { "emoji": "🎁", "text": "Early adopter perks" }
       ],
-      "footer": "Registration & payment available now · Download from July 13, 12:00 UTC"
+      "footer": "Registration & payment available now · Download from July 20, 12:00 UTC"
     }
   },
   "ChangelogModal": {
