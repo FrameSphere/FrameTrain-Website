@@ -8,9 +8,13 @@ import { rateLimit, getClientIp } from '@/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
 
-// Löst einen LIFETIME-Code direkt ein (ohne Stripe-Checkout).
-// percent- und free_months-Codes laufen NICHT hier, sondern über
-// /api/payment/create-checkout, weil dort Stripe den Rabatt/Trial abbildet.
+// Löst einen Code direkt ein (ohne Stripe-Checkout):
+// - lifetime:     Zugang für immer
+// - free_months:  Zugang für X Monate OHNE Abo/Karte — läuft danach automatisch
+//                 ab (promo_access_until; täglicher Cron zieht Zugang + API-Key zurück).
+//                 Alternativ kann der User free_months auch MIT Abo über
+//                 /api/payment/create-checkout einlösen (Stripe-Trial).
+// percent-Codes laufen ausschließlich über den Checkout.
 export async function POST(req: NextRequest) {
   try {
     const user = await getCurrentUser()
@@ -37,13 +41,14 @@ export async function POST(req: NextRequest) {
     }
 
     const promo = result.promo
-    if (promo.type !== 'lifetime') {
-      // Rabatt-/Gratismonats-Codes müssen durch den Checkout laufen
+    if (promo.type !== 'lifetime' && promo.type !== 'free_months') {
+      // Rabatt-Codes müssen durch den Stripe-Checkout laufen
       return NextResponse.json({ valid: false, reason: 'invalid' }, { status: 400 })
     }
 
     // Atomar einlösen: Redemption-Datensatz (unique pro User+Code) +
     // race-sicherer Slot-Verbrauch + Freischaltung — alles oder nichts.
+    let accessUntil: Date | null = null
     try {
       await prisma.$transaction(async (tx) => {
         // Upsert statt create: eine "pending"-Einlösung (abgebrochener Checkout
@@ -78,10 +83,35 @@ export async function POST(req: NextRequest) {
           throw new Error('PROMO_EXHAUSTED')
         }
 
-        await tx.user.update({
-          where: { id: user.userId },
-          data: { hasPaid: true, lifetimeAccess: true, updatedAt: new Date() },
-        })
+        if (promo.type === 'lifetime') {
+          await tx.user.update({
+            where: { id: user.userId },
+            data: { hasPaid: true, lifetimeAccess: true, promoAccessUntil: null, updatedAt: new Date() },
+          })
+        } else {
+          // free_months ohne Abo: Zugang bis now + X Monate.
+          // Läuft bereits eine Promo-Periode, wird ab deren Ende verlängert.
+          const dbUser = await tx.user.findUnique({
+            where: { id: user.userId },
+            select: { promoAccessUntil: true, lifetimeAccess: true },
+          })
+          const base = dbUser?.promoAccessUntil && dbUser.promoAccessUntil > new Date()
+            ? dbUser.promoAccessUntil
+            : new Date()
+          const until = new Date(base)
+          until.setMonth(until.getMonth() + promo.freeMonths!)
+          accessUntil = until
+
+          await tx.user.update({
+            where: { id: user.userId },
+            data: {
+              hasPaid: true,
+              // Lifetime-User nicht versehentlich auf Zeitablauf zurückstufen
+              promoAccessUntil: dbUser?.lifetimeAccess ? null : until,
+              updatedAt: new Date(),
+            },
+          })
+        }
 
         // API Key anlegen (idempotent, gleiche Logik wie im Stripe-Webhook)
         const existingKey = await tx.apiKey.findFirst({
@@ -103,8 +133,13 @@ export async function POST(req: NextRequest) {
       throw err
     }
 
-    console.log('✅ Lifetime promo code redeemed:', promo.code, 'by', user.email)
-    return NextResponse.json({ success: true, lifetime: true })
+    console.log(`✅ Promo code redeemed (${promo.type}):`, promo.code, 'by', user.email)
+    return NextResponse.json({
+      success: true,
+      type: promo.type,
+      // Cast nötig: TS verfolgt Zuweisungen innerhalb der Transaktions-Closure nicht
+      accessUntil: accessUntil ? (accessUntil as Date).toISOString() : null,
+    })
   } catch (error) {
     console.error('Promo redeem error:', error)
     return NextResponse.json({ error: 'Interner Fehler' }, { status: 500 })

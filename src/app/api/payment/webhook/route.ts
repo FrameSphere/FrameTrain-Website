@@ -213,17 +213,20 @@ export async function POST(req: NextRequest) {
             where: { stripeCustomerId: sub.customer as string },
           })
           if (userByCustomer) {
-            // Lifetime-User behalten Zugang & API Keys — nur Abo-Felder aufräumen
+            // Lifetime-User & laufende Gratismonate behalten Zugang & API Keys —
+            // nur Abo-Felder aufräumen
+            const keepAccess = userByCustomer.lifetimeAccess ||
+              (userByCustomer.promoAccessUntil !== null && userByCustomer.promoAccessUntil > new Date())
             await prisma.user.update({
               where: { id: userByCustomer.id },
               data: {
-                hasPaid: userByCustomer.lifetimeAccess ? true : false,
+                hasPaid: keepAccess,
                 stripeSubscriptionId: null,
                 subscriptionCancelAt: null,
                 updatedAt: new Date(),
               },
             })
-            if (!userByCustomer.lifetimeAccess) {
+            if (!keepAccess) {
               // API Key deaktivieren
               await prisma.apiKey.updateMany({
                 where: { userId: userByCustomer.id, isActive: true },
@@ -237,18 +240,21 @@ export async function POST(req: NextRequest) {
           break
         }
 
-        // Lifetime-User behalten Zugang & API Keys — nur Abo-Felder aufräumen
+        // Lifetime-User & laufende Gratismonate behalten Zugang & API Keys —
+        // nur Abo-Felder aufräumen
+        const keepAccess = user.lifetimeAccess ||
+          (user.promoAccessUntil !== null && user.promoAccessUntil > new Date())
         await prisma.user.update({
           where: { id: user.id },
           data: {
-            hasPaid: user.lifetimeAccess ? true : false,
+            hasPaid: keepAccess,
             stripeSubscriptionId: null,
             subscriptionCancelAt: null,
             updatedAt: new Date(),
           },
         })
 
-        if (!user.lifetimeAccess) {
+        if (!keepAccess) {
           // Alle aktiven API Keys deaktivieren
           await prisma.apiKey.updateMany({
             where: { userId: user.id, isActive: true },

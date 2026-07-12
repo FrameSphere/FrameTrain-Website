@@ -21,6 +21,7 @@ model User {
   framesphereUserId String?   @unique @map("framesphere_user_id")
   hasPaid              Boolean   @default(false) @map("has_paid")
   lifetimeAccess       Boolean   @default(false) @map("lifetime_access") // Zugang via Lifetime-Promo-Code — darf nie durch Abo-Events deaktiviert werden
+  promoAccessUntil     DateTime? @map("promo_access_until") // Zugang via Gratismonate-Code OHNE Abo — läuft zu diesem Zeitpunkt automatisch ab (Cron deaktiviert dann Zugang + API-Keys)
   stripeCustomerId     String?   @unique @map("stripe_customer_id")
   stripeSubscriptionId String?   @unique @map("stripe_subscription_id")
   subscriptionCancelAt DateTime? @map("subscription_cancel_at")

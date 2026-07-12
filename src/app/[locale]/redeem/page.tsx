@@ -28,9 +28,22 @@ export default function RedeemPage() {
   const [codeInput, setCodeInput] = useState('')
   const [promo, setPromo] = useState<ValidatedPromo | null>(null)
   const [plan, setPlan] = useState<Plan>('monthly')
+  // Nur für free_months: 'direct' = ohne Abo/Karte (endet automatisch),
+  // 'subscription' = mit Abo (nahtloser Übergang nach der Gratiszeit)
+  const [mode, setMode] = useState<'direct' | 'subscription'>('direct')
   const [checking, setChecking] = useState(false)
   const [redeeming, setRedeeming] = useState(false)
   const [error, setError] = useState('')
+
+  // Ende der Gratiszeit (für Anzeigetexte)
+  const freeUntilDate = (() => {
+    if (!promo || promo.type !== 'free_months' || !promo.freeMonths) return ''
+    const d = new Date()
+    d.setMonth(d.getMonth() + promo.freeMonths)
+    return d.toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' })
+  })()
+
+  const planPrice = plan === 'monthly' ? '4,99 €/Monat' : '39,99 €/Jahr'
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) router.push('/login')
@@ -77,8 +90,12 @@ export default function RedeemPage() {
     setRedeeming(true)
     setError('')
     try {
-      if (promo.type === 'lifetime') {
-        // Lifetime: direkt einlösen, kein Stripe
+      const directRedeem = promo.type === 'lifetime' ||
+        (promo.type === 'free_months' && mode === 'direct')
+
+      if (directRedeem) {
+        // Direkt einlösen, kein Stripe — Lifetime für immer,
+        // Gratismonate mit automatischem Ablauf (Server setzt promo_access_until)
         const res = await fetch('/api/promo/redeem', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -340,11 +357,56 @@ export default function RedeemPage() {
                     </button>
                   </div>
 
-                  {/* Plan-Auswahl nur für Rabatt/Gratismonate (nicht Lifetime) */}
-                  {promo.type !== 'lifetime' && (
+                  {/* Gratismonate: Wahl zwischen "ohne Abo" und "mit Abo" */}
+                  {promo.type === 'free_months' && (
                     <div style={{ marginBottom: 20 }}>
                       <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', letterSpacing: '0.08em', marginBottom: 10 }}>
-                        {t('choosePlan')}
+                        {t('chooseMode')}
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                        {([
+                          { key: 'direct' as const, title: t('modeDirectTitle'), desc: t('modeDirectDesc', { months: promo.freeMonths ?? 0, date: freeUntilDate }) },
+                          { key: 'subscription' as const, title: t('modeSubTitle'), desc: t('modeSubDesc') },
+                        ]).map(m => (
+                          <button
+                            key={m.key}
+                            onClick={() => setMode(m.key)}
+                            style={{
+                              padding: '14px 16px', borderRadius: 12, cursor: 'pointer',
+                              textAlign: 'left',
+                              border: `1px solid ${mode === m.key ? 'rgba(167,139,250,0.55)' : 'rgba(255,255,255,0.1)'}`,
+                              background: mode === m.key ? 'rgba(139,92,246,0.15)' : 'rgba(255,255,255,0.03)',
+                              fontFamily: "'DM Sans', sans-serif",
+                              transition: 'all 0.15s ease',
+                              display: 'flex', alignItems: 'flex-start', gap: 12,
+                            }}
+                          >
+                            <div style={{
+                              width: 18, height: 18, borderRadius: '50%', flexShrink: 0, marginTop: 1,
+                              border: `2px solid ${mode === m.key ? '#a78bfa' : '#475569'}`,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            }}>
+                              {mode === m.key && <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#a78bfa' }} />}
+                            </div>
+                            <div>
+                              <div style={{ fontSize: 14, fontWeight: 700, color: mode === m.key ? '#e2e8f0' : '#94a3b8' }}>
+                                {m.title}
+                              </div>
+                              <div style={{ fontSize: 12.5, marginTop: 3, lineHeight: 1.5, color: mode === m.key ? '#94a3b8' : '#475569' }}>
+                                {m.desc}
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Plan-Auswahl: bei Rabatt-Codes immer, bei Gratismonaten nur im Abo-Modus */}
+                  {(promo.type === 'percent' || (promo.type === 'free_months' && mode === 'subscription')) && (
+                    <div style={{ marginBottom: 20 }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', letterSpacing: '0.08em', marginBottom: 10 }}>
+                        {promo.type === 'free_months' ? t('choosePlanAfterTrial') : t('choosePlan')}
                       </div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                         {(['monthly', 'yearly'] as Plan[]).map(p => (
@@ -371,6 +433,20 @@ export default function RedeemPage() {
                       </div>
                     </div>
                   )}
+
+                  {/* Klartext: was genau passiert */}
+                  <div style={{
+                    marginBottom: 18, padding: '12px 14px',
+                    background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: 12, color: '#94a3b8', fontSize: 13, lineHeight: 1.6,
+                  }}>
+                    {promo.type === 'lifetime' && t('noteLifetime')}
+                    {promo.type === 'percent' && t('notePercent')}
+                    {promo.type === 'free_months' && mode === 'direct' &&
+                      t('noteDirect', { months: promo.freeMonths ?? 0, date: freeUntilDate })}
+                    {promo.type === 'free_months' && mode === 'subscription' &&
+                      t('noteTrial', { months: promo.freeMonths ?? 0, date: freeUntilDate, price: planPrice })}
+                  </div>
 
                   {error && (
                     <div style={{
@@ -399,22 +475,31 @@ export default function RedeemPage() {
                       transition: 'opacity 0.2s ease',
                     }}
                   >
-                    {redeeming ? (
-                      <>
-                        <div style={{
-                          width: 17, height: 17,
-                          border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white',
-                          borderRadius: '50%', animation: 'spin 0.7s linear infinite',
-                        }} />
-                        {promo.type === 'lifetime' ? tPromo('redeeming') : t('redirectingStripe')}
-                      </>
-                    ) : (
-                      <>
-                        {promo.type === 'lifetime' ? <Sparkles size={18} /> : <Lock size={18} />}
-                        {promo.type === 'lifetime' ? t('redeemLifetimeCta') : t('redeemCheckoutCta')}
-                        <ArrowRight size={18} />
-                      </>
-                    )}
+                    {(() => {
+                      const isDirect = promo.type === 'lifetime' ||
+                        (promo.type === 'free_months' && mode === 'direct')
+                      if (redeeming) {
+                        return (
+                          <>
+                            <div style={{
+                              width: 17, height: 17,
+                              border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white',
+                              borderRadius: '50%', animation: 'spin 0.7s linear infinite',
+                            }} />
+                            {isDirect ? tPromo('redeeming') : t('redirectingStripe')}
+                          </>
+                        )
+                      }
+                      return (
+                        <>
+                          {isDirect ? <Sparkles size={18} /> : <Lock size={18} />}
+                          {promo.type === 'lifetime'
+                            ? t('redeemLifetimeCta')
+                            : isDirect ? t('redeemDirectCta') : t('redeemCheckoutCta')}
+                          <ArrowRight size={18} />
+                        </>
+                      )
+                    })()}
                   </button>
                 </>
               )}
