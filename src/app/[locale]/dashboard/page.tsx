@@ -122,6 +122,9 @@ function DashboardPageInner() {
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
   const [hasPaid, setHasPaid] = useState(true)
   const [subscriptionCancelAt, setSubscriptionCancelAt] = useState<string | null>(null)
+  const [lifetimeAccess, setLifetimeAccess] = useState(false)
+  const [promoAccessUntil, setPromoAccessUntil] = useState<string | null>(null)
+  const [hasSubscription, setHasSubscription] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const [dataLoading, setDataLoading] = useState(true)
   const [regenerating, setRegenerating] = useState(false)
@@ -238,6 +241,9 @@ function DashboardPageInner() {
       setApiKeys(data.apiKeys || [])
       setHasPaid(data.hasPaid ?? true)
       setSubscriptionCancelAt(data.subscriptionCancelAt ?? null)
+      setLifetimeAccess(!!data.lifetimeAccess)
+      setPromoAccessUntil(data.promoAccessUntil ?? null)
+      setHasSubscription(!!data.hasSubscription)
       setIsOAuthUser(!!data.isOAuthUser)
       setHasDesktopPassword(!!data.hasDesktopPassword)
     } catch { /* silent */ } finally { setDataLoading(false) }
@@ -309,14 +315,11 @@ function DashboardPageInner() {
     setTimeout(() => setCopiedKey(null), 2000)
   }
 
-  const handlePayment = async () => {
+  // Zur Payment-Seite statt direkt zu Stripe: dort kann der User
+  // Monatlich/Jährlich wählen und Gutschein-Codes einlösen
+  const handlePayment = () => {
     setRedirectingToPayment(true)
-    try {
-      const res = await fetch('/api/payment/create-checkout', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' } })
-      if (!res.ok) throw new Error()
-      const data = await res.json()
-      if (data.url) window.location.href = data.url
-    } catch { alert(t('apiKeys.errorRedirectPayment')); setRedirectingToPayment(false) }
+    router.push('/payment')
   }
 
   const handlePortal = async () => {
@@ -516,6 +519,48 @@ function DashboardPageInner() {
                     ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscriptionCanceling.redirecting')}</>
                     : <>{t('subscriptionCanceling.continueButton')}</>}
                 </button>
+              </div>
+            )
+          })()}
+
+          {/* ── Gratiszeit (Promo-Code ohne Abo) läuft ab ──────────── */}
+          {hasPaid && !lifetimeAccess && !hasSubscription && promoAccessUntil && (() => {
+            const untilDate = new Date(promoAccessUntil)
+            const now = new Date()
+            const diffDays = Math.max(0, Math.ceil((untilDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)))
+            const formattedDate = untilDate.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' })
+            return (
+              <div className="mb-8 p-5 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">
+                      {t('promoAccess.title', { days: diffDays })}
+                    </p>
+                    <p className="text-amber-300 text-sm mt-0.5">
+                      {t('promoAccess.text', { date: formattedDate })}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex-shrink-0 flex flex-col sm:flex-row gap-2">
+                  <button
+                    onClick={handlePayment}
+                    disabled={redirectingToPayment}
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm"
+                  >
+                    {redirectingToPayment
+                      ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('promoAccess.redirecting')}</>
+                      : <>{t('promoAccess.subscribeButton')}</>}
+                  </button>
+                  <button
+                    onClick={() => router.push('/redeem')}
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 font-bold rounded-xl transition-all text-sm"
+                  >
+                    {t('promoAccess.redeemButton')}
+                  </button>
+                </div>
               </div>
             )
           })()}
@@ -774,27 +819,52 @@ function DashboardPageInner() {
                 <h2 className="text-2xl font-bold text-white">{t('subscription.title')}</h2>
               </div>
 
-              {/* Status */}
+              {/* Status: Lifetime > Gratiszeit (Promo) > Abo */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border ${
-                  subscriptionCancelAt
-                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
-                    : 'bg-green-500/10 border-green-500/30 text-green-300'
-                }`}>
-                  <span className={`w-2 h-2 rounded-full ${
-                    subscriptionCancelAt ? 'bg-amber-400' : 'bg-green-400'
-                  }`} />
-                  {subscriptionCancelAt ? t('subscription.statusCanceling') : t('subscription.statusActive')}
-                </div>
-                {subscriptionCancelAt && (() => {
-                  const d = new Date(subscriptionCancelAt)
-                  const days = Math.ceil((d.getTime() - Date.now()) / 86400000)
-                  return (
-                    <span className="text-sm text-amber-400 font-medium">
-                      {t('subscription.expiresOn', { date: d.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' }), days })}
-                    </span>
-                  )
-                })()}
+                {lifetimeAccess ? (
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border bg-violet-500/10 border-violet-500/30 text-violet-300">
+                    <span className="w-2 h-2 rounded-full bg-violet-400" />
+                    {t('subscription.statusLifetime')}
+                  </div>
+                ) : !hasSubscription && promoAccessUntil ? (
+                  <>
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border bg-amber-500/10 border-amber-500/30 text-amber-300">
+                      <span className="w-2 h-2 rounded-full bg-amber-400" />
+                      {t('subscription.statusPromo')}
+                    </div>
+                    {(() => {
+                      const d = new Date(promoAccessUntil)
+                      const days = Math.max(0, Math.ceil((d.getTime() - Date.now()) / 86400000))
+                      return (
+                        <span className="text-sm text-amber-400 font-medium">
+                          {t('subscription.expiresOn', { date: d.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' }), days })}
+                        </span>
+                      )
+                    })()}
+                  </>
+                ) : (
+                  <>
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border ${
+                      subscriptionCancelAt
+                        ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                        : 'bg-green-500/10 border-green-500/30 text-green-300'
+                    }`}>
+                      <span className={`w-2 h-2 rounded-full ${
+                        subscriptionCancelAt ? 'bg-amber-400' : 'bg-green-400'
+                      }`} />
+                      {subscriptionCancelAt ? t('subscription.statusCanceling') : t('subscription.statusActive')}
+                    </div>
+                    {subscriptionCancelAt && (() => {
+                      const d = new Date(subscriptionCancelAt)
+                      const days = Math.ceil((d.getTime() - Date.now()) / 86400000)
+                      return (
+                        <span className="text-sm text-amber-400 font-medium">
+                          {t('subscription.expiresOn', { date: d.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' }), days })}
+                        </span>
+                      )
+                    })()}
+                  </>
+                )}
               </div>
 
               {/* Info-Kacheln */}
@@ -803,23 +873,40 @@ function DashboardPageInner() {
                   <p className="text-xs text-gray-500 mb-1">{t('subscription.includedTitle')}</p>
                   <p className="text-sm text-gray-300">{t('subscription.includedText')}</p>
                 </div>
-                <div className="glass rounded-xl p-4 border border-white/10">
-                  <p className="text-xs text-gray-500 mb-1">{t('subscription.portalTitle')}</p>
-                  <p className="text-sm text-gray-300">{t('subscription.portalText')}</p>
-                </div>
+                {hasSubscription && (
+                  <div className="glass rounded-xl p-4 border border-white/10">
+                    <p className="text-xs text-gray-500 mb-1">{t('subscription.portalTitle')}</p>
+                    <p className="text-sm text-gray-300">{t('subscription.portalText')}</p>
+                  </div>
+                )}
               </div>
 
-              <button
-                onClick={handlePortal}
-                disabled={redirectingToPortal}
-                className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/25 text-white font-semibold rounded-xl transition-all disabled:opacity-50"
-              >
-                {redirectingToPortal
-                  ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscription.redirecting')}</>
-                  : <><ExternalLink className="w-4 h-4" /> {t('subscription.manageButton')}</>
-                }
-              </button>
-              <p className="text-xs text-gray-600 mt-3">{t('subscription.redirectNote')}</p>
+              {/* Aktion: Stripe-Portal nur mit echtem Abo; Promo-User → Payment-Seite; Lifetime → nichts nötig */}
+              {hasSubscription ? (
+                <>
+                  <button
+                    onClick={handlePortal}
+                    disabled={redirectingToPortal}
+                    className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/25 text-white font-semibold rounded-xl transition-all disabled:opacity-50"
+                  >
+                    {redirectingToPortal
+                      ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscription.redirecting')}</>
+                      : <><ExternalLink className="w-4 h-4" /> {t('subscription.manageButton')}</>
+                    }
+                  </button>
+                  <p className="text-xs text-gray-600 mt-3">{t('subscription.redirectNote')}</p>
+                </>
+              ) : !lifetimeAccess && promoAccessUntil ? (
+                <button
+                  onClick={handlePayment}
+                  disabled={redirectingToPayment}
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition-all disabled:opacity-50"
+                >
+                  {redirectingToPayment
+                    ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscription.redirecting')}</>
+                    : <>{t('subscription.subscribeButton')}</>}
+                </button>
+              ) : null}
             </div>
           )}
 

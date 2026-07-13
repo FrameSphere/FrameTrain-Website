@@ -542,7 +542,11 @@
       "planMonthly": "Monatlich",
       "planYearly": "Jährlich",
       "noteLifetime": "Dein Account wird dauerhaft freigeschaltet — kein Abo, keine Zahlung, kein Ablaufdatum.",
-      "notePercent": "Der Rabatt wird im nächsten Schritt an der Stripe-Kasse automatisch abgezogen.",
+      "intervalMonthly": "Monat",
+      "intervalYearly": "Jahr",
+      "notePercentOnce": "{percent} % Rabatt auf die erste Zahlung: Du zahlst einmalig {price} statt {regular}, danach gilt der reguläre Preis pro {interval}. Der Rabatt wird an der Stripe-Kasse automatisch abgezogen.",
+      "notePercentForever": "{percent} % Rabatt dauerhaft: Du zahlst {price} statt {regular} pro {interval} — solange dein Abo läuft. Der Rabatt wird an der Stripe-Kasse automatisch abgezogen.",
+      "notePercentRepeating": "{percent} % Rabatt für die ersten {months, plural, one {1 Monat} other {# Monate}}: Du zahlst {price} statt {regular} pro {interval}, danach gilt der reguläre Preis. Der Rabatt wird an der Stripe-Kasse automatisch abgezogen.",
       "noteDirect": "Du erhältst sofort vollen Zugang für {months, plural, one {1 Monat} other {# Monate}} — ganz ohne Zahlungsmittel. Am {date} endet der Zugang automatisch und dein API-Key wird deaktiviert. Du kannst danach jederzeit ein Abo abschließen.",
       "noteTrial": "{months, plural, one {1 Monat} other {# Monate}} gratis: Die erste Abbuchung ({price}) erfolgt erst am {date}. Kündigst du vorher, zahlst du nichts.",
       "redeemLifetimeCta": "Jetzt einlösen & freischalten",
@@ -4658,6 +4662,13 @@
       "redirecting": "Weiterleitung...",
       "continueButton": "Abo fortsetzen →"
     },
+    "promoAccess": {
+      "title": "Dein Gratis-Zugang läuft in {days, plural, one {# Tag} other {# Tagen}} aus",
+      "text": "Gültig bis {date} · Danach wird dein API-Key deaktiviert. Schließe ein Abo ab oder löse einen weiteren Code ein, um FrameTrain weiter zu nutzen.",
+      "redirecting": "Weiterleitung...",
+      "subscribeButton": "Abo abschließen →",
+      "redeemButton": "Code einlösen"
+    },
     "apiKeys": {
       "title": "Deine API-Keys",
       "regenerateButton": "Neuen Key generieren",
@@ -4723,6 +4734,9 @@
       "title": "Abo verwalten",
       "statusCanceling": "Kündigung zum Periodenende",
       "statusActive": "Aktiv",
+      "statusLifetime": "Lifetime-Zugang",
+      "statusPromo": "Gratis-Zeitraum (Gutschein)",
+      "subscribeButton": "Abo abschließen →",
       "expiresOn": "Läuft aus am {date} ({days, plural, one {# Tag} other {# Tage}})",
       "includedTitle": "Was ist enthalten",
       "includedText": "Voller App-Zugang · API-Key · Alle Updates",

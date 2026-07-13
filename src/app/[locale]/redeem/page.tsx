@@ -15,7 +15,20 @@ interface ValidatedPromo {
   code: string
   type: 'percent' | 'free_months' | 'lifetime'
   percentOff?: number
+  percentDuration?: 'once' | 'forever' | 'repeating'
+  percentDurationMonths?: number
   freeMonths?: number
+}
+
+// Preise (müssen zu den Stripe-Preisen passen)
+const PLAN_PRICES: Record<Plan, number> = { monthly: 4.99, yearly: 39.99 }
+
+function formatEuro(value: number): string {
+  return value.toFixed(2).replace('.', ',') + ' €'
+}
+
+function discounted(planKey: Plan, percentOff: number): string {
+  return formatEuro(PLAN_PRICES[planKey] * (1 - percentOff / 100))
 }
 
 export default function RedeemPage() {
@@ -425,9 +438,21 @@ export default function RedeemPage() {
                             <div style={{ fontSize: 14, fontWeight: 700 }}>
                               {p === 'monthly' ? t('planMonthly') : t('planYearly')}
                             </div>
-                            <div style={{ fontSize: 12, marginTop: 2, color: plan === p ? '#a78bfa' : '#475569' }}>
-                              {p === 'monthly' ? '4,99 €' : '39,99 €'}
-                            </div>
+                            {promo.type === 'percent' && promo.percentOff ? (
+                              // Rabatt sichtbar machen: alter Preis durchgestrichen, neuer Preis grün
+                              <div style={{ fontSize: 12, marginTop: 2 }}>
+                                <span style={{ textDecoration: 'line-through', color: '#475569' }}>
+                                  {formatEuro(PLAN_PRICES[p])}
+                                </span>
+                                <span style={{ color: '#34d399', fontWeight: 700, marginLeft: 6 }}>
+                                  {discounted(p, promo.percentOff)}
+                                </span>
+                              </div>
+                            ) : (
+                              <div style={{ fontSize: 12, marginTop: 2, color: plan === p ? '#a78bfa' : '#475569' }}>
+                                {formatEuro(PLAN_PRICES[p])}
+                              </div>
+                            )}
                           </button>
                         ))}
                       </div>
@@ -441,7 +466,18 @@ export default function RedeemPage() {
                     borderRadius: 12, color: '#94a3b8', fontSize: 13, lineHeight: 1.6,
                   }}>
                     {promo.type === 'lifetime' && t('noteLifetime')}
-                    {promo.type === 'percent' && t('notePercent')}
+                    {promo.type === 'percent' && promo.percentOff && (() => {
+                      const vars = {
+                        percent: promo.percentOff,
+                        price: discounted(plan, promo.percentOff),
+                        regular: formatEuro(PLAN_PRICES[plan]),
+                        interval: plan === 'monthly' ? t('intervalMonthly') : t('intervalYearly'),
+                        months: promo.percentDurationMonths ?? 0,
+                      }
+                      if (promo.percentDuration === 'forever') return t('notePercentForever', vars)
+                      if (promo.percentDuration === 'repeating') return t('notePercentRepeating', vars)
+                      return t('notePercentOnce', vars)
+                    })()}
                     {promo.type === 'free_months' && mode === 'direct' &&
                       t('noteDirect', { months: promo.freeMonths ?? 0, date: freeUntilDate })}
                     {promo.type === 'free_months' && mode === 'subscription' &&

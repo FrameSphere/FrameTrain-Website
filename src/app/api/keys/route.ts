@@ -22,6 +22,9 @@ export async function GET(req: NextRequest) {
       select: {
         hasPaid: true,
         subscriptionCancelAt: true,
+        lifetimeAccess: true,
+        promoAccessUntil: true,
+        stripeSubscriptionId: true,
         provider: true,
         passwordHash: true,
         desktopPasswordHash: true,
@@ -49,6 +52,9 @@ export async function GET(req: NextRequest) {
       apiKeys: dbUser.apiKeys,
       hasPaid: dbUser.hasPaid,
       subscriptionCancelAt: dbUser.subscriptionCancelAt?.toISOString() ?? null,
+      lifetimeAccess: dbUser.lifetimeAccess,
+      promoAccessUntil: dbUser.promoAccessUntil?.toISOString() ?? null,
+      hasSubscription: dbUser.stripeSubscriptionId !== null,
       isOAuthUser,
       hasDesktopPassword,
     })

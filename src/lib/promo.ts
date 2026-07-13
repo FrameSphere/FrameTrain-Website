@@ -78,6 +78,9 @@ export function publicPromoView(promo: PromoCode) {
     code: promo.code,
     type: promo.type as PromoType,
     percentOff: promo.type === 'percent' ? promo.percentOff : undefined,
+    // Für die Anzeige "Rabatt gilt einmalig / dauerhaft / X Monate"
+    percentDuration: promo.type === 'percent' ? (promo.percentDuration ?? 'once') : undefined,
+    percentDurationMonths: promo.type === 'percent' ? promo.percentDurationMonths : undefined,
     freeMonths: promo.type === 'free_months' ? promo.freeMonths : undefined,
   }
 }

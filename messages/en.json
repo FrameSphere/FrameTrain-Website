@@ -315,7 +315,11 @@
       "planMonthly": "Monthly",
       "planYearly": "Yearly",
       "noteLifetime": "Your account is unlocked permanently — no subscription, no payment, no expiry.",
-      "notePercent": "The discount is applied automatically at the Stripe checkout in the next step.",
+      "intervalMonthly": "month",
+      "intervalYearly": "year",
+      "notePercentOnce": "{percent}% off your first payment: you pay {price} instead of {regular} once, then the regular price per {interval} applies. The discount is applied automatically at the Stripe checkout.",
+      "notePercentForever": "{percent}% off forever: you pay {price} instead of {regular} per {interval} — for as long as your subscription runs. The discount is applied automatically at the Stripe checkout.",
+      "notePercentRepeating": "{percent}% off for the first {months, plural, one {1 month} other {# months}}: you pay {price} instead of {regular} per {interval}, then the regular price applies. The discount is applied automatically at the Stripe checkout.",
       "noteDirect": "You get full access for {months, plural, one {1 month} other {# months}} right away — no payment method required. On {date} access ends automatically and your API key is deactivated. You can subscribe anytime afterwards.",
       "noteTrial": "{months, plural, one {1 month} other {# months}} free: the first charge ({price}) happens on {date}. Cancel before then and you pay nothing.",
       "redeemLifetimeCta": "Redeem now & unlock",
@@ -1737,6 +1741,13 @@
       "redirecting": "Redirecting...",
       "continueButton": "Continue subscription →"
     },
+    "promoAccess": {
+      "title": "Your free access expires in {days, plural, one {# day} other {# days}}",
+      "text": "Valid until {date} · After that your API key will be deactivated. Subscribe or redeem another code to keep using FrameTrain.",
+      "redirecting": "Redirecting...",
+      "subscribeButton": "Subscribe →",
+      "redeemButton": "Redeem code"
+    },
     "apiKeys": {
       "title": "Your API Keys",
       "regenerateButton": "Generate new key",
@@ -1802,6 +1813,9 @@
       "title": "Manage subscription",
       "statusCanceling": "Cancels at period end",
       "statusActive": "Active",
+      "statusLifetime": "Lifetime access",
+      "statusPromo": "Free period (promo code)",
+      "subscribeButton": "Subscribe →",
       "expiresOn": "Expires on {date} ({days, plural, one {# day} other {# days}})",
       "includedTitle": "What's included",
       "includedText": "Full app access · API key · All updates",
