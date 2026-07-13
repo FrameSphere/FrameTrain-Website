@@ -216,10 +216,10 @@ function InstallationSection() {
   const recItems = t.raw('requirements.recItems') as string[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Download className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -301,10 +301,10 @@ function QuickStartSection() {
   const steps = t.raw('steps') as { title: string; desc: string; details: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Zap className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-6">
@@ -339,10 +339,10 @@ function FirstTrainingSection() {
   const step4Items = t.raw('step4.items') as { label: string; desc: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Play className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -421,10 +421,10 @@ function ModelManagerSection() {
   const featureIcons = [<Download className="w-6 h-6" />, <Layers className="w-6 h-6" />, <Database className="w-6 h-6" />, <GitBranch className="w-6 h-6" />]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Package className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -478,10 +478,10 @@ function TrainingPanelSection() {
   const controlIcons = [<Zap className="w-5 h-5 text-yellow-400 flex-shrink-0" />, <Square className="w-5 h-5 text-red-400 flex-shrink-0" />, <RefreshCw className="w-5 h-5 text-blue-400 flex-shrink-0" />]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Brain className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -543,10 +543,10 @@ function DatasetUploadSection() {
   const prepItems = t.raw('prepItems') as { title: string; desc: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Database className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -598,10 +598,10 @@ function AnalysisSection() {
   const metrics = t.raw('metrics') as { metric: string; desc: string; good: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <BarChart3 className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -651,10 +651,10 @@ function TestingSection() {
   const features = t.raw('features') as { title: string; desc: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Play className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -709,10 +709,10 @@ function VersioningSection() {
   const historyItems = t.raw('historyItems') as string[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <GitBranch className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -758,10 +758,10 @@ function TrainingBasicsSection() {
   const scratchItems = t.raw('scratchItems') as string[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Sparkles className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -817,10 +817,10 @@ function HyperparametersSection() {
   const items = t.raw('items') as { name: string; range: string; default: string; impact: string; tips: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Settings className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -856,10 +856,10 @@ function LoRASection() {
   const configItems = t.raw('configItems') as { param: string; desc: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Layers className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -914,10 +914,10 @@ function DatasetsFormatSection() {
   const bestPractices = t.raw('bestPractices') as { title: string; rest: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Database className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -973,10 +973,10 @@ function MonitoringSection() {
   const panelIcons = [<Gauge className="w-5 h-5 text-purple-400 flex-shrink-0" />, <TrendingDown className="w-5 h-5 text-green-400 flex-shrink-0" />, <BarChart3 className="w-5 h-5 text-blue-400 flex-shrink-0" />, <Clock className="w-5 h-5 text-yellow-400 flex-shrink-0" />]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <TrendingUp className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1015,10 +1015,10 @@ function OptimizationSection() {
   const batchTable = t.raw('batchTable') as { gpu: string; bs: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Zap className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1063,10 +1063,10 @@ function GPUSetupSection() {
   const appleItems = t.raw('appleItems') as string[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Cpu className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1116,10 +1116,10 @@ function ExportSection() {
   const deployItems = t.raw('deployItems') as { title: string; desc: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Download className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1158,10 +1158,10 @@ function TroubleshootingSection() {
   const errors = t.raw('errors') as { problem: string; causes: string[]; solution: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <AlertCircle className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1194,10 +1194,10 @@ function SettingsSection() {
   const items = t.raw('items') as { setting: string; desc: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Settings className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1223,10 +1223,10 @@ function ThemesSection() {
   const lightThemes = t.raw('lightThemes') as string[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Sparkles className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1265,10 +1265,10 @@ function PresetsSection() {
   const presets = t.raw('presets') as { preset: string; epochs: number; bs: number; lr: string; use: string }[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <Lightbulb className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">
@@ -1298,10 +1298,10 @@ function UpdatesSection() {
   const autoItems = t.raw('autoItems') as string[]
   return (
     <div>
-      <h1 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h2 className="text-4xl font-black text-white mb-2 flex items-center gap-3">
         <RefreshCw className="w-8 h-8 text-purple-400" />
         {t('heading')}
-      </h1>
+      </h2>
       <p className="text-gray-400 mb-8">{t('subtitle')}</p>
       
       <div className="space-y-8">

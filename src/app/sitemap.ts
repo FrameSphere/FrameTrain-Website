@@ -17,7 +17,8 @@ const pages: PageDef[] = [
   { path: '/faq', changeFrequency: 'monthly', priority: 0.85 },
   { path: '/install', changeFrequency: 'monthly', priority: 0.85 },
   { path: '/changelog', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/library', changeFrequency: 'daily', priority: 0.88 },
+  // /library bewusst nicht gelistet, solange die Seite noindex ist (siehe
+  // library/page.tsx) – Test-Einträge müssen erst aus der DB entfernt werden.
   { path: '/imprint', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.3 },

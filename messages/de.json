@@ -2554,7 +2554,7 @@
         "href": "/guides/local-vs-cloud"
       },
       {
-        "title": "Beste GPU für ML Training 2025",
+        "title": "Beste GPU für ML Training 2026",
         "description": "Von RTX 3060 bis RTX 4090 und Apple M4 Max: Welche GPU für welchen Anwendungsfall? Kaufberatung mit VRAM-Tabellen für LLM Fine-Tuning.",
         "tags": [
           "GPU",
@@ -2847,24 +2847,14 @@
     }
   },
   "GpuGuide": {
-    "metaTitle": "Beste GPU für lokales ML Training – Kaufberatung 2025 | FrameTrain",
-    "metaDescription": "Welche GPU für LLM Fine-Tuning, LoRA Training und lokales Machine Learning? NVIDIA RTX vs Apple Silicon M-Chips: der komplette GPU-Guide für AI-Training 2025.",
-    "keywords": [
-      "beste GPU Machine Learning",
-      "GPU für KI Training",
-      "RTX 4090 ML Training",
-      "Apple M2 M3 KI Training",
-      "VRAM für LLM Fine-Tuning",
-      "GPU Kaufberatung AI",
-      "CUDA GPU für ML",
-      "lokales LLM Training GPU"
-    ],
-    "ogTitle": "Beste GPU für lokales ML Training 2025",
+    "metaTitle": "Beste GPU für lokales ML Training – Kaufberatung 2026 | FrameTrain",
+    "metaDescription": "Welche GPU für LLM Fine-Tuning, LoRA Training und lokales Machine Learning? NVIDIA RTX vs Apple Silicon M-Chips: der komplette GPU-Guide für AI-Training 2026.",
+    "ogTitle": "Beste GPU für lokales ML Training 2026",
     "ogDescription": "NVIDIA RTX vs Apple Silicon: Welche GPU für AI-Training kaufen?",
     "breadcrumb": "GPU Guide",
     "badges": [
       "Hardware",
-      "Kaufberatung 2025"
+      "Kaufberatung 2026"
     ],
     "heroTitleLine1": "Beste GPU für lokales",
     "heroTitleLine2": "ML Training & LLM Fine-Tuning",

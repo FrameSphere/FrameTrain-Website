@@ -3,9 +3,8 @@ import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Shield, DollarSign, Cloud, Laptop, ChevronRight, ArrowRight, Check, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
-import { pageAlternates, pageOpenGraph } from '@/lib/seo'
+import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -28,8 +27,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 type PrivacyItem = { title: string; text: string }
 
-export default function LocalVsCloudPage() {
-  const t = useTranslations('CloudGuide')
+export default async function LocalVsCloudPage({ params }: Props) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'CloudGuide' })
 
   const badges = t.raw('badges') as string[]
   const costHeaders = t.raw('cost.tableHeaders') as string[]
@@ -39,8 +39,36 @@ export default function LocalVsCloudPage() {
   const privacyItems = t.raw('privacy.items') as PrivacyItem[]
   const whenCloudItems = t.raw('whenCloud.items') as string[]
 
+  const pageUrl = `${siteUrl}/${locale}/guides/local-vs-cloud`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: 'Guides', item: `${siteUrl}/${locale}/guides` },
+          { '@type': 'ListItem', position: 3, name: t('breadcrumb'), item: pageUrl },
+        ],
+      },
+      {
+        '@type': 'Article',
+        headline: t('ogTitle'),
+        description: t('metaDescription'),
+        inLanguage: locale === 'en' ? 'en-US' : 'de-DE',
+        author: { '@type': 'Organization', name: 'FrameTrain' },
+        publisher: { '@type': 'Organization', name: 'FrameTrain' },
+        mainEntityOfPage: pageUrl,
+      },
+    ],
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main className="flex-1">

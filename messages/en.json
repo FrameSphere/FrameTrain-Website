@@ -616,7 +616,7 @@
     "items": [
       { "title": "LoRA Fine-Tuning Explained", "description": "What is LoRA? How does QLoRA work? The complete guide to parameter-efficient fine-tuning of LLMs on your own data – with VRAM comparisons.", "tags": ["LLM", "LoRA", "QLoRA"], "href": "/guides/lora-finetuning" },
       { "title": "Local vs Cloud – The Honest Comparison", "description": "Google Colab, AWS SageMaker, Paperspace versus local GPU training. Cost, privacy, speed: when is which approach worth it?", "tags": ["Cloud", "GDPR", "Cost"], "href": "/guides/local-vs-cloud" },
-      { "title": "Best GPU for ML Training 2025", "description": "From RTX 3060 to RTX 4090 and Apple M4 Max: which GPU for which use case? Buying advice with VRAM tables for LLM fine-tuning.", "tags": ["GPU", "Hardware", "VRAM"], "href": "/guides/gpu-guide" }
+      { "title": "Best GPU for ML Training 2026", "description": "From RTX 3060 to RTX 4090 and Apple M4 Max: which GPU for which use case? Buying advice with VRAM tables for LLM fine-tuning.", "tags": ["GPU", "Hardware", "VRAM"], "href": "/guides/gpu-guide" }
     ]
   },
   "LoraGuide": {
@@ -725,13 +725,12 @@
     "cta": { "heading": "Start Training Locally with FrameTrain", "text": "Starting at €4.99/month – cancel anytime, no hidden costs, full control over your data.", "ctaStart": "Compare for Free", "ctaLora": "Read the LoRA Guide" }
   },
   "GpuGuide": {
-    "metaTitle": "Best GPU for Local ML Training – Buying Guide 2025 | FrameTrain",
-    "metaDescription": "Which GPU for LLM fine-tuning, LoRA training, and local machine learning? NVIDIA RTX vs Apple Silicon M-chips: the complete GPU guide for AI training 2025.",
-    "keywords": ["best GPU machine learning", "GPU for AI training", "RTX 4090 ML training", "Apple M2 M3 AI training", "VRAM for LLM fine-tuning", "GPU buying guide AI", "CUDA GPU for ML", "local LLM training GPU"],
-    "ogTitle": "Best GPU for Local ML Training 2025",
+    "metaTitle": "Best GPU for Local ML Training – Buying Guide 2026 | FrameTrain",
+    "metaDescription": "Which GPU for LLM fine-tuning, LoRA training, and local machine learning? NVIDIA RTX vs Apple Silicon M-chips: the complete GPU guide for AI training 2026.",
+    "ogTitle": "Best GPU for Local ML Training 2026",
     "ogDescription": "NVIDIA RTX vs Apple Silicon: which GPU should you buy for AI training?",
     "breadcrumb": "GPU Guide",
-    "badges": ["Hardware", "Buying Guide 2025"],
+    "badges": ["Hardware", "Buying Guide 2026"],
     "heroTitleLine1": "Best GPU for Local",
     "heroTitleLine2": "ML Training & LLM Fine-Tuning",
     "heroSubtitle": "VRAM is the decisive factor. Here you'll find the right GPU for every budget and use case – from the affordable RTX 3060 to the Apple M4 Max.",

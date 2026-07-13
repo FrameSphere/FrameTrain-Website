@@ -27,11 +27,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: t('twitterDescription'),
       creator: '@FrameTrainApp',
     },
+    // Noindex bis die Library nur verifizierten Content zeigt (SEO-Audit
+    // 13.07.2026: Test-Einträge wie "döner"/"test" waren öffentlich indexierbar).
+    // TODO: auf index:true zurückstellen, sobald Test-Skripte aus der DB entfernt sind.
     robots: {
-      index: true,
+      index: false,
       follow: true,
       googleBot: {
-        index: true,
+        index: false,
         follow: true,
         'max-snippet': -1,
         'max-image-preview': 'large',

@@ -27,17 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const copy =
     locale === 'en'
       ? {
-          title: 'FrameTrain – Train HuggingFace & LLM models locally (LoRA, PyTorch, GPU)',
+          title: 'FrameTrain – Local LLM Training with LoRA & PyTorch',
           description:
-            'FrameTrain is the desktop app for local machine learning training. Fine-tune HuggingFace models with LoRA, PyTorch, and GPU acceleration – no cloud, no recurring extra costs. From €4.99/month in Early Access for unlimited training.',
+            'Desktop app for local ML training: fine-tune HuggingFace models with LoRA & PyTorch, GDPR-compliant, no cloud required. From €4.99/month – get started.',
           ogTitle: 'FrameTrain – Train AI models locally | ML Training Desktop App',
           ogDescription:
             'Fine-tune HuggingFace & LLM models locally on your GPU. No cloud lock-in, maximum data security, GDPR-compliant. From €4.99/month in Early Access. Download now!',
         }
       : {
-          title: 'FrameTrain – HuggingFace & LLM Modelle lokal trainieren (LoRA, PyTorch, GPU)',
+          title: 'FrameTrain – LLM-Modelle lokal trainieren mit LoRA',
           description:
-            'FrameTrain ist die Desktop-App für lokales Machine Learning Training. Fine-Tune HuggingFace Modelle mit LoRA, PyTorch und GPU-Beschleunigung – ohne Cloud, ohne laufende Zusatzkosten. Ab 4,99€/Monat im Early Access für unbegrenztes Training.',
+            'Desktop-App für lokales ML-Training: HuggingFace-Modelle mit LoRA & PyTorch fine-tunen, DSGVO-konform ohne Cloud. Ab 4,99€/Monat – jetzt starten.',
           ogTitle: 'FrameTrain – KI-Modelle lokal trainieren | ML Training Desktop App',
           ogDescription:
             'Fine-Tune HuggingFace & LLM Modelle lokal auf deiner GPU. Kein Cloud-Zwang, maximale Datensicherheit, DSGVO-konform. Ab 4,99€/Monat im Early Access. Jetzt downloaden!',
@@ -115,6 +115,13 @@ export default async function RootLayout({ children, params }: Props) {
   const schemaOrg = {
     '@context': 'https://schema.org',
     '@graph': [
+      {
+        '@type': 'Organization',
+        name: 'FrameTrain',
+        url: baseUrl,
+        logo: `${baseUrl}/favicon.svg`,
+        sameAs: ['https://github.com/FrameSphere/FrameTrain-Website'],
+      },
       {
         '@type': 'SoftwareApplication',
         name: 'FrameTrain',

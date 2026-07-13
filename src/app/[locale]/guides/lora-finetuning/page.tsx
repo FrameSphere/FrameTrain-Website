@@ -3,9 +3,8 @@ import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Brain, Zap, Check, ArrowRight, Code2, Cpu, ChevronRight } from 'lucide-react'
-import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
-import { pageAlternates, pageOpenGraph } from '@/lib/seo'
+import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -28,8 +27,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 type HyperParam = { param: string; typical: string; desc: string }
 
-export default function LoraGuidePage() {
-  const t = useTranslations('LoraGuide')
+export default async function LoraGuidePage({ params }: Props) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'LoraGuide' })
 
   const loraItems = t.raw('vsFull.loraItems') as string[]
   const fullItems = t.raw('vsFull.fullItems') as string[]
@@ -38,8 +38,36 @@ export default function LoraGuidePage() {
   const hyperparams = t.raw('hyperparams.items') as HyperParam[]
   const badges = t.raw('badges') as string[]
 
+  const pageUrl = `${siteUrl}/${locale}/guides/lora-finetuning`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: 'Guides', item: `${siteUrl}/${locale}/guides` },
+          { '@type': 'ListItem', position: 3, name: t('breadcrumb'), item: pageUrl },
+        ],
+      },
+      {
+        '@type': 'Article',
+        headline: t('ogTitle'),
+        description: t('metaDescription'),
+        inLanguage: locale === 'en' ? 'en-US' : 'de-DE',
+        author: { '@type': 'Organization', name: 'FrameTrain' },
+        publisher: { '@type': 'Organization', name: 'FrameTrain' },
+        mainEntityOfPage: pageUrl,
+      },
+    ],
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main className="flex-1">
