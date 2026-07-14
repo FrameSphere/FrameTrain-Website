@@ -25,6 +25,17 @@ export function normalizePromoCode(input: unknown): string | null {
   return CODE_FORMAT.test(code) ? code : null
 }
 
+/**
+ * Enddatum eines Gratis-Zeitraums per KALENDER-Monaten (nicht 30-Tage-Blöcke).
+ * Wird überall genutzt (Anzeige, Direkt-Einlösung, Stripe-Trial), damit UI,
+ * DB und Stripe exakt dasselbe Datum verwenden.
+ */
+export function addFreeMonths(months: number, from: Date = new Date()): Date {
+  const d = new Date(from)
+  d.setMonth(d.getMonth() + months)
+  return d
+}
+
 export type PromoValidation =
   | { ok: true; promo: PromoCode }
   | { ok: false; reason: 'invalid' | 'already_redeemed' }

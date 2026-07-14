@@ -547,6 +547,7 @@
       "notePercentOnce": "{percent} % Rabatt auf die erste Zahlung: Du zahlst einmalig {price} statt {regular}, danach gilt der reguläre Preis pro {interval}. Der Rabatt wird an der Stripe-Kasse automatisch abgezogen.",
       "notePercentForever": "{percent} % Rabatt dauerhaft: Du zahlst {price} statt {regular} pro {interval} — solange dein Abo läuft. Der Rabatt wird an der Stripe-Kasse automatisch abgezogen.",
       "notePercentRepeating": "{percent} % Rabatt für die ersten {months, plural, one {1 Monat} other {# Monate}}: Du zahlst {price} statt {regular} pro {interval}, danach gilt der reguläre Preis. Der Rabatt wird an der Stripe-Kasse automatisch abgezogen.",
+      "notePercentRepeatingYearly": "{percent} % Rabatt auf deine erste Jahresrechnung: Du zahlst {price} statt {regular}, danach gilt der reguläre Jahrespreis. Hinweis: Ein „{months}-Monate\"-Rabatt kommt beim Monatsabo voll zur Geltung.",
       "noteDirect": "Du erhältst sofort vollen Zugang für {months, plural, one {1 Monat} other {# Monate}} — ganz ohne Zahlungsmittel. Am {date} endet der Zugang automatisch und dein API-Key wird deaktiviert. Du kannst danach jederzeit ein Abo abschließen.",
       "noteTrial": "{months, plural, one {1 Monat} other {# Monate}} gratis: Die erste Abbuchung ({price}) erfolgt erst am {date}. Kündigst du vorher, zahlst du nichts.",
       "redeemLifetimeCta": "Jetzt einlösen & freischalten",
@@ -572,6 +573,7 @@
     },
     "success": {
       "verifying": "Zahlung wird verifiziert…",
+      "activating": "Zugang wird aktiviert…",
       "invalid": {
         "heading": "Keine gültige Zahlung gefunden",
         "text": "Diese Seite ist nur nach einer erfolgreichen Zahlung zugänglich. Hast du bereits bezahlt? Gehe ins Dashboard.",
@@ -2125,6 +2127,69 @@
             "tags": [
               "studenten",
               "rabatt"
+            ]
+          },
+          {
+            "q": "Kann ich einen Gutschein- oder Promo-Code einlösen?",
+            "a": "Ja. Beim Kauf klickst du auf „Du hast einen Gutschein-Code?\" oder öffnest direkt die Gutschein-Seite. Dort gibst du deinen Code ein, wir prüfen ihn und schalten deinen Vorteil sofort frei. Codes erhältst du z. B. über Aktionen, Partner oder direkt von uns.",
+            "tags": [
+              "code",
+              "gutschein",
+              "promo"
+            ]
+          },
+          {
+            "q": "Welche Arten von Codes gibt es?",
+            "a": "Drei: Rabatt-Codes (z. B. 50 % günstiger), Gratismonate-Codes (z. B. 2 Monate kostenlos) und Lifetime-Codes (dauerhafter Gratis-Zugang ganz ohne Abo).",
+            "tags": [
+              "code",
+              "rabatt",
+              "gratismonate",
+              "lifetime"
+            ]
+          },
+          {
+            "q": "Wie funktionieren Gratismonate-Codes?",
+            "a": "Du hast zwei Möglichkeiten. „Ohne Abo einlösen\" gibt dir vollen Zugang für den Gratiszeitraum – ganz ohne Zahlungsmittel; der Zugang endet danach automatisch. „Mit Abo starten\" hinterlegt deine Karte bei Stripe, belastet sie aber erst nach der Gratiszeit, sodass es nahtlos weitergeht. Kündigst du vorher, zahlst du nichts.",
+            "tags": [
+              "gratismonate",
+              "trial",
+              "code"
+            ]
+          },
+          {
+            "q": "Was ist ein Lifetime-Zugang?",
+            "a": "Ein Lifetime-Code schaltet deinen Account dauerhaft frei – kein Abo, keine Zahlung, kein Ablaufdatum. Alle Updates sind inklusive.",
+            "tags": [
+              "lifetime",
+              "code"
+            ]
+          },
+          {
+            "q": "Was passiert, wenn mein Gratis-Zeitraum endet?",
+            "a": "Hast du „ohne Abo\" eingelöst, endet der Zugang am angezeigten Datum automatisch und dein API-Key wird deaktiviert. Im Dashboard siehst du rechtzeitig, wann das ist – dort kannst du jederzeit ein Abo abschließen oder einen weiteren Code einlösen, um FrameTrain weiterzunutzen.",
+            "tags": [
+              "gratismonate",
+              "ablauf",
+              "api-key"
+            ]
+          },
+          {
+            "q": "Kann ich während der Gratiszeit schon ein Abo abschließen?",
+            "a": "Ja. Schließt du während laufender Gratismonate ein Abo ab, übernehmen wir die restliche Gratiszeit – die erste Abbuchung erfolgt erst nach deren Ende. Es wird nichts doppelt berechnet und keine Gratiszeit verschenkt.",
+            "tags": [
+              "gratismonate",
+              "abo",
+              "abbuchung"
+            ]
+          },
+          {
+            "q": "Gilt mein Rabatt-Code auch für das Jahresabo?",
+            "a": "Rabatt-Codes lassen sich mit Monats- und Jahresabo kombinieren; der Rabatt wird an der Stripe-Kasse automatisch abgezogen. Zeitlich begrenzte Rabatte (z. B. „für die ersten Monate\") passen aber am besten zum Monatsabo – beim Jahresabo greift der Rabatt nur auf die erste Jahresrechnung.",
+            "tags": [
+              "rabatt",
+              "jahresabo",
+              "code"
             ]
           }
         ]
@@ -4668,6 +4733,10 @@
       "redirecting": "Weiterleitung...",
       "subscribeButton": "Abo abschließen →",
       "redeemButton": "Code einlösen"
+    },
+    "trial": {
+      "title": "Gratiszeit aktiv – noch {days, plural, one {# Tag} other {# Tage}}",
+      "text": "Kostenlos bis {date}. Danach startet deine reguläre Abrechnung automatisch – vorher jederzeit im Stripe-Portal kündbar."
     },
     "apiKeys": {
       "title": "Deine API-Keys",

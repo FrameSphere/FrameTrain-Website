@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import type { PromoCode } from '@prisma/client'
 import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { validatePromoCode } from '@/lib/promo'
+import { validatePromoCode, addFreeMonths } from '@/lib/promo'
 import { rateLimit, getClientIp } from '@/lib/rate-limit'
 
 // Force dynamic rendering
@@ -109,7 +109,10 @@ export async function POST(req: NextRequest) {
 
     // Promo → Stripe-Parameter übersetzen
     let discounts: Stripe.Checkout.SessionCreateParams.Discount[] | undefined
-    let trialPeriodDays: number | undefined
+    // trial_end = exakter Unix-Zeitstempel, ab dem Stripe erstmals abbucht.
+    // Wir nutzen Kalendermonate (nicht 30-Tage-Blöcke), damit UI/DB/Stripe
+    // dasselbe Datum zeigen.
+    let trialEnd: number | undefined
 
     if (promo?.type === 'percent') {
       const couponId = await ensureStripeCoupon(promo)
@@ -117,7 +120,30 @@ export async function POST(req: NextRequest) {
     } else if (promo?.type === 'free_months') {
       // Gratismonate als Trial: Karte wird erfasst, erste Abbuchung erst nach
       // Ablauf. Funktioniert für monthly UND yearly gleichermaßen.
-      trialPeriodDays = promo.freeMonths! * 30
+      trialEnd = Math.floor(addFreeMonths(promo.freeMonths!).getTime() / 1000)
+    } else {
+      // KEIN Promo-Code beim Checkout: Hat der User bereits einen laufenden
+      // Gratis-Zugang (Code ohne Abo eingelöst), übernehmen wir dessen Restzeit
+      // als Trial — sonst würde sofort abgebucht und die Gratistage verfallen.
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.userId },
+        select: { promoAccessUntil: true, lifetimeAccess: true, stripeSubscriptionId: true },
+      })
+      if (
+        dbUser &&
+        !dbUser.lifetimeAccess &&
+        !dbUser.stripeSubscriptionId &&
+        dbUser.promoAccessUntil &&
+        dbUser.promoAccessUntil > new Date()
+      ) {
+        trialEnd = Math.floor(dbUser.promoAccessUntil.getTime() / 1000)
+      }
+    }
+
+    // Stripe verlangt trial_end mindestens ~48 h in der Zukunft
+    const MIN_TRIAL_LEAD_SEC = 60 * 60
+    if (trialEnd && trialEnd < Math.floor(Date.now() / 1000) + MIN_TRIAL_LEAD_SEC) {
+      trialEnd = undefined
     }
 
     // Erstelle Stripe Checkout Session (Subscription)
@@ -133,7 +159,7 @@ export async function POST(req: NextRequest) {
       mode: 'subscription',
       ...(discounts ? { discounts } : {}),
       subscription_data: {
-        ...(trialPeriodDays ? { trial_period_days: trialPeriodDays } : {}),
+        ...(trialEnd ? { trial_end: trialEnd } : {}),
         metadata,
       },
       success_url: `${fullBaseUrl}/payment/success?session_id={CHECKOUT_SESSION_ID}`,

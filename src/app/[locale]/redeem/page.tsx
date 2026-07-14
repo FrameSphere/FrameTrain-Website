@@ -475,7 +475,13 @@ export default function RedeemPage() {
                         months: promo.percentDurationMonths ?? 0,
                       }
                       if (promo.percentDuration === 'forever') return t('notePercentForever', vars)
-                      if (promo.percentDuration === 'repeating') return t('notePercentRepeating', vars)
+                      if (promo.percentDuration === 'repeating') {
+                        // "X Monate"-Rabatt trifft beim Jahresabo nur die erste
+                        // Jahresrechnung → ehrlich formulieren statt "für X Monate".
+                        return plan === 'yearly'
+                          ? t('notePercentRepeatingYearly', vars)
+                          : t('notePercentRepeating', vars)
+                      }
                       return t('notePercentOnce', vars)
                     })()}
                     {promo.type === 'free_months' && mode === 'direct' &&

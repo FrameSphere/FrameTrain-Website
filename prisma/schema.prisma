@@ -25,6 +25,7 @@ model User {
   stripeCustomerId     String?   @unique @map("stripe_customer_id")
   stripeSubscriptionId String?   @unique @map("stripe_subscription_id")
   subscriptionCancelAt DateTime? @map("subscription_cancel_at")
+  subscriptionTrialEnd DateTime? @map("subscription_trial_end") // Ende der Stripe-Gratiszeit (Trial); erste Abbuchung erfolgt danach
   termsAcceptedAt      DateTime? @map("terms_accepted_at")            // Zeitpunkt der Zustimmung zu AGB & Datenschutz
   diagnosticsConsent   Boolean   @default(false) @map("diagnostics_consent") // Optionale Einwilligung: Desktop-App darf anonyme Fehlerdaten senden
   diagnosticsConsentAt DateTime? @map("diagnostics_consent_at")
@@ -191,7 +192,9 @@ model Payment {
   stripePaymentId      String?   @unique @map("stripe_payment_id")
   stripeSessionId      String?   @unique @map("stripe_session_id")
   stripeSubscriptionId String?   @map("stripe_subscription_id")
-  status               String    @default("pending")
+  stripeInvoiceId      String?   @unique @map("stripe_invoice_id") // Stripe-Rechnung: dedupliziert Verlängerungen & Fehlversuche
+  status               String    @default("pending")              // pending | completed | renewed | failed
+  billingReason        String?   @map("billing_reason")           // Stripe billing_reason (subscription_create | subscription_cycle | …)
   createdAt       DateTime  @default(now()) @map("created_at")
   completedAt     DateTime? @map("completed_at")
 

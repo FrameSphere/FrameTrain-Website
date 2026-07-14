@@ -76,6 +76,47 @@ async function finalizePromoRedemption(session: Stripe.Checkout.Session, userId:
   }
 }
 
+// Helper: eine Stripe-Rechnung in die Zahlungshistorie schreiben (idempotent
+// über stripe_invoice_id). Erfasst Verlängerungen UND Fehlversuche, damit der
+// Support ohne Stripe-Dashboard eine lückenlose Historie sieht.
+async function logInvoice(invoice: Stripe.Invoice, ok: boolean) {
+  const invoiceId = invoice.id
+  if (!invoiceId) return
+
+  const subscriptionId = (invoice as any).subscription as string | null
+  const billingReason = (invoice as any).billing_reason as string | null
+
+  // Die allererste Rechnung (subscription_create) ist bereits über
+  // checkout.session.completed erfasst → keine Dublette anlegen.
+  if (ok && billingReason === 'subscription_create') return
+
+  // User zuordnen (über Subscription, sonst über Customer)
+  let user = subscriptionId
+    ? await prisma.user.findFirst({ where: { stripeSubscriptionId: subscriptionId } })
+    : null
+  if (!user && invoice.customer) {
+    user = await prisma.user.findFirst({ where: { stripeCustomerId: invoice.customer as string } })
+  }
+
+  const amount = ok ? (invoice.amount_paid ?? 0) : (invoice.amount_due ?? 0)
+  const data = {
+    userId: user?.id ?? null,
+    email: invoice.customer_email ?? user?.email ?? 'unknown',
+    amount,
+    currency: invoice.currency ?? 'eur',
+    stripeSubscriptionId: subscriptionId,
+    billingReason: billingReason ?? undefined,
+    status: ok ? 'renewed' : 'failed',
+    completedAt: ok ? new Date() : null,
+  }
+
+  await prisma.payment.upsert({
+    where: { stripeInvoiceId: invoiceId },
+    create: { ...data, stripeInvoiceId: invoiceId },
+    update: data,
+  })
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')!
@@ -121,13 +162,30 @@ export async function POST(req: NextRequest) {
           break
         }
 
-        // User aktivieren + Stripe IDs speichern
+        // Trial-Ende aus der Subscription lesen (für Dashboard-Anzeige
+        // "erste Abbuchung am …"). Nur bei Abos mit Gratiszeit gesetzt.
+        let trialEnd: Date | null = null
+        if (subscriptionId) {
+          try {
+            const sub = await stripe.subscriptions.retrieve(subscriptionId)
+            if (sub.trial_end) trialEnd = new Date(sub.trial_end * 1000)
+          } catch (e) {
+            console.error('Could not retrieve subscription for trial_end:', e)
+          }
+        }
+
+        // User aktivieren + Stripe IDs speichern.
+        // promoAccessUntil zurücksetzen, sobald ein echtes Abo besteht — die
+        // Restzeit wurde beim Checkout als Stripe-Trial übernommen und wird
+        // nun vom Abo abgelöst (verhindert Doppel-Anzeige & Fehlablauf).
         await prisma.user.update({
           where: { id: user.id },
           data: {
             hasPaid: true,
             stripeCustomerId: session.customer as string,
             stripeSubscriptionId: subscriptionId ?? undefined,
+            subscriptionTrialEnd: trialEnd,
+            ...(subscriptionId ? { promoAccessUntil: null } : {}),
             updatedAt: new Date(),
           },
         })
@@ -275,6 +333,11 @@ export async function POST(req: NextRequest) {
       console.warn('⚠️ Payment failed for customer:', invoice.customer, '| attempt:', (invoice as any).attempt_count)
       // hasPaid bleibt true bis customer.subscription.deleted feuert
       // Stripe schickt automatisch Retry-E-Mails
+      try {
+        await logInvoice(invoice, false)
+      } catch (dbError) {
+        console.error('❌ Database error logging failed invoice:', dbError)
+      }
       break
     }
 
@@ -285,17 +348,27 @@ export async function POST(req: NextRequest) {
       if (!subscriptionId) break
 
       try {
+        // Verlängerung in die Zahlungshistorie schreiben (dedupliziert)
+        await logInvoice(invoice, true)
+
         const user = await prisma.user.findFirst({
           where: { stripeSubscriptionId: subscriptionId },
         })
-        if (user && !user.hasPaid) {
-          // Reaktivieren falls es zwischenzeitlich deaktiviert wurde
-          await prisma.user.update({
-            where: { id: user.id },
-            data: { hasPaid: true, updatedAt: new Date() },
-          })
-          await ensureApiKey(user.id, user.email)
-          console.log('✅ Subscription reactivated for:', user.email)
+        if (user) {
+          const updates: Record<string, unknown> = {}
+          if (!user.hasPaid) {
+            // Reaktivieren falls es zwischenzeitlich deaktiviert wurde
+            updates.hasPaid = true
+            await ensureApiKey(user.id, user.email)
+          }
+          // Trial ist vorbei, sobald die erste echte Abrechnung durchläuft
+          if (user.subscriptionTrialEnd && (invoice as any).billing_reason !== 'subscription_create') {
+            updates.subscriptionTrialEnd = null
+          }
+          if (Object.keys(updates).length > 0) {
+            updates.updatedAt = new Date()
+            await prisma.user.update({ where: { id: user.id }, data: updates })
+          }
         }
       } catch (dbError) {
         console.error('❌ Database error in invoice.payment_succeeded:', dbError)

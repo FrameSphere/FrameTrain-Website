@@ -10,7 +10,7 @@ import { Footer } from '@/components/Footer'
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
-  Globe, AlertCircle, Pencil, Loader2, CreditCard,
+  Globe, AlertCircle, Pencil, Loader2, CreditCard, Zap,
 } from 'lucide-react'
 /* Temporäre UI Anfang, bald herausnehmen */
 import { DownloadLockCountdown, isAppReleased } from '@/components/ReleaseCountdown'
@@ -125,6 +125,7 @@ function DashboardPageInner() {
   const [lifetimeAccess, setLifetimeAccess] = useState(false)
   const [promoAccessUntil, setPromoAccessUntil] = useState<string | null>(null)
   const [hasSubscription, setHasSubscription] = useState(false)
+  const [subscriptionTrialEnd, setSubscriptionTrialEnd] = useState<string | null>(null)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const [dataLoading, setDataLoading] = useState(true)
   const [regenerating, setRegenerating] = useState(false)
@@ -244,6 +245,7 @@ function DashboardPageInner() {
       setLifetimeAccess(!!data.lifetimeAccess)
       setPromoAccessUntil(data.promoAccessUntil ?? null)
       setHasSubscription(!!data.hasSubscription)
+      setSubscriptionTrialEnd(data.subscriptionTrialEnd ?? null)
       setIsOAuthUser(!!data.isOAuthUser)
       setHasDesktopPassword(!!data.hasDesktopPassword)
     } catch { /* silent */ } finally { setDataLoading(false) }
@@ -560,6 +562,25 @@ function DashboardPageInner() {
                   >
                     {t('promoAccess.redeemButton')}
                   </button>
+                </div>
+              </div>
+            )
+          })()}
+
+          {/* ── Stripe-Gratiszeit (Trial) läuft – erste Abbuchung ankündigen ── */}
+          {hasSubscription && !subscriptionCancelAt && subscriptionTrialEnd && (() => {
+            const trialDate = new Date(subscriptionTrialEnd)
+            if (trialDate <= new Date()) return null
+            const diffDays = Math.max(0, Math.ceil((trialDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+            const formattedDate = trialDate.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' })
+            return (
+              <div className="mb-8 p-5 rounded-2xl border border-violet-500/30 bg-violet-500/10 flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-5 h-5 text-violet-400" />
+                </div>
+                <div>
+                  <p className="text-white font-bold">{t('trial.title', { days: diffDays })}</p>
+                  <p className="text-violet-300 text-sm mt-0.5">{t('trial.text', { date: formattedDate })}</p>
                 </div>
               </div>
             )

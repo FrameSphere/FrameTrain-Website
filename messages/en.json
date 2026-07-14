@@ -320,6 +320,7 @@
       "notePercentOnce": "{percent}% off your first payment: you pay {price} instead of {regular} once, then the regular price per {interval} applies. The discount is applied automatically at the Stripe checkout.",
       "notePercentForever": "{percent}% off forever: you pay {price} instead of {regular} per {interval} — for as long as your subscription runs. The discount is applied automatically at the Stripe checkout.",
       "notePercentRepeating": "{percent}% off for the first {months, plural, one {1 month} other {# months}}: you pay {price} instead of {regular} per {interval}, then the regular price applies. The discount is applied automatically at the Stripe checkout.",
+      "notePercentRepeatingYearly": "{percent}% off your first yearly invoice: you pay {price} instead of {regular}, then the regular yearly price applies. Note: a \"{months}-month\" discount is best combined with the monthly plan.",
       "noteDirect": "You get full access for {months, plural, one {1 month} other {# months}} right away — no payment method required. On {date} access ends automatically and your API key is deactivated. You can subscribe anytime afterwards.",
       "noteTrial": "{months, plural, one {1 month} other {# months}} free: the first charge ({price}) happens on {date}. Cancel before then and you pay nothing.",
       "redeemLifetimeCta": "Redeem now & unlock",
@@ -345,6 +346,7 @@
     },
     "success": {
       "verifying": "Verifying payment…",
+      "activating": "Activating access…",
       "invalid": {
         "heading": "No valid payment found",
         "text": "This page is only accessible after a successful payment. Already paid? Go to the dashboard.",
@@ -902,7 +904,14 @@
           { "q": "Can I cancel at any time?", "a": "Yes, at any time, effective at the end of the current billing period. No notice periods, no hidden fees. Access remains active until the end of the paid period.", "tags": ["cancel", "subscription"] },
           { "q": "Is there a money-back guarantee?", "a": "Not currently. Since this involves digital content that is made available immediately, the statutory right of withdrawal is limited. Our support team will help with any issues.", "tags": ["guarantee", "refund"] },
           { "q": "What happens after the first 100 users?", "a": "The price increases to €9.99/month for new users. Existing users keep their Early Access price permanently – even as the general price rises.", "tags": ["early access", "price increase"] },
-          { "q": "Are there discounts for students or non-profits?", "a": "Not yet, but planned. Get in touch by email – we try to find solutions on a case-by-case basis.", "tags": ["students", "discount"] }
+          { "q": "Are there discounts for students or non-profits?", "a": "Not yet, but planned. Get in touch by email – we try to find solutions on a case-by-case basis.", "tags": ["students", "discount"] },
+          { "q": "Can I redeem a voucher or promo code?", "a": "Yes. During checkout click \"Have a promo code?\" or open the redeem page directly. Enter your code, we validate it and unlock your benefit instantly. You get codes through promotions, partners, or directly from us.", "tags": ["code", "voucher", "promo"] },
+          { "q": "What types of codes are there?", "a": "Three: discount codes (e.g. 50% off), free-months codes (e.g. 2 months free), and lifetime codes (permanent free access without any subscription).", "tags": ["code", "discount", "free months", "lifetime"] },
+          { "q": "How do free-months codes work?", "a": "You have two options. \"Redeem without subscription\" gives you full access for the free period with no payment method – access then ends automatically. \"Start with subscription\" stores your card with Stripe but only charges it after the free period, so it continues seamlessly. Cancel before then and you pay nothing.", "tags": ["free months", "trial", "code"] },
+          { "q": "What is lifetime access?", "a": "A lifetime code unlocks your account permanently – no subscription, no payment, no expiry date. All updates included.", "tags": ["lifetime", "code"] },
+          { "q": "What happens when my free period ends?", "a": "If you redeemed \"without subscription\", access ends automatically on the shown date and your API key is deactivated. Your dashboard shows you when that is in good time – there you can subscribe or redeem another code anytime to keep using FrameTrain.", "tags": ["free months", "expiry", "api key"] },
+          { "q": "Can I subscribe while my free period is still running?", "a": "Yes. If you subscribe during active free months, we carry over the remaining free time – the first charge only happens after it ends. Nothing is charged twice and no free time is lost.", "tags": ["free months", "subscription", "billing"] },
+          { "q": "Does my discount code also apply to the yearly plan?", "a": "Discount codes work with both the monthly and yearly plan; the discount is applied automatically at the Stripe checkout. Time-limited discounts (e.g. \"for the first months\") fit the monthly plan best – on the yearly plan the discount only applies to the first yearly invoice.", "tags": ["discount", "yearly", "code"] }
         ]
       },
       "hardware": {
@@ -1747,6 +1756,10 @@
       "redirecting": "Redirecting...",
       "subscribeButton": "Subscribe →",
       "redeemButton": "Redeem code"
+    },
+    "trial": {
+      "title": "Free period active – {days, plural, one {# day} other {# days}} left",
+      "text": "Free until {date}. Your regular billing then starts automatically – cancel anytime before in the Stripe portal."
     },
     "apiKeys": {
       "title": "Your API Keys",

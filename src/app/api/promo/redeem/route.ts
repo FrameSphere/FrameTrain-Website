@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client'
 import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { generateApiKey } from '@/lib/api-key'
-import { validatePromoCode, consumeRedemptionSlot } from '@/lib/promo'
+import { validatePromoCode, consumeRedemptionSlot, addFreeMonths } from '@/lib/promo'
 import { rateLimit, getClientIp } from '@/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
@@ -98,8 +98,7 @@ export async function POST(req: NextRequest) {
           const base = dbUser?.promoAccessUntil && dbUser.promoAccessUntil > new Date()
             ? dbUser.promoAccessUntil
             : new Date()
-          const until = new Date(base)
-          until.setMonth(until.getMonth() + promo.freeMonths!)
+          const until = addFreeMonths(promo.freeMonths!, base)
           accessUntil = until
 
           await tx.user.update({

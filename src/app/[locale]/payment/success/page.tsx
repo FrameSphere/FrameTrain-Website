@@ -415,7 +415,7 @@ function PaymentSuccessContent() {
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="w-12 h-12 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-6" />
-            <p className="text-gray-400 text-lg">{t('verifying')}</p>
+            <p className="text-gray-400 text-lg">{promoRedeemed ? t('activating') : t('verifying')}</p>
           </div>
         </main>
       </div>
