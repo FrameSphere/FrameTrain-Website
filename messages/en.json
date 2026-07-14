@@ -1025,7 +1025,7 @@
     },
     "installation": {
       "heading": "Installation", "subtitle": "How to set up FrameTrain on your system",
-      "step1": { "heading": "1. Create an account & pay", "text": "Sign up at <a href='/register' class='text-purple-400'>frame-train.vercel.app</a> and choose a plan. After payment you'll receive your API key by email.", "cta": "Create account" },
+      "step1": { "heading": "1. Create an account & pay", "text": "Sign up at <a href='/register' class='text-purple-400'>frame-train.com</a> and choose a plan. After payment you'll receive your API key by email.", "cta": "Create account" },
       "step2": { "heading": "2. Download", "text": "Download the desktop app for your operating system:", "os": [ { "name": "Windows", "desc": "Windows 10/11 (64-bit)", "file": "Download .msi" }, { "name": "macOS", "desc": "macOS 11+ (Intel & Apple Silicon)", "file": "Download .dmg" }, { "name": "Linux", "desc": "Ubuntu 20.04+ (AppImage)", "file": "Download .AppImage" } ] },
       "step3": { "heading": "3. Enter your API key", "text": "On first launch you'll be asked for your API key. Enter the key you received by email. It's stored locally \u2013 you only need to enter it once." },
       "step4": { "heading": "4. Done!", "text": "FrameTrain is now ready to use. Continue to the Quick Start.", "successTitle": "Installation successful!", "successDesc": "FrameTrain now runs locally on your system. No server, no cloud, full control." },

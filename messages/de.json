@@ -1116,7 +1116,7 @@
       "subtitle": "So richtest du FrameTrain auf deinem System ein",
       "step1": {
         "heading": "1. Account erstellen & zahlen",
-        "text": "Registriere dich auf <a href='/register' class='text-purple-400'>frame-train.vercel.app</a> und wähle einen Plan. Nach der Zahlung erhältst du deinen API-Key per E-Mail.",
+        "text": "Registriere dich auf <a href='/register' class='text-purple-400'>frame-train.com</a> und wähle einen Plan. Nach der Zahlung erhältst du deinen API-Key per E-Mail.",
         "cta": "Account erstellen"
       },
       "step2": {

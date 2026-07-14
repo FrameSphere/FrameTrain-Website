@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 // NEXT_PUBLIC_SITE_URL in Vercel setzen (ohne trailing Slash) –
 // Canonicals, hreflang, og:url, Sitemap und robots.txt ziehen dann mit.
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://frame-train.vercel.app'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://frame-train.com'
 ).replace(/\/$/, '')
 
 /**

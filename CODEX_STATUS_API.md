@@ -25,7 +25,7 @@ npx prisma migrate dev --name add_status_updates
 
 ### Endpoint
 ```
-POST https://frame-train.vercel.app/api/status-updates
+POST https://frame-train.com/api/status-updates
 ```
 
 ### Header
@@ -77,7 +77,7 @@ Die Desktop-App befindet sich in aktiver Entwicklung. Release geplant für 29. J
 ## Beispiel-curl
 
 ```bash
-curl -X POST https://frame-train.vercel.app/api/status-updates \
+curl -X POST https://frame-train.com/api/status-updates \
   -H "Authorization: Bearer $CODEX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
