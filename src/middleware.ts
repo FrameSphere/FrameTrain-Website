@@ -5,7 +5,25 @@ import { routing } from '@/i18n/routing'
 
 const intlMiddleware = createIntlMiddleware(routing)
 
+// Alte Vercel-Produktions-URL vor dem Domain-Umzug auf frame-train.com.
+// Nur dieser exakte Host wird umgeleitet, NICHT *.vercel.app – sonst würden
+// auch Preview-Deployments (frame-train-git-*.vercel.app) mit umgeleitet.
+const LEGACY_HOST = 'frame-train.vercel.app'
+
 export function middleware(request: NextRequest) {
+  // Permanenter Redirect der alten Domain auf frame-train.com – konsolidiert
+  // SEO-Signale und verhindert getrennte Cookies/Sessions durch Parallelbetrieb.
+  // /api ausgenommen: Webhooks/OAuth-Callbacks werden direkt in den jeweiligen
+  // Dashboards (Stripe, Google, GitHub) auf die neue Domain umgestellt.
+  const hostname = request.headers.get('host') || ''
+  if (hostname === LEGACY_HOST && !request.nextUrl.pathname.startsWith('/api')) {
+    const url = new URL(request.url)
+    url.protocol = 'https'
+    url.hostname = 'frame-train.com'
+    url.port = ''
+    return NextResponse.redirect(url, 308)
+  }
+
   // API-Routes: nur CORS, kein Locale-Routing (Backend-Endpunkte bleiben
   // unter /api/* ohne /de bzw. /en Präfix)
   if (request.nextUrl.pathname.startsWith('/api')) {
