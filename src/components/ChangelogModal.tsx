@@ -27,6 +27,9 @@ interface ChangelogEntry {
   version: string
   title: string
   description?: string | null
+  title_en?: string | null
+  description_en?: string | null
+  source?: string | null
   type: 'feature' | 'fix' | 'improvement' | 'breaking' | 'security'
   created_at: string
 }
@@ -287,9 +290,12 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
               )
             }
 
-            // release entry
+            // release entry (zweisprachig: EN-Felder nutzen, wenn Locale = en)
             const style = RELEASE_TYPE_STYLE[item.data.type] || RELEASE_TYPE_STYLE.feature
             const label = t(`typeLabels.${item.data.type}` as any) || item.data.type
+            const relTitle = locale === 'en' && item.data.title_en ? item.data.title_en : item.data.title
+            const relDesc  = locale === 'en' && item.data.description_en ? item.data.description_en : item.data.description
+            const isDateVersion = /^\d{4}-\d{2}-\d{2}$/.test(item.data.version)
             return (
               <div
                 key={`r-${item.data.id}`}
@@ -308,13 +314,17 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
                       {style.icon}
                       {label}
                     </span>
-                    <span className="text-[11px] text-gray-600 font-mono">v{item.data.version}</span>
+                    {!isDateVersion && (
+                      <span className="text-[11px] text-gray-600 font-mono">v{item.data.version}</span>
+                    )}
                   </div>
                   <span className="text-[11px] text-gray-600 flex-shrink-0">{fmtDate(item.data.created_at, locale, dateLabels)}</span>
                 </div>
-                <p className="text-white font-semibold text-sm">{item.data.title}</p>
-                {item.data.description && (
-                  <p className="text-gray-400 text-sm mt-1 leading-relaxed">{item.data.description}</p>
+                <p className="text-white font-semibold text-sm">{relTitle}</p>
+                {relDesc && (
+                  item.data.source === 'automation'
+                    ? <div className="mt-1.5"><SimpleMarkdown text={relDesc} /></div>
+                    : <p className="text-gray-400 text-sm mt-1 leading-relaxed">{relDesc}</p>
                 )}
               </div>
             )

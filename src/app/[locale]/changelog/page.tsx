@@ -18,6 +18,9 @@ interface ChangelogEntry {
   version: string
   title: string
   description: string | null
+  title_en?: string | null
+  description_en?: string | null
+  source?: string | null
   type: 'feature' | 'fix' | 'improvement' | 'breaking' | 'security'
   published: number
   created_at: string
@@ -108,6 +111,14 @@ export default function ChangelogPage() {
 
   const fmtDate = (iso: string) =>
     new Date(iso).toLocaleDateString(locale === 'en' ? 'en-US' : 'de-DE', { year: 'numeric', month: 'long', day: 'numeric' })
+
+  // Zweisprachige Einträge: EN-Felder nutzen, wenn Locale = en und vorhanden
+  const entryTitle = (e: ChangelogEntry) =>
+    locale === 'en' && e.title_en ? e.title_en : e.title
+  const entryDescription = (e: ChangelogEntry) =>
+    locale === 'en' && e.description_en ? e.description_en : e.description
+  // Automation-Versionen sind Datumsangaben (YYYY-MM-DD) → als Datum anzeigen statt "vYYYY-MM-DD"
+  const isDateVersion = (v: string) => /^\d{4}-\d{2}-\d{2}$/.test(v)
 
   useEffect(() => {
     // Changelog-Einträge vom Manager-API
@@ -250,12 +261,16 @@ export default function ChangelogPage() {
                       <div className="flex items-center gap-4 mb-6 flex-wrap">
                         <div className="glass-strong rounded-2xl px-6 py-4 border border-white/10">
                           <div className="flex items-center gap-3 mb-1">
-                            <span className="text-2xl font-black text-white">v{version}</span>
+                            <span className="text-2xl font-black text-white">
+                              {isDateVersion(version) ? fmtDate(version) : `v${version}`}
+                            </span>
                             <span className="text-xs font-bold px-3 py-1 rounded-full border text-purple-400 bg-purple-500/10 border-purple-500/20">
                               Release
                             </span>
                           </div>
-                          <div className="text-sm text-gray-500">{fmtDate(latest.created_at)}</div>
+                          {!isDateVersion(version) && (
+                            <div className="text-sm text-gray-500">{fmtDate(latest.created_at)}</div>
+                          )}
                         </div>
                       </div>
                       <div className="glass-strong rounded-2xl border border-white/10 overflow-hidden">
@@ -266,9 +281,13 @@ export default function ChangelogPage() {
                               <span className={`text-xs font-bold px-2 py-0.5 rounded border flex-shrink-0 mt-0.5 ${TYPE_COLOR[e.type] || TYPE_COLOR.feature}`}>
                                 {t(`typeLabels.${e.type}` as any) || e.type}
                               </span>
-                              <div>
-                                <p className="text-white text-sm font-semibold">{e.title}</p>
-                                {e.description && <p className="text-gray-400 text-sm mt-1 leading-relaxed">{e.description}</p>}
+                              <div className="min-w-0">
+                                <p className="text-white text-sm font-semibold">{entryTitle(e)}</p>
+                                {entryDescription(e) && (
+                                  e.source === 'automation'
+                                    ? <div className="mt-2"><SimpleMarkdown text={entryDescription(e)!} /></div>
+                                    : <p className="text-gray-400 text-sm mt-1 leading-relaxed">{entryDescription(e)}</p>
+                                )}
                               </div>
                             </div>
                           ))}
