@@ -105,7 +105,7 @@ export default function HomePage() {
 
             {/* Main headline */}
             <div className="text-center max-w-5xl mx-auto">
-              <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-8 leading-tight">
                 <span className="block text-glow-purple bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
                   {t('hero.titleLine1')}
                 </span>
@@ -188,7 +188,7 @@ export default function HomePage() {
         <section className="py-32 px-4 relative" id="features">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 {t('features.title')}
               </h2>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -214,7 +214,7 @@ export default function HomePage() {
         <section className="py-32 px-4 relative">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 {t('howItWorks.title')}
               </h2>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -321,7 +321,7 @@ export default function HomePage() {
         {/* Pricing Section */}
         <section className="py-32 px-4 relative" id="pricing">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
               {t('pricing.title')}
             </h2>
             <p className="text-xl text-gray-400 mb-4">
@@ -338,7 +338,7 @@ export default function HomePage() {
                 <div className="flex-1">
                 <div className="text-sm font-bold text-purple-400 uppercase tracking-widest mb-4">{t('pricing.monthly.label')}</div>
                 <div className="mb-6">
-                  <div className="text-6xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">
+                  <div className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">
                     {t('pricing.monthly.price')}
                   </div>
                   <div className="text-gray-400 text-sm">{t('pricing.monthly.billing')}</div>
@@ -371,7 +371,7 @@ export default function HomePage() {
                 <div className="flex-1">
                 <div className="text-sm font-bold text-green-400 uppercase tracking-widest mb-4">{t('pricing.yearly.label')}</div>
                 <div className="mb-6">
-                  <div className="text-6xl font-black bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-1">
+                  <div className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-1">
                     {t('pricing.yearly.price')}
                   </div>
                   <div className="text-gray-400 text-sm">{t('pricing.yearly.billing')}</div>
@@ -610,7 +610,7 @@ function StepCard({ number, icon, title, description }: any) {
   return (
     <div className="relative">
       <div className="glass-strong rounded-2xl p-8 hover:scale-105 transition-all duration-300">
-        <div className="text-6xl font-black text-purple-500/20 mb-4">{number}</div>
+        <div className="text-4xl sm:text-5xl md:text-6xl font-black text-purple-500/20 mb-4">{number}</div>
         <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6">
           <div className="text-white">
             {icon}

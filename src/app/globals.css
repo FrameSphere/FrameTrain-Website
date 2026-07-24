@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    /* iOS bläht Text im Querformat sonst eigenmächtig auf */
+    -webkit-text-size-adjust: 100%;
+    /* Anker-Links (#features, #pricing) würden sonst unter der
+       fixierten Header-Pille landen */
+    scroll-padding-top: 6rem;
+  }
+
   :root {
     --background: 0 0% 3%;
     --foreground: 0 0% 98%;
@@ -31,6 +39,22 @@
                 radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.08) 0%, rgba(0, 0, 0, 0) 50%),
                 #000000;
     background-attachment: fixed;
+  }
+
+  /* iOS Safari zoomt beim Fokussieren in jedes Feld unter 16px hinein.
+     Betrifft vor allem die text-sm-Inputs in der Library. */
+  @media (max-width: 767px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+
+    /* background-attachment: fixed wird auf iOS teuer neu gezeichnet
+       und ruckelt beim Scrollen mit den backdrop-filter-Flächen */
+    body {
+      background-attachment: scroll;
+    }
   }
 }
 

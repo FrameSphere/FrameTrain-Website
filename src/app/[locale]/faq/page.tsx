@@ -218,7 +218,7 @@ export default function FAQPage() {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mb-8">
               <HelpCircle className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-black text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">
               {t('heading')}
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
@@ -305,7 +305,7 @@ export default function FAQPage() {
                         <button
                           key={cat.id}
                           onClick={() => setActiveCategory(cat.id)}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all text-sm ${
+                          className={`w-full flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-left transition-all text-sm ${
                             isActive
                               ? `${a.badge} font-semibold`
                               : 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -355,7 +355,7 @@ export default function FAQPage() {
                             setActiveCategory(categories[catIdx + 1].id)
                             window.scrollTo({ top: 0, behavior: 'smooth' })
                           }}
-                          className="flex items-center gap-2 text-sm text-gray-500 hover:text-purple-400 transition"
+                          className="inline-flex items-center gap-2 min-h-[44px] px-2 -mr-2 text-sm text-gray-500 hover:text-purple-400 transition"
                         >
                           <span>{t('nextCategory', { name: categories[catIdx + 1].label })}</span>
                           <ArrowRight className="w-4 h-4" />

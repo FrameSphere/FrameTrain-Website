@@ -55,7 +55,7 @@ function OAuthButtons() {
         </span>
       </a>
       </div>
-      <p className="mt-3 text-center text-[11px] text-gray-500 leading-relaxed">
+      <p className="mt-3 text-center text-xs text-gray-500 leading-relaxed">
         {tRegister.rich('oauthConsentNotice', {
           terms: (chunks) => <Link href="/terms" target="_blank" className="text-violet-400 hover:text-violet-300">{chunks}</Link>,
           privacy: (chunks) => <Link href="/privacy" target="_blank" className="text-violet-400 hover:text-violet-300">{chunks}</Link>,
@@ -213,9 +213,9 @@ export default function RegisterPage() {
                     required
                     checked={acceptedTerms}
                     onChange={(e) => setAcceptedTerms(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-purple-500 focus:ring-purple-500 focus:ring-offset-0 flex-shrink-0"
+                    className="mt-0.5 w-5 h-5 rounded border-white/20 bg-white/5 text-purple-500 focus:ring-purple-500 focus:ring-offset-0 flex-shrink-0"
                   />
-                  <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition">
+                  <span className="text-sm text-gray-400 leading-relaxed group-hover:text-gray-300 transition">
                     {t.rich('consentLabel', {
                       terms: (chunks) => <Link href="/terms" target="_blank" className="text-violet-400 hover:text-violet-300 underline">{chunks}</Link>,
                       privacy: (chunks) => <Link href="/privacy" target="_blank" className="text-violet-400 hover:text-violet-300 underline">{chunks}</Link>,
@@ -228,9 +228,9 @@ export default function RegisterPage() {
                     type="checkbox"
                     checked={diagnosticsConsent}
                     onChange={(e) => setDiagnosticsConsent(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-purple-500 focus:ring-purple-500 focus:ring-offset-0 flex-shrink-0"
+                    className="mt-0.5 w-5 h-5 rounded border-white/20 bg-white/5 text-purple-500 focus:ring-purple-500 focus:ring-offset-0 flex-shrink-0"
                   />
-                  <span className="text-xs text-gray-500 leading-relaxed group-hover:text-gray-400 transition">
+                  <span className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400 transition">
                     {t('diagnosticsLabel')}
                   </span>
                 </label>

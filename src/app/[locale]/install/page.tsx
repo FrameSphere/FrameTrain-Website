@@ -27,7 +27,7 @@ export default function InstallPage() {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
               {t('heading')}
             </h1>
             <p className="text-xl text-gray-400">

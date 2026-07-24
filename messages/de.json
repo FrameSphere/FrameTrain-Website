@@ -13,7 +13,10 @@
     "about": "About",
     "pricing": "Pricing",
     "login": "Login",
-    "start": "Starten" 
+    "start": "Starten",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "language": "Sprache"
   },
   "Footer": {
     "tagline": "Professionelle Desktop-Anwendung für lokales Machine Learning Training. Train smarter, not harder.",

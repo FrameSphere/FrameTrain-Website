@@ -39,7 +39,7 @@ export default function AITrainingGuideHubPage() {
               <Sparkles className="w-4 h-4" />
               {t('hub.badge')}
             </div>
-            <h1 className="text-5xl md:text-6xl font-black text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">
               {t('hub.headingLine1')}{' '}
               <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
                 {t('hub.headingLine2')}

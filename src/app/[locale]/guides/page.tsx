@@ -49,7 +49,7 @@ export default function GuidesPage() {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mb-6">
               <Shield className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-black text-white mb-6">{t('heading')}</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">{t('heading')}</h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               {t('subtitle')}
             </p>

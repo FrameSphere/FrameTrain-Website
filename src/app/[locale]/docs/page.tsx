@@ -94,7 +94,7 @@ export default function DocsPage() {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mb-6">
                 <Book className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-5xl md:text-6xl font-black text-white mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">
                 {t('heroTitle')}
               </h1>
               <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
@@ -152,7 +152,7 @@ export default function DocsPage() {
                             <button
                               key={item.id}
                               onClick={() => setActiveSection(item.id)}
-                              className={`w-full text-left px-3 py-2.5 rounded-lg transition-all text-sm ${
+                              className={`w-full text-left px-3 py-2.5 min-h-[44px] rounded-lg transition-all text-sm ${
                                 activeSection === item.id
                                   ? 'bg-purple-500/20 text-purple-400 font-medium border border-purple-400/30'
                                   : 'text-gray-400 hover:bg-white/5 hover:text-white'
@@ -241,7 +241,7 @@ function InstallationSection() {
               <div key={os.name} className="glass border border-white/10 rounded-xl p-5 hover:border-purple-400/30 transition-colors">
                 <h3 className="text-white font-bold mb-1">{os.name}</h3>
                 <p className="text-gray-400 text-sm mb-4">{os.desc}</p>
-                <button className="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-2 transition-colors">
+                <button className="text-purple-400 hover:text-purple-300 text-sm font-medium inline-flex items-center gap-2 min-h-[44px] transition-colors">
                   <Download className="w-4 h-4" />
                   {os.file}
                 </button>

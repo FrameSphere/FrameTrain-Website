@@ -347,13 +347,13 @@ function ScriptDetailModal({
             {t('createdLabel')}: {timeAgo(script.created_at, timeAgoMessages)} · {t('licenseLabel')}
           </p>
           <div className="flex gap-2">
-            <button onClick={onClose} className="px-4 py-2 rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition-all">
+            <button onClick={onClose} className="px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition-all">
               {t('closeButton')}
             </button>
             <a
               href={`data:text/plain;charset=utf-8,${encodeURIComponent(fullScript)}`}
               download={`${script.name.replace(/\s+/g, '_').toLowerCase()}.py`}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition-all"
             >
               <Download className="w-4 h-4" /> {t('downloadButton')}
             </a>
@@ -548,7 +548,7 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
                   <span className="text-[10px] text-gray-600">{t('upload.savedLabel')}</span>
                 </div>
               )}
-              <p className="text-[10px] text-gray-400 mt-1.5">
+              <p className="text-xs text-gray-400 mt-1.5">
                 {!authorLocked ? t('upload.communityNameHintNew') : t('upload.communityNameHintLocked')}
               </p>
             </div>
@@ -620,7 +620,7 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
         </div>
 
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-white/8">
-          <button onClick={onClose} className="px-4 py-2 rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition-all">
+          <button onClick={onClose} className="px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition-all">
             {t('upload.cancel')}
           </button>
           <button
@@ -717,7 +717,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
               {t('badge')}
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-black mb-5 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-5 leading-tight">
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
                 {t('heroTitlePart1')}
               </span>{' '}
@@ -764,9 +764,9 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
           </div>
 
           {/* ── Search & Filter bar ── */}
-          <div className="glass-strong rounded-2xl p-4 border border-white/8 flex flex-col md:flex-row gap-3">
+          <div className="glass-strong rounded-2xl p-4 border border-white/8 flex flex-col md:flex-row md:flex-wrap gap-3">
             {/* Search */}
-            <div className="relative flex-1">
+            <div className="relative flex-1 md:min-w-[220px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 value={search}
@@ -782,7 +782,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
                 <button
                   key={tf}
                   onClick={() => setTypeFilter(tf)}
-                  className={`px-4 py-2.5 text-sm font-medium transition-all ${
+                  className={`px-4 py-2.5 min-h-[44px] text-sm font-medium transition-all ${
                     typeFilter === tf
                       ? 'bg-purple-500/20 text-purple-300'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -797,7 +797,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             <select
               value={frameworkFilter}
               onChange={(e) => setFrameworkFilter(e.target.value)}
-              className="px-4 py-2.5 rounded-xl glass border border-white/10 text-gray-300 text-sm focus:outline-none focus:border-purple-500/50 flex-shrink-0"
+              className="px-4 py-2.5 min-h-[44px] rounded-xl glass border border-white/10 text-gray-300 text-sm focus:outline-none focus:border-purple-500/50 flex-shrink-0"
             >
               <option value="">{t('allFrameworks')}</option>
               <option value="transformers">transformers</option>
@@ -810,7 +810,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-4 py-2.5 rounded-xl glass border border-white/10 text-gray-300 text-sm focus:outline-none focus:border-purple-500/50 flex-shrink-0"
+              className="px-4 py-2.5 min-h-[44px] rounded-xl glass border border-white/10 text-gray-300 text-sm focus:outline-none focus:border-purple-500/50 flex-shrink-0"
             >
               <option value="downloads">{t('sortDownloads')}</option>
               <option value="stars">{t('sortStars')}</option>
@@ -820,7 +820,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             {/* Verified toggle */}
             <button
               onClick={() => setVerifiedOnly((v) => !v)}
-              className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all flex items-center gap-2 flex-shrink-0 ${
+              className={`px-4 py-2.5 min-h-[44px] rounded-xl border text-sm font-medium transition-all flex items-center gap-2 flex-shrink-0 ${
                 verifiedOnly
                   ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/25'
                   : 'glass border-white/10 text-gray-400 hover:text-white'
