@@ -7,6 +7,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { EmailVerificationBanner } from '@/components/EmailVerificationBanner'
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
@@ -305,10 +306,13 @@ function DashboardPageInner() {
     setRegenerating(true)
     try {
       const res = await fetch('/api/keys/regenerate', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' } })
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.code === 'EMAIL_NOT_VERIFIED' ? t('apiKeys.errorEmailNotVerified') : data?.error)
+      }
       await fetchDashboardData()
       alert(t('apiKeys.successRegenerate'))
-    } catch { alert(t('apiKeys.errorRegenerate')) } finally { setRegenerating(false) }
+    } catch (err: any) { alert(err?.message || t('apiKeys.errorRegenerate')) } finally { setRegenerating(false) }
   }
 
   const copyToClipboard = (key: string) => {
@@ -465,6 +469,9 @@ function DashboardPageInner() {
             <h1 className="text-4xl font-bold text-white mb-2">{t('title')}</h1>
             <p className="text-gray-400">{t('welcome', { email: user?.email || '' })}</p>
           </div>
+
+          {/* ── E-Mail-Verifikations-Banner ────────────────────────── */}
+          <EmailVerificationBanner />
 
           {/* ── Abo-Status-Banner (nur wenn abgelaufen) ───────────── */}
           {!hasPaid && (

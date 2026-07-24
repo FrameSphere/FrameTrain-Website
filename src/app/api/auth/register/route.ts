@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { signToken, setAuthCookie } from '@/lib/auth'
+import { generateVerificationToken } from '@/lib/email-verification'
+import { sendVerificationEmail } from '@/lib/resend'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -9,7 +11,8 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { email, password, acceptedTerms, diagnosticsConsent } = body
+    const { email, password, acceptedTerms, diagnosticsConsent, locale } = body
+    const emailLocale = locale === 'en' ? 'en' : 'de'
 
     // Validation
     if (!email || !password) {
@@ -50,6 +53,7 @@ export async function POST(req: NextRequest) {
 
     // Create user
     const now = new Date()
+    const { token: verificationToken, tokenHash, expiresAt } = generateVerificationToken()
     const user = await prisma.user.create({
       data: {
         email,
@@ -57,8 +61,17 @@ export async function POST(req: NextRequest) {
         termsAcceptedAt: now,
         diagnosticsConsent: !!diagnosticsConsent,
         diagnosticsConsentAt: diagnosticsConsent ? now : null,
+        emailVerificationTokenHash: tokenHash,
+        emailVerificationExpires: expiresAt,
       },
     })
+
+    // Verifikations-Mail best-effort versenden: ein Resend-Fehler darf die
+    // Registrierung nicht blockieren, der User kann sich die Mail später
+    // erneut zuschicken lassen ("Erneut senden" im Dashboard-Banner).
+    sendVerificationEmail(user.email, verificationToken, emailLocale).catch((err) =>
+      console.error('Verifikations-Mail konnte nicht gesendet werden:', err)
+    )
 
     // Generate JWT token
     const token = signToken({

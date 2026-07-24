@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     // Fetch full user from DB to include hasPaid and communityName
     const user = await prisma.user.findUnique({
       where: { id: currentUser.userId },
-      select: { id: true, email: true, name: true, hasPaid: true, provider: true, communityName: true },
+      select: { id: true, email: true, name: true, hasPaid: true, provider: true, communityName: true, emailVerified: true },
     })
 
     if (!user) {
@@ -30,6 +30,7 @@ export async function GET(req: NextRequest) {
         hasPaid: user.hasPaid,
         provider: user.provider,
         communityName: user.communityName || undefined,
+        emailVerified: user.emailVerified,
       },
     })
   } catch (error) {

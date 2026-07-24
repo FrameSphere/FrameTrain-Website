@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { UserPlus, Mail, Lock, CheckCircle } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 
 function OAuthButtons() {
   const t = useTranslations('Auth.oauth')
@@ -67,6 +67,7 @@ function OAuthButtons() {
 
 export default function RegisterPage() {
   const { login } = useAuth()
+  const locale = useLocale()
   const t = useTranslations('Auth.register')
   const tFields = useTranslations('Auth.fields')
   const tOauth = useTranslations('Auth.oauth')
@@ -105,6 +106,7 @@ export default function RegisterPage() {
           password: formData.password,
           acceptedTerms,
           diagnosticsConsent,
+          locale,
         }),
       })
       const data = await res.json()

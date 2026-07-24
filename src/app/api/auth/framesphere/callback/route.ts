@@ -64,6 +64,10 @@ export async function GET(req: NextRequest) {
             framesphereUserId: fsUser.id,
             name: user.name || fsUser.name || null,
             provider: user.provider || 'framesphere',
+            // FrameSphere bürgt für die E-Mail-Adresse – auch bei bereits
+            // bestehenden, per Passwort registrierten aber noch unverifizierten Accounts.
+            emailVerified: true,
+            emailVerifiedAt: user.emailVerifiedAt ?? new Date(),
           },
         })
       } else {
@@ -75,6 +79,8 @@ export async function GET(req: NextRequest) {
             provider: 'framesphere',
             providerAccountId: fsUser.id,
             framesphereUserId: fsUser.id,
+            emailVerified: true,
+            emailVerifiedAt: new Date(),
           },
         })
       }

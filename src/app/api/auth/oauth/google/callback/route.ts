@@ -92,13 +92,17 @@ export async function GET(req: NextRequest) {
     if (user) {
       // Update provider info falls noch nicht gesetzt ODER die providerAccountId noch nicht stimmt
       // (verhindert Ghost-Sessions bei mehrfachem OAuth-Login)
-      if (user.provider !== 'google' || user.providerAccountId !== googleUser.sub) {
+      if (user.provider !== 'google' || user.providerAccountId !== googleUser.sub || !user.emailVerified) {
         user = await prisma.user.update({
           where: { id: user.id },
           data: {
             provider: 'google',
             providerAccountId: googleUser.sub,
             name: user.name || googleUser.name || null,
+            // Google bürgt für die E-Mail-Adresse – auch bei bereits bestehenden,
+            // per Passwort registrierten aber noch unverifizierten Accounts.
+            emailVerified: true,
+            emailVerifiedAt: user.emailVerifiedAt ?? new Date(),
           },
         })
       }
@@ -110,6 +114,8 @@ export async function GET(req: NextRequest) {
           name: googleUser.name || null,
           provider: 'google',
           providerAccountId: googleUser.sub,
+          emailVerified: true,
+          emailVerifiedAt: new Date(),
         },
       })
     }

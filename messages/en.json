@@ -461,6 +461,28 @@
         "passwordMismatch": "Passwords do not match",
         "registrationFailed": "Registration failed"
       }
+    },
+    "verifyEmail": {
+      "banner": {
+        "title": "Please verify your email address",
+        "text": "We've sent you a verification email. Some features are limited until you verify.",
+        "resendButton": "Resend email",
+        "sending": "Sending...",
+        "sent": "✅ Email resent. Please check your inbox (and spam folder).",
+        "rateLimited": "Too many requests. Please try again in a few minutes.",
+        "sendError": "❌ Email could not be sent. Please try again later."
+      },
+      "page": {
+        "verifyingTitle": "Verifying email...",
+        "verifyingText": "One moment please.",
+        "successTitle": "Email verified!",
+        "errorTitle": "Verification failed",
+        "missingToken": "No verification token found. Please use the link from your email.",
+        "genericError": "Something went wrong. Please try again.",
+        "alreadyVerified": "Your email address was already verified.",
+        "success": "Your email address has been verified successfully.",
+        "continueButton": "Continue to dashboard"
+      }
     }
   },
   "Changelog": {
@@ -1778,7 +1800,8 @@
       "active": "Active",
       "deactivatedExpired": "Deactivated · subscription expired",
       "noKeyAlert": "❌ You need an active API key",
-      "errorRedirectPayment": "❌ Error redirecting to payment"
+      "errorRedirectPayment": "❌ Error redirecting to payment",
+      "errorEmailNotVerified": "❌ Please verify your email address first before creating an API key."
     },
     "download": {
       "title": "Download desktop app",

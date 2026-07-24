@@ -724,6 +724,28 @@
         "passwordMismatch": "Passwörter stimmen nicht überein",
         "registrationFailed": "Registrierung fehlgeschlagen"
       }
+    },
+    "verifyEmail": {
+      "banner": {
+        "title": "Bitte bestätige deine E-Mail-Adresse",
+        "text": "Wir haben dir eine Bestätigungsmail geschickt. Ohne Bestätigung sind manche Funktionen eingeschränkt.",
+        "resendButton": "Mail erneut senden",
+        "sending": "Sende...",
+        "sent": "✅ Mail wurde erneut versendet. Bitte prüfe dein Postfach (auch den Spam-Ordner).",
+        "rateLimited": "Zu viele Anfragen. Bitte versuche es in ein paar Minuten erneut.",
+        "sendError": "❌ Mail konnte nicht versendet werden. Bitte versuche es später erneut."
+      },
+      "page": {
+        "verifyingTitle": "E-Mail wird bestätigt...",
+        "verifyingText": "Einen Moment bitte.",
+        "successTitle": "E-Mail bestätigt!",
+        "errorTitle": "Bestätigung fehlgeschlagen",
+        "missingToken": "Kein Bestätigungs-Token gefunden. Bitte nutze den Link aus deiner E-Mail.",
+        "genericError": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+        "alreadyVerified": "Deine E-Mail-Adresse war bereits bestätigt.",
+        "success": "Deine E-Mail-Adresse wurde erfolgreich bestätigt.",
+        "continueButton": "Weiter zum Dashboard"
+      }
     }
   },
   "Changelog": {
@@ -4755,7 +4777,8 @@
       "active": "Aktiv",
       "deactivatedExpired": "Deaktiviert · Abo abgelaufen",
       "noKeyAlert": "❌ Du brauchst einen aktiven API-Key",
-      "errorRedirectPayment": "❌ Fehler beim Weiterleiten zur Zahlung"
+      "errorRedirectPayment": "❌ Fehler beim Weiterleiten zur Zahlung",
+      "errorEmailNotVerified": "❌ Bitte bestätige zuerst deine E-Mail-Adresse, bevor du einen API-Key erstellst."
     },
     "download": {
       "title": "Desktop-App herunterladen",
