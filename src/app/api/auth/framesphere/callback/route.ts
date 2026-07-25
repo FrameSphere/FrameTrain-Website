@@ -68,6 +68,9 @@ export async function GET(req: NextRequest) {
             // bestehenden, per Passwort registrierten aber noch unverifizierten Accounts.
             emailVerified: true,
             emailVerifiedAt: user.emailVerifiedAt ?? new Date(),
+            // Der SSO-Weg ist auf Login-/Registrierungsseite erst nach
+            // Zustimmung anklickbar – Zeitstempel dokumentiert das.
+            termsAcceptedAt: user.termsAcceptedAt ?? new Date(),
           },
         })
       } else {
@@ -81,6 +84,7 @@ export async function GET(req: NextRequest) {
             framesphereUserId: fsUser.id,
             emailVerified: true,
             emailVerifiedAt: new Date(),
+            termsAcceptedAt: new Date(),
           },
         })
       }

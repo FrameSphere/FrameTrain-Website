@@ -111,7 +111,9 @@ export default function RegisterPage() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('errors.registrationFailed'))
-      window.location.href = '/payment'
+      // Nicht direkt zur Kauf-Seite: zuerst muss die E-Mail bestätigt werden.
+      // Voller Reload, damit der AuthContext das frisch gesetzte Cookie liest.
+      window.location.href = `/${locale}/verify-email/pending`
     } catch (err: any) {
       setError(err.message)
     } finally {

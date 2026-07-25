@@ -705,6 +705,9 @@
         "framesphere_misconfigured": "FrameSphere SSO ist nicht konfiguriert. Bitte wende dich an den Support.",
         "framesphere_server_error": "Serverfehler beim FrameSphere-Login. Bitte versuche es erneut."
       },
+      "consentLabel": "Ich habe die <terms>AGB</terms> und die <privacy>Datenschutzerklärung</privacy> gelesen und stimme ihnen zu – einschließlich der Übermittlung und Verarbeitung meiner Daten durch FrameTrain.",
+      "consentRequired": "Bitte stimme den AGB und der Datenschutzerklärung zu, um dich anzumelden.",
+      "consentHint": "Erst nach deiner Zustimmung ist die Anmeldung möglich.",
       "loadingFallback": "Lädt..."
     },
     "register": {
@@ -713,7 +716,7 @@
       "confirmPasswordLabel": "Passwort bestätigen",
       "confirmPasswordPlaceholder": "Passwort wiederholen",
       "passwordPlaceholder": "Mindestens 8 Zeichen",
-      "submit": "Weiter zur Zahlung",
+      "submit": "Weiter zur E-Mail-Bestätigung",
       "submitLoading": "Lädt...",
       "haveAccount": "Bereits registriert?",
       "loginLink": "Jetzt anmelden",
@@ -747,7 +750,29 @@
         "genericError": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
         "alreadyVerified": "Deine E-Mail-Adresse war bereits bestätigt.",
         "success": "Deine E-Mail-Adresse wurde erfolgreich bestätigt.",
-        "continueButton": "Weiter zum Dashboard"
+        "continueButton": "Weiter zum Dashboard",
+        "continuePayment": "Weiter zur Kauf-Seite",
+        "continueLogin": "Zur Anmeldung"
+      },
+      "pending": {
+        "heading": "Bestätige deine E-Mail-Adresse",
+        "subtitle": "Wir haben dir einen Bestätigungslink geschickt an:",
+        "waiting": "Warte auf deine Bestätigung …",
+        "verifiedTitle": "E-Mail bestätigt!",
+        "verifiedText": "Alles klar – du wirst weitergeleitet.",
+        "checkButton": "Ich habe bestätigt – jetzt prüfen",
+        "checking": "Prüfe …",
+        "notYet": "Noch keine Bestätigung eingegangen. Bitte klicke zuerst auf den Link in der Mail.",
+        "checkError": "Status konnte nicht geprüft werden. Bitte versuche es gleich noch einmal.",
+        "resendButton": "Mail erneut senden",
+        "sending": "Sende...",
+        "sent": "✅ Mail wurde erneut versendet. Bitte prüfe dein Postfach (auch den Spam-Ordner).",
+        "rateLimited": "Zu viele Anfragen. Bitte versuche es in ein paar Minuten erneut.",
+        "sendError": "❌ Mail konnte nicht versendet werden. Bitte versuche es später erneut.",
+        "spamHint": "Keine Mail erhalten? Schau auch im Spam-Ordner nach. Die Seite erkennt automatisch, sobald du bestätigt hast – du kannst den Link auch auf dem Handy öffnen.",
+        "wrongEmail": "Falsche E-Mail-Adresse?",
+        "logoutLink": "Abmelden",
+        "loadingText": "Lädt..."
       }
     }
   },

@@ -9,11 +9,24 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { email, password } = body
+    const { email, password, acceptedTerms } = body
 
     if (!email || !password) {
       return NextResponse.json(
         { error: 'E-Mail und Passwort sind erforderlich' },
+        { status: 400 }
+      )
+    }
+
+    // Zustimmung ist Voraussetzung für den Login – auch für Accounts, die vor
+    // Einführung der Checkbox angelegt wurden. Die Prüfung läuft bewusst vor
+    // dem Passwort-Check: sie verrät nichts über die Existenz des Accounts.
+    if (acceptedTerms !== true) {
+      return NextResponse.json(
+        {
+          error: 'Bitte stimme den AGB und der Datenschutzerklärung zu, um dich anzumelden.',
+          code: 'consent_required',
+        },
         { status: 400 }
       )
     }
@@ -49,6 +62,16 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Zustimmung dokumentieren: Bestandsaccounts ohne termsAcceptedAt bekommen
+    // beim ersten Login mit Checkbox einen Zeitstempel, spätere Logins lassen
+    // den ursprünglichen Zeitpunkt unangetastet.
+    if (!user.termsAcceptedAt) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { termsAcceptedAt: new Date() },
+      })
+    }
+
     // Generate JWT token
     const token = signToken({
       userId: user.id,
@@ -63,6 +86,8 @@ export async function POST(req: NextRequest) {
       user: {
         id: user.id,
         email: user.email,
+        emailVerified: user.emailVerified,
+        hasPaid: user.hasPaid,
       },
     }, {
       headers: {
