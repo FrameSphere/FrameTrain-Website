@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState, useRef, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+// Locale-bewusster Router: sonst würde /en/payment auf /de/... weiterleiten.
+import { useRouter } from '@/i18n/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import {
@@ -246,9 +248,16 @@ function PaymentPageInner() {
     if (param === 'yearly') setPlan('yearly')
   }, [searchParams])
 
+  // Die Kauf-Seite ist erst nach bestätigter E-Mail erreichbar – wer noch
+  // nicht bestätigt hat, landet auf der Warteseite.
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) router.push('/login')
-  }, [authLoading, isAuthenticated, router])
+    if (authLoading) return
+    if (!isAuthenticated) {
+      router.push('/login')
+      return
+    }
+    if (user && user.emailVerified === false) router.push('/verify-email/pending')
+  }, [authLoading, isAuthenticated, user, router])
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80)
@@ -266,7 +275,14 @@ function PaymentPageInner() {
         body: JSON.stringify({ plan }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('errorFallback'))
+      if (!res.ok) {
+        // Serverseitiger Riegel: E-Mail noch nicht bestätigt → zurück auf die Warteseite
+        if (data.code === 'email_not_verified') {
+          router.push('/verify-email/pending')
+          return
+        }
+        throw new Error(data.error || t('errorFallback'))
+      }
       if (data.url) window.location.href = data.url
     } catch (err: any) {
       setError(err.message)
@@ -282,6 +298,9 @@ function PaymentPageInner() {
     )
   }
   if (!isAuthenticated) return null
+  // Kein Aufblitzen der Kauf-Seite, während die Weiterleitung auf die
+  // Warteseite läuft
+  if (user?.emailVerified === false) return null
 
   // Stagger delays
   const d = (n: number) => n * 120 + 200

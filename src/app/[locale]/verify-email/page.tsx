@@ -10,6 +10,22 @@ import { CheckCircle, XCircle, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 type Status = 'verifying' | 'success' | 'error'
+// Wohin es nach der Bestätigung weitergeht. Der Mail-Link wird oft in einem
+// Browser ohne Session geöffnet (z. B. auf dem Handy) – dann führt der Button
+// zur Anmeldung statt in einen geschützten Bereich.
+type Destination = 'payment' | 'dashboard' | 'login'
+
+const DESTINATION_HREF: Record<Destination, string> = {
+  payment: '/payment',
+  dashboard: '/dashboard',
+  login: '/login',
+}
+
+const DESTINATION_LABEL: Record<Destination, string> = {
+  payment: 'continuePayment',
+  dashboard: 'continueButton',
+  login: 'continueLogin',
+}
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams()
@@ -17,6 +33,7 @@ function VerifyEmailContent() {
   const t = useTranslations('Auth.verifyEmail.page')
   const [status, setStatus] = useState<Status>('verifying')
   const [message, setMessage] = useState('')
+  const [destination, setDestination] = useState<Destination>('login')
 
   useEffect(() => {
     const token = searchParams.get('token')
@@ -44,6 +61,20 @@ function VerifyEmailContent() {
         setStatus('success')
         setMessage(data.alreadyVerified ? t('alreadyVerified') : t('success'))
         refreshUser()
+
+        // Ziel des Weiter-Buttons anhand der Session bestimmen. Eigenes
+        // try/catch: die Bestätigung selbst war erfolgreich und darf durch
+        // einen Fehler beim Nachschlagen nicht als Fehler dargestellt werden.
+        try {
+          const meRes = await fetch('/api/auth/me', { credentials: 'include' })
+          if (cancelled) return
+          if (meRes.ok) {
+            const me = await meRes.json()
+            if (!cancelled) setDestination(me.user?.hasPaid ? 'dashboard' : 'payment')
+          }
+        } catch {
+          // Session unbekannt → Button führt zur Anmeldung (Default)
+        }
       } catch {
         if (!cancelled) {
           setStatus('error')
@@ -70,10 +101,10 @@ function VerifyEmailContent() {
 
       {status !== 'verifying' && (
         <Link
-          href="/dashboard"
+          href={DESTINATION_HREF[destination]}
           className="inline-block w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
         >
-          {t('continueButton')}
+          {t(DESTINATION_LABEL[destination] as any)}
         </Link>
       )}
     </div>

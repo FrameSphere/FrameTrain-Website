@@ -92,7 +92,12 @@ export async function GET(req: NextRequest) {
     if (user) {
       // Update provider info falls noch nicht gesetzt ODER die providerAccountId noch nicht stimmt
       // (verhindert Ghost-Sessions bei mehrfachem OAuth-Login)
-      if (user.provider !== 'google' || user.providerAccountId !== googleUser.sub || !user.emailVerified) {
+      if (
+        user.provider !== 'google' ||
+        user.providerAccountId !== googleUser.sub ||
+        !user.emailVerified ||
+        !user.termsAcceptedAt
+      ) {
         user = await prisma.user.update({
           where: { id: user.id },
           data: {
@@ -103,6 +108,9 @@ export async function GET(req: NextRequest) {
             // per Passwort registrierten aber noch unverifizierten Accounts.
             emailVerified: true,
             emailVerifiedAt: user.emailVerifiedAt ?? new Date(),
+            // Login- und Registrierungsseite geben den OAuth-Weg erst nach
+            // Zustimmung frei – Zeitstempel dokumentiert das.
+            termsAcceptedAt: user.termsAcceptedAt ?? new Date(),
           },
         })
       }
@@ -116,6 +124,7 @@ export async function GET(req: NextRequest) {
           providerAccountId: googleUser.sub,
           emailVerified: true,
           emailVerifiedAt: new Date(),
+          termsAcceptedAt: new Date(),
         },
       })
     }

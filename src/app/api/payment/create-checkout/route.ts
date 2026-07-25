@@ -63,6 +63,19 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Kaufen erst nach bestätigter E-Mail. Die Weiterleitung im Frontend ist
+    // nur Komfort – verbindlich ist diese Prüfung.
+    const verifiedCheck = await prisma.user.findUnique({
+      where: { id: user.userId },
+      select: { emailVerified: true },
+    })
+    if (!verifiedCheck?.emailVerified) {
+      return NextResponse.json(
+        { error: 'Bitte bestätige zuerst deine E-Mail-Adresse.', code: 'email_not_verified' },
+        { status: 403 }
+      )
+    }
+
     const body = await req.json().catch(() => ({}))
     const plan: 'monthly' | 'yearly' = body.plan === 'yearly' ? 'yearly' : 'monthly'
 

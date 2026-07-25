@@ -442,6 +442,9 @@
         "framesphere_misconfigured": "FrameSphere SSO is not configured. Please contact support.",
         "framesphere_server_error": "Server error during FrameSphere login. Please try again."
       },
+      "consentLabel": "I have read and agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy> – including the transmission and processing of my data by FrameTrain.",
+      "consentRequired": "Please agree to the Terms of Service and Privacy Policy to sign in.",
+      "consentHint": "Sign-in is only possible once you have agreed.",
       "loadingFallback": "Loading..."
     },
     "register": {
@@ -450,7 +453,7 @@
       "confirmPasswordLabel": "Confirm password",
       "confirmPasswordPlaceholder": "Repeat password",
       "passwordPlaceholder": "At least 8 characters",
-      "submit": "Continue to payment",
+      "submit": "Continue to email confirmation",
       "submitLoading": "Loading...",
       "haveAccount": "Already have an account?",
       "loginLink": "Sign in now",
@@ -484,7 +487,29 @@
         "genericError": "Something went wrong. Please try again.",
         "alreadyVerified": "Your email address was already verified.",
         "success": "Your email address has been verified successfully.",
-        "continueButton": "Continue to dashboard"
+        "continueButton": "Continue to dashboard",
+        "continuePayment": "Continue to checkout",
+        "continueLogin": "Go to sign-in"
+      },
+      "pending": {
+        "heading": "Confirm your email address",
+        "subtitle": "We've sent a confirmation link to:",
+        "waiting": "Waiting for your confirmation …",
+        "verifiedTitle": "Email confirmed!",
+        "verifiedText": "All set – taking you to the next step.",
+        "checkButton": "I've confirmed – check now",
+        "checking": "Checking …",
+        "notYet": "No confirmation yet. Please click the link in the email first.",
+        "checkError": "Could not check the status. Please try again in a moment.",
+        "resendButton": "Resend email",
+        "sending": "Sending...",
+        "sent": "✅ Email resent. Please check your inbox (and spam folder).",
+        "rateLimited": "Too many requests. Please try again in a few minutes.",
+        "sendError": "❌ Email could not be sent. Please try again later.",
+        "spamHint": "No email? Check your spam folder too. This page detects your confirmation automatically – you can also open the link on your phone.",
+        "wrongEmail": "Wrong email address?",
+        "logoutLink": "Sign out",
+        "loadingText": "Loading..."
       }
     }
   },

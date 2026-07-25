@@ -9,10 +9,16 @@ import { Footer } from '@/components/Footer'
 import { LogIn, Mail, Lock } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-function OAuthButtons() {
+// `disabled` = Zustimmung fehlt noch. Die Links werden dann nicht nur optisch
+// gedimmt, sondern per pointer-events-none auch wirklich unklickbar – sonst
+// käme man über OAuth an der Zustimmung vorbei.
+function OAuthButtons({ disabled }: { disabled: boolean }) {
   const t = useTranslations('Auth.oauth')
   return (
-    <div className="space-y-3 mb-6">
+    <div
+      className={`space-y-3 mb-6 transition-opacity ${disabled ? 'opacity-40 pointer-events-none select-none' : ''}`}
+      aria-disabled={disabled}
+    >
       {/* Google */}
       <a
         href="/api/auth/oauth/google"
@@ -65,6 +71,7 @@ function LoginContent() {
   const tFields = useTranslations('Auth.fields')
   const tOauth = useTranslations('Auth.oauth')
   const [formData, setFormData] = useState({ email: '', password: '' })
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -79,9 +86,13 @@ function LoginContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    if (!acceptedTerms) {
+      setError(t('consentRequired'))
+      return
+    }
     setLoading(true)
     try {
-      await login(formData.email, formData.password)
+      await login(formData.email, formData.password, acceptedTerms)
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -99,7 +110,29 @@ function LoginContent() {
         <p className="text-gray-400">{t('subtitle')}</p>
       </div>
 
-      <OAuthButtons />
+      {/* Zustimmung als Voraussetzung: schaltet sowohl die OAuth-Buttons als
+          auch das E-Mail-Formular frei. */}
+      <div className="mb-6 p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+        <label className="flex items-start gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={acceptedTerms}
+            onChange={(e) => setAcceptedTerms(e.target.checked)}
+            className="mt-0.5 w-5 h-5 rounded border-white/20 bg-white/5 text-purple-500 focus:ring-purple-500 focus:ring-offset-0 flex-shrink-0"
+          />
+          <span className="text-sm text-gray-400 leading-relaxed group-hover:text-gray-300 transition">
+            {t.rich('consentLabel', {
+              terms: (chunks) => <Link href="/terms" target="_blank" className="text-violet-400 hover:text-violet-300 underline">{chunks}</Link>,
+              privacy: (chunks) => <Link href="/privacy" target="_blank" className="text-violet-400 hover:text-violet-300 underline">{chunks}</Link>,
+            })}
+          </span>
+        </label>
+        {!acceptedTerms && (
+          <p className="mt-3 pl-8 text-xs text-amber-400/90">{t('consentHint')}</p>
+        )}
+      </div>
+
+      <OAuthButtons disabled={!acceptedTerms} />
 
       <div className="flex items-center gap-3 mb-6">
         <div className="flex-1 h-px bg-white/10" />
@@ -152,7 +185,7 @@ function LoginContent() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !acceptedTerms}
           className="w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? t('submitLoading') : t('submit')}
