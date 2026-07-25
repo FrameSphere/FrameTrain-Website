@@ -9,36 +9,88 @@
     /* Anker-Links (#features, #pricing) würden sonst unter der
        fixierten Header-Pille landen */
     scroll-padding-top: 6rem;
+    scroll-behavior: smooth;
   }
 
   :root {
     --background: 0 0% 3%;
     --foreground: 0 0% 98%;
-    
+
     --primary: 280 100% 70%;
     --primary-foreground: 0 0% 100%;
-    
+
     --secondary: 200 100% 60%;
     --accent: 340 100% 65%;
     --success: 150 80% 55%;
-    
+
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 70%;
-    
+
     --border: 0 0% 20%;
     --ring: 280 100% 70%;
+
+    /* ── Motion ──────────────────────────────────────────────────
+       Die eingebauten CSS-Easings sind für UI zu weich. Diese Kurven
+       starten schnell und laufen sanft aus – dadurch fühlt sich die
+       Oberfläche unmittelbar an, ohne hektisch zu wirken.
+       ease-in ist bewusst NICHT dabei: es verzögert genau den Moment,
+       den der Nutzer am genauesten beobachtet. */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-snap: cubic-bezier(0.32, 0.72, 0, 1);
   }
-  
+
   * {
     @apply border-border;
   }
-  
+
   body {
     @apply bg-background text-foreground antialiased;
     background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%),
                 radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.08) 0%, rgba(0, 0, 0, 0) 50%),
                 #000000;
     background-attachment: fixed;
+    /* Echte Kapitälchen-Ziffern & Ligaturen statt Browser-Default */
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+
+  /* Große Schriftgrade brauchen negatives Tracking, sonst wirken sie
+     auseinandergefallen – kleine Grade brauchen das Gegenteil. Optische
+     Korrektur, die man nie bewusst sieht, aber immer spürt. */
+  h1 {
+    letter-spacing: -0.035em;
+  }
+
+  h2 {
+    letter-spacing: -0.025em;
+  }
+
+  h3,
+  h4 {
+    letter-spacing: -0.015em;
+  }
+
+  /* Verhindert einzelne Wörter in der letzten Zeile ("Hurenkinder")
+     bei zentrierten Headlines. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Sichtbarer, konsistenter Tastatur-Fokus. Vorher war Fokus je nach
+     Element mal ein Tailwind-Ring, mal gar nichts. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring) / 0.75);
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
   }
 
   /* iOS Safari zoomt beim Fokussieren in jedes Feld unter 16px hinein.
@@ -66,64 +118,123 @@
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .glass-strong {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(24px) saturate(200%);
     -webkit-backdrop-filter: blur(24px) saturate(200%);
     border: 1px solid rgba(255, 255, 255, 0.15);
   }
-  
+
   .glass-dark {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .glow-purple {
     box-shadow: 0 0 40px rgba(168, 85, 247, 0.4),
                 0 0 80px rgba(168, 85, 247, 0.2);
   }
-  
+
   .glow-blue {
     box-shadow: 0 0 40px rgba(59, 130, 246, 0.4),
                 0 0 80px rgba(59, 130, 246, 0.2);
   }
-  
+
   .glow-pink {
     box-shadow: 0 0 40px rgba(236, 72, 153, 0.4),
                 0 0 80px rgba(236, 72, 153, 0.2);
   }
-  
+
   .glow-green {
     box-shadow: 0 0 40px rgba(34, 197, 94, 0.4),
                 0 0 80px rgba(34, 197, 94, 0.2);
   }
-  
+
+  /* Deutlich zurückgenommen: der frühere Doppel-Schatten mit 0.8/0.4
+     Alpha war ein Neon-Halo, der die Buchstabenkanten aufgeweicht und
+     die Headline unscharf gemacht hat. Jetzt nur noch ein Hauch
+     Farblicht hinter dem Text. */
   .text-glow-purple {
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.8),
-                 0 0 40px rgba(168, 85, 247, 0.4);
+    text-shadow: 0 0 32px rgba(168, 85, 247, 0.28);
   }
-  
+
   .text-glow-blue {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.8),
-                 0 0 40px rgba(59, 130, 246, 0.4);
+    text-shadow: 0 0 32px rgba(59, 130, 246, 0.28);
   }
-  
+
+  /* ── Marken-Farbverlauf ───────────────────────────────────────
+     Eine einzige Verlaufsdefinition statt 15 verschiedener
+     from-x-via-y-to-z-Kombinationen quer über die Seite. */
+  .text-gradient-brand {
+    background-image: linear-gradient(100deg, #c4b5fd 0%, #f0abfc 45%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ── Interaktions-Bausteine ───────────────────────────────────── */
+
+  /* Druckfeedback. Der Wert ist bewusst subtil – man sieht ihn nicht,
+     man spürt nur, dass die Oberfläche zugehört hat. */
+  .press {
+    transition: transform 160ms var(--ease-out);
+  }
+
+  .press:active {
+    transform: scale(0.97);
+  }
+
+  /* Ersetzt hover:scale-105 auf Karten. Skalieren rendert Text neu und
+     lässt ihn kurz unscharf werden; ein Anheben um 2px plus hellerer
+     Rand liest sich als "anfassbar", ohne das Layout zu verzerren. */
+  .card-lift {
+    transition:
+      transform 220ms var(--ease-out),
+      border-color 220ms var(--ease-out),
+      background-color 220ms var(--ease-out),
+      box-shadow 220ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-lift:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .card-lift:active {
+    transform: translateY(-1px);
+    transition-duration: 120ms;
+  }
+
+  /* Zahlen in Countdown/Stats dürfen beim Hochzählen nicht springen. */
+  .nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
-  
+
   .animate-pulse-slow {
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-  
+
   .animate-gradient {
     background-size: 200% 200%;
     animation: gradient 8s ease infinite;
   }
-  
+
+  /* Einblenden beim Mounten – ersetzt "Element ist einfach da". */
+  .animate-enter {
+    animation: enter 320ms var(--ease-out) both;
+  }
+
   @keyframes float {
     0%, 100% {
       transform: translateY(0px);
@@ -132,7 +243,7 @@
       transform: translateY(-20px);
     }
   }
-  
+
   @keyframes gradient {
     0% {
       background-position: 0% 50%;
@@ -144,39 +255,47 @@
       background-position: 0% 50%;
     }
   }
-  
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      /* Nicht von scale(0) – nichts in der echten Welt taucht aus dem
+         Nichts auf. */
+      transform: translateY(6px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
-  
+
   /* Selection color */
   ::selection {
-    background: rgba(168, 85, 247, 0.3);
+    background: rgba(168, 85, 247, 0.28);
     color: white;
   }
-  
+
   /* Grid background */
   .grid-bg {
-    background-image: 
+    background-image:
       linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
     background-size: 50px 50px;
   }
-  
+
   /* Neon border */
   .neon-border {
     position: relative;
   }
-  
+
   .neon-border::before {
     content: '';
     position: absolute;
     inset: -2px;
     border-radius: inherit;
     padding: 2px;
-    background: linear-gradient(45deg, 
-      rgba(168, 85, 247, 0.8), 
+    background: linear-gradient(45deg,
+      rgba(168, 85, 247, 0.8),
       rgba(59, 130, 246, 0.8),
       rgba(236, 72, 153, 0.8),
       rgba(34, 197, 94, 0.8)
@@ -189,20 +308,67 @@
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar – neutral statt kräftig lila. Ein Scrollbalken ist
+   Chrome, keine Markenfläche; die Farbe hat vorher mit jedem Abschnitt
+   der Seite konkurriert. */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.5);
+  background: rgba(255, 255, 255, 0.14);
   border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.7);
+  background: rgba(255, 255, 255, 0.26);
+  background-clip: content-box;
+}
+
+html {
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+/* ── Reduced Motion ────────────────────────────────────────────────
+   Nicht "alles aus": Deckkraft- und Farbübergänge helfen beim
+   Verstehen und bleiben. Weg fällt alles, was sich bewegt oder
+   dauerhaft läuft. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-float,
+  .animate-pulse-slow,
+  .animate-gradient,
+  .animate-enter,
+  .animate-pulse,
+  .animate-ping,
+  .neon-border::before {
+    animation: none !important;
+  }
+
+  .animate-gradient {
+    background-position: 50% 50%;
+  }
+
+  .press:active,
+  .card-lift:hover,
+  .card-lift:active {
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

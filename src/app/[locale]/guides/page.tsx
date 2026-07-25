@@ -44,43 +44,46 @@ export default function GuidesPage() {
       <Header />
 
       <main className="flex-1">
-        <section className="py-20 px-4 border-b border-white/10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mb-6">
-              <Shield className="w-10 h-10 text-white" />
+        <section className="py-16 sm:py-20 px-4 border-b border-white/10">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-6">
+              <Shield className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">{t('heading')}</h1>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-[1.1]">{t('heading')}</h1>
+            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
               {t('subtitle')}
             </p>
           </div>
         </section>
 
-        <section className="py-16 px-4">
-          <div className="max-w-4xl mx-auto grid gap-6">
+        <section className="py-14 px-4">
+          <div className="max-w-3xl mx-auto grid gap-4">
             {guides.map((guide, i) => (
               <Link key={guide.href} href={guide.href} className="group">
-                <div className="glass-strong rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.01]">
-                  <div className="flex items-start gap-6">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${colorMap[colors[i]]} rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                <div className="card-lift glass-strong rounded-2xl p-6 sm:p-7 border border-white/10">
+                  <div className="flex items-start gap-5">
+                    <div className={`w-12 h-12 bg-gradient-to-br ${colorMap[colors[i]]} rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform duration-200 ease-out group-hover:scale-[1.06] [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-white`}>
                       {icons[i]}
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-2xl font-black text-white mb-3 group-hover:text-purple-300 transition-colors">
+                      <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-200 transition-colors duration-200">
                         {guide.title}
                       </h2>
-                      <p className="text-gray-400 leading-relaxed mb-4">{guide.description}</p>
+                      <p className="text-[15px] text-gray-400 leading-[1.65] mb-4">{guide.description}</p>
                       <div className="flex items-center gap-4">
-                        <div className="flex gap-2 flex-wrap">
+                        <div className="flex gap-1.5 flex-wrap">
                           {guide.tags.map((tag) => (
-                            <span key={tag} className="text-xs px-2 py-1 rounded bg-white/5 text-gray-500 font-mono border border-white/10">
+                            <span key={tag} className="text-[11px] px-2 py-0.5 rounded bg-white/[0.04] text-gray-500 font-mono border border-white/10">
                               {tag}
                             </span>
                           ))}
                         </div>
-                        <div className="ml-auto flex items-center gap-1 text-purple-400 text-sm font-semibold group-hover:gap-2 transition-all">
+                        {/* group-hover:gap-2 animierte vorher gap – eine Layout-
+                            Eigenschaft, die pro Frame ein Reflow auslöst. Der
+                            Pfeil verschiebt sich jetzt per transform. */}
+                        <div className="ml-auto flex items-center gap-1.5 text-purple-400/80 text-[13px] font-medium group-hover:text-purple-300 transition-colors duration-200">
                           <span>{t('readLabel')}</span>
-                          <ArrowRight className="w-4 h-4" />
+                          <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
                         </div>
                       </div>
                     </div>

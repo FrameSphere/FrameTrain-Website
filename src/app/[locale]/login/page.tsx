@@ -22,7 +22,7 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
       {/* Google */}
       <a
         href="/api/auth/oauth/google"
-        className="w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/5 transition-all"
+        className="press w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
       >
         <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -36,7 +36,7 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
       {/* GitHub */}
       <a
         href="/api/auth/oauth/github"
-        className="w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/5 transition-all"
+        className="press w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
       >
         <svg className="w-5 h-5 flex-shrink-0 text-white" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -47,7 +47,7 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
       {/* FrameSphere SSO */}
       <a
         href="/api/auth/framesphere"
-        className="w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/30 rounded-xl text-gray-300 hover:border-violet-400/60 hover:text-white hover:bg-violet-500/5 transition-all group"
+        className="press w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/30 rounded-xl text-gray-300 hover:border-violet-400/60 hover:text-white hover:bg-violet-500/[0.07] transition-colors duration-[180ms] ease-out group"
       >
         <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25">
           <span className="text-white font-black text-[10px]">FS</span>
@@ -159,7 +159,7 @@ function LoginContent() {
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 hover:border-white/20 focus:border-purple-500/60 focus:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
               placeholder={tFields('emailPlaceholder')}
             />
           </div>
@@ -177,7 +177,7 @@ function LoginContent() {
               required
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 hover:border-white/20 focus:border-purple-500/60 focus:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
               placeholder={tFields('passwordPlaceholder')}
             />
           </div>
@@ -186,7 +186,7 @@ function LoginContent() {
         <button
           type="submit"
           disabled={loading || !acceptedTerms}
-          className="w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="press w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-shadow duration-200 ease-out disabled:opacity-40 disabled:shadow-none disabled:cursor-not-allowed disabled:active:transform-none"
         >
           {loading ? t('submitLoading') : t('submit')}
         </button>

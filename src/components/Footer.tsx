@@ -2,6 +2,18 @@ import { Heart } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 
+/**
+ * Fußzeilen-Link.
+ *
+ * Die 44px-Tap-Targets aus der Mobile-Überarbeitung bleiben – auf dem Handy
+ * sind sie nötig. Ab sm greift ein kompakteres Raster: mit Maus braucht ein
+ * Textlink keine 44px Höhe, und die Fußzeile war dadurch über 600px hoch,
+ * mit so viel Luft zwischen den Einträgen, dass die Spalten nicht mehr als
+ * Gruppen lesbar waren.
+ */
+const footerLink =
+  'inline-flex items-center min-h-[44px] sm:min-h-0 sm:py-[5px] text-gray-400 hover:text-white transition-colors duration-[180ms] ease-out'
+
 export function Footer() {
   const t = useTranslations('Footer')
 
@@ -11,29 +23,43 @@ export function Footer() {
       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-4 py-12 md:py-16">
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
           {/* Brand */}
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+            <h3 className="text-gradient-brand text-xl font-semibold mb-3">
               FrameTrain
             </h3>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-md">
+            <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
               {t('tagline')}
             </p>
 
-            {/* Social badges */}
-            <div className="flex gap-3 mt-6">
-              <a href="https://github.com/FrameSphere/FrameTrain-Website" target="_blank" rel="noopener noreferrer">
-              <div className="glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-purple-400 transition cursor-pointer">
+            {/* Social badges
+                Vorher hatten die drei Kacheln drei verschiedene Hover-Farben
+                (lila/blau/pink) – bei nebeneinanderliegenden, gleichrangigen
+                Elementen liest sich das als Bedeutungsunterschied, den es
+                nicht gibt. Jetzt eine gemeinsame Hover-Sprache. */}
+            <div className="flex gap-2 mt-6">
+              <a
+                href="https://github.com/FrameSphere/FrameTrain-Website"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="press glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/[0.09] transition-colors duration-[180ms] ease-out"
+              >
                 GitHub
-              </div>
               </a>
-              <a href="https://www.reddit.com/r/FrameTrain/" target="_blank" rel="noopener noreferrer">
-              <div className="glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-blue-400 transition cursor-pointer">
+              <a
+                href="https://www.reddit.com/r/FrameTrain/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="press glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/[0.09] transition-colors duration-[180ms] ease-out"
+              >
                 Reddit
-              </div>
               </a>
-              <div className="glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-pink-400 transition cursor-pointer">
+              {/* Discord ist (noch) nicht verlinkt. Vorher sah die Kachel
+                  identisch aus wie die beiden echten Links inklusive
+                  cursor-pointer und Hover – sie hat einen Klick versprochen,
+                  den es nicht gibt. Jetzt klar als inaktiv erkennbar. */}
+              <div className="glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-600 select-none">
                 {t('discord')}
               </div>
             </div>
@@ -41,45 +67,45 @@ export function Footer() {
 
           {/* Product */}
           <div>
-            <h4 className="font-semibold text-white mb-4">{t('productHeading')}</h4>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 mb-3">{t('productHeading')}</h4>
             <ul className="text-sm text-gray-400">
               <li>
-                <Link href="/#features" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/#features" className={footerLink}>
                   {t('features')}
                 </Link>
               </li>
               <li>
-                <Link href="/#pricing" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/#pricing" className={footerLink}>
                   {t('pricing')}
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/docs" className={footerLink}>
                   {t('docs')}
                 </Link>
               </li>
               <li>
-                <Link href="/changelog" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/changelog" className={footerLink}>
                   {t('changelog')}
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/faq" className={footerLink}>
                   {t('faq')}
                 </Link>
               </li>
               <li>
-                <Link href="/guides" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/guides" className={footerLink}>
                   {t('guides')}
                 </Link>
               </li>
               <li>
-                <Link href="/library" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/library" className={footerLink}>
                   {t('library')}
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/about" className={footerLink}>
                   {t('about')}
                 </Link>
               </li>
@@ -88,25 +114,25 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="font-semibold text-white mb-4">{t('legalHeading')}</h4>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 mb-3">{t('legalHeading')}</h4>
             <ul className="text-sm text-gray-400">
               <li>
-                <Link href="/privacy" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/privacy" className={footerLink}>
                   {t('privacy')}
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/terms" className={footerLink}>
                   {t('terms')}
                 </Link>
               </li>
               <li>
-                <Link href="/imprint" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/imprint" className={footerLink}>
                   {t('imprint')}
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="inline-flex items-center min-h-[44px] hover:text-purple-400 transition">
+                <Link href="/cookies" className={footerLink}>
                   {t('cookies')}
                 </Link>
               </li>
@@ -134,7 +160,9 @@ export function Footer() {
 
           <div className="flex items-center gap-2 text-xs text-gray-600">
             <span>{t('madeWithPre')}</span>
-            <Heart className="w-4 h-4 text-pink-500 fill-pink-500 animate-pulse" />
+            {/* animate-pulse entfernt: ein pulsierendes Herz ganz unten auf
+                jeder einzelnen Seite ist Dauerbewegung ohne jede Funktion. */}
+            <Heart className="w-3.5 h-3.5 text-pink-500/80 fill-pink-500/80" />
             <span>{t('madeWithPost')}</span>
           </div>
         </div>
