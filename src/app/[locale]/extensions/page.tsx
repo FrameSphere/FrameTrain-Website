@@ -25,22 +25,19 @@ export default function ExtensionsPage() {
               <Package className="w-12 h-12 text-white" />
             </div>
             <div className="absolute -top-1 -right-1 w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/50">
-              <span className="text-white text-xs font-black">!</span>
+              <span className="text-white text-xs font-bold">!</span>
             </div>
           </div>
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-bold mb-6">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
-            </span>
+            <span className="inline-flex rounded-full h-1.5 w-1.5 bg-amber-500" />
             {t('comingSoon')}
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+            <span className="text-gradient-brand">
               {t('heading')}
             </span>
           </h1>
@@ -71,7 +68,7 @@ export default function ExtensionsPage() {
           {/* Back to Dashboard */}
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 px-8 py-4 glass-strong border border-white/15 text-gray-300 font-semibold rounded-2xl hover:border-purple-500/40 hover:text-white transition-all group"
+            className="card-lift inline-flex items-center gap-2 px-8 py-4 glass-strong border border-white/15 text-gray-300 font-semibold rounded-2xl hover:border-purple-500/40 hover:text-white transition duration-200 ease-out group"
           >
             <ArrowRight className="w-5 h-5 rotate-180" />
             {t('backToDashboard')}

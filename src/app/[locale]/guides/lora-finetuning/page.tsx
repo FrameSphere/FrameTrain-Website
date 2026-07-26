@@ -89,9 +89,9 @@ export default async function LoraGuidePage({ params }: Props) {
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">{badges[0]}</span>
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">{badges[1]}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               {t('heroTitleLine1')}<br />
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 {t('heroTitleLine2')}
               </span>
             </h1>
@@ -107,7 +107,7 @@ export default async function LoraGuidePage({ params }: Props) {
 
             {/* Was ist LoRA */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Brain className="w-8 h-8 text-purple-400" />
                 {t('whatIsLora.heading')}
               </h2>
@@ -120,7 +120,7 @@ export default async function LoraGuidePage({ params }: Props) {
 
             {/* LoRA vs Full Fine-Tuning */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6">
+              <h2 className="text-3xl font-bold text-white mb-6">
                 {t('vsFull.heading')}
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
@@ -156,7 +156,7 @@ export default async function LoraGuidePage({ params }: Props) {
 
             {/* QLoRA */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Cpu className="w-8 h-8 text-blue-400" />
                 {t('qlora.heading')}
               </h2>
@@ -191,7 +191,7 @@ export default async function LoraGuidePage({ params }: Props) {
 
             {/* LoRA Hyperparameter */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Code2 className="w-8 h-8 text-green-400" />
                 {t('hyperparams.heading')}
               </h2>
@@ -213,7 +213,7 @@ export default async function LoraGuidePage({ params }: Props) {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-6">
                 <Zap className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-black text-white mb-4">
+              <h3 className="text-2xl font-bold text-white mb-4">
                 {t('cta.heading')}
               </h3>
               <p className="text-gray-400 mb-6 max-w-lg mx-auto">

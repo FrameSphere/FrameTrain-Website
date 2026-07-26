@@ -50,7 +50,7 @@ export default function PaymentCancelPage() {
               boxShadow: '0 40px 80px rgba(0,0,0,0.4)',
             }}>
 
-            <h1 className="text-4xl font-black text-white mb-3">{t('heading')}</h1>
+            <h1 className="text-4xl font-bold text-white mb-3">{t('heading')}</h1>
             <p className="text-gray-400 text-lg mb-8 leading-relaxed">
               {t('subtitleLine1')}
               <br />
@@ -80,7 +80,7 @@ export default function PaymentCancelPage() {
                 <span className="relative">{t('retryButton')}</span>
               </Link>
               <Link href="/dashboard"
-                className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-gray-300 hover:text-white transition-all"
+                className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-gray-300 hover:text-white transition duration-200 ease-out"
                 style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <ArrowLeft className="w-4 h-4" />
                 {t('backToDashboard')}

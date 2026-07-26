@@ -132,7 +132,7 @@ export default function DownloadPage() {
                 <button
                   key={p}
                   onClick={() => setPlatform(p)}
-                  className={`p-4 rounded-lg border-2 transition-all ${
+                  className={`p-4 rounded-lg border-2 transition duration-200 ease-out ${
                     platform === p
                       ? 'border-purple-500 bg-purple-500/20'
                       : 'border-white/20 bg-white/5 hover:border-white/40'
@@ -168,7 +168,7 @@ export default function DownloadPage() {
           <button
             onClick={handleDownload}
             disabled={isDownloading || !apiKey.trim()}
-            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {isDownloading ? (
               <>

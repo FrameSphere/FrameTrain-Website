@@ -164,7 +164,7 @@ export function Header() {
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
               </div>
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl font-bold text-gradient-brand">
                 FrameTrain
               </span>
             </Link>
@@ -337,7 +337,7 @@ export function Header() {
                       <div className="mt-2 pt-3 border-t border-white/10 flex flex-col gap-2">
                         <Link
                           href="/login"
-                          className="flex items-center justify-center w-full px-4 min-h-[48px] rounded-xl glass text-gray-200 font-semibold hover:bg-white/10 transition-colors"
+                          className="card-lift flex items-center justify-center w-full px-4 min-h-[48px] rounded-xl glass text-gray-200 font-semibold hover:bg-white/10 transition-colors"
                         >
                           {t('login')}
                         </Link>

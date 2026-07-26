@@ -229,7 +229,7 @@ function WieKILerntSection({ c }: { c: any }) {
         {c.cycleSteps.map((item: any, i: number) => (
           <div key={i} className={`glass border rounded-xl p-5 ${stepColors[i]}`}>
             <div className="flex gap-4 items-start">
-              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl flex items-center justify-center text-white font-black text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
                 {item.step}
               </div>
               <div>

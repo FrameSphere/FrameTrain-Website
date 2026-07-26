@@ -166,7 +166,7 @@ export default function ChangelogPage() {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mb-6">
               <Rocket className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">{t('heading')}</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">{t('heading')}</h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               {t('subtitle')}
             </p>
@@ -201,7 +201,7 @@ export default function ChangelogPage() {
                 <div className="flex items-center gap-3 mb-8">
                   <div className="flex items-center gap-2">
                     <GitCommit className="w-5 h-5 text-cyan-400" />
-                    <h2 className="text-2xl font-black text-white">{t('devStatusHeading')}</h2>
+                    <h2 className="text-2xl font-bold text-white">{t('devStatusHeading')}</h2>
                   </div>
                   <span className="text-xs font-bold px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
                     {t('liveBadge')}
@@ -248,7 +248,7 @@ export default function ChangelogPage() {
                 {hasStatusData && (
                   <div className="flex items-center gap-3 mb-8">
                     <Rocket className="w-5 h-5 text-purple-400" />
-                    <h2 className="text-2xl font-black text-white">{t('releasesHeading')}</h2>
+                    <h2 className="text-2xl font-bold text-white">{t('releasesHeading')}</h2>
                   </div>
                 )}
 
@@ -261,7 +261,7 @@ export default function ChangelogPage() {
                       <div className="flex items-center gap-4 mb-6 flex-wrap">
                         <div className="glass-strong rounded-2xl px-6 py-4 border border-white/10">
                           <div className="flex items-center gap-3 mb-1">
-                            <span className="text-2xl font-black text-white">
+                            <span className="text-2xl font-bold text-white">
                               {isDateVersion(version) ? fmtDate(version) : `v${version}`}
                             </span>
                             <span className="text-xs font-bold px-3 py-1 rounded-full border text-purple-400 bg-purple-500/10 border-purple-500/20">
@@ -303,7 +303,7 @@ export default function ChangelogPage() {
                     <div className="flex items-center gap-4 mb-6 flex-wrap">
                       <div className="glass-strong rounded-2xl px-6 py-4 border border-white/10">
                         <div className="flex items-center gap-3 mb-1">
-                          <span className="text-2xl font-black text-white">v{release.version}</span>
+                          <span className="text-2xl font-bold text-white">v{release.version}</span>
                           <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
                             release.tagColor === 'green'
                               ? 'text-green-400 bg-green-500/10 border-green-500/20'

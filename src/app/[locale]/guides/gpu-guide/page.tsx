@@ -98,9 +98,9 @@ export default async function GpuGuidePage({ params }: Props) {
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">{badges[0]}</span>
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">{badges[1]}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               {t('heroTitleLine1')}<br />
-              <span className="bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 {t('heroTitleLine2')}
               </span>
             </h1>
@@ -119,7 +119,7 @@ export default async function GpuGuidePage({ params }: Props) {
               <div className="grid md:grid-cols-3 gap-4">
                 {summaryItems.map(({ vram, desc, example }) => (
                   <div key={vram} className="glass rounded-xl p-4 border border-white/10">
-                    <div className="text-2xl font-black text-purple-400 mb-1">{vram}</div>
+                    <div className="text-2xl font-bold text-purple-400 mb-1">{vram}</div>
                     <p className="text-gray-300 text-sm mb-2">{desc}</p>
                     <p className="text-xs text-gray-600 font-mono">{example}</p>
                   </div>
@@ -133,7 +133,7 @@ export default async function GpuGuidePage({ params }: Props) {
                 <div className="flex items-start justify-between gap-4 mb-6">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-2xl font-black text-white">{gpu.name}</h3>
+                      <h3 className="text-2xl font-bold text-white">{gpu.name}</h3>
                       <span className={`text-xs font-bold px-3 py-1 rounded-full border ${tierColors[gpu.tierColor]}`}>
                         {gpu.tier}
                       </span>
@@ -188,7 +188,7 @@ export default async function GpuGuidePage({ params }: Props) {
 
             {/* CTA */}
             <div className="glass-strong rounded-2xl p-8 border border-purple-500/20 text-center">
-              <h3 className="text-2xl font-black text-white mb-4">
+              <h3 className="text-2xl font-bold text-white mb-4">
                 {t('cta.heading')}
               </h3>
               <p className="text-gray-400 mb-6 max-w-lg mx-auto">

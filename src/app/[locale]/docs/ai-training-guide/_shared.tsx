@@ -107,7 +107,7 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
               <Link
                 key={ch.id}
                 href={ch.href}
-                className={`flex items-center gap-2 w-full text-left px-2 py-1.5 rounded-lg text-xs transition-all ${
+                className={`flex items-center gap-2 w-full text-left px-2 py-1.5 rounded-lg text-xs transition duration-200 ease-out ${
                   ch.id === currentChapterId
                     ? 'bg-violet-500/20 text-violet-300 font-semibold border border-violet-400/30'
                     : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
@@ -127,7 +127,7 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
               <button
                 key={itemId}
                 onClick={() => setActiveSection(itemId)}
-                className={`w-full text-left px-2 py-2 rounded-lg text-xs transition-all ${
+                className={`w-full text-left px-2 py-2 rounded-lg text-xs transition duration-200 ease-out ${
                   activeSection === itemId
                     ? 'bg-violet-500/15 text-violet-300 font-medium'
                     : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
@@ -153,7 +153,7 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
         {/* Prev / Next */}
         <div className="flex justify-between gap-4 mt-6">
           {prev ? (
-            <Link href={prev.href} className="flex items-center gap-3 glass border border-white/10 rounded-xl p-4 hover:border-violet-400/30 transition-all group flex-1">
+            <Link href={prev.href} className="card-lift flex items-center gap-3 glass border border-white/10 rounded-xl p-4 hover:border-violet-400/30 transition duration-200 ease-out group flex-1">
               <ArrowLeft className="w-5 h-5 text-gray-500 group-hover:text-violet-400 transition-colors" />
               <div>
                 <p className="text-gray-600 text-xs">{t('nav.previous')}</p>
@@ -163,7 +163,7 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
           ) : <div />}
 
           {next ? (
-            <Link href={next.href} className="flex items-center gap-3 glass border border-white/10 rounded-xl p-4 hover:border-violet-400/30 transition-all group flex-1 justify-end text-right">
+            <Link href={next.href} className="card-lift flex items-center gap-3 glass border border-white/10 rounded-xl p-4 hover:border-violet-400/30 transition duration-200 ease-out group flex-1 justify-end text-right">
               <div>
                 <p className="text-gray-600 text-xs">{t('nav.next')}</p>
                 <p className="text-white font-semibold text-sm">{next.emoji} {t(`chapters.${next.key}.title`)}</p>
@@ -202,7 +202,7 @@ export function InfoBox({ type, title, children }: { type: 'success' | 'warning'
 export function SectionTitle({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle?: string }) {
   return (
     <div className="mb-8">
-      <h1 className="text-3xl md:text-4xl font-black text-white mb-2 flex items-center gap-3">
+      <h1 className="text-3xl md:text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
         <span className="text-violet-400">{icon}</span>
         {title}
       </h1>

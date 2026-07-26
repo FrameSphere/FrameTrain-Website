@@ -149,7 +149,7 @@ function FAQAccordion({ faq, accent, special }: { faq: RawFaq; accent: typeof co
   return (
     <div className={`glass-strong rounded-2xl overflow-hidden border ${open ? accent.border : 'border-white/10'} transition-colors duration-300`}>
       <button
-        className="w-full text-left px-7 py-5 flex items-start justify-between gap-4 hover:bg-white/3 transition-colors group"
+        className="press w-full text-left px-7 py-5 flex items-start justify-between gap-4 hover:bg-white/3 transition-colors group"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
@@ -160,7 +160,7 @@ function FAQAccordion({ faq, accent, special }: { faq: RawFaq; accent: typeof co
           className={`w-5 h-5 flex-shrink-0 mt-0.5 transition-transform duration-300 ${open ? 'rotate-180 text-purple-400' : 'text-gray-500'}`}
         />
       </button>
-      <div className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-[600px]' : 'max-h-0'}`}>
+      <div className={`overflow-hidden transition duration-200 ease-out ${open ? 'max-h-[600px]' : 'max-h-0'}`}>
         <div className="px-7 pb-6 text-gray-300 leading-relaxed text-sm border-t border-white/5 pt-4">
           {typeof content === 'string' ? <p>{content}</p> : content}
         </div>
@@ -218,7 +218,7 @@ export default function FAQPage() {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mb-8">
               <HelpCircle className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
               {t('heading')}
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
@@ -305,7 +305,7 @@ export default function FAQPage() {
                         <button
                           key={cat.id}
                           onClick={() => setActiveCategory(cat.id)}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-left transition-all text-sm ${
+                          className={`w-full flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-left transition duration-200 ease-out text-sm ${
                             isActive
                               ? `${a.badge} font-semibold`
                               : 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -337,7 +337,7 @@ export default function FAQPage() {
                         {cat.icon}
                       </div>
                       <div>
-                        <h2 className="text-2xl font-black text-white">{cat.label}</h2>
+                        <h2 className="text-2xl font-bold text-white">{cat.label}</h2>
                         <p className="text-gray-500 text-sm">{t('questionsCount', { count: cat.faqs.length })}</p>
                       </div>
                     </div>
@@ -374,7 +374,7 @@ export default function FAQPage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="glass-strong rounded-3xl p-10 border border-white/10">
               <Sparkles className="w-10 h-10 text-purple-400 mx-auto mb-5" />
-              <h3 className="text-2xl font-black text-white mb-4">{t('stillQuestions.heading')}</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">{t('stillQuestions.heading')}</h3>
               <p className="text-gray-400 mb-7 max-w-lg mx-auto">
                 {t('stillQuestions.text')}
               </p>

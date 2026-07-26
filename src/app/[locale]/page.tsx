@@ -311,7 +311,7 @@ export default function HomePage() {
                       ]
                       return (
                         <Link key={ch.title} href={hrefs[i]}
-                          className="flex items-center gap-3 px-3.5 py-2 glass border border-white/[0.08] rounded-xl hover:border-violet-400/30 hover:bg-violet-500/[0.07] transition-colors duration-[180ms] ease-out group"
+                          className="card-lift flex items-center gap-3 px-3.5 py-2 glass border border-white/[0.08] rounded-xl hover:border-violet-400/30 hover:bg-violet-500/[0.07] transition-colors duration-[180ms] ease-out group"
                         >
                           <span className="text-gray-600 text-xs font-mono">{ch.num}</span>
                           <span className="text-base">{ch.emoji}</span>
@@ -344,7 +344,7 @@ export default function HomePage() {
               {t('pricing.increaseNote')}
             </div>
 
-            {/* Die Wrapper hatten hover:scale-105 über 500ms. Eine Glass-Karte
+            {/* Die Wrapper hatten über 500ms. Eine Glass-Karte
                 mit backdrop-filter um 5 % zu skalieren heißt: der Blur wird
                 für jeden Frame neu berechnet und der Preistext wird währenddessen
                 unscharf. Ersetzt durch card-lift (translateY, 220ms). */}
@@ -722,7 +722,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
       itemType="https://schema.org/Question"
     >
       <button
-        className="w-full text-left px-5 sm:px-6 py-4 flex items-center justify-between gap-4 hover:bg-white/[0.04] transition-colors duration-200"
+        className="press w-full text-left px-5 sm:px-6 py-4 flex items-center justify-between gap-4 hover:bg-white/[0.04] transition-colors duration-200"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >

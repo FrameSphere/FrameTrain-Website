@@ -39,7 +39,7 @@ export default function InstallPage() {
           <div className="flex gap-4 mb-8 justify-center flex-wrap">
             <button 
               onClick={() => setSelectedPlatform('macos')}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              className={`px-6 py-3 rounded-lg font-semibold transition duration-200 ease-out ${
                 selectedPlatform === 'macos' 
                   ? 'bg-purple-600 text-white' 
                   : 'glass text-white hover:bg-white/10'
@@ -49,7 +49,7 @@ export default function InstallPage() {
             </button>
             <button 
               onClick={() => setSelectedPlatform('windows')}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              className={`px-6 py-3 rounded-lg font-semibold transition duration-200 ease-out ${
                 selectedPlatform === 'windows' 
                   ? 'bg-purple-600 text-white' 
                   : 'glass text-white hover:bg-white/10'
@@ -59,7 +59,7 @@ export default function InstallPage() {
             </button>
             <button 
               onClick={() => setSelectedPlatform('linux')}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              className={`px-6 py-3 rounded-lg font-semibold transition duration-200 ease-out ${
                 selectedPlatform === 'linux' 
                   ? 'bg-purple-600 text-white' 
                   : 'glass text-white hover:bg-white/10'
@@ -72,7 +72,7 @@ export default function InstallPage() {
           {/* macOS Installation – SEO: bleibt immer im DOM, nur per CSS (hidden) ausgeblendet */}
           <div className={selectedPlatform === 'macos' ? '' : 'hidden'}>
           <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
-              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Download className="w-8 h-8 text-purple-400" />
                 {t('macos.heading')}
               </h2>
@@ -160,7 +160,7 @@ export default function InstallPage() {
           {/* Windows Installation – SEO: bleibt immer im DOM, nur per CSS (hidden) ausgeblendet */}
           <div className={selectedPlatform === 'windows' ? '' : 'hidden'}>
           <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
-              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Download className="w-8 h-8 text-purple-400" />
                 {t('windows.heading')}
               </h2>
@@ -249,7 +249,7 @@ export default function InstallPage() {
           {/* Linux Installation – SEO: bleibt immer im DOM, nur per CSS (hidden) ausgeblendet */}
           <div className={selectedPlatform === 'linux' ? '' : 'hidden'}>
           <div className="glass-strong rounded-2xl p-8 mb-8 border border-white/10">
-              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Download className="w-8 h-8 text-purple-400" />
                 {t('linux.heading')}
               </h2>

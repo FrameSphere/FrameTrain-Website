@@ -228,7 +228,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-xl transition-colors text-gray-400 hover:text-white"
+            className="press p-2 hover:bg-white/10 rounded-xl transition-colors text-gray-400 hover:text-white"
           >
             <X className="w-5 h-5" />
           </button>
@@ -260,14 +260,14 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
               return (
                 <div
                   key={`s-${item.data.id}`}
-                  className={`rounded-2xl border p-4 transition-all ${
+                  className={`rounded-2xl border p-4 transition duration-200 ease-out ${
                     isNew ? 'border-purple-500/30 bg-purple-500/5' : 'border-white/8 bg-white/[0.02]'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div className="flex items-center gap-2 flex-wrap">
                       {isNew && (
-                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
                           {t('newBadge')}
                         </span>
                       )}
@@ -299,14 +299,14 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
             return (
               <div
                 key={`r-${item.data.id}`}
-                className={`rounded-2xl border p-4 transition-all ${
+                className={`rounded-2xl border p-4 transition duration-200 ease-out ${
                   isNew ? 'border-purple-500/30 bg-purple-500/5' : 'border-white/8 bg-white/[0.02]'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3 mb-1.5">
                   <div className="flex items-center gap-2 flex-wrap">
                     {isNew && (
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
                         {t('newBadge')}
                       </span>
                     )}
@@ -336,7 +336,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
           <Link
             href="/changelog"
             onClick={onClose}
-            className="flex items-center justify-center gap-2 w-full py-2.5 glass border border-white/10 rounded-xl text-gray-300 hover:text-white hover:border-purple-500/30 transition-all text-sm font-semibold group"
+            className="card-lift flex items-center justify-center gap-2 w-full py-2.5 glass border border-white/10 rounded-xl text-gray-300 hover:text-white hover:border-purple-500/30 transition duration-200 ease-out text-sm font-semibold group"
           >
             {t('viewFull')}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

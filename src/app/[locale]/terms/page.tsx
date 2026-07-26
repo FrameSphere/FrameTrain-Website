@@ -37,7 +37,7 @@ export default function TermsPage() {
               <FileText className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-black text-white">{t('heading')}</h1>
+              <h1 className="text-4xl font-bold text-white">{t('heading')}</h1>
               <p className="text-gray-400 text-sm mt-1">{t('lastUpdated')}</p>
             </div>
           </div>

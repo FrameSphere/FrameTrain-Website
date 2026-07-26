@@ -39,9 +39,9 @@ export default function AITrainingGuideHubPage() {
               <Sparkles className="w-4 h-4" />
               {t('hub.badge')}
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
               {t('hub.headingLine1')}{' '}
-              <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 {t('hub.headingLine2')}
               </span>
             </h1>
@@ -70,7 +70,7 @@ export default function AITrainingGuideHubPage() {
                 const num = String(idx + 1).padStart(2, '0')
                 return (
                   <Link key={ch.id} href={ch.href} className="group block">
-                    <div className={`glass border ${c.border} rounded-2xl p-7 bg-gradient-to-br ${c.color} hover:scale-[1.01] transition-all duration-200 hover:shadow-lg h-full`}>
+                    <div className={`glass border ${c.border} rounded-2xl p-7 bg-gradient-to-br ${c.color} transition duration-200 ease-out hover:shadow-lg h-full`}>
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <span className="text-3xl">{ch.emoji}</span>
@@ -78,10 +78,10 @@ export default function AITrainingGuideHubPage() {
                             <p className={`text-xs font-bold ${c.accent} mb-0.5 uppercase tracking-wider`}>
                               {t('hub.chapterLabel')} {num}
                             </p>
-                            <h2 className="text-white font-black text-xl">{t(`chapters.${ch.key}.title`)}</h2>
+                            <h2 className="text-white font-bold text-xl">{t(`chapters.${ch.key}.title`)}</h2>
                           </div>
                         </div>
-                        <ArrowRight className={`w-5 h-5 ${c.accent} opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all`} />
+                        <ArrowRight className={`w-5 h-5 ${c.accent} opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition duration-200 ease-out`} />
                       </div>
                       <p className="text-gray-400 text-sm mb-4 leading-relaxed">{chData.desc}</p>
                       <div className="flex flex-wrap gap-2">
@@ -101,7 +101,7 @@ export default function AITrainingGuideHubPage() {
             <div className="mt-12 text-center">
               <Link
                 href="/docs/ai-training-guide/ml-grundlagen"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-white font-bold hover:from-violet-500 hover:to-fuchsia-500 transition-all shadow-lg shadow-violet-500/30"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-white font-bold hover:from-violet-500 hover:to-fuchsia-500 transition duration-200 ease-out shadow-lg shadow-violet-500/30"
               >
                 <BookOpen className="w-5 h-5" />
                 {t('hub.startCta')}

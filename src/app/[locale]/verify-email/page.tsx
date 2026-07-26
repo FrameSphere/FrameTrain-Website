@@ -102,7 +102,7 @@ function VerifyEmailContent() {
       {status !== 'verifying' && (
         <Link
           href={DESTINATION_HREF[destination]}
-          className="inline-block w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
+          className="inline-block w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition duration-200 ease-out"
         >
           {t(DESTINATION_LABEL[destination] as any)}
         </Link>

@@ -126,7 +126,7 @@ export function DocSearch() {
       {/* Search trigger */}
       <button
         onClick={() => { setOpen(true); setTimeout(() => inputRef.current?.focus(), 50) }}
-        className="w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-400 hover:border-violet-400/30 hover:text-gray-300 transition-all text-sm"
+        className="card-lift w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-400 hover:border-violet-400/30 hover:text-gray-300 transition duration-200 ease-out text-sm"
       >
         <Search className="w-4 h-4 flex-shrink-0" />
         <span className="flex-1 text-left">{tSearch('triggerPlaceholder')}</span>

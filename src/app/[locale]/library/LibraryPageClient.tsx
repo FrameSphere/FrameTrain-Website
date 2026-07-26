@@ -101,7 +101,7 @@ function ScriptCard({
 }) {
   return (
     <article
-      className="glass-strong rounded-2xl p-6 flex flex-col gap-4 hover:border-white/20 border border-white/8 transition-all duration-300 hover:scale-[1.01] cursor-pointer group"
+      className="card-lift glass-strong rounded-2xl p-6 flex flex-col gap-4 hover:border-white/20 border border-white/8 transition duration-200 ease-out cursor-pointer group"
       onClick={() => onView(script)}
       itemScope
       itemType="https://schema.org/SoftwareSourceCode"
@@ -277,7 +277,7 @@ function ScriptDetailModal({
           </div>
           <button
             onClick={onClose}
-            className="flex-shrink-0 p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition-all"
+            className="press flex-shrink-0 p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition duration-200 ease-out"
           >
             <X className="w-5 h-5" />
           </button>
@@ -322,7 +322,7 @@ function ScriptDetailModal({
             <button
               onClick={handleCopy}
               disabled={loading || !fullScript}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 hover:text-white text-xs font-medium transition-all disabled:opacity-40"
+              className="press flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 hover:text-white text-xs font-medium transition duration-200 ease-out disabled:opacity-40"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               {copied ? t('copiedButton') : t('copyButton')}
@@ -347,13 +347,13 @@ function ScriptDetailModal({
             {t('createdLabel')}: {timeAgo(script.created_at, timeAgoMessages)} · {t('licenseLabel')}
           </p>
           <div className="flex gap-2">
-            <button onClick={onClose} className="px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition-all">
+            <button onClick={onClose} className="press px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition duration-200 ease-out">
               {t('closeButton')}
             </button>
             <a
               href={`data:text/plain;charset=utf-8,${encodeURIComponent(fullScript)}`}
               download={`${script.name.replace(/\s+/g, '_').toLowerCase()}.py`}
-              className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out"
             >
               <Download className="w-4 h-4" /> {t('downloadButton')}
             </a>
@@ -394,7 +394,7 @@ function DuplicateNameErrorModal({ name, onClose, t }: { name: string; onClose: 
 
         <button
           onClick={onClose}
-          className="w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition-all hover:from-purple-500 hover:to-pink-500"
+          className="press w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition duration-200 ease-out hover:from-purple-500 hover:to-pink-500"
         >
           {t('duplicateNameRetry')}
         </button>
@@ -518,7 +518,7 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
             <h2 className="text-lg font-bold text-white">{t('upload.title')}</h2>
             <p className="text-gray-400 text-sm">{t('upload.subtitle')}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition-all">
+          <button onClick={onClose} className="press p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition duration-200 ease-out">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -620,12 +620,12 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
         </div>
 
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-white/8">
-          <button onClick={onClose} className="px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition-all">
+          <button onClick={onClose} className="press px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition duration-200 ease-out">
             {t('upload.cancel')}
           </button>
           <button
             onClick={handleSubmit} disabled={loading}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition-all disabled:opacity-60"
+            className="press inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out disabled:opacity-60"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
             {t('upload.submit')}
@@ -717,8 +717,8 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
               {t('badge')}
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-5 leading-tight">
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight">
+              <span className="text-gradient-brand">
                 {t('heroTitlePart1')}
               </span>{' '}
               <span className="text-white">{t('heroTitlePart2')}</span>
@@ -748,14 +748,14 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             {isAuthenticated ? (
               <button
                 onClick={() => setShowUpload(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-500 hover:to-pink-500 transition-all shadow-lg shadow-purple-500/30"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out shadow-lg shadow-purple-500/30"
               >
                 <Upload className="w-4 h-4" /> {t('uploadCta')}
               </button>
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/15 text-gray-300 hover:border-white/30 hover:text-white font-semibold transition-all"
+                className="card-lift inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/15 text-gray-300 hover:border-white/30 hover:text-white font-semibold transition duration-200 ease-out"
               >
                 <Upload className="w-4 h-4" /> {t('loginCta')}
                 <ArrowRight className="w-4 h-4" />
@@ -782,7 +782,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
                 <button
                   key={tf}
                   onClick={() => setTypeFilter(tf)}
-                  className={`px-4 py-2.5 min-h-[44px] text-sm font-medium transition-all ${
+                  className={`px-4 py-2.5 min-h-[44px] text-sm font-medium transition duration-200 ease-out ${
                     typeFilter === tf
                       ? 'bg-purple-500/20 text-purple-300'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -820,7 +820,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             {/* Verified toggle */}
             <button
               onClick={() => setVerifiedOnly((v) => !v)}
-              className={`px-4 py-2.5 min-h-[44px] rounded-xl border text-sm font-medium transition-all flex items-center gap-2 flex-shrink-0 ${
+              className={`px-4 py-2.5 min-h-[44px] rounded-xl border text-sm font-medium transition duration-200 ease-out flex items-center gap-2 flex-shrink-0 ${
                 verifiedOnly
                   ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/25'
                   : 'glass border-white/10 text-gray-400 hover:text-white'
@@ -882,7 +882,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
       <section className="py-20 px-4 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-4xl font-black mb-4 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold mb-4 text-gradient-brand">
               {t('seo.heading')}
             </h2>
             <p className="text-gray-400 text-lg max-w-3xl mx-auto">
@@ -949,7 +949,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
 
           {/* CTA Download App */}
           <div className="glass-strong rounded-2xl p-8 border border-purple-500/15 bg-gradient-to-br from-purple-600/5 to-transparent text-center">
-            <h3 className="text-2xl font-black text-white mb-3">
+            <h3 className="text-2xl font-bold text-white mb-3">
               {t('seo.ctaHeading')}
             </h3>
             <p className="text-gray-400 text-base mb-6 max-w-xl mx-auto">
@@ -958,13 +958,13 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             <div className="flex flex-wrap gap-3 justify-center">
               <Link
                 href="/download"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-500 hover:to-pink-500 transition-all shadow-lg shadow-purple-500/30"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out shadow-lg shadow-purple-500/30"
               >
                 <Sparkles className="w-4 h-4" /> {t('seo.ctaDownload')}
               </Link>
               <Link
                 href="/docs"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/15 text-gray-300 hover:border-white/30 hover:text-white font-semibold transition-all"
+                className="card-lift inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/15 text-gray-300 hover:border-white/30 hover:text-white font-semibold transition duration-200 ease-out"
               >
                 <BookOpen className="w-4 h-4" /> {t('seo.ctaDocs')}
                 <ArrowRight className="w-4 h-4" />

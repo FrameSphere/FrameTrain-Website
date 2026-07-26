@@ -164,13 +164,13 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
 
   return (
     <div
-      className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`transition duration-300 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       {/* Header */}
       <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
           {t('headingPre')}{' '}
-          <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-fuchsia-400 bg-clip-text text-transparent">
+          <span className="text-gradient-brand">
             FrameTrain
           </span>
         </h2>
@@ -182,7 +182,7 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
         {FEATURE_META.map((f, i) => (
           <div
             key={f.key}
-            className={`bg-gradient-to-br ${f.color} border ${f.border} rounded-2xl p-6 transition-all duration-500 ${
+            className={`bg-gradient-to-br ${f.color} border ${f.border} rounded-2xl p-6 transition duration-300 ease-out ${
               activeIdx === i ? 'scale-[1.03] shadow-lg' : 'scale-100'
             }`}
           >
@@ -199,7 +199,7 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <button
           onClick={onTutorial}
-          className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-2xl font-bold text-lg shadow-lg shadow-violet-500/30 transition-all"
+          className="press flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-2xl font-bold text-lg shadow-lg shadow-violet-500/30 transition duration-200 ease-out"
         >
           <BookOpen className="w-5 h-5" />
           {t('ctaTutorial')}
@@ -207,7 +207,7 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
         </button>
         <button
           onClick={onSkip}
-          className="flex items-center gap-2 px-8 py-4 glass border border-white/15 text-gray-300 hover:text-white hover:border-white/30 rounded-2xl font-semibold transition-all"
+          className="press flex items-center gap-2 px-8 py-4 glass border border-white/15 text-gray-300 hover:text-white hover:border-white/30 rounded-2xl font-semibold transition duration-200 ease-out"
         >
           <Play className="w-5 h-5" />
           {t('ctaSkip')}
@@ -247,13 +247,13 @@ function TutorialView({ onDone }: { onDone: () => void }) {
   const text = stepTexts[step]
 
   return (
-    <div className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+    <div className={`transition duration-300 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       {/* Progress */}
       <div className="flex items-center justify-center gap-2 mb-10">
         {stepsMeta.map((_, i) => (
           <div
             key={i}
-            className={`rounded-full transition-all duration-300 ${
+            className={`rounded-full transition duration-200 ease-out ${
               i === step
                 ? 'w-8 h-2.5 bg-violet-400'
                 : i < step
@@ -265,14 +265,14 @@ function TutorialView({ onDone }: { onDone: () => void }) {
       </div>
 
       {/* Step card */}
-      <div className={`rounded-3xl border p-10 mb-8 text-center ${meta.bg} transition-all duration-500`}>
+      <div className={`rounded-3xl border p-10 mb-8 text-center ${meta.bg} transition duration-300 ease-out`}>
         <div className="flex justify-center mb-6">
           <div className="w-20 h-20 glass rounded-3xl flex items-center justify-center">
             {meta.icon}
           </div>
         </div>
         <div className={`text-xs font-bold uppercase tracking-widest mb-2 ${meta.color}`}>{t('stepLabel')} {String(step + 1).padStart(2, '0')}</div>
-        <h3 className="text-2xl font-black text-white mb-4">{text.title}</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">{text.title}</h3>
         <p className="text-gray-300 text-base leading-relaxed max-w-sm mx-auto">{text.desc}</p>
       </div>
 
@@ -281,13 +281,13 @@ function TutorialView({ onDone }: { onDone: () => void }) {
         <button
           onClick={() => setStep(s => Math.max(0, s - 1))}
           disabled={step === 0}
-          className="px-5 py-2.5 glass border border-white/10 text-gray-400 hover:text-white rounded-xl disabled:opacity-30 transition-all text-sm"
+          className="px-5 py-2.5 glass border border-white/10 text-gray-400 hover:text-white rounded-xl disabled:opacity-30 transition duration-200 ease-out text-sm"
         >
           {t('back')}
         </button>
         <button
           onClick={next}
-          className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-xl font-bold shadow-lg shadow-violet-500/25 transition-all"
+          className="press flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-xl font-bold shadow-lg shadow-violet-500/25 transition duration-200 ease-out"
         >
           {step < stepsMeta.length - 1 ? (
             <>{t('next')} <ChevronRight className="w-4 h-4" /></>
@@ -430,7 +430,7 @@ function PaymentSuccessContent() {
         <main className="flex-1 flex items-center justify-center px-4">
           <div className="text-center max-w-md">
             <div className="text-5xl mb-6">⚠️</div>
-            <h1 className="text-2xl font-black text-white mb-3">{t('invalid.heading')}</h1>
+            <h1 className="text-2xl font-bold text-white mb-3">{t('invalid.heading')}</h1>
             <p className="text-gray-400 mb-8">{t('invalid.text')}</p>
             <div className="flex gap-4 justify-center">
               <button
@@ -464,9 +464,9 @@ function PaymentSuccessContent() {
             <div className="text-center">
               <AnimatedCheck onDone={handleCheckDone} />
               <div
-                className={`transition-all duration-700 mt-8 ${successVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`transition duration-300 ease-out mt-8 ${successVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
-                <h1 className="text-4xl font-black text-white mb-3">
+                <h1 className="text-4xl font-bold text-white mb-3">
                   {t('successHeading')}
                 </h1>
                 <p className="text-gray-400 text-lg">

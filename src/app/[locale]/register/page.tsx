@@ -45,7 +45,7 @@ function OAuthButtons() {
         className="press w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/30 rounded-xl text-gray-300 hover:border-violet-400/60 hover:text-white hover:bg-violet-500/[0.07] transition-colors duration-[180ms] ease-out group"
       >
         <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25">
-          <span className="text-white font-black text-[10px]">FS</span>
+          <span className="text-white font-bold text-[10px]">FS</span>
         </div>
         <span className="font-medium text-sm group-hover:text-violet-300 transition-colors">
           {t('frameSphereRegister')}

@@ -90,9 +90,9 @@ export default async function LocalVsCloudPage({ params }: Props) {
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">{badges[0]}</span>
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">{badges[1]}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               {t('heroTitleLine1')}<br />
-              <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 {t('heroTitleLine2')}
               </span>
             </h1>
@@ -107,7 +107,7 @@ export default async function LocalVsCloudPage({ params }: Props) {
 
             {/* Cost Comparison */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <DollarSign className="w-8 h-8 text-yellow-400" />
                 {t('cost.heading')}
               </h2>
@@ -141,7 +141,7 @@ export default async function LocalVsCloudPage({ params }: Props) {
 
             {/* Feature Comparison Table */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6">{t('features.heading')}</h2>
+              <h2 className="text-3xl font-bold text-white mb-6">{t('features.heading')}</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -174,7 +174,7 @@ export default async function LocalVsCloudPage({ params }: Props) {
 
             {/* Datenschutz */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Shield className="w-8 h-8 text-green-400" />
                 {t('privacy.heading')}
               </h2>
@@ -193,7 +193,7 @@ export default async function LocalVsCloudPage({ params }: Props) {
 
             {/* Wann Cloud sinnvoll ist */}
             <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-black text-white mb-6 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <Cloud className="w-8 h-8 text-blue-400" />
                 {t('whenCloud.heading')}
               </h2>
@@ -215,7 +215,7 @@ export default async function LocalVsCloudPage({ params }: Props) {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-cyan-500 rounded-2xl mb-6">
                 <Laptop className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-black text-white mb-4">
+              <h3 className="text-2xl font-bold text-white mb-4">
                 {t('cta.heading')}
               </h3>
               <p className="text-gray-400 mb-6 max-w-lg mx-auto">

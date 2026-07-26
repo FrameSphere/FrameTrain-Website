@@ -103,7 +103,7 @@ function CommunityNameErrorModal({ name, onClose, t }: { name: string; onClose: 
 
         <button
           onClick={onClose}
-          className="w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition-all hover:from-purple-500 hover:to-pink-500"
+          className="press w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition duration-200 ease-out hover:from-purple-500 hover:to-pink-500"
         >
           {t('communityNameError.retryButton')}
         </button>
@@ -488,7 +488,7 @@ function DashboardPageInner() {
               <button
                 onClick={handlePayment}
                 disabled={redirectingToPayment}
-                className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm"
+                className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
               >
                 {redirectingToPayment
                   ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscriptionInactive.redirecting')}</>
@@ -522,7 +522,7 @@ function DashboardPageInner() {
                 <button
                   onClick={handlePayment}
                   disabled={redirectingToPayment}
-                  className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm"
+                  className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
                 >
                   {redirectingToPayment
                     ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscriptionCanceling.redirecting')}</>
@@ -557,7 +557,7 @@ function DashboardPageInner() {
                   <button
                     onClick={handlePayment}
                     disabled={redirectingToPayment}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm"
+                    className="press flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
                   >
                     {redirectingToPayment
                       ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('promoAccess.redirecting')}</>
@@ -565,7 +565,7 @@ function DashboardPageInner() {
                   </button>
                   <button
                     onClick={() => router.push('/redeem')}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 font-bold rounded-xl transition-all text-sm"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 font-bold rounded-xl transition duration-200 ease-out text-sm"
                   >
                     {t('promoAccess.redeemButton')}
                   </button>
@@ -619,7 +619,7 @@ function DashboardPageInner() {
                 <button
                   onClick={handlePayment}
                   disabled={redirectingToPayment}
-                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg transition-all disabled:opacity-50 flex items-center gap-2 mx-auto"
+                  className="press px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg transition duration-200 ease-out disabled:opacity-50 flex items-center gap-2 mx-auto"
                 >
                   {redirectingToPayment ? <><RefreshCw className="w-5 h-5 animate-spin" /><span>{t('apiKeys.payRedirecting')}</span></> : <><Key className="w-5 h-5" /><span>{t('apiKeys.payButton')}</span></>}
                 </button>
@@ -690,7 +690,7 @@ function DashboardPageInner() {
                   key={platform}
                   onClick={() => downloadApp(platform)}
                   disabled={!activeKey}
-                  className="glass-strong hover:bg-white/10 border border-white/10 rounded-xl p-6 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="card-lift glass-strong hover:bg-white/10 border border-white/10 rounded-xl p-6 transition duration-200 ease-out group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="text-center">
                     <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-br ${gradient} rounded-2xl flex items-center justify-center`}>
@@ -754,7 +754,7 @@ function DashboardPageInner() {
                   <button
                     onClick={handleSaveCommunityName}
                     disabled={savingCommunityName || !communityNameInput.trim()}
-                    className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition-all hover:from-purple-500 hover:to-pink-500 disabled:opacity-60"
+                    className="press px-5 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition duration-200 ease-out hover:from-purple-500 hover:to-pink-500 disabled:opacity-60"
                   >
                     {savingCommunityName ? <Loader2 className="w-4 h-4 animate-spin" /> : t('communityName.saveButton')}
                   </button>
@@ -829,7 +829,7 @@ function DashboardPageInner() {
                 <button
                   onClick={setDesktopPasswordHandler}
                   disabled={settingDesktopPassword || !desktopPassword || !desktopPasswordConfirm}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {settingDesktopPassword
                     ? <><RefreshCw className="w-4 h-4 animate-spin" /><span>{t('desktopPassword.saving')}</span></>
@@ -915,7 +915,7 @@ function DashboardPageInner() {
                   <button
                     onClick={handlePortal}
                     disabled={redirectingToPortal}
-                    className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/25 text-white font-semibold rounded-xl transition-all disabled:opacity-50"
+                    className="press flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/25 text-white font-semibold rounded-xl transition duration-200 ease-out disabled:opacity-50"
                   >
                     {redirectingToPortal
                       ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscription.redirecting')}</>
@@ -928,7 +928,7 @@ function DashboardPageInner() {
                 <button
                   onClick={handlePayment}
                   disabled={redirectingToPayment}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition-all disabled:opacity-50"
+                  className="press flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50"
                 >
                   {redirectingToPayment
                     ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscription.redirecting')}</>
@@ -943,7 +943,7 @@ function DashboardPageInner() {
             {/* Coming Soon Overlay */}
             <div className="absolute inset-0 bg-gray-950/70 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3 rounded-2xl">
               <span className="text-4xl">🚧</span>
-              <span className="text-white font-black text-2xl">{t('cli.comingSoonBadge')}</span>
+              <span className="text-white font-bold text-2xl">{t('cli.comingSoonBadge')}</span>
               <span className="text-gray-400 text-sm text-center max-w-xs px-4">
                 {t('cli.comingSoonText')}
               </span>
@@ -978,7 +978,7 @@ function DashboardPageInner() {
             >
               {/* Unread admin reply badge */}
               {supportBadge > 0 && !supportOpen && (
-                <span className="absolute top-3 right-16 flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-[11px] font-black shadow-lg shadow-red-500/40 animate-pulse">
+                <span className="absolute top-3 right-16 flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-[11px] font-bold shadow-sm shadow-red-500/40 animate-enter">
                   {supportBadge}
                 </span>
               )}
@@ -1044,7 +1044,7 @@ function DashboardPageInner() {
                           <button
                             onClick={submitTicket}
                             disabled={submitting || !newSubject.trim() || !newMessage.trim()}
-                            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             {submitting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                             {submitting ? t('support.submitting') : t('support.submitButton')}
@@ -1084,7 +1084,7 @@ function DashboardPageInner() {
                             <button
                               key={t2.ticket_id}
                               onClick={() => openThread(t2)}
-                              className="w-full flex items-center justify-between glass rounded-xl px-5 py-4 border border-white/10 hover:border-purple-500/30 hover:bg-white/5 transition-all text-left"
+                              className="card-lift w-full flex items-center justify-between glass rounded-xl px-5 py-4 border border-white/10 hover:border-purple-500/30 hover:bg-white/5 transition duration-200 ease-out text-left"
                             >
                               <div>
                                 <p className="text-white font-semibold text-sm">{t2.subject}</p>
@@ -1166,7 +1166,7 @@ function DashboardPageInner() {
                               <button
                                 onClick={sendReply}
                                 disabled={sendingReply || !replyText.trim()}
-                                className="self-end flex items-center gap-1.5 px-5 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors disabled:opacity-50 font-semibold text-sm"
+                                className="press self-end flex items-center gap-1.5 px-5 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors disabled:opacity-50 font-semibold text-sm"
                               >
                                 {sendingReply ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                               </button>

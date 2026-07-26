@@ -202,21 +202,21 @@ function EnsemblesSection({ c }: { c: any }) {
       <div className="mt-10 p-8 bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border border-violet-400/20 rounded-2xl">
         <div className="flex items-center gap-3 mb-4">
           <Brain className="w-8 h-8 text-violet-400" />
-          <h2 className="text-2xl font-black text-white">{t('heading')}</h2>
+          <h2 className="text-2xl font-bold text-white">{t('heading')}</h2>
         </div>
         <p className="text-gray-400 mb-6">
           {t('text')}
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link href="/docs/ai-training-guide" className="px-4 py-2 bg-violet-600/20 border border-violet-400/30 rounded-lg text-violet-300 text-sm font-semibold hover:bg-violet-600/30 transition-all flex items-center gap-2">
+          <Link href="/docs/ai-training-guide" className="px-4 py-2 bg-violet-600/20 border border-violet-400/30 rounded-lg text-violet-300 text-sm font-semibold hover:bg-violet-600/30 transition duration-200 ease-out flex items-center gap-2">
             <BookOpen className="w-4 h-4" />
             {t('allChapters')}
           </Link>
-          <Link href="/docs/ai-training-guide/ml-grundlagen" className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-300 text-sm font-semibold hover:bg-white/10 transition-all flex items-center gap-2">
+          <Link href="/docs/ai-training-guide/ml-grundlagen" className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-300 text-sm font-semibold hover:bg-white/10 transition duration-200 ease-out flex items-center gap-2">
             <ArrowRight className="w-4 h-4" />
             {t('restart')}
           </Link>
-          <Link href="/download" className="px-4 py-2 bg-gradient-to-r from-violet-600/50 to-fuchsia-600/50 border border-violet-400/30 rounded-lg text-white text-sm font-semibold hover:from-violet-600/70 hover:to-fuchsia-600/70 transition-all flex items-center gap-2">
+          <Link href="/download" className="px-4 py-2 bg-gradient-to-r from-violet-600/50 to-fuchsia-600/50 border border-violet-400/30 rounded-lg text-white text-sm font-semibold hover:from-violet-600/70 hover:to-fuchsia-600/70 transition duration-200 ease-out flex items-center gap-2">
             <Zap className="w-4 h-4" />
             {t('startCta')}
           </Link>

@@ -46,11 +46,21 @@ interface ConfettiParticle {
   color: string; size: number; angle: number; spin: number; opacity: number
 }
 
+// Nach so vielen Salven ist gut. Vorher lief die Animation dauerhaft:
+// alle 3 Sekunden eine neue Salve, requestAnimationFrame ohne Ende – über
+// die gesamten sieben Tage des Konfetti-Zeitraums, auf Startseite UND
+// Dashboard. Das hält den Main Thread permanent beschäftigt (kein Idle,
+// spürbarer Akkuverbrauch auf Mobilgeräten) für einen Effekt, den man
+// nach zwei Sekunden gesehen hat.
+const CONFETTI_BURSTS = 3
+const CONFETTI_BURST_INTERVAL_MS = 2200
+
 function useConfetti(active: boolean) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<ConfettiParticle[]>([])
   const rafRef = useRef<number>(0)
   const lastBurstRef = useRef<number>(0)
+  const burstCountRef = useRef<number>(0)
 
   const COLORS = [
     '#a855f7', '#ec4899', '#3b82f6', '#10b981',
@@ -81,6 +91,8 @@ function useConfetti(active: boolean) {
 
   useEffect(() => {
     if (!active) return
+    // Wer reduzierte Bewegung eingestellt hat, bekommt gar keine Animation.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -95,18 +107,29 @@ function useConfetti(active: boolean) {
 
     // Initial burst
     burst()
+    burstCountRef.current = 1
 
     const animate = (ts: number) => {
       if (!canvas || !ctx) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // Periodic new bursts every 3s
-      if (ts - lastBurstRef.current > 3000) {
+      if (
+        burstCountRef.current < CONFETTI_BURSTS &&
+        ts - lastBurstRef.current > CONFETTI_BURST_INTERVAL_MS
+      ) {
         burst()
+        burstCountRef.current += 1
         lastBurstRef.current = ts
       }
 
       particlesRef.current = particlesRef.current.filter(p => p.opacity > 0.01)
+
+      // Alle Salven durch und nichts mehr in der Luft: Schleife beenden,
+      // statt weiter leere Frames zu zeichnen.
+      if (burstCountRef.current >= CONFETTI_BURSTS && particlesRef.current.length === 0) {
+        rafRef.current = 0
+        return
+      }
 
       for (const p of particlesRef.current) {
         p.x += p.vx
@@ -198,7 +221,7 @@ export function DownloadLockCountdown() {
           { v: timeLeft.seconds, label: t('seconds') },
         ].map(({ v, label }) => (
           <div key={label} className="flex-1 text-center bg-black/20 rounded-lg py-2 px-1">
-            <div className="text-xl font-black text-amber-400 font-mono">{mounted ? pad(v) : '--'}</div>
+            <div className="text-xl font-bold text-amber-400 font-mono">{mounted ? pad(v) : '--'}</div>
             <div className="text-[10px] text-amber-500/70 font-medium">{label}</div>
           </div>
         ))}
@@ -241,7 +264,7 @@ export function ReleaseBanner() {
         />
         <div className="glass-strong border border-green-400/30 rounded-2xl px-6 py-4 text-center relative">
           <div className="text-2xl mb-1">🎉</div>
-          <p className="text-green-300 font-black text-lg">{t('liveTitle')}</p>
+          <p className="text-green-300 font-bold text-lg">{t('liveTitle')}</p>
           <p className="text-green-400/70 text-sm mt-1">{t('liveDesc')}</p>
         </div>
       </div>
@@ -271,11 +294,11 @@ export function ReleaseBanner() {
             ].map(({ v, label }, i) => (
               <div key={label} className="flex flex-col items-center">
                 <div className="glass rounded-xl px-4 py-3 min-w-[64px] text-center border border-white/10 mb-1.5">
-                  <span className="text-3xl font-black text-white font-mono tabular-nums">{mounted ? pad(v) : '--'}</span>
+                  <span className="text-3xl font-bold text-white font-mono tabular-nums">{mounted ? pad(v) : '--'}</span>
                 </div>
                 <span className="text-[11px] text-gray-500 font-medium">{label}</span>
                 {i < 3 && (
-                  <span className="absolute text-2xl text-purple-400/50 font-black" style={{ marginTop: '8px', marginLeft: '70px' }}>:</span>
+                  <span className="absolute text-2xl text-purple-400/50 font-bold" style={{ marginTop: '8px', marginLeft: '70px' }}>:</span>
                 )}
               </div>
             ))}
@@ -303,7 +326,7 @@ export function ComingSoonBadge() {
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
         <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
       </span>
-      <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+      <span className="text-gradient-brand">
         {t('text')}
       </span>
     </div>
@@ -329,9 +352,9 @@ export function ReleasePromoSection() {
               <Rocket className="w-3.5 h-3.5" />
               {t('tag')}
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {t('titlePre')}{' '}
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 {t('titleHighlight')}
               </span>
             </h2>

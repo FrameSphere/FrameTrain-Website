@@ -36,7 +36,7 @@ function OverfittingFixSection({ c }: { c: any }) {
       <div className="space-y-4">
         {c.measures.map((item: any, i: number) => (
           <div key={i} className="glass border border-white/10 rounded-xl p-5 flex gap-4">
-            <div className={`w-10 h-10 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center text-white font-black flex-shrink-0`}>
+            <div className={`w-10 h-10 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0`}>
               {item.rank}
             </div>
             <div className="flex-1">

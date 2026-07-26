@@ -83,19 +83,19 @@ export default function AboutPage() {
 
           <div className="max-w-4xl mx-auto relative text-center">
             <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm text-gray-400 mb-8 border border-white/10">
-              <Heart className="w-4 h-4 text-pink-500 fill-pink-500 animate-pulse" />
+              <Heart className="w-3.5 h-3.5 text-pink-500/80 fill-pink-500/80" />
               <span>{t('hero.badge')}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 leading-tight">
+              <span className="text-gradient-brand">
                 {t('hero.titleLine1')}
               </span>
               <br />
               <span className="text-white">{t('hero.titleLine2')}</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               {t('hero.subtitle')}
             </p>
           </div>
@@ -111,7 +111,7 @@ export default function AboutPage() {
                   <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
                     <Brain className="w-5 h-5 text-white" />
                   </div>
-                  <h2 className="text-3xl font-black text-white">{t('origin.heading')}</h2>
+                  <h2 className="text-3xl font-bold text-white">{t('origin.heading')}</h2>
                 </div>
 
                 <div className="space-y-5 text-gray-300 text-lg leading-relaxed">
@@ -128,24 +128,24 @@ export default function AboutPage() {
         {/* ─── MISSION / VISION ─── */}
         <section className="py-20 px-4">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
-            <div className="glass-strong rounded-3xl p-10 border border-purple-500/20 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300">
+            <div className="glass-strong rounded-3xl p-10 border border-purple-500/20 relative overflow-hidden group transition-transform duration-300">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent pointer-events-none" />
               <div className="relative">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
                   <Target className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-black text-white mb-4">{t('mission.heading')}</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{t('mission.heading')}</h2>
                 <p className="text-gray-300 text-lg leading-relaxed">{t('mission.text')}</p>
               </div>
             </div>
 
-            <div className="glass-strong rounded-3xl p-10 border border-blue-500/20 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300">
+            <div className="glass-strong rounded-3xl p-10 border border-blue-500/20 relative overflow-hidden group transition-transform duration-300">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent pointer-events-none" />
               <div className="relative">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-6">
                   <Eye className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-black text-white mb-4">{t('vision.heading')}</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{t('vision.heading')}</h2>
                 <p className="text-gray-300 text-lg leading-relaxed">{t('vision.text')}</p>
               </div>
             </div>
@@ -156,16 +156,16 @@ export default function AboutPage() {
         <section className="py-20 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">{t('values.heading')}</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">{t('values.heading')}</h2>
               <p className="text-gray-400 text-lg max-w-xl mx-auto">{t('values.subtitle')}</p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               {values.map((v, i) => (
-                <div key={v.title} className="glass-strong rounded-2xl p-8 border border-white/10 hover:scale-[1.01] transition-transform duration-300">
+                <div key={v.title} className="glass-strong rounded-2xl p-8 border border-white/10 transition-transform duration-300">
                   <div className={`w-14 h-14 bg-gradient-to-br ${valueColors[i]} rounded-2xl flex items-center justify-center mb-6 text-white`}>
                     {valueIcons[i]}
                   </div>
-                  <h3 className="text-xl font-black text-white mb-3">{v.title}</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">{v.title}</h3>
                   <p className="text-gray-400 leading-relaxed">{v.description}</p>
                 </div>
               ))}
@@ -181,12 +181,12 @@ export default function AboutPage() {
                 <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center">
                   <Code2 className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-3xl font-black text-white">{t('techStack.heading')}</h2>
+                <h2 className="text-3xl font-bold text-white">{t('techStack.heading')}</h2>
               </div>
               <p className="text-gray-400 mb-8 leading-relaxed">{t('techStack.intro')}</p>
               <div className="grid sm:grid-cols-2 gap-3">
                 {techStack.map((item) => (
-                  <div key={item.name} className="glass rounded-xl px-5 py-4 border border-white/10 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors">
+                  <div key={item.name} className="card-lift glass rounded-xl px-5 py-4 border border-white/10 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors">
                     <div>
                       <div className="text-white font-semibold text-sm">{item.name}</div>
                       <div className="text-gray-500 text-xs mt-0.5">{item.desc}</div>
@@ -205,7 +205,7 @@ export default function AboutPage() {
         <section className="py-20 px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">{t('milestones.heading')}</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">{t('milestones.heading')}</h2>
               <p className="text-gray-400 text-lg">{t('milestones.subtitle')}</p>
             </div>
 
@@ -228,7 +228,7 @@ export default function AboutPage() {
                           <span className="text-xs text-gray-600 border border-gray-700 rounded-full px-2 py-0.5">{t('milestones.plannedLabel')}</span>
                         )}
                       </div>
-                      <h3 className="text-xl font-black text-white mb-2">{m.title}</h3>
+                      <h3 className="text-xl font-bold text-white mb-2">{m.title}</h3>
                       <p className="text-gray-400 text-sm leading-relaxed">{m.desc}</p>
                     </div>
                   </div>
@@ -257,13 +257,13 @@ export default function AboutPage() {
                 <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/20">
                   <Github className="w-8 h-8 text-white" />
                 </div>
-                <h2 className="text-3xl font-black text-white mb-4">{t('openSource.heading')}</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">{t('openSource.heading')}</h2>
                 <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto mb-8">{t('openSource.text')}</p>
                 <a
                   href="https://github.com/FrameSphere/FrameTrain-Website"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 glass-strong px-6 py-3 rounded-xl text-gray-200 hover:text-white border border-white/20 hover:border-white/30 transition font-semibold"
+                  className="card-lift inline-flex items-center gap-2 glass-strong px-6 py-3 rounded-xl text-gray-200 hover:text-white border border-white/20 hover:border-white/30 transition font-semibold"
                 >
                   <Github className="w-5 h-5" />
                   <span>{t('openSource.cta')}</span>
@@ -283,7 +283,7 @@ export default function AboutPage() {
                   <div className={`w-10 h-10 bg-gradient-to-br ${statColors[i]} rounded-xl flex items-center justify-center text-white mx-auto mb-3`}>
                     {statIcons[i]}
                   </div>
-                  <div className={`text-3xl font-black bg-gradient-to-r ${statColors[i]} bg-clip-text text-transparent mb-1`}>
+                  <div className={`text-3xl font-bold bg-gradient-to-r ${statColors[i]} bg-clip-text text-transparent mb-1`}>
                     {s.number}
                   </div>
                   <div className="text-xs text-gray-500 font-medium">{s.label}</div>
@@ -303,7 +303,7 @@ export default function AboutPage() {
                   <Users className="w-5 h-5 text-purple-400" />
                   <span className="text-gray-400 text-sm">{t('cta.communityLabel')}</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-black text-white mb-5">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
                   {t('cta.heading')}
                 </h2>
                 <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">

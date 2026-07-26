@@ -57,7 +57,7 @@ export function EmailVerificationBanner() {
       <button
         onClick={handleResend}
         disabled={sending}
-        className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-bold rounded-xl transition-all disabled:opacity-50 text-sm"
+        className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
       >
         {sending ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('sending')}</> : t('resendButton')}
       </button>

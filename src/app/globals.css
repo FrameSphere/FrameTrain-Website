@@ -138,20 +138,8 @@
                 0 0 80px rgba(168, 85, 247, 0.2);
   }
 
-  .glow-blue {
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.4),
-                0 0 80px rgba(59, 130, 246, 0.2);
-  }
-
-  .glow-pink {
-    box-shadow: 0 0 40px rgba(236, 72, 153, 0.4),
-                0 0 80px rgba(236, 72, 153, 0.2);
-  }
-
-  .glow-green {
-    box-shadow: 0 0 40px rgba(34, 197, 94, 0.4),
-                0 0 80px rgba(34, 197, 94, 0.2);
-  }
+  /* .glow-blue / .glow-pink / .glow-green und .text-glow-blue entfernt –
+     in keiner Komponente verwendet. */
 
   /* Deutlich zurückgenommen: der frühere Doppel-Schatten mit 0.8/0.4
      Alpha war ein Neon-Halo, der die Buchstabenkanten aufgeweicht und
@@ -159,10 +147,6 @@
      Farblicht hinter dem Text. */
   .text-glow-purple {
     text-shadow: 0 0 32px rgba(168, 85, 247, 0.28);
-  }
-
-  .text-glow-blue {
-    text-shadow: 0 0 32px rgba(59, 130, 246, 0.28);
   }
 
   /* ── Marken-Farbverlauf ───────────────────────────────────────
@@ -283,28 +267,97 @@
     background-size: 50px 50px;
   }
 
-  /* Neon border */
-  .neon-border {
-    position: relative;
+  /* .neon-border entfernt – wurde nirgends verwendet, brachte aber eine
+     endlos laufende background-position-Animation samt Masken-Compositing
+     mit. Toter Code, der bei Verwendung teuer geworden wäre. */
+}
+
+/* ── GlowCard (components/ui/spotlight-card.tsx) ────────────────────
+   Standen vorher als <style dangerouslySetInnerHTML> im Komponenten-JSX und
+   landeten damit einmal pro Instanz im DOM (auf der Pricing-Sektion also
+   doppelt). Die Regeln sind statisch und global, gehören also hierher. */
+[data-glow]::before,
+[data-glow]::after {
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  inset: calc(var(--border-size) * -1);
+  border: var(--border-size) solid transparent;
+  border-radius: calc(var(--radius) * 1px);
+  background-attachment: scroll;
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+}
+
+[data-glow]::before {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+    calc(var(--x, 0) * 1px)
+    calc(var(--y, 0) * 1px),
+    hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)), transparent 100%
+  );
+  filter: brightness(2);
+}
+
+[data-glow]::after {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
+    calc(var(--x, 0) * 1px)
+    calc(var(--y, 0) * 1px),
+    hsl(0 100% 100% / var(--border-light-opacity, 1)), transparent 100%
+  );
+}
+
+[data-glow] [data-glow] {
+  position: absolute;
+  inset: 0;
+  will-change: filter;
+  opacity: var(--outer, 1);
+  border-radius: calc(var(--radius) * 1px);
+  border-width: calc(var(--border-size) * 20);
+  filter: blur(calc(var(--border-size) * 10));
+  background: none;
+  pointer-events: none;
+  border: none;
+}
+
+[data-glow] > [data-glow]::before {
+  inset: -10px;
+  border-width: 10px;
+}
+
+/* ── backdrop-filter auf kleinen Viewports ──────────────────────────
+   Die Startseite rendert 62 Elemente mit backdrop-filter. Jedes davon ist
+   eine eigene Compositing-Ebene, deren Unschärfe neu berechnet werden muss,
+   sobald sich etwas dahinter bewegt – also bei jedem Scroll-Frame. Auf
+   Mittelklasse-Android ist das die teuerste Einzelposition der Seite.
+
+   Der Hintergrund ist ohnehin nahezu schwarz, die Unschärfe trägt optisch
+   fast nichts bei. Unter md ersetzen wir sie deshalb durch eine etwas
+   deckendere Fläche: gleiche Anmutung, keine Blur-Kosten. Ab md (Tablet
+   quer / Desktop, wo GPU-Budget da ist) bleibt der Effekt unverändert. */
+@media (max-width: 767px) {
+  .glass,
+  .glass-strong,
+  .glass-dark {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
-  .neon-border::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    padding: 2px;
-    background: linear-gradient(45deg,
-      rgba(168, 85, 247, 0.8),
-      rgba(59, 130, 246, 0.8),
-      rgba(236, 72, 153, 0.8),
-      rgba(34, 197, 94, 0.8)
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: gradient 6s ease infinite;
-    background-size: 300% 300%;
+  .glass {
+    background: rgba(255, 255, 255, 0.055);
+  }
+
+  .glass-strong {
+    background: rgba(30, 27, 42, 0.72);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.72);
   }
 }
 

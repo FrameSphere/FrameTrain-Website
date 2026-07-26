@@ -184,7 +184,7 @@ export default function VerifyEmailPendingPage() {
                   <button
                     onClick={handleManualCheck}
                     disabled={checking}
-                    className="w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {checking ? t('checking') : t('checkButton')}
                   </button>
@@ -192,7 +192,7 @@ export default function VerifyEmailPendingPage() {
                   <button
                     onClick={handleResend}
                     disabled={sending}
-                    className="w-full flex items-center justify-center gap-2 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/5 transition-all disabled:opacity-50 text-sm font-medium"
+                    className="press w-full flex items-center justify-center gap-2 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/5 transition duration-200 ease-out disabled:opacity-50 text-sm font-medium"
                   >
                     {sending ? (
                       <>
