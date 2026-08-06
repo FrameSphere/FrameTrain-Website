@@ -67,8 +67,8 @@ export default function ImprintPage() {
                 </p>
                 <p>
                   {t('contact.websiteLabel')}{' '}
-                  <a href="https://frametrain.vercel.app" className="text-violet-400 hover:text-violet-300">
-                    frametrain.vercel.app
+                  <a href="https://frame-train.com" className="text-violet-400 hover:text-violet-300">
+                    frame-train.com
                   </a>
                 </p>
               </div>
