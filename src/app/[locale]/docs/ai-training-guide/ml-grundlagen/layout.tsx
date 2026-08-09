@@ -1,24 +1,25 @@
 import type { Metadata } from 'next'
-import { pageAlternates, pageOpenGraph } from '@/lib/seo'
+import { coachChapterMetadata, CoachChapterJsonLd } from '@/lib/coach-seo'
 
-const path = '/docs/ai-training-guide/ml-grundlagen'
+const ID = 'ml-grundlagen' as const
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
-  return {
-    title: 'ML Grundlagen – Machine Learning, Neuronale Netze, Transformer erklärt | FrameTrain',
-    description: 'Was ist Machine Learning? Neuronale Netzwerke, Transformer-Architektur, LLMs, Backpropagation und Gradient Descent – vollständig und verständlich erklärt für KI-Training.',
-    alternates: pageAlternates(locale, path),
-    openGraph: pageOpenGraph({
-      locale,
-      path,
-      title: 'ML Grundlagen – Machine Learning, Neuronale Netze, Transformer | FrameTrain',
-      description: 'Was ist Machine Learning? Neuronale Netzwerke, Transformer, Backpropagation und Gradient Descent verständlich erklärt.',
-      type: 'article',
-    }),
-  }
+  return coachChapterMetadata(locale, ID)
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+export default async function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  return (
+    <>
+      <CoachChapterJsonLd locale={locale} id={ID} />
+      {children}
+    </>
+  )
 }

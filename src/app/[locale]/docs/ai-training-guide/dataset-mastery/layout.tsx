@@ -1,24 +1,25 @@
 import type { Metadata } from 'next'
-import { pageAlternates, pageOpenGraph } from '@/lib/seo'
+import { coachChapterMetadata, CoachChapterJsonLd } from '@/lib/coach-seo'
 
-const path = '/docs/ai-training-guide/dataset-mastery'
+const ID = 'dataset-mastery' as const
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
-  return {
-    title: 'Dataset-Mastery – Datenqualität, Preprocessing, Augmentation, Balancing | FrameTrain',
-    description: 'Wie viele Trainingsdaten brauche ich? Datenqualitäts-Checkliste, Text-Preprocessing-Pipeline, Data Augmentation Techniken und Klassen-Balancing für ML.',
-    alternates: pageAlternates(locale, path),
-    openGraph: pageOpenGraph({
-      locale,
-      path,
-      title: 'Dataset-Mastery – Datenqualität, Preprocessing, Augmentation | FrameTrain',
-      description: 'Datenqualität, Preprocessing, Augmentation und Klassen-Balancing für erfolgreiches ML-Training.',
-      type: 'article',
-    }),
-  }
+  return coachChapterMetadata(locale, ID)
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+export default async function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  return (
+    <>
+      <CoachChapterJsonLd locale={locale} id={ID} />
+      {children}
+    </>
+  )
 }
