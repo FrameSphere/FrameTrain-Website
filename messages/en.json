@@ -24,6 +24,7 @@
     "productHeading": "Product",
     "features": "Features",
     "pricing": "Pricing",
+    "download": "Download",
     "docs": "Documentation",
     "changelog": "Changelog",
     "faq": "FAQ",
@@ -173,7 +174,7 @@
   },
   "About": {
     "metaTitle": "About FrameTrain – Mission, Vision, Team | FrameTrain",
-    "metaDescription": "FrameTrain was built so ML engineers and researchers can train AI models locally – no cloud dependency, no data loss, no subscription surprises. Meet the team and the mission.",
+    "metaDescription": "FrameTrain lets ML engineers train AI models locally – no cloud dependency, no data loss, no subscription. Meet the team and the mission.",
     "keywords": ["About FrameTrain", "FrameTrain team", "local ML training mission", "AI tool made in Germany"],
     "ogTitle": "About FrameTrain – Mission & Vision",
     "ogDescription": "Why we built FrameTrain and where it's headed.",
@@ -608,6 +609,7 @@
     "startingDownload": "Download is starting...",
     "versionInfo": "Version: {version} • Size: {size} MB",
     "installGuideHeading": "Installation Guide",
+    "installGuideLink": "Detailed guide: security warnings & system requirements",
     "steps": {
       "windows": ["Download the .msi file", "Double-click the file", "Follow the installation wizard", "FrameTrain will start automatically"],
       "mac": ["Download the .dmg file", "Open the downloaded file", "Drag FrameTrain into the Applications folder", "Launch FrameTrain from Applications"],
@@ -676,8 +678,8 @@
     ]
   },
   "LoraGuide": {
-    "metaTitle": "LoRA Fine-Tuning Explained – Train LLMs Efficiently | FrameTrain",
-    "metaDescription": "What is LoRA? How does Low-Rank Adaptation work? The complete guide to LoRA vs full fine-tuning, QLoRA, and how to efficiently adapt language models to your own data.",
+    "metaTitle": "LoRA Fine-Tuning Explained – Train LLMs Efficiently",
+    "metaDescription": "What is LoRA? The complete guide to Low-Rank Adaptation, LoRA vs full fine-tuning and QLoRA – adapt language models efficiently to your data.",
     "keywords": ["LoRA fine-tuning", "Low-Rank Adaptation", "QLoRA", "LLM fine-tuning", "LoRA vs full fine-tuning", "HuggingFace LoRA", "PEFT", "Parameter Efficient Fine-Tuning"],
     "ogTitle": "LoRA Fine-Tuning Explained – Train LLMs Efficiently",
     "ogDescription": "The complete guide to LoRA and QLoRA for LLM fine-tuning.",
@@ -725,7 +727,7 @@
     "cta": { "heading": "LoRA Fine-Tuning Right Inside FrameTrain", "text": "LoRA, QLoRA, rank, alpha, target modules – all configurable through an intuitive interface. No code required. Locally on your GPU.", "ctaStart": "Get Started", "ctaDocs": "Documentation" }
   },
   "CloudGuide": {
-    "metaTitle": "Local ML Training vs Cloud – Cost, Privacy, Speed | FrameTrain",
+    "metaTitle": "Local ML Training vs Cloud – Cost, Privacy, Speed",
     "metaDescription": "Local GPU training vs Google Colab, AWS SageMaker, and Paperspace head-to-head. Cost, privacy, speed, and when each approach makes sense.",
     "keywords": ["local ML training", "Google Colab alternative", "AWS SageMaker alternative", "GPU training local vs cloud", "ML training GDPR", "Paperspace alternative", "machine learning without the cloud", "local LLM training"],
     "ogTitle": "Local ML Training vs Cloud – The Big Comparison",
@@ -781,7 +783,7 @@
     "cta": { "heading": "Start Training Locally with FrameTrain", "text": "Starting at €4.99/month – cancel anytime, no hidden costs, full control over your data.", "ctaStart": "Compare for Free", "ctaLora": "Read the LoRA Guide" }
   },
   "GpuGuide": {
-    "metaTitle": "Best GPU for Local ML Training – Buying Guide 2026 | FrameTrain",
+    "metaTitle": "Best GPU for Local ML Training – Buying Guide 2026",
     "metaDescription": "Which GPU for LLM fine-tuning, LoRA training, and local machine learning? NVIDIA RTX vs Apple Silicon M-chips: the complete GPU guide for AI training 2026.",
     "ogTitle": "Best GPU for Local ML Training 2026",
     "ogDescription": "NVIDIA RTX vs Apple Silicon: which GPU should you buy for AI training?",
@@ -1060,8 +1062,8 @@
     }
   },
   "Docs": {
-    "metaTitle": "Documentation – Installation, Training, LoRA & GPU Setup | FrameTrain",
-    "metaDescription": "Complete FrameTrain documentation: installation, quick start, model manager, dataset formats, LoRA training, hyperparameters, GPU setup, export, and troubleshooting.",
+    "metaTitle": "Documentation – Installation, LoRA Training & GPU Setup",
+    "metaDescription": "FrameTrain documentation: installation, quick start, dataset formats, LoRA training, hyperparameters, GPU setup and troubleshooting.",
     "heroTitle": "Documentation",
     "heroSubtitle": "Everything you need to install, configure, and effectively use FrameTrain.",
     "coachBanner": { "title": "AI Training Coach \u2728 \u2013 ML basics, loss curves, LoRA & more", "desc": "The complete theory guide for anyone who wants to understand how ML training really works" },
@@ -1354,8 +1356,8 @@
   },
   "AICoach": {
     "meta": {
-      "title": "AI Training Coach – ML Basics, LoRA, Hyperparameters & More | FrameTrain",
-      "description": "The complete theory guide to machine learning training: neural networks, transformers, loss curves, LoRA/QLoRA, hyperparameter tuning, and advanced techniques.",
+      "title": "AI Training Coach – ML Basics, LoRA & More",
+      "description": "The complete theory guide to ML training: neural networks, transformers, loss curves, LoRA/QLoRA, hyperparameter tuning and advanced techniques.",
       "keywords": ["learn ML training", "LoRA explained", "neural network basics", "transformer architecture", "hyperparameter tuning", "overfitting underfitting", "machine learning course"],
       "ogTitle": "AI Training Coach – The Complete ML Theory Guide",
       "ogDescription": "8 chapters: from ML basics to advanced fine-tuning techniques."

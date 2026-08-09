@@ -21,6 +21,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
+// Hinweis: KEIN JSON-LD in diesem Layout. Es umschließt auch die 8 Kapitel-
+// Segmente – das Course/BreadcrumbList-Schema des Hubs würde sonst auf jeder
+// Kapitelseite zusätzlich erscheinen (mehrfache BreadcrumbLists). Der Hub rendert
+// sein JSON-LD daher in page.tsx (Index-Seite), die Kapitel via CoachChapterJsonLd.
 export default function AITrainingGuideLayout({ children }: { children: React.ReactNode }) {
   return children
 }

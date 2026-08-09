@@ -287,3 +287,60 @@ export function CoachChapterJsonLd({ locale, id }: { locale: string; id: CoachCh
     />
   )
 }
+
+/**
+ * JSON-LD (@graph: BreadcrumbList + Course) für die Coach-Übersichtsseite.
+ * Die 8 Kapitel deklarieren `isPartOf: { @type: Course }` – dieses Course-Objekt
+ * existiert erst hier als eigene Entität und listet alle Kapitel als hasPart.
+ */
+export function coachHubJsonLd(locale: string) {
+  const coachName = locale === 'en' ? COACH_NAME.en : COACH_NAME.de
+  const home = `${siteUrl}/${locale}`
+  const docs = `${siteUrl}/${locale}/docs`
+  const coach = `${siteUrl}/${locale}${COACH_PATH}`
+  const description =
+    locale === 'en'
+      ? 'The complete theory guide to machine learning training in 8 chapters: from ML basics through LoRA/QLoRA to advanced techniques.'
+      : 'Der komplette Theorie-Guide zum Machine-Learning-Training in 8 Kapiteln: von ML-Grundlagen über LoRA/QLoRA bis zu fortgeschrittenen Techniken.'
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: home },
+          { '@type': 'ListItem', position: 2, name: 'Docs', item: docs },
+          { '@type': 'ListItem', position: 3, name: coachName, item: coach },
+        ],
+      },
+      {
+        '@type': 'Course',
+        name: coachName,
+        description,
+        url: coach,
+        inLanguage: locale === 'en' ? 'en-US' : 'de-DE',
+        provider: { '@type': 'Organization', name: 'FrameTrain', url: siteUrl },
+        hasPart: (Object.keys(COACH_CHAPTERS) as CoachChapterId[]).map((id) => {
+          const chapter = COACH_CHAPTERS[id]
+          const copy = copyFor(locale, id)
+          return {
+            '@type': 'LearningResource',
+            name: copy.name,
+            url: `${siteUrl}/${locale}${chapter.path}`,
+          }
+        }),
+      },
+    ],
+  }
+}
+
+/** Server-Komponente: rendert das JSON-LD-Script für die Coach-Übersichtsseite. */
+export function CoachHubJsonLd({ locale }: { locale: string }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(coachHubJsonLd(locale)) }}
+    />
+  )
+}

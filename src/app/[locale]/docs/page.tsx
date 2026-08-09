@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { siteUrl } from '@/lib/seo'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { AppDocSearch } from '@/components/AppDocSearch'
@@ -19,8 +20,31 @@ import {
 
 export default function DocsPage() {
   const t = useTranslations('Docs')
+  const locale = useLocale()
   const [activeSection, setActiveSection] = useState('installation')
   const navigateTo = (section: string) => setActiveSection(section)
+
+  const pageUrl = `${siteUrl}/${locale}/docs`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: t('metaTitle'), item: pageUrl },
+        ],
+      },
+      {
+        '@type': 'CollectionPage',
+        name: t('metaTitle'),
+        description: t('metaDescription'),
+        url: pageUrl,
+        inLanguage: locale === 'en' ? 'en-US' : 'de-DE',
+        isPartOf: { '@type': 'WebSite', name: 'FrameTrain', url: siteUrl },
+      },
+    ],
+  }
 
   const navigation = [
     {
@@ -84,6 +108,10 @@ export default function DocsPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       
       <main className="flex-1">

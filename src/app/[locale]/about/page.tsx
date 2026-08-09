@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
-import { pageAlternates, pageOpenGraph } from '@/lib/seo'
+import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
 import {
   Sparkles, Heart, Shield, Zap, Brain, Globe, Lock,
   Code2, Cpu, ArrowRight, Github, Users, Rocket, Star,
@@ -63,14 +63,46 @@ type StatItem = { number: string; label: string }
 
 export default function AboutPage() {
   const t = useTranslations('About')
+  const locale = useLocale()
 
   const values = t.raw('values.items') as ValueItem[]
   const techStack = t.raw('techStack.items') as TechItem[]
   const milestones = t.raw('milestones.items') as Milestone[]
   const stats = t.raw('stats') as StatItem[]
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: t('metaTitle'), item: `${siteUrl}/${locale}/about` },
+        ],
+      },
+      {
+        '@type': 'AboutPage',
+        name: t('metaTitle'),
+        description: t('metaDescription'),
+        url: `${siteUrl}/${locale}/about`,
+        inLanguage: locale === 'en' ? 'en-US' : 'de-DE',
+        mainEntity: {
+          '@type': 'Organization',
+          name: 'FrameTrain',
+          url: siteUrl,
+          logo: `${siteUrl}/favicon.svg`,
+          sameAs: ['https://github.com/FrameSphere/FrameTrain-Website'],
+        },
+      },
+    ],
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main className="flex-1">

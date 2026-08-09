@@ -70,6 +70,11 @@ export function Footer() {
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 mb-3">{t('productHeading')}</h4>
             <ul className="text-sm text-gray-400">
               <li>
+                <Link href="/download" className={footerLink}>
+                  {t('download')}
+                </Link>
+              </li>
+              <li>
                 <Link href="/#features" className={footerLink}>
                   {t('features')}
                 </Link>

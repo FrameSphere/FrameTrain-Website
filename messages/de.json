@@ -24,6 +24,7 @@
     "productHeading": "Produkt",
     "features": "Features",
     "pricing": "Pricing",
+    "download": "Download",
     "docs": "Dokumentation",
     "changelog": "Changelog",
     "faq": "FAQ",
@@ -303,7 +304,7 @@
   },
   "About": {
     "metaTitle": "Über FrameTrain – Mission, Vision, Team | FrameTrain",
-    "metaDescription": "FrameTrain wurde entwickelt, damit ML Engineers und Forscher KI-Modelle lokal trainieren können – ohne Cloud-Abhängigkeit, ohne Datenverlust, ohne Abo. Lerne das Team und die Mission kennen.",
+    "metaDescription": "FrameTrain lässt ML Engineers KI-Modelle lokal trainieren – ohne Cloud, ohne Datenverlust, ohne Abo. Lerne Team und Mission dahinter kennen.",
     "keywords": [
       "FrameTrain über uns",
       "FrameTrain Team",
@@ -941,6 +942,7 @@
     "startingDownload": "Download wird gestartet...",
     "versionInfo": "Version: {version} • Größe: {size} MB",
     "installGuideHeading": "Installationsanleitung",
+    "installGuideLink": "Ausführliche Anleitung: Sicherheitswarnungen & Systemanforderungen",
     "steps": {
       "windows": [
         "Download die .msi Datei",
@@ -971,8 +973,8 @@
     "supportText": "Probleme beim Download? <link>Kontaktiere unseren Support</link>"
   },
   "Install": {
-    "metaTitle": "Installation – FrameTrain für macOS, Windows & Linux einrichten",
-    "metaDescription": "Schritt-für-Schritt-Anleitung zur Installation von FrameTrain auf macOS, Windows und Linux, inklusive Lösungen für Sicherheitswarnungen und Systemanforderungen.",
+    "metaTitle": "FrameTrain installieren – macOS, Windows & Linux",
+    "metaDescription": "Schritt für Schritt: FrameTrain auf macOS, Windows und Linux installieren – inkl. Sicherheitswarnungen und Systemanforderungen.",
     "heading": "Installations-Anleitung",
     "subtitle": "So installierst du FrameTrain auf deinem System",
     "tabs": {
@@ -1100,8 +1102,8 @@
     }
   },
   "Docs": {
-    "metaTitle": "Dokumentation – Installation, Training, LoRA & GPU-Setup | FrameTrain",
-    "metaDescription": "Komplette FrameTrain-Dokumentation: Installation, Quick Start, Model Manager, Dataset-Formate, LoRA-Training, Hyperparameter, GPU-Setup, Export und Troubleshooting.",
+    "metaTitle": "Dokumentation – Installation, LoRA-Training & GPU-Setup",
+    "metaDescription": "FrameTrain-Dokumentation: Installation, Quick Start, Dataset-Formate, LoRA-Training, Hyperparameter, GPU-Setup und Troubleshooting.",
     "heroTitle": "Dokumentation",
     "heroSubtitle": "Alles was du brauchst, um FrameTrain zu installieren, konfigurieren und effektiv zu nutzen.",
     "coachBanner": {
@@ -2685,8 +2687,8 @@
     ]
   },
   "LoraGuide": {
-    "metaTitle": "LoRA Fine-Tuning erklärt – LLMs effizient trainieren | FrameTrain",
-    "metaDescription": "Was ist LoRA? Wie funktioniert Low-Rank Adaptation? Der vollständige Guide zu LoRA vs Full Fine-Tuning, QLoRA und wie du Sprachmodelle effizient auf eigene Daten anpasst.",
+    "metaTitle": "LoRA Fine-Tuning erklärt – LLMs effizient trainieren",
+    "metaDescription": "Was ist LoRA? Der komplette Guide zu Low-Rank Adaptation, LoRA vs Full Fine-Tuning und QLoRA – Sprachmodelle effizient auf eigene Daten anpassen.",
     "keywords": [
       "LoRA Fine-Tuning",
       "Low-Rank Adaptation",
@@ -2806,8 +2808,8 @@
     }
   },
   "CloudGuide": {
-    "metaTitle": "Lokales ML Training vs Cloud – Kosten, Datenschutz, Geschwindigkeit | FrameTrain",
-    "metaDescription": "Lokales GPU-Training vs Google Colab, AWS SageMaker und Paperspace im direkten Vergleich. Kosten, Datenschutz, Geschwindigkeit und wann welcher Ansatz sinnvoll ist.",
+    "metaTitle": "Lokales ML-Training vs Cloud – Kosten & Datenschutz",
+    "metaDescription": "Lokales GPU-Training vs Google Colab, AWS SageMaker und Paperspace: Kosten, Datenschutz, Geschwindigkeit – und wann sich welcher Ansatz lohnt.",
     "keywords": [
       "lokales ML Training",
       "Google Colab Alternative",
@@ -2966,8 +2968,8 @@
     }
   },
   "GpuGuide": {
-    "metaTitle": "Beste GPU für lokales ML Training – Kaufberatung 2026 | FrameTrain",
-    "metaDescription": "Welche GPU für LLM Fine-Tuning, LoRA Training und lokales Machine Learning? NVIDIA RTX vs Apple Silicon M-Chips: der komplette GPU-Guide für AI-Training 2026.",
+    "metaTitle": "Beste GPU für lokales ML-Training – Kaufberatung 2026",
+    "metaDescription": "Welche GPU für LLM Fine-Tuning und lokales ML? NVIDIA RTX vs Apple Silicon M-Chips – der komplette GPU-Guide für AI-Training 2026.",
     "ogTitle": "Beste GPU für lokales ML Training 2026",
     "ogDescription": "NVIDIA RTX vs Apple Silicon: Welche GPU für AI-Training kaufen?",
     "breadcrumb": "GPU Guide",
@@ -3273,8 +3275,8 @@
   },
   "AICoach": {
     "meta": {
-      "title": "KI-Training Coach – ML-Grundlagen, LoRA, Hyperparameter & mehr | FrameTrain",
-      "description": "Der komplette Theorie-Guide zu Machine Learning Training: neuronale Netze, Transformer, Loss-Kurven, LoRA/QLoRA, Hyperparameter-Tuning und fortgeschrittene Techniken.",
+      "title": "KI-Training Coach – ML-Grundlagen, LoRA & mehr",
+      "description": "Der komplette Theorie-Guide zum ML-Training: neuronale Netze, Transformer, Loss-Kurven, LoRA/QLoRA, Hyperparameter-Tuning und fortgeschrittene Techniken.",
       "keywords": [
         "ML Training lernen",
         "LoRA erklärt",

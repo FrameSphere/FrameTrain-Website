@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Download, Loader2, CheckCircle, XCircle, Terminal, Globe } from 'lucide-react';
+import { Download, Loader2, CheckCircle, XCircle, Terminal, Globe, ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 
@@ -223,6 +223,13 @@ export default function DownloadPage() {
               </li>
             ))}
           </ol>
+          <Link
+            href="/install"
+            className="inline-flex items-center gap-1.5 mt-6 text-purple-400 hover:text-purple-300 font-medium transition-colors"
+          >
+            {t('installGuideLink')}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
         {/* CLI Alternative */}

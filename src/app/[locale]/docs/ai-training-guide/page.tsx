@@ -1,11 +1,13 @@
 'use client'
 
+import { Fragment } from 'react'
 import { Link } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Brain, Sparkles, ArrowRight, BookOpen } from 'lucide-react'
 import { DocSearch } from '@/components/DocSearch'
+import { CoachHubJsonLd } from '@/lib/coach-seo'
 import { CHAPTER_META } from './_shared'
 
 const CHAPTER_COLORS = [
@@ -21,11 +23,13 @@ const CHAPTER_COLORS = [
 
 export default function AITrainingGuideHubPage() {
   const t = useTranslations('AICoach')
+  const locale = useLocale()
   const hubChapters = t.raw('hub.chapters') as { desc: string; topics: string[] }[]
   const stats = t.raw('hub.stats') as string[]
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
+      <CoachHubJsonLd locale={locale} />
       <Header />
 
       <main className="flex-1">
@@ -50,10 +54,10 @@ export default function AITrainingGuideHubPage() {
             </p>
             <div className="flex items-center justify-center gap-4 text-sm text-gray-500 mb-10 flex-wrap">
               {stats.map((stat, i) => (
-                <>
-                  {i > 0 && <span key={`sep-${i}`}>·</span>}
-                  <span key={stat}>{stat}</span>
-                </>
+                <Fragment key={stat}>
+                  {i > 0 && <span>·</span>}
+                  <span>{stat}</span>
+                </Fragment>
               ))}
             </div>
             <DocSearch />

@@ -3,9 +3,9 @@ import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Brain, Laptop, Cpu, Shield, ArrowRight } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
-import { pageAlternates, pageOpenGraph } from '@/lib/seo'
+import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -37,10 +37,37 @@ type GuideItem = { title: string; description: string; tags: string[]; href: str
 
 export default function GuidesPage() {
   const t = useTranslations('GuidesHub')
+  const locale = useLocale()
   const guides = t.raw('items') as GuideItem[]
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: t('metaTitle'), item: `${siteUrl}/${locale}/guides` },
+        ],
+      },
+      {
+        '@type': 'ItemList',
+        itemListElement: guides.map((guide, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: guide.title,
+          url: `${siteUrl}/${locale}${guide.href}`,
+        })),
+      },
+    ],
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main className="flex-1">
