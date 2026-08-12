@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { AppScreenshot } from '@/components/AppScreenshot'
 import { Brain, Zap, Check, ArrowRight, Code2, Cpu, ChevronRight } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
@@ -30,6 +31,7 @@ type HyperParam = { param: string; typical: string; desc: string }
 export default async function LoraGuidePage({ params }: Props) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'LoraGuide' })
+  const tShots = await getTranslations({ locale, namespace: 'Screenshots' })
 
   const loraItems = t.raw('vsFull.loraItems') as string[]
   const fullItems = t.raw('vsFull.fullItems') as string[]
@@ -206,6 +208,23 @@ export default async function LoraGuidePage({ params }: Props) {
                   </div>
                 ))}
               </div>
+
+              {/* Wo diese Parameter in der App tatsächlich stehen – der Guide
+                  erklärt sie, der Screenshot zeigt den Ort. */}
+              <AppScreenshot
+                locale={locale}
+                slug="training"
+                alt={t('hyperparams.screenshotAlt')}
+                caption={t('hyperparams.screenshotCaption')}
+                className="mt-8"
+              />
+              <Link
+                href="/screenshots"
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-purple-400/90 hover:text-purple-300 transition-colors group"
+              >
+                {tShots('tourLinkLabel')}
+                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+              </Link>
             </div>
 
             {/* CTA */}

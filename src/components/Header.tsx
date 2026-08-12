@@ -229,6 +229,9 @@ export function Header() {
                       >
                         {t('features')}
                       </Link>
+                      {/* "Screenshots" steht bewusst nur im Mobile-Menü und im
+                          Footer: als siebter Punkt läuft die Desktop-Pille bei
+                          exakt 1280px (dem xl-Breakpoint) um 19px über. */}
                       <Link
                         href="/extensions"
                         className={navLink}
@@ -327,6 +330,7 @@ export function Header() {
                   ) : (
                     <>
                       <Link href="/#features" className={drawerLink}>{t('features')}</Link>
+                      <Link href="/screenshots" className={drawerLink}>{t('screenshots')}</Link>
                       <Link href="/extensions" className={drawerLink}>{t('extensions')}</Link>
                       <Link href="/library" className={drawerLink}>{t('library')}</Link>
                       <Link href="/guides" className={drawerLink}>{t('guides')}</Link>

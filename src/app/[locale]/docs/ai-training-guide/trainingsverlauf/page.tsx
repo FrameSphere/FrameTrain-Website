@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { AppScreenshot } from '@/components/AppScreenshot'
 import { LineChart, CheckCircle2, AlertTriangle, TrendingDown, Activity, ChevronRight } from 'lucide-react'
 import {
   CHAPTER_META, SubPageLayout,
@@ -15,7 +16,7 @@ import {
 const CHAPTER_ID = 'trainingsverlauf' as const
 const CHAPTER = CHAPTER_META.find(c => c.id === CHAPTER_ID)!
 
-function LossKurvenSection({ c }: { c: any }) {
+function LossKurvenSection({ c, locale }: { c: any; locale: string }) {
   return (
     <div className="space-y-6">
       <SectionTitle icon={<LineChart className="w-9 h-9" />} title={c.title} subtitle={c.subtitle} />
@@ -61,6 +62,18 @@ function LossKurvenSection({ c }: { c: any }) {
 
       <H2>{c.frametrainHeading}</H2>
       <P><Rich html={c.frametrainText} /></P>
+      {/* Der Screenshot der Analyse-Charts liegt bislang nur in der deutschen
+          Oberfläche vor. Sobald die englische Fassung existiert, kann die
+          Locale-Bedingung ersatzlos raus. */}
+      {locale === 'de' && (
+        <AppScreenshot
+          locale="de"
+          slug="analysis-charts"
+          alt={c.screenshotAlt}
+          caption={c.screenshotCaption}
+          className="mt-6"
+        />
+      )}
     </div>
   )
 }
@@ -251,10 +264,11 @@ function InstabilesTrainingSection({ c }: { c: any }) {
 export default function TrainingsverlaufPage() {
   const t = useTranslations('AICoach')
   const tDocs = useTranslations('Docs')
+  const locale = useLocale()
   const content = t.raw('chapters.trainingsverlauf.content') as any
   const [activeSection, setActiveSection] = useState(CHAPTER.itemIds[0])
   const sectionContent = {
-    'loss-kurven': <LossKurvenSection c={content.lossKurven} />,
+    'loss-kurven': <LossKurvenSection c={content.lossKurven} locale={locale} />,
     'gutes-training': <GutesTrainingSection c={content.gutesTraining} />,
     'overfitting': <OverfittingSection c={content.overfitting} />,
     'underfitting': <UnderfittingSection c={content.underfitting} />,

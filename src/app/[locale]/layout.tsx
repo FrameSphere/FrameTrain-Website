@@ -124,6 +124,9 @@ export default async function RootLayout({ children, params }: Props) {
       },
       {
         '@type': 'SoftwareApplication',
+        // Stabile @id, damit Unterseiten (z.B. /screenshots) dieselbe App
+        // ergänzen können, statt eine zweite Entität aufzumachen.
+        '@id': `${baseUrl}/#software`,
         name: 'FrameTrain',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Windows, macOS, Linux',

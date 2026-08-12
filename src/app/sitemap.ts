@@ -15,6 +15,7 @@ const pages: PageDef[] = [
   { path: '/about', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/download', changeFrequency: 'weekly', priority: 0.95 },
   { path: '/faq', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/screenshots', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/install', changeFrequency: 'monthly', priority: 0.85 },
   { path: '/changelog', changeFrequency: 'weekly', priority: 0.8 },
   // /library bewusst nicht gelistet, solange die Seite noindex ist (siehe

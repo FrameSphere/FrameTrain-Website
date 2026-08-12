@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { AppScreenshot } from '@/components/AppScreenshot'
 import { Database, Settings, Sparkles, BarChart3, ChevronRight, CheckCircle2 } from 'lucide-react'
 import {
   CHAPTER_META, SubPageLayout,
@@ -28,7 +29,7 @@ const STRATEGY_COLORS: Record<string, string> = {
   green: 'border-green-400/20',
 }
 
-function DatenQualitaetSection({ c }: { c: any }) {
+function DatenQualitaetSection({ c, locale }: { c: any; locale: string }) {
   return (
     <div className="space-y-6">
       <SectionTitle icon={<Database className="w-9 h-9" />} title={c.title} subtitle={c.subtitle} />
@@ -78,6 +79,15 @@ function DatenQualitaetSection({ c }: { c: any }) {
           </div>
         ))}
       </div>
+
+      <H2>{c.screenshotHeading}</H2>
+      <P>{c.screenshotText}</P>
+      <AppScreenshot
+        locale={locale}
+        slug="datasets"
+        alt={c.screenshotAlt}
+        caption={c.screenshotCaption}
+      />
     </div>
   )
 }
@@ -203,10 +213,11 @@ function BalancingSection({ c }: { c: any }) {
 export default function DatasetMasteryPage() {
   const t = useTranslations('AICoach')
   const tDocs = useTranslations('Docs')
+  const locale = useLocale()
   const content = t.raw('chapters.datasetMastery.content') as any
   const [activeSection, setActiveSection] = useState(CHAPTER.itemIds[0])
   const sectionContent = {
-    'daten-qualitaet': <DatenQualitaetSection c={content.datenQualitaet} />,
+    'daten-qualitaet': <DatenQualitaetSection c={content.datenQualitaet} locale={locale} />,
     'preprocessing': <PreprocessingSection c={content.preprocessing} />,
     'augmentation': <AugmentationSection c={content.augmentation} />,
     'balancing': <BalancingSection c={content.balancing} />,

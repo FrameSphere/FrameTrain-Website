@@ -1,11 +1,12 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import { Link, useRouter } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { AppScreenshot } from '@/components/AppScreenshot'
 import { GlowCard } from '@/components/ui/spotlight-card'
 import {
   Sparkles, Lock, Rocket, Zap, Code2, Database,
@@ -30,6 +31,7 @@ export default function HomePage() {
   const { isAuthenticated } = useAuth()
   const spotlightRef = useRef<HTMLDivElement>(null)
   const t = useTranslations('Home')
+  const locale = useLocale()
 
   // Der Spotlight lief vorher über React-State: jede Mausbewegung hat die
   // komplette Landing Page (Hero, Features, FAQ, Footer …) neu gerendert.
@@ -202,6 +204,28 @@ export default function HomePage() {
                 {stats.map((s, i) => (
                   <StatCard key={i} number={s.number} label={s.label} color={(['purple', 'blue', 'pink', 'green'] as const)[i]} />
                 ))}
+              </div>
+            </div>
+
+            {/* Produkt-Screenshot. Bis hierhin behauptet die Seite nur, wie die
+                App arbeitet – das ist die erste Stelle, an der man sie sieht.
+                Bewusst der Trainingsdialog: die Oberfläche, in der die
+                eigentliche Arbeit stattfindet. */}
+            <div className="mt-16 sm:mt-20 max-w-5xl mx-auto">
+              <AppScreenshot
+                locale={locale}
+                slug="training"
+                alt={t('hero.shotAlt')}
+                caption={t('hero.shotCaption')}
+              />
+              <div className="mt-5 text-center">
+                <Link
+                  href="/screenshots"
+                  className="press inline-flex items-center gap-2 px-5 py-2.5 glass border border-white/[0.1] rounded-xl text-[15px] font-medium text-gray-300 hover:text-white hover:border-white/25 transition-colors duration-200 group"
+                >
+                  {t('hero.shotCta')}
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+                </Link>
               </div>
             </div>
           </div>

@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { AppScreenshot } from '@/components/AppScreenshot'
 import { Shield, Flame, Sliders, AlertTriangle, ChevronRight } from 'lucide-react'
 import {
   CHAPTER_META, SubPageLayout,
@@ -25,7 +26,7 @@ const SEVERITY_BORDER: Record<string, string> = {
   critical: 'border-red-400/20', high: 'border-orange-400/20', moderate: 'border-yellow-400/20', positive: 'border-green-400/20',
 }
 
-function OverfittingFixSection({ c }: { c: any }) {
+function OverfittingFixSection({ c, locale }: { c: any; locale: string }) {
   return (
     <div className="space-y-6">
       <SectionTitle icon={<Shield className="w-9 h-9" />} title={c.title} subtitle={c.subtitle} />
@@ -68,6 +69,15 @@ function OverfittingFixSection({ c }: { c: any }) {
       <InfoBox type="success" title={c.goldenRuleTitle}>
         {c.goldenRuleText}
       </InfoBox>
+
+      <H2>{c.screenshotHeading}</H2>
+      <P>{c.screenshotText}</P>
+      <AppScreenshot
+        locale={locale}
+        slug="ai-analysis"
+        alt={c.screenshotAlt}
+        caption={c.screenshotCaption}
+      />
     </div>
   )
 }
@@ -212,10 +222,11 @@ function LossSpikeSection({ c }: { c: any }) {
 export default function DiagnosePage() {
   const t = useTranslations('AICoach')
   const tDocs = useTranslations('Docs')
+  const locale = useLocale()
   const content = t.raw('chapters.diagnose.content') as any
   const [activeSection, setActiveSection] = useState(CHAPTER.itemIds[0])
   const sectionContent = {
-    'overfitting-fix': <OverfittingFixSection c={content.overfittingFix} />,
+    'overfitting-fix': <OverfittingFixSection c={content.overfittingFix} locale={locale} />,
     'underfitting-fix': <UnderfittingFixSection c={content.underfittingFix} />,
     'lr-probleme': <LRProblemeSection c={content.lrProbleme} />,
     'loss-spike': <LossSpikeSection c={content.lossSpike} />,

@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { Download, Loader2, CheckCircle, XCircle, Terminal, Globe, ArrowRight } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import { AppScreenshot } from '@/components/AppScreenshot';
 
 type Platform = 'windows' | 'mac' | 'linux';
 
@@ -17,6 +18,7 @@ interface DownloadInfo {
 
 export default function DownloadPage() {
   const t = useTranslations('Download');
+  const locale = useLocale();
   const [platform, setPlatform] = useState<Platform>('windows');
   const [apiKey, setApiKey] = useState('');
   const [isDownloading, setIsDownloading] = useState(false);
@@ -205,6 +207,24 @@ export default function DownloadPage() {
               <p className="text-red-300">{error}</p>
             </div>
           )}
+        </div>
+
+        {/* Was nach dem Download auf einen zukommt – steht bewusst unter der
+            Download-Karte, damit die Primäraktion oben bleibt. */}
+        <div className="mb-8">
+          <AppScreenshot
+            locale={locale}
+            slug="models"
+            alt={t('shotAlt')}
+            caption={t('shotCaption')}
+          />
+          <Link
+            href="/screenshots"
+            className="inline-flex items-center gap-1.5 mt-4 text-purple-400 hover:text-purple-300 font-medium transition-colors group"
+          >
+            {t('shotLink')}
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+          </Link>
         </div>
 
         {/* Installation Instructions */}

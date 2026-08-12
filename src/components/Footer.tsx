@@ -80,6 +80,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/screenshots" className={footerLink}>
+                  {t('screenshots')}
+                </Link>
+              </li>
+              <li>
                 <Link href="/#pricing" className={footerLink}>
                   {t('pricing')}
                 </Link>

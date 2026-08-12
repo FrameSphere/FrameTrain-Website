@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { AppScreenshot } from '@/components/AppScreenshot'
 import { Shield, DollarSign, Cloud, Laptop, ChevronRight, ArrowRight, Check, X } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
@@ -189,6 +190,16 @@ export default async function LocalVsCloudPage({ params }: Props) {
                   </div>
                 ))}
               </div>
+
+              {/* Belegt das Datenschutz-Argument: selbst die KI-Funktionen
+                  haben eine vollständig lokale Option. */}
+              <AppScreenshot
+                locale={locale}
+                slug="ai-providers"
+                alt={t('privacy.screenshotAlt')}
+                caption={t('privacy.screenshotCaption')}
+                className="mt-8"
+              />
             </div>
 
             {/* Wann Cloud sinnvoll ist */}
