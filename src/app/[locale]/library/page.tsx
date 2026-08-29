@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 async function getInitialScripts() {
   try {
     const scripts = await prisma.libraryScript.findMany({
+      where: { rejectedAt: null },
       orderBy: [{ verified: 'desc' }, { downloads: 'desc' }],
       take: 50,
       select: {

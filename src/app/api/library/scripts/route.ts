@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getCurrentUser } from '@/lib/auth';
+import { getRequestUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
 
     type WhereClause = {
       verified?: boolean;
+      rejectedAt?: null;
       model_type?: string;
       task_type?: string;
       framework?: string;
@@ -43,7 +44,9 @@ export async function GET(req: NextRequest) {
       }>;
     };
 
-    const where: WhereClause = {};
+    // Abgelehnte Skripte (rejectedAt gesetzt) nie im öffentlichen Listing zeigen –
+    // konsistent mit der Desktop-App, die sie als "Abgelehnt" ausblendet.
+    const where: WhereClause = { rejectedAt: null };
 
     if (verifiedOnly)  where.verified    = true;
     if (model_type)    where.model_type  = model_type;
@@ -70,12 +73,24 @@ export async function GET(req: NextRequest) {
       prisma.libraryScript.count({ where }),
     ]);
 
-    // camelCase -> snake_case damit Frontend-Interface stimmt
+    // camelCase -> snake_case damit Frontend-Interface stimmt.
+    // Nur öffentliche Felder ausliefern: Script-Inhalt (Bandbreite) sowie interne
+    // Prüf-Felder (aiCheckResult/aiCheckedAt) gehören nicht ins öffentliche Listing.
     const scripts = rawScripts.map((s) => ({
-      ...s,
-      script: undefined, // Script-Inhalt nicht im Listing mitschicken (spart Bandbreite)
-      created_at: s.createdAt.toISOString(),
-      updated_at: s.updatedAt.toISOString(),
+      id:          s.id,
+      name:        s.name,
+      description: s.description,
+      author:      s.author,
+      model_type:  s.model_type,
+      task_type:   s.task_type,
+      framework:   s.framework,
+      script_type: s.script_type,
+      verified:    s.verified,
+      downloads:   s.downloads,
+      stars:       s.stars,
+      tags:        s.tags,
+      created_at:  s.createdAt.toISOString(),
+      updated_at:  s.updatedAt.toISOString(),
     }));
 
     return NextResponse.json(
@@ -95,7 +110,7 @@ export async function GET(req: NextRequest) {
 // Body: { name, description, author, userId, model_type, task_type, framework, tags, script }
 export async function POST(req: NextRequest) {
   try {
-    const currentUser = await getCurrentUser();
+    const currentUser = await getRequestUser(req);
     if (!currentUser) {
       return NextResponse.json(
         { error: 'Nicht authentifiziert' },

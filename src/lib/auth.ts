@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
+import { prisma } from '@/lib/prisma'
 
 // KEIN Fallback-Secret: Ein hartcodierter Default wäre ein kritisches
 // Sicherheitsrisiko (jeder, der den Quellcode kennt, könnte gültige
@@ -34,6 +35,42 @@ export async function getCurrentUser(): Promise<JWTPayload | null> {
   if (!token) return null
   
   return verifyToken(token)
+}
+
+/**
+ * Löst einen User über einen Desktop-API-Key (Format `ft_…`) auf.
+ * Gleiche Logik wie /api/keys/verify: Plaintext-Lookup + isActive-Check.
+ */
+export async function getUserFromApiKey(key: string): Promise<JWTPayload | null> {
+  if (!key || !key.startsWith('ft_') || key.length < 24) return null
+
+  const apiKey = await prisma.apiKey.findUnique({
+    where: { key },
+    include: { user: { select: { id: true, email: true } } },
+  })
+
+  if (!apiKey || !apiKey.isActive || !apiKey.user) return null
+
+  // last-used aktualisieren, aber den Request nicht blockieren
+  prisma.apiKey
+    .update({ where: { id: apiKey.id }, data: { lastUsedAt: new Date() } })
+    .catch(() => {})
+
+  return { userId: apiKey.user.id, email: apiKey.user.email }
+}
+
+/**
+ * Authentifiziert einen Request entweder über den `Authorization: Bearer ft_…`
+ * Header (Desktop-App, cross-origin ohne Cookie) oder das `auth-token`-Cookie
+ * (Web-Browser). So funktioniert derselbe Endpoint für beide Clients.
+ */
+export async function getRequestUser(req: Request): Promise<JWTPayload | null> {
+  const authz = req.headers.get('authorization')
+  if (authz?.startsWith('Bearer ')) {
+    const user = await getUserFromApiKey(authz.slice(7).trim())
+    if (user) return user
+  }
+  return getCurrentUser()
 }
 
 export async function setAuthCookie(token: string) {

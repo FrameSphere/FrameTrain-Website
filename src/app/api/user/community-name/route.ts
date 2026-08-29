@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getCurrentUser } from '@/lib/auth';
+import { getRequestUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
 export async function OPTIONS() {
@@ -65,7 +65,7 @@ export async function GET(req: NextRequest) {
 // Returns: { success: boolean, message: string, updatedCount: number }
 export async function POST(req: NextRequest) {
   try {
-    const currentUser = await getCurrentUser();
+    const currentUser = await getRequestUser(req);
     if (!currentUser) {
       return new NextResponse(
         JSON.stringify({ error: 'Nicht authentifiziert' }),
