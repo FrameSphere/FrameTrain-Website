@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { getRequestUser } from '@/lib/auth';
 
@@ -29,39 +30,40 @@ export async function GET(req: NextRequest) {
     const limit  = Math.min(100, parseInt(searchParams.get('limit')  ?? '50', 10));
     const offset =              parseInt(searchParams.get('offset') ?? '0',  10);
 
-    type WhereClause = {
-      verified?: boolean;
-      rejectedAt?: null;
-      model_type?: string;
-      task_type?: string;
-      framework?: string;
-      script_type?: string;
-      OR?: Array<{
-        name?: { contains: string; mode: 'insensitive' };
-        description?: { contains: string; mode: 'insensitive' };
-        author?: { contains: string; mode: 'insensitive' };
-        tags?: { has: string };
-      }>;
-    };
+    // Optionale Authentifizierung: eingeloggte Nutzer sehen zusätzlich ihre
+    // EIGENEN abgelehnten Skripte (mit Warnung im Frontend). Fremde abgelehnte
+    // Skripte bleiben für alle unsichtbar.
+    const currentUser = await getRequestUser(req);
 
-    // Abgelehnte Skripte (rejectedAt gesetzt) nie im öffentlichen Listing zeigen –
-    // konsistent mit der Desktop-App, die sie als "Abgelehnt" ausblendet.
-    const where: WhereClause = { rejectedAt: null };
+    // Konditionen werden per AND kombiniert – nötig, weil sowohl die
+    // Sichtbarkeits- als auch die Suchbedingung ein eigenes OR brauchen.
+    const and: Prisma.LibraryScriptWhereInput[] = [];
 
-    if (verifiedOnly)  where.verified    = true;
-    if (model_type)    where.model_type  = model_type;
-    if (task_type)     where.task_type   = task_type;
-    if (framework)     where.framework   = framework;
-    if (script_type)   where.script_type = script_type;
+    // Sichtbarkeit: abgelehnte Skripte nur für den jeweiligen Eigentümer.
+    and.push(
+      currentUser
+        ? { OR: [{ rejectedAt: null }, { userId: currentUser.userId }] }
+        : { rejectedAt: null },
+    );
+
+    if (verifiedOnly)  and.push({ verified:    true });
+    if (model_type)    and.push({ model_type });
+    if (task_type)     and.push({ task_type });
+    if (framework)     and.push({ framework });
+    if (script_type)   and.push({ script_type });
 
     if (search) {
-      where.OR = [
-        { name:        { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { author:      { contains: search, mode: 'insensitive' } },
-        { tags:        { has: search.toLowerCase() } },
-      ];
+      and.push({
+        OR: [
+          { name:        { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+          { author:      { contains: search, mode: 'insensitive' } },
+          { tags:        { has: search.toLowerCase() } },
+        ],
+      });
     }
+
+    const where: Prisma.LibraryScriptWhereInput = { AND: and };
 
     const [rawScripts, total] = await Promise.all([
       prisma.libraryScript.findMany({
@@ -89,6 +91,10 @@ export async function GET(req: NextRequest) {
       downloads:   s.downloads,
       stars:       s.stars,
       tags:        s.tags,
+      // Nur beim eigenen abgelehnten Skript befüllt (Fremde sind rausgefiltert),
+      // damit das Frontend die Ablehnungs-Warnung anzeigen kann.
+      rejectedAt:     s.rejectedAt ? s.rejectedAt.toISOString() : null,
+      rejectedReason: s.rejectedReason,
       created_at:  s.createdAt.toISOString(),
       updated_at:  s.updatedAt.toISOString(),
     }));

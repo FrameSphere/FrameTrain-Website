@@ -3,6 +3,7 @@ import { LibraryPageClient } from './LibraryPageClient'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { prisma } from '@/lib/prisma'
+import { getCurrentUser } from '@/lib/auth'
 import { getTranslations } from 'next-intl/server'
 import { pageAlternates, pageOpenGraph, siteUrl as baseUrl } from '@/lib/seo'
 
@@ -45,8 +46,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function getInitialScripts() {
   try {
+    // Eingeloggte Nutzer sehen zusätzlich ihre eigenen abgelehnten Skripte
+    // (mit Warnung); fremde abgelehnte Skripte bleiben für alle unsichtbar.
+    const currentUser = await getCurrentUser()
     const scripts = await prisma.libraryScript.findMany({
-      where: { rejectedAt: null },
+      where: currentUser
+        ? { OR: [{ rejectedAt: null }, { userId: currentUser.userId }] }
+        : { rejectedAt: null },
       orderBy: [{ verified: 'desc' }, { downloads: 'desc' }],
       take: 50,
       select: {
@@ -62,6 +68,8 @@ async function getInitialScripts() {
         downloads: true,
         stars: true,
         tags: true,
+        rejectedAt: true,
+        rejectedReason: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -80,6 +88,8 @@ async function getInitialScripts() {
       stars: s.stars,
       tags: s.tags,
       script: '',
+      rejectedAt: s.rejectedAt ? s.rejectedAt.toISOString() : null,
+      rejectedReason: s.rejectedReason,
       created_at: s.createdAt.toISOString(),
       updated_at: s.updatedAt.toISOString(),
     }))

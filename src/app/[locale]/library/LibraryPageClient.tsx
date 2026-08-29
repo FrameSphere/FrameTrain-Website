@@ -8,7 +8,7 @@ import {
   Search, Globe, Star, Download, CheckCircle2,
   Upload, X, ArrowRight, Loader2, Code2,
   FlaskConical, Dumbbell, Sparkles, BookOpen, Copy, Check,
-  Clock, User, AlertCircle,
+  Clock, User, AlertCircle, ShieldAlert,
 } from 'lucide-react'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -29,6 +29,15 @@ export interface LibraryScript {
   tags: string[]
   created_at: string
   updated_at: string
+  // Nur beim eigenen abgelehnten Skript gesetzt – fremde abgelehnte Skripte
+  // liefert die API gar nicht erst aus.
+  rejectedAt?: string | null
+  rejectedReason?: string | null
+}
+
+/** Wurde das Skript von der serverseitigen Prüfung abgelehnt? */
+function isRejected(s: Pick<LibraryScript, 'rejectedAt'>): boolean {
+  return typeof s.rejectedAt === 'string' && s.rejectedAt.length > 0
 }
 
 interface UploadForm {
@@ -120,7 +129,11 @@ function ScriptCard({
                 <Dumbbell className="w-2.5 h-2.5" /> {t('badgeTraining')}
               </span>
             )}
-            {script.verified && (
+            {isRejected(script) ? (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-500/15 text-red-300 border border-red-500/25">
+                <ShieldAlert className="w-2.5 h-2.5" /> {t('badgeRejected')}
+              </span>
+            ) : script.verified && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
                 <CheckCircle2 className="w-2.5 h-2.5" /> {t('badgeVerified')}
               </span>
@@ -266,7 +279,11 @@ function ScriptDetailModal({
                   <Dumbbell className="w-3 h-3" /> {t('modalTrainingScript')}
                 </span>
               )}
-              {script.verified && (
+              {isRejected(script) ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-red-500/15 text-red-300 border border-red-500/25">
+                  <ShieldAlert className="w-3 h-3" /> {t('badgeRejected')}
+                </span>
+              ) : script.verified && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
                   <CheckCircle2 className="w-3 h-3" /> {t('modalVerifiedBy')}
                 </span>
@@ -282,6 +299,20 @@ function ScriptDetailModal({
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {/* Ablehnungs-Warnung (nur beim eigenen abgelehnten Skript sichtbar) */}
+        {isRejected(script) && (
+          <div className="flex items-start gap-3 px-6 py-3 border-b border-red-500/20 bg-red-500/8">
+            <ShieldAlert className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+            <div className="text-xs leading-relaxed">
+              <p className="font-semibold text-red-300">{t('rejectedTitle')}</p>
+              {script.rejectedReason && (
+                <p className="text-red-300/80 mt-0.5">{script.rejectedReason}</p>
+              )}
+              <p className="text-red-200/60 mt-1">{t('rejectedHint')}</p>
+            </div>
+          </div>
+        )}
 
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-3 px-6 py-3 border-b border-white/8 bg-white/2">
