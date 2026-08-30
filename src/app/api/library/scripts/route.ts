@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { getRequestUser } from '@/lib/auth';
+import { runAutoReview } from '@/lib/scriptAudit';
 
 export const dynamic = 'force-dynamic';
+// POST löst eine synchrone Claude-Prüfung aus – mehr Zeit als der Default geben.
+export const maxDuration = 60;
 
 // CORS headers – Desktop-App (Tauri) sendet aus tauri://localhost
 const CORS = {
@@ -206,12 +209,47 @@ export async function POST(req: NextRequest) {
           ? tags.map((t: string) => String(t).toLowerCase().slice(0, 30)).slice(0, 20)
           : [],
         script,
-        verified: false, // Immer false – Verifikation erfolgt manuell
+        verified: false, // Start immer false – Auto-Prüfung entscheidet direkt danach
       },
     });
 
+    // ── Automatische, strenge Prüfung mit Claude – ohne Mensch dazwischen ──
+    // Fail-safe: Schlägt die Prüfung fehl (kein Key, Timeout, kein JSON), bleibt
+    // das Script „pending" (nicht öffentlich) statt riskant freigegeben zu werden.
+    let review: Awaited<ReturnType<typeof runAutoReview>> | null = null;
+    try {
+      review = await runAutoReview({
+        name: created.name, description: created.description, author: created.author,
+        model_type: created.model_type, task_type: created.task_type, framework: created.framework,
+        script_type: created.script_type, tags: created.tags, script: created.script,
+      });
+
+      const { result, decision, reason } = review;
+      const data: {
+        aiCheckResult: string; aiCheckedAt: Date;
+        verified?: boolean; rejectedAt?: Date | null; rejectedReason?: string | null;
+      } = { aiCheckResult: JSON.stringify(result), aiCheckedAt: new Date() };
+
+      if (decision === 'approve') {
+        data.verified = true;
+      } else if (decision === 'reject') {
+        data.rejectedAt = new Date(); data.rejectedReason = `AI: ${reason}`;
+      }
+      // 'hold' → nur Ergebnis speichern, bleibt pending für manuelle Prüfung
+
+      await prisma.libraryScript.update({ where: { id: created.id }, data });
+    } catch (e) {
+      console.error('[POST /api/library/scripts] Auto-Prüfung fehlgeschlagen:', e);
+      // Upload gilt trotzdem als erfolgreich – Script bleibt pending.
+    }
+
     return NextResponse.json(
-      { success: true, id: created.id },
+      {
+        success:  true,
+        id:       created.id,
+        decision: review?.decision ?? 'hold',
+        verified: review?.decision === 'approve',
+      },
       { status: 201, headers: CORS },
     );
   } catch (err) {
