@@ -108,10 +108,14 @@ export default async function RootLayout({ children, params }: Props) {
 
   const messages = await getMessages()
 
-  const faqItems = (messages as any).Home?.faq?.items as
-    | { question: string; answer: string }[]
-    | undefined
-
+  // Hinweis: Die FAQPage-Structured-Data liegt bewusst NICHT hier im Root-Layout.
+  // Ein Layout rendert auf allen Unterrouten mit – die Startseiten-FAQ als
+  // FAQPage an /apple-silicon, /docs usw. zu hängen widerspricht Googles Regel
+  // "FAQ-Markup = auf DIESER Seite sichtbarer Inhalt" und erzeugt doppelte
+  // FAQPage-Entitäten. Jede Seite mit sichtbarer FAQ liefert ihre eigene
+  // FAQPage (Startseite in page.tsx, /faq in faq/page.tsx, /apple-silicon und
+  // /compare in ihren page.tsx). Organization + SoftwareApplication bleiben
+  // site-weit, weil sie die Entität auf jeder Seite bestätigen sollen.
   const schemaOrg = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -120,7 +124,7 @@ export default async function RootLayout({ children, params }: Props) {
         name: 'FrameTrain',
         url: baseUrl,
         logo: `${baseUrl}/favicon.svg`,
-        sameAs: ['https://github.com/FrameSphere/FrameTrain-Website'],
+        sameAs: ['https://github.com/FrameSphere/FrameTrain-App'],
       },
       {
         '@type': 'SoftwareApplication',
@@ -173,18 +177,6 @@ export default async function RootLayout({ children, params }: Props) {
               ],
         url: `${baseUrl}/${locale}`,
       },
-      ...(faqItems
-        ? [
-            {
-              '@type': 'FAQPage',
-              mainEntity: faqItems.map((item) => ({
-                '@type': 'Question',
-                name: item.question,
-                acceptedAnswer: { '@type': 'Answer', text: item.answer },
-              })),
-            },
-          ]
-        : []),
     ],
   }
 

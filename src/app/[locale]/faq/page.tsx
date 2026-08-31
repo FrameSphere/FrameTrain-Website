@@ -226,7 +226,7 @@ export default function FAQPage() {
             </p>
             <p className="text-gray-600 text-sm">
               {t('noAnswerFound')}{' '}
-              <a href="https://github.com/FrameSphere/FrameTrain-Website" target="_blank" className="text-purple-400 hover:text-purple-300 transition">
+              <a href="https://github.com/FrameSphere/FrameTrain-App" target="_blank" className="text-purple-400 hover:text-purple-300 transition">
                 {t('openGithub')}
               </a>{' '}
               {t('orAskDiscord')}
@@ -380,7 +380,7 @@ export default function FAQPage() {
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
                 <a
-                  href="https://github.com/FrameSphere/FrameTrain-Website"
+                  href="https://github.com/FrameSphere/FrameTrain-App"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="glass-strong px-6 py-3 rounded-xl text-gray-300 hover:text-white transition font-semibold border border-white/10 flex items-center gap-2"

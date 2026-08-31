@@ -40,7 +40,9 @@
     "cookies": "Cookies",
     "copyright": "© {year} FrameTrain · betrieben von <link>FrameSphere</link>. Alle Rechte vorbehalten.",
     "madeWithPre": "Erstellt mit",
-    "madeWithPost": "für ML Engineers"
+    "madeWithPost": "für ML Engineers",
+    "appleSilicon": "Apple Silicon",
+    "compare": "Vergleich"
   },
   "Imprint": {
     "metaTitle": "Impressum – FrameTrain",
@@ -5529,5 +5531,323 @@
         "beta": true
       }
     ]
+  },
+  "AppleSilicon": {
+    "metaTitle": "KI-Training auf Apple Silicon – LLMs lokal auf dem Mac fine-tunen",
+    "metaDescription": "LLMs fine-tunen und KI-Modelle lokal auf Apple Silicon (M1, M2, M3, M4) trainieren. FrameTrain nutzt Metal MPS – ohne CUDA, ohne Cloud. Was dein Mac schafft.",
+    "keywords": [
+      "LLM fine-tunen Mac",
+      "LoRA Mac",
+      "QLoRA Apple Silicon",
+      "lokales KI-Training Mac",
+      "Hugging Face Modell trainieren Mac",
+      "Apple Silicon Machine Learning",
+      "M1 M2 M3 M4 KI-Training",
+      "Metal MPS PyTorch"
+    ],
+    "ogTitle": "KI-Modelle lokal auf dem Mac trainieren – Apple Silicon",
+    "ogDescription": "LoRA & QLoRA Fine-Tuning auf M1/M2/M3/M4 via Metal MPS. Ohne CUDA, ohne Cloud, DSGVO-konform.",
+    "breadcrumb": "Apple Silicon",
+    "badges": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "heroTitleLine1": "KI-Modelle lokal",
+    "heroTitleLine2": "auf deinem Mac trainieren",
+    "heroSubtitle": "FrameTrain führt LoRA- und QLoRA-Fine-Tuning direkt auf Apple Silicon aus – über Apples Metal Performance Shaders (MPS). Keine NVIDIA-GPU, kein CUDA, keine Cloud: Daten und Modelle bleiben auf deinem Mac.",
+    "intro": {
+      "heading": "Warum Apple Silicon stark für lokales Training ist",
+      "p1": "Apple-Silicon-Chips (M1, M2, M3, M4) vereinen CPU, GPU und Neural Engine mit <b>Unified Memory</b>: Die GPU kann den gesamten Arbeitsspeicher nutzen statt nur einen kleinen dedizierten VRAM-Pool. Ein 32-GB-Mac arbeitet damit mit Modellen, für die sonst eine deutlich teurere NVIDIA-Karte nötig wäre.",
+      "p2": "FrameTrain spricht die GPU über <b>Metal MPS</b> an – dasselbe Backend, das PyTorch auf macOS nutzt. Du bekommst GPU-beschleunigtes Training ohne CUDA, und alles läuft offline: DSGVO-konform by design."
+    },
+    "noCuda": {
+      "heading": "Kein CUDA nötig",
+      "points": [
+        {
+          "title": "Unified Memory",
+          "desc": "GPU und CPU teilen sich einen Speicherpool – mehr RAM ist fürs Modell nutzbar als auf einer vergleichbaren dedizierten GPU."
+        },
+        {
+          "title": "Metal-MPS-Beschleunigung",
+          "desc": "PyTorch läuft über Apples Metal-Backend, Training ist also auf jedem M-Mac out of the box GPU-beschleunigt."
+        },
+        {
+          "title": "Komplett lokal & privat",
+          "desc": "Datensätze und trainierte Modelle verlassen deinen Rechner nie. Kein Cloud-Account, kein Upload, kein AV-Vertrag nötig."
+        }
+      ]
+    },
+    "capability": {
+      "heading": "Was schafft dein Mac?",
+      "intro": "Praktische Orientierung nach Unified Memory. Das sind <b>Richtwerte</b>, keine festen Benchmarks – die reale Machbarkeit hängt von Quantisierung, Sequenzlänge, Batch-Size und Basismodell ab.",
+      "tableHeaders": [
+        "Mac / Chip",
+        "Unified Memory",
+        "Realistische Nutzung"
+      ],
+      "tableRows": [
+        [
+          "MacBook Air M1 / M2",
+          "8 GB",
+          "Klassische ML-Modelle, kleine Netze, quantisierte 1–3B-LoRA-Experimente"
+        ],
+        [
+          "MacBook Pro M2 / M3",
+          "16 GB",
+          "LoRA-/QLoRA-Fine-Tuning von 7B-Modellen (quantisiert), kleine Full-Fine-Tunes"
+        ],
+        [
+          "MacBook Pro M3 / M4 Pro",
+          "18–24 GB",
+          "Komfortables 7B-LoRA- & QLoRA-Fine-Tuning, größere Datensätze"
+        ],
+        [
+          "MacBook Pro / Studio M-Serie Max",
+          "32–64 GB",
+          "7B–13B-Fine-Tuning, längere Sequenzen, schnellere Iteration"
+        ],
+        [
+          "Mac Studio M-Serie Ultra",
+          "64–192 GB",
+          "13B+ Modelle und mehrere Experimente parallel"
+        ]
+      ],
+      "note": "Faustregel: QLoRA (4-bit) halbiert den Speicherbedarf gegenüber Standard-LoRA grob – damit rückt die nächsthöhere Stufe in Reichweite."
+    },
+    "howItWorks": {
+      "heading": "So läuft Training auf dem Mac",
+      "steps": [
+        {
+          "title": "Modell wählen",
+          "desc": "Hugging-Face-Modell importieren oder ein lokales laden – direkt in der GUI."
+        },
+        {
+          "title": "Datensatz vorbereiten",
+          "desc": "Importieren, in Train/Validation/Test splitten und vor dem Training prüfen."
+        },
+        {
+          "title": "LoRA / QLoRA konfigurieren",
+          "desc": "Rank, Lernrate und Epochen setzen – mit sinnvollen Defaults für Apple Silicon."
+        },
+        {
+          "title": "Auf MPS trainieren",
+          "desc": "Training läuft auf der Metal-GPU, mit Live-Loss-Kurve und Trainingsanalyse."
+        },
+        {
+          "title": "Versionieren & exportieren",
+          "desc": "Jeder Lauf wird versioniert; Ergebnis exportieren (inkl. GGUF) oder lokal via Ollama nutzen."
+        }
+      ]
+    },
+    "requirements": {
+      "heading": "Voraussetzungen",
+      "items": [
+        "Apple-Silicon-Mac (M1, M2, M3 oder M4 – jede Variante)",
+        "macOS 13 Ventura oder neuer",
+        "Mindestens 8 GB Unified Memory – 16 GB+ empfohlen für 7B-LLMs",
+        "Genügend freier Speicher für Modelle und Checkpoints (10–50 GB je nach Modell)",
+        "Keine NVIDIA-GPU und kein CUDA erforderlich"
+      ]
+    },
+    "faq": {
+      "heading": "Apple-Silicon-FAQ",
+      "items": [
+        {
+          "question": "Unterstützt FrameTrain Apple Silicon (M1, M2, M3, M4)?",
+          "answer": "Ja. FrameTrain läuft nativ auf allen Apple-Silicon-Chips und nutzt Metal MPS für GPU-beschleunigtes Training. Intel-Macs sind nicht der Fokus – ein M-Chip wird empfohlen."
+        },
+        {
+          "question": "Brauche ich eine NVIDIA-GPU oder CUDA, um auf dem Mac zu trainieren?",
+          "answer": "Nein. Auf macOS beschleunigt FrameTrain das Training über Apples Metal-Backend (MPS). CUDA ist nur auf Windows/Linux mit NVIDIA-GPUs relevant."
+        },
+        {
+          "question": "Kann ich ein 7B-LLM auf meinem Mac fine-tunen?",
+          "answer": "In der Regel ja ab etwa 16 GB Unified Memory, mit LoRA oder QLoRA. Ab 32 GB sind auch größere Modelle und längere Sequenzen möglich."
+        },
+        {
+          "question": "Ist Training auf Apple Silicon langsamer als auf einer NVIDIA-GPU?",
+          "answer": "Bei schweren Workloads ist eine High-End-NVIDIA-GPU meist schneller. Der Vorteil von Apple Silicon ist Unified Memory und dass alles lokal und leise auf dem Laptop läuft – für LoRA/QLoRA-Fine-Tuning ist es sehr leistungsfähig."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Trainiere auf deinem Mac – noch heute",
+      "text": "Lade FrameTrain und starte dein erstes lokales Fine-Tuning auf Apple Silicon in wenigen Minuten.",
+      "ctaDownload": "Für Mac herunterladen",
+      "ctaDocs": "Zur Dokumentation"
+    }
+  },
+  "Compare": {
+    "metaTitle": "FrameTrain vs. MLX LoRA Studio vs. Unsloth – lokales Fine-Tuning im Vergleich",
+    "metaDescription": "Wie schlägt sich FrameTrain gegen MLX LoRA Studio und Unsloth beim lokalen LLM-Fine-Tuning? Ein fairer Vergleich zu Plattformen, GUI, LoRA/QLoRA, Apple Silicon & mehr.",
+    "keywords": [
+      "FrameTrain vs Unsloth",
+      "MLX LoRA Studio Alternative",
+      "Unsloth Alternative",
+      "lokale LLM Fine-Tuning Tools",
+      "LoRA GUI Vergleich",
+      "bestes lokales Fine-Tuning Tool",
+      "Fine-Tuning Desktop App"
+    ],
+    "ogTitle": "FrameTrain vs. MLX LoRA Studio vs. Unsloth",
+    "ogDescription": "Ein fairer Direktvergleich lokaler LLM-Fine-Tuning-Tools – Plattformen, GUI, LoRA/QLoRA und Apple Silicon.",
+    "breadcrumb": "Vergleich",
+    "heroTitleLine1": "FrameTrain vs. MLX LoRA Studio",
+    "heroTitleLine2": "vs. Unsloth",
+    "heroSubtitle": "Es gibt nicht das eine „beste“ lokale Fine-Tuning-Tool – es hängt von deiner Hardware und Arbeitsweise ab. Hier ein ehrlicher Direktvergleich zur Entscheidung.",
+    "intro": {
+      "p1": "Alle drei erlauben Fine-Tuning von Sprachmodellen auf eigener Hardware, lösen aber unterschiedliche Probleme. <b>Unsloth</b> ist eine Code-first-Bibliothek für maximale Geschwindigkeit und Speichereffizienz auf NVIDIA-GPUs. <b>MLX-basierte LoRA-GUIs</b> sind native macOS-Apps auf Basis von Apples MLX-Framework. <b>FrameTrain</b> ist eine plattformübergreifende Desktop-Umgebung, die den gesamten Workflow – Datensätze, Training, Monitoring, Versionierung – in einer GUI bündelt.",
+      "p2": "Willst du ein grafisches All-in-one-Tool für Windows, macOS und Linux, ist FrameTrain gebaut für dich. Lebst du in Python und holst jedes Token/Sekunde aus einer NVIDIA-Karte, ist Unsloth exzellent. Bist du komplett auf Apple Silicon und willst die schlankeste native Option, passt vielleicht eine MLX-GUI am besten."
+    },
+    "lastUpdated": "Vergleich zuletzt geprüft: August 2026.",
+    "matrix": {
+      "heading": "Feature-Vergleich",
+      "colHeaders": [
+        "",
+        "FrameTrain",
+        "MLX LoRA Studio¹",
+        "Unsloth"
+      ],
+      "legend": {
+        "yes": "Ja",
+        "no": "Nein",
+        "partial": "Teilweise / variiert"
+      },
+      "rows": [
+        {
+          "feature": "Native Desktop-GUI",
+          "frametrain": "yes",
+          "mlx": "yes",
+          "unsloth": "no"
+        },
+        {
+          "feature": "Plattformen",
+          "frametrain": "Windows, macOS, Linux",
+          "mlx": "nur macOS",
+          "unsloth": "Linux, Windows (WSL)"
+        },
+        {
+          "feature": "Apple Silicon (M1–M4)",
+          "frametrain": "yes",
+          "mlx": "yes",
+          "unsloth": "partial"
+        },
+        {
+          "feature": "NVIDIA CUDA",
+          "frametrain": "yes",
+          "mlx": "no",
+          "unsloth": "yes"
+        },
+        {
+          "feature": "LoRA-Fine-Tuning",
+          "frametrain": "yes",
+          "mlx": "yes",
+          "unsloth": "yes"
+        },
+        {
+          "feature": "QLoRA (4-bit)",
+          "frametrain": "yes",
+          "mlx": "partial",
+          "unsloth": "yes"
+        },
+        {
+          "feature": "Hugging-Face-Import",
+          "frametrain": "yes",
+          "mlx": "yes",
+          "unsloth": "yes"
+        },
+        {
+          "feature": "Visueller Netz-Builder",
+          "frametrain": "yes",
+          "mlx": "no",
+          "unsloth": "no"
+        },
+        {
+          "feature": "Dataset-Management in GUI",
+          "frametrain": "yes",
+          "mlx": "partial",
+          "unsloth": "no"
+        },
+        {
+          "feature": "Modell-Versionierung & Lauf-Vergleich",
+          "frametrain": "yes",
+          "mlx": "no",
+          "unsloth": "partial"
+        },
+        {
+          "feature": "Live-Training-Monitoring (GUI)",
+          "frametrain": "yes",
+          "mlx": "partial",
+          "unsloth": "partial"
+        },
+        {
+          "feature": "Komplett lokal / offline",
+          "frametrain": "yes",
+          "mlx": "yes",
+          "unsloth": "yes"
+        },
+        {
+          "feature": "Open Source",
+          "frametrain": "partial",
+          "mlx": "partial",
+          "unsloth": "yes"
+        },
+        {
+          "feature": "Am besten für",
+          "frametrain": "All-in-one, plattformübergreifende GUI",
+          "mlx": "Native Apple-Silicon-Nutzer",
+          "unsloth": "Max. Speed auf NVIDIA, Code-first"
+        }
+      ]
+    },
+    "chooseWhich": {
+      "heading": "Welches Tool passt zu dir?",
+      "cards": [
+        {
+          "name": "FrameTrain",
+          "tag": "All-in-one-GUI",
+          "desc": "Eine komplette grafische Trainingsumgebung: Daten importieren, mit LoRA/QLoRA fine-tunen, Loss-Kurven beobachten, Läufe versionieren und Netze visuell bauen.",
+          "bestFor": "Du willst eine plattformübergreifende App, die den ganzen Workflow abdeckt – auf Windows, Mac oder Linux."
+        },
+        {
+          "name": "MLX LoRA Studio",
+          "tag": "Nativ macOS",
+          "desc": "Schlanke MLX-basierte Apps, die LoRA-Adapter nativ auf Apple Silicon fine-tunen, eng auf den Mac optimiert.",
+          "bestFor": "Du bist ausschließlich auf Apple Silicon und willst die nativste, minimalste Option."
+        },
+        {
+          "name": "Unsloth",
+          "tag": "Code-first Speed",
+          "desc": "Eine Open-Source-Python-Bibliothek, die LoRA/QLoRA-Fine-Tuning auf NVIDIA-GPUs deutlich schneller und speichereffizienter macht.",
+          "bestFor": "Du arbeitest in Python/Notebooks auf NVIDIA-Hardware und willst maximale Performance."
+        }
+      ]
+    },
+    "disclaimer": "¹ „MLX LoRA Studio“ steht hier stellvertretend für MLX-basierte LoRA-GUIs auf macOS. Angaben zu Drittanbieter-Tools geben unser Verständnis ihrer Produktkategorie (Stand August 2026) wieder und können sich ändern – bitte auf den offiziellen Quellen prüfen. Der Vergleich fokussiert dokumentierte Kategorie-Merkmale.",
+    "faq": {
+      "heading": "Vergleichs-FAQ",
+      "items": [
+        {
+          "question": "Ist FrameTrain eine gute Unsloth-Alternative?",
+          "answer": "Wenn du eine grafische, plattformübergreifende App statt einer Python-Bibliothek willst: ja. Unsloth ist auf NVIDIA-GPUs für Code-first-Workflows schneller; FrameTrain tauscht etwas Rohgeschwindigkeit gegen eine komplette GUI, die auch auf macOS und Linux läuft und Datensätze, Monitoring und Versionierung abdeckt."
+        },
+        {
+          "question": "Funktioniert FrameTrain ohne NVIDIA-GPU?",
+          "answer": "Ja. FrameTrain läuft auf Apple Silicon via Metal MPS und auf NVIDIA-GPUs via CUDA – du bist nicht an einen Hersteller gebunden. MLX-basierte Tools sind macOS-only; Unsloth ist primär NVIDIA-fokussiert."
+        },
+        {
+          "question": "Welches Tool ist am besten für Apple Silicon?",
+          "answer": "Sowohl FrameTrain als auch MLX-basierte GUIs laufen nativ auf Apple Silicon. FrameTrain ergänzt einen kompletten Workflow (Datensätze, Versionierung, visueller Builder) und Cross-Platform-Support; eine reine MLX-App ist schlanker, wenn du nur den Mac nutzt."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Teste FrameTrain selbst",
+      "text": "Der fairste Vergleich ist dein eigener. Lade FrameTrain und starte ein lokales Fine-Tuning auf deiner Hardware.",
+      "ctaDownload": "FrameTrain herunterladen",
+      "ctaDocs": "Zu den Guides"
+    }
   }
 }

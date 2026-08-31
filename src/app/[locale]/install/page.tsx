@@ -407,7 +407,7 @@ export default function InstallPage() {
               <Link href="/docs" className="text-purple-400 hover:text-purple-300">
                 📚 {t('help.docs')}
               </Link>
-              <a href="https://github.com/KarolP-tech/FrameTrain" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">
+              <a href="https://github.com/FrameSphere/FrameTrain-App" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">
                 💻 GitHub
               </a>
             </div>

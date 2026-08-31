@@ -91,7 +91,7 @@ export default function AboutPage() {
           name: 'FrameTrain',
           url: siteUrl,
           logo: `${siteUrl}/favicon.svg`,
-          sameAs: ['https://github.com/FrameSphere/FrameTrain-Website'],
+          sameAs: ['https://github.com/FrameSphere/FrameTrain-App'],
         },
       },
     ],
@@ -292,7 +292,7 @@ export default function AboutPage() {
                 <h2 className="text-3xl font-bold text-white mb-4">{t('openSource.heading')}</h2>
                 <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto mb-8">{t('openSource.text')}</p>
                 <a
-                  href="https://github.com/FrameSphere/FrameTrain-Website"
+                  href="https://github.com/FrameSphere/FrameTrain-App"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="card-lift inline-flex items-center gap-2 glass-strong px-6 py-3 rounded-xl text-gray-200 hover:text-white border border-white/20 hover:border-white/30 transition font-semibold"

@@ -40,7 +40,7 @@ export function Footer() {
                 nicht gibt. Jetzt eine gemeinsame Hover-Sprache. */}
             <div className="flex gap-2 mt-6">
               <a
-                href="https://github.com/FrameSphere/FrameTrain-Website"
+                href="https://github.com/FrameSphere/FrameTrain-App"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="press glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/[0.09] transition-colors duration-[180ms] ease-out"
@@ -82,6 +82,16 @@ export function Footer() {
               <li>
                 <Link href="/screenshots" className={footerLink}>
                   {t('screenshots')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/apple-silicon" className={footerLink}>
+                  {t('appleSilicon')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/compare" className={footerLink}>
+                  {t('compare')}
                 </Link>
               </li>
               <li>

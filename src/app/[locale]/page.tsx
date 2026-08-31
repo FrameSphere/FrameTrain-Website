@@ -93,6 +93,23 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* FAQ-Structured-Data der Startseite. Liegt bewusst HIER (nicht im
+          Root-Layout), damit die FAQPage nur auf der Seite erscheint, auf der
+          die Fragen auch sichtbar sind – Googles Grundregel für FAQ-Markup. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqItems.map((item) => ({
+              '@type': 'Question',
+              name: item.question,
+              acceptedAnswer: { '@type': 'Answer', text: item.answer },
+            })),
+          }),
+        }}
+      />
       {/* Cursor-Spotlight. Startet unsichtbar und blendet erst bei der
           ersten echten Mausbewegung ein – sonst klebt beim Laden ein
           Lichtfleck in der oberen linken Ecke. */}
