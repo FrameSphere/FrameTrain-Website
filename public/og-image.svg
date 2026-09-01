@@ -58,9 +58,9 @@
   <text x="80" y="430" font-family="Arial, sans-serif" font-size="28" fill="#9ca3af">HuggingFace · LoRA · PyTorch · GPU · Kein Cloud-Abo</text>
 
   <!-- Price badge -->
-  <rect x="80" y="480" width="220" height="56" rx="28" fill="url(#grad1)" opacity="0.2"/>
-  <rect x="80" y="480" width="220" height="56" rx="28" fill="none" stroke="url(#grad1)" stroke-width="1.5"/>
-  <text x="190" y="515" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#c084fc" text-anchor="middle">Einmalig 1,99€</text>
+  <rect x="80" y="480" width="250" height="56" rx="28" fill="url(#grad1)" opacity="0.2"/>
+  <rect x="80" y="480" width="250" height="56" rx="28" fill="none" stroke="url(#grad1)" stroke-width="1.5"/>
+  <text x="205" y="515" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#c084fc" text-anchor="middle">ab 4,99 €/Monat</text>
 
   <!-- Right side decorative element -->
   <circle cx="950" cy="315" r="180" fill="none" stroke="url(#grad1)" stroke-width="1" opacity="0.3"/>
