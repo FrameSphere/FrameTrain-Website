@@ -187,7 +187,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         { 
           error: 'Zugriff verweigert',
-          message: 'Ungültiger API-Key oder fehlende Berechtigung. Bitte kaufe zuerst eine Lizenz auf https://frametrain.ai'
+          message: 'Ungültiger API-Key oder fehlende Berechtigung. Bitte kaufe zuerst eine Lizenz auf https://frame-train.com'
         },
         { status: 403 }
       );

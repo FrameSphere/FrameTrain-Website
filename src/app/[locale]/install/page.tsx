@@ -427,7 +427,7 @@ export default function InstallPage() {
           <div className="text-center">
             <p className="text-gray-400 mb-4">{t('help.needHelp')}</p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <a href="mailto:support@frametrain.ai" className="text-purple-400 hover:text-purple-300">
+              <a href="mailto:framesphere@gmx.net" className="text-purple-400 hover:text-purple-300">
                 📧 {t('help.emailSupport')}
               </a>
               <Link href="/docs" className="text-purple-400 hover:text-purple-300">

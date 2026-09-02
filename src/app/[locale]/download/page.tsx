@@ -306,7 +306,7 @@ export default function DownloadPage() {
           <p className="mt-8 text-center text-sm text-gray-500">
             {t.rich('supportText', {
               link: (chunks) => (
-                <a href="mailto:support@frametrain.ai" className="text-purple-400 hover:text-purple-300 transition-colors">
+                <a href="mailto:framesphere@gmx.net" className="text-purple-400 hover:text-purple-300 transition-colors">
                   {chunks}
                 </a>
               ),

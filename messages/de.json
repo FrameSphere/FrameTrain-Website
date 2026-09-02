@@ -2664,7 +2664,7 @@
           },
           {
             "q": "Die App startet nicht – was tun?",
-            "a": "Häufige Ursachen: 1. API-Key nicht eingegeben oder ungültig. 2. Keine Internetverbindung für Lizenzvalidierung. 3. macOS: Quarantäne-Flag noch aktiv (sudo xattr -cr). 4. Windows: Datei nicht entsperrt (Eigenschaften → Zulassen). Bei weiteren Problemen: support@frametrain.ai",
+            "a": "Häufige Ursachen: 1. API-Key nicht eingegeben oder ungültig. 2. Keine Internetverbindung für Lizenzvalidierung. 3. macOS: Quarantäne-Flag noch aktiv (sudo xattr -cr). 4. Windows: Datei nicht entsperrt (Eigenschaften → Zulassen). Bei weiteren Problemen: framesphere@gmx.net",
             "tags": [
               "fehler",
               "start",
