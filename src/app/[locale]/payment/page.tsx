@@ -11,6 +11,7 @@ import {
   Lock, Sparkles, ArrowRight, CheckCircle2, Ticket
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { trackSignUp } from '@/lib/analytics'
 
 // ─── Feature items ─────────────────────────────────────────────────────────────
 const FEATURE_META = [
@@ -247,6 +248,26 @@ function PaymentPageInner() {
     const param = searchParams.get('plan')
     if (param === 'yearly') setPlan('yearly')
   }, [searchParams])
+
+  // OAuth-Neuregistrierungen landen hier mit ?signup=google|github (gesetzt im
+  // OAuth-Callback, nur bei tatsächlich neu angelegtem User). Das sign_up-Event
+  // feuert daher hier statt auf der Registrierungsseite — dedupliziert über
+  // sessionStorage, damit ein Reload nicht doppelt zählt.
+  useEffect(() => {
+    const signupMethod = searchParams.get('signup')
+    if (!signupMethod) return
+    // Nur für tatsächlich eingeloggte Nutzer: sonst könnte sich jeder
+    // /payment?signup=google aufrufen und die sign_up-Zahlen aufblähen.
+    if (authLoading || !isAuthenticated) return
+    const key = `ft_signup_tracked_${signupMethod}`
+    try {
+      if (window.sessionStorage.getItem(key)) return
+      window.sessionStorage.setItem(key, '1')
+    } catch {
+      /* kein Storage → einmal feuern ist besser als gar nicht */
+    }
+    trackSignUp(signupMethod)
+  }, [searchParams, authLoading, isAuthenticated])
 
   // Die Kauf-Seite ist erst nach bestätigter E-Mail erreichbar – wer noch
   // nicht bestätigt hat, landet auf der Warteseite.

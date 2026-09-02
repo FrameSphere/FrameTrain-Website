@@ -79,6 +79,16 @@ async function getLatestRelease(): Promise<GitHubRelease | null> {
   }
 }
 
+// Der macOS-Build wird ausschließlich für Apple Silicon gebaut (der
+// PyTorch-Stack liefert die benötigten Versionen nicht mehr für Intel-Macs).
+// Das .dmg-Asset trägt diese Info nicht im Dateinamen, ein sauberer Arch-Guard
+// ist hier deshalb nicht möglich — stattdessen wird der Hinweis mit jeder
+// Download-Antwort mitgeliefert (die Download-Seite zeigt ihn zusätzlich
+// prominent an, bevor überhaupt geladen wird).
+const PLATFORM_NOTES: Record<string, string> = {
+  mac: 'Der macOS-Build ist ausschließlich für Apple Silicon (M1/M2/M3/M4). Auf Intel-Macs startet die App nicht.',
+};
+
 /**
  * Find the correct asset for the platform
  */
@@ -228,6 +238,8 @@ export async function GET(request: NextRequest) {
         filename: asset.name,
         size: asset.size,
         size_mb: (asset.size / 1024 / 1024).toFixed(2),
+        ...(PLATFORM_NOTES[platform] ? { platform_note: PLATFORM_NOTES[platform] } : {}),
+        requires: 'Python 3.9+',
       });
     }
 

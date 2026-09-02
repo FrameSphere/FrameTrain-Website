@@ -6,6 +6,8 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import '../globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
+import { Analytics } from '@/components/Analytics'
+import { CookieBanner } from '@/components/CookieBanner'
 import { siteUrl, pageAlternates, pageOpenGraph } from '@/lib/seo'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -183,6 +185,42 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <head>
+        {/* Google Consent Mode v2 – MUSS vor jedem Tag laufen.
+            Default: alles verweigert. Erst die Zustimmung im Cookie-Banner
+            (src/components/CookieBanner.tsx) schickt ein consent-update und
+            lässt <Analytics /> die Tags überhaupt erst nachladen. Ohne
+            gesetzte NEXT_PUBLIC-IDs passiert hier ohnehin nichts. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'denied',
+  personalization_storage: 'denied',
+  functionality_storage: 'granted',
+  security_storage: 'granted',
+  wait_for_update: 500
+});
+try {
+  var c = window.localStorage.getItem('ft_consent_v1');
+  if (c && JSON.parse(c).status === 'granted') {
+    gtag('consent', 'update', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted',
+      personalization_storage: 'granted'
+    });
+  }
+} catch (e) {}
+`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
@@ -191,7 +229,9 @@ export default async function RootLayout({ children, params }: Props) {
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>{children}</AuthProvider>
+          <CookieBanner />
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   )

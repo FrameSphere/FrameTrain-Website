@@ -117,6 +117,9 @@ export async function POST(req: NextRequest) {
     const metadata: Record<string, string> = {
       userId: user.userId,
       email: user.email,
+      // plan landet mit in der Session, damit das Conversion-Tracking auf der
+      // Success-Seite monatlich/jährlich unterscheiden kann.
+      plan,
       ...(promo ? { promoCodeId: promo.id, promoCode: promo.code } : {}),
     }
 

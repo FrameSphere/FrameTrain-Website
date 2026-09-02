@@ -104,6 +104,9 @@ export async function GET(req: NextRequest) {
     }
 
     // Upsert user
+    // Für das Funnel-Tracking: nur echte Neuregistrierungen sollen später ein
+    // sign_up-Event auslösen, nicht jeder OAuth-Login.
+    let isNewUser = false
     let user = await prisma.user.findFirst({
       where: {
         OR: [
@@ -139,6 +142,7 @@ export async function GET(req: NextRequest) {
         })
       }
     } else {
+      isNewUser = true
       user = await prisma.user.create({
         data: {
           email,
@@ -156,7 +160,10 @@ export async function GET(req: NextRequest) {
     const token = signToken({ userId: user.id, email: user.email })
     const cookieValue = `auth-token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24 * 7}; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`
 
-    const destination = user.hasPaid ? '/dashboard' : '/payment'
+    // ?signup=github signalisiert der Zielseite eine Neuregistrierung — sie
+    // feuert daraufhin (nur mit Consent) genau ein sign_up-Event.
+    const destination =
+      (user.hasPaid ? '/dashboard' : '/payment') + (isNewUser ? '?signup=github' : '')
 
     const response = NextResponse.redirect(`${baseUrl}${destination}`, {
       headers: { 'Set-Cookie': cookieValue },

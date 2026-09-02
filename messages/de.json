@@ -166,6 +166,16 @@
           "privacy": "https://policies.google.com/privacy?hl=de"
         },
         {
+          "name": "Google Analytics / Google Ads",
+          "role": "Reichweitenmessung & Conversion-Tracking – nur mit Einwilligung",
+          "privacy": "https://policies.google.com/privacy?hl=de"
+        },
+        {
+          "name": "Meta (Facebook-Pixel)",
+          "role": "Conversion-Tracking – nur mit Einwilligung",
+          "privacy": "https://www.facebook.com/privacy/policy"
+        },
+        {
           "name": "GitHub",
           "role": "OAuth-Login (optional)",
           "privacy": "https://docs.github.com/de/site-policy/privacy-policies/github-privacy-statement"
@@ -193,7 +203,7 @@
     },
     "s7": {
       "heading": "7. Cookies",
-      "text": "FrameTrain verwendet ausschließlich technisch notwendige Cookies. Die vollständige Liste findest du in unserer <link>Cookie-Richtlinie</link>. Es werden keine Tracking- oder Marketing-Cookies eingesetzt."
+      "text": "FrameTrain setzt technisch notwendige Cookies ohne Einwilligung ein. Analyse- und Marketing-Dienste (Google Analytics 4, Google Ads, Meta-Pixel) laden ausschließlich nach deiner ausdrücklichen Zustimmung im Cookie-Banner und können jederzeit abgelehnt werden. Die vollständige Liste und alle Details findest du in unserer <link>Cookie-Richtlinie</link>."
     },
     "s8": {
       "heading": "8. Datensicherheit",
@@ -280,7 +290,7 @@
     },
     "s2": {
       "heading": "2. Von uns verwendete Cookies",
-      "intro": "FrameTrain verwendet ausschließlich technisch notwendige Cookies. Wir setzen keine Tracking-, Marketing- oder Analyse-Cookies ein, weshalb für die unten genannten Cookies auch kein Cookie-Banner bzw. Consent-Tool erforderlich ist.",
+      "intro": "Die folgenden Cookies sind technisch notwendig und werden immer gesetzt – dafür ist keine Einwilligung erforderlich. Analyse- und Marketing-Dienste (siehe Abschnitt 3) laden ausschließlich nach deiner ausdrücklichen Zustimmung im Cookie-Banner.",
       "columns": { "name": "Cookie", "purpose": "Zweck", "duration": "Dauer", "type": "Typ" },
       "items": [
         { "name": "auth-token", "purpose": "Hält dich in deinem FrameTrain-Account eingeloggt", "duration": "7 Tage", "type": "Notwendig" },
@@ -290,8 +300,8 @@
       ]
     },
     "s3": {
-      "heading": "3. Keine Tracking- oder Marketing-Cookies",
-      "text": "Wir verwenden weder Google Analytics noch Meta Pixel oder andere Tracking- bzw. Werbetechnologien auf dieser Website. Es wird kein Profil über dein Surfverhalten erstellt."
+      "heading": "3. Analyse- & Marketing-Cookies (nur mit deiner Einwilligung)",
+      "text": "Wir können Google Analytics 4, Google Ads und den Meta-Pixel einsetzen, um zu messen, wie unsere Seite genutzt wird und welche Kampagnen zu einem Kauf führen. Diese Dienste werden erst geladen, nachdem du im Cookie-Banner ausdrücklich zugestimmt hast (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Solange du nicht zustimmst oder ablehnst, wird kein einziges Script dieser Anbieter geladen und es werden keine entsprechenden Cookies gesetzt; über Googles Consent Mode v2 stehen zudem alle Einwilligungssignale standardmäßig auf \"denied\". Deine Entscheidung speichern wir lokal in deinem Browser (localStorage-Eintrag \"ft_consent_v1\") – du kannst sie jederzeit über den Link \"Cookie-Einstellungen\" in der Fußzeile ändern oder widerrufen. Beim Kauf übermitteln wir an diese Dienste den Bestellwert, die Währung und eine Transaktions-ID – keine Namen, keine E-Mail-Adressen, keine Zahlungsdaten."
     },
     "s4": {
       "heading": "4. Cookies verwalten",
@@ -305,6 +315,19 @@
       "heading": "6. Kontakt",
       "text": "Bei Fragen zu dieser Cookie-Richtlinie wende dich an <link>framesphere@gmx.net</link>."
     }
+  },
+  "Consent": {
+    "heading": "Cookies & Analyse",
+    "text": "Technisch notwendige Cookies setzen wir immer. Zusätzlich möchten wir mit Analyse- und Marketing-Diensten (Google Analytics, Google Ads, Meta) messen, wie unsere Seite genutzt wird. Diese Dienste laden erst nach deiner Zustimmung – Ablehnen hat keine Nachteile.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen",
+    "revoke": "Einwilligung widerrufen",
+    "close": "Schließen",
+    "manageCta": "Cookie-Einstellungen",
+    "statusGranted": "Aktueller Stand: Du hast zugestimmt.",
+    "statusDenied": "Aktueller Stand: Du hast abgelehnt.",
+    "cookiesLink": "Cookie-Richtlinie",
+    "privacyLink": "Datenschutz"
   },
   "About": {
     "metaTitle": "Über FrameTrain – Mission, Vision, Team | FrameTrain",
@@ -723,6 +746,8 @@
       "passwordPlaceholder": "Mindestens 8 Zeichen",
       "submit": "Weiter zur E-Mail-Bestätigung",
       "submitLoading": "Lädt...",
+      "promoHint": "Gutschein-Code (Gratismonate, Rabatt oder Lifetime)? Nach der Registrierung hier einlösen:",
+      "promoCta": "Code einlösen",
       "haveAccount": "Bereits registriert?",
       "loginLink": "Jetzt anmelden",
       "frameSphereHint": "Mit FrameSphere registrieren = einloggen mit deinem FrameSphere-Account.",
@@ -1093,14 +1118,19 @@
       "heading": "Systemanforderungen",
       "osLabel": "Betriebssystem",
       "os": {
-        "macos": "macOS 11.0+",
+        "macos": "macOS 11+ – nur Apple Silicon (M1/M2/M3/M4)",
         "windows": "Windows 10/11",
         "linux": "Ubuntu 20.04+ (oder äquivalent)"
       },
       "ramLabel": "Arbeitsspeicher",
       "ram": "8GB (16GB empfohlen)",
       "storageLabel": "Speicherplatz",
-      "storage": "2GB frei"
+      "storage": "10 GB frei (50 GB+ empfohlen)",
+      "pythonLabel": "Python",
+      "python": "3.9 oder neuer (zwingend erforderlich)",
+      "pythonNote": "FrameTrain nutzt PyTorch und startet ohne installiertes Python 3.9+ nicht – der erste Start prüft das und bricht sonst ab. Unter Windows musst du Python meist selbst installieren.",
+      "pythonCta": "Python herunterladen (python.org)",
+      "macNote": "Der macOS-Build ist ausschließlich für Apple Silicon (M1/M2/M3/M4). Intel-Macs werden nicht unterstützt, weil der PyTorch-Stack in den benötigten Versionen keine Intel-Macs mehr bedient."
     },
     "help": {
       "needHelp": "Benötigst du Hilfe?",
@@ -1189,7 +1219,7 @@
           },
           {
             "name": "macOS",
-            "desc": "macOS 11+ (Intel & Apple Silicon)",
+            "desc": "macOS 11+ (nur Apple Silicon M1–M4)",
             "file": ".dmg herunterladen"
           },
           {
@@ -1217,8 +1247,9 @@
           "CPU: 4 Kerne",
           "RAM: 8 GB",
           "GPU: NVIDIA GTX 1060 6GB oder Apple M1",
-          "Speicher: 10 GB frei",
-          "OS: Windows 10, macOS 11, Ubuntu 20.04"
+          "Speicher: 10 GB frei (50 GB+ empfohlen)",
+          "Python: 3.9 oder neuer – zwingend erforderlich, wird beim ersten Start geprüft",
+          "OS: Windows 10/11, macOS 11+ (nur Apple Silicon M1–M4), Ubuntu 20.04"
         ],
         "recItems": [
           "CPU: 8+ Kerne",
@@ -2101,7 +2132,7 @@
           },
           {
             "q": "Welche Betriebssysteme werden unterstützt?",
-            "a": "FrameTrain läuft auf Windows 10/11, macOS 11+ (Intel & Apple Silicon) und Ubuntu 20.04+. Alle gängigen Linux-Distributionen mit AppImage-Unterstützung funktionieren ebenfalls.",
+            "a": "FrameTrain läuft auf Windows 10/11, macOS 11+ mit Apple Silicon (M1/M2/M3/M4) und Ubuntu 20.04+. Alle gängigen Linux-Distributionen mit AppImage-Unterstützung funktionieren ebenfalls. Intel-Macs werden nicht unterstützt, da der PyTorch-Stack die benötigten Versionen nicht mehr für Intel-Macs bereitstellt. Auf allen Plattformen ist zusätzlich Python 3.9 oder neuer erforderlich – ohne installiertes Python startet die App nicht.",
             "tags": [
               "os",
               "windows",
@@ -2127,7 +2158,7 @@
           },
           {
             "q": "Gibt es eine kostenlose Testversion?",
-            "a": "Derzeit gibt es keine kostenlose Testversion. Wir planen einen Free Tier mit begrenzten Funktionen. Im Early Access ist der Einstiegspreis von 4,99€/Monat bewusst niedrig gehalten.",
+            "a": "Es gibt keinen offenen Selbstbedienungs-Trial, aber Gutschein-Codes: Mit einem Gratismonate-Code testest du FrameTrain vollständig kostenlos – wahlweise ganz ohne Zahlungsmittel (der Zugang endet dann automatisch) oder mit hinterlegter Karte für den nahtlosen Übergang. Es gibt außerdem Rabatt-Codes und Lifetime-Codes. Codes löst du unter /redeem ein. Codes vergeben wir über Aktionen und Partner – frag uns einfach per E-Mail. Ohne Code gilt der Early-Access-Preis ab 4,99€/Monat, monatlich kündbar.",
             "tags": [
               "kostenlos",
               "trial",
@@ -2166,7 +2197,7 @@
           },
           {
             "q": "Gibt es eine Geldzurückgarantie?",
-            "a": "Derzeit nicht. Da es sich um digitale Inhalte handelt, die sofort zur Verfügung gestellt werden, gilt das gesetzliche Widerrufsrecht eingeschränkt. Bei Problemen hilft unser Support.",
+            "a": "Eine pauschale Geldzurückgarantie gibt es nicht: Da es sich um digitale Inhalte handelt, die sofort bereitgestellt werden, gilt das gesetzliche Widerrufsrecht eingeschränkt. Wenn du vor dem Kauf testen möchtest, nutze einen Gratismonate-Code unter /redeem – „Ohne Abo einlösen\" kostet dich kein Zahlungsmittel und endet automatisch. Bei Problemen hilft dir unser Support weiter.",
             "tags": [
               "garantie",
               "rückerstattung"
@@ -3260,7 +3291,7 @@
         }
       ],
       "frameworksHeading": "Unterstützte Frameworks & Technologien",
-      "frameworksIntro": "Alle Skripte in der Open Library basieren auf gängigen Open-Source-ML-Frameworks und laufen nativ in FrameTrain auf Windows, macOS (Intel & Apple Silicon) und Linux.",
+      "frameworksIntro": "Alle Skripte in der Open Library basieren auf gängigen Open-Source-ML-Frameworks und laufen nativ in FrameTrain auf Windows, macOS (Apple Silicon) und Linux.",
       "howToHeading": "So verwendest du die Open Library",
       "steps": [
         {
@@ -5076,6 +5107,8 @@
       "title": "Early Access Pricing",
       "subtitle": "Jetzt einsteigen bevor der Preis steigt.",
       "increaseNote": "⚡ Preis steigt auf 9,99 € nach 100 Nutzern",
+    "promoHint": "Du hast einen Gutschein-Code?",
+    "promoCta": "Code einlösen",
       "monthly": {
         "label": "Monatlich",
         "price": "4,99€",
@@ -5656,7 +5689,7 @@
       "items": [
         {
           "question": "Unterstützt FrameTrain Apple Silicon (M1, M2, M3, M4)?",
-          "answer": "Ja. FrameTrain läuft nativ auf allen Apple-Silicon-Chips und nutzt Metal MPS für GPU-beschleunigtes Training. Intel-Macs sind nicht der Fokus – ein M-Chip wird empfohlen."
+          "answer": "Ja. FrameTrain läuft nativ auf allen Apple-Silicon-Chips (M1/M2/M3/M4) und nutzt Metal MPS für GPU-beschleunigtes Training. Für Intel-Macs gibt es bewusst keinen Build – der PyTorch-Stack liefert die benötigten Versionen nicht mehr für Intel-Macs. Zusätzlich wird Python 3.9 oder neuer benötigt."
         },
         {
           "question": "Brauche ich eine NVIDIA-GPU oder CUDA, um auf dem Mac zu trainieren?",

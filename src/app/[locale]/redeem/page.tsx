@@ -8,6 +8,7 @@ import {
   Ticket, ArrowRight, ArrowLeft, CheckCircle2, Sparkles, X, Lock,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { trackStartTrial } from '@/lib/analytics'
 
 type Plan = 'monthly' | 'yearly'
 
@@ -120,6 +121,14 @@ export default function RedeemPage() {
           setPromo(null)
           throw new Error(data.reason === 'already_redeemed' ? tPromo('alreadyRedeemed') : tPromo('invalid'))
         }
+        // Funnel-Signal: Zugang ist freigeschaltet, aber es floss kein Geld.
+        // Bewusst kein purchase mit Wert 0 — siehe src/lib/analytics.ts.
+        // Muss vor dem Redirect feuern; dedupliziert über den Code.
+        trackStartTrial({
+          promoType: promo.type,
+          freeMonths: promo.freeMonths,
+          dedupeId: promo.code,
+        })
         // Weiter zur Success-Seite (mit Animation), von dort ins Dashboard
         window.location.href = '/payment/success?promo=redeemed'
         return

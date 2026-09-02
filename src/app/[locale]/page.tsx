@@ -11,7 +11,7 @@ import { GlowCard } from '@/components/ui/spotlight-card'
 import {
   Sparkles, Lock, Rocket, Zap, Code2, Database,
   BarChart3, Package, Shield, ArrowRight, Check,
-  Brain, Cpu, Cloud, Download, Book, ChevronDown
+  Brain, Cpu, Cloud, Download, Book, ChevronDown, Ticket
 } from 'lucide-react'
 /* Temporäre UI Anfang, bald herausnehmen */
 import { ReleaseBanner, ComingSoonBadge, ReleasePromoSection } from '@/components/ReleaseCountdown'
@@ -454,6 +454,20 @@ export default function HomePage() {
               </GlowCard>
               </div>
             </div>
+
+            {/* Gutschein-Pfad sichtbar machen: Gratismonate-, Rabatt- und
+                Lifetime-Codes werden unter /redeem eingelöst. Bewusst dezent,
+                damit die beiden Kauf-CTAs die Primäraktion bleiben. */}
+            <p className="mt-8 text-sm text-gray-500">
+              {t('pricing.promoHint')}{' '}
+              <Link
+                href="/redeem"
+                className="inline-flex items-center gap-1 text-purple-400 hover:text-purple-300 font-medium underline underline-offset-4 transition-colors"
+              >
+                <Ticket className="w-3.5 h-3.5" />
+                {t('pricing.promoCta')}
+              </Link>
+            </p>
           </div>
         </section>
 

@@ -5,7 +5,8 @@ import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { UserPlus, Mail, Lock, CheckCircle } from 'lucide-react'
+import { UserPlus, Mail, Lock, CheckCircle, Ticket } from 'lucide-react'
+import { trackSignUp } from '@/lib/analytics'
 import { useTranslations, useLocale } from 'next-intl'
 
 function OAuthButtons() {
@@ -111,6 +112,9 @@ export default function RegisterPage() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('errors.registrationFailed'))
+      // Frühes Funnel-Signal für die Ad-Plattformen (nur mit Consent, sonst
+      // No-Op). Muss VOR dem Redirect feuern — danach ist die Seite weg.
+      trackSignUp('email')
       // Nicht direkt zur Kauf-Seite: zuerst muss die E-Mail bestätigt werden.
       // Voller Reload, damit der AuthContext das frisch gesetzte Cookie liest.
       window.location.href = `/${locale}/verify-email/pending`
@@ -247,7 +251,21 @@ export default function RegisterPage() {
               </button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-gray-400">
+            {/* Gutschein-Pfad: Gratismonate-/Rabatt-/Lifetime-Codes werden unter
+                /redeem eingelöst (setzt einen Account voraus – deshalb hier
+                als Hinweis nach der Registrierung). */}
+            <p className="mt-6 text-center text-sm text-gray-500">
+              {t('promoHint')}{' '}
+              <Link
+                href="/redeem"
+                className="inline-flex items-center gap-1 text-purple-400 hover:text-purple-300 font-medium transition"
+              >
+                <Ticket className="w-3.5 h-3.5" />
+                {t('promoCta')}
+              </Link>
+            </p>
+
+            <p className="mt-4 text-center text-sm text-gray-400">
               {t('haveAccount')}{' '}
               <Link href="/login" className="text-purple-400 hover:text-purple-300 font-medium transition">
                 {t('loginLink')}

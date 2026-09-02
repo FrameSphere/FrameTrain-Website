@@ -50,9 +50,20 @@ export async function GET(req: NextRequest) {
       select: { hasPaid: true },
     })
 
+    // Conversion-Werte kommen ausschließlich von Stripe, nie vom Client.
+    // amount_total ist in Cent; bei Gratis-Trials (Gutschein-Code) ist der
+    // Betrag 0 — die Success-Seite feuert dann bewusst keinen Kauf-Event.
+    const amountTotal =
+      typeof session.amount_total === 'number' ? session.amount_total / 100 : null
+
     return NextResponse.json({
       valid: true,
       hasPaid: dbUser?.hasPaid ?? false,
+      // Für das Conversion-Tracking auf der Success-Seite
+      transactionId: session.id,
+      amountTotal,
+      currency: session.currency ? session.currency.toUpperCase() : null,
+      plan: (session.metadata?.plan as string | undefined) ?? null,
     })
   } catch (error: any) {
     console.error('verify-session error:', error)

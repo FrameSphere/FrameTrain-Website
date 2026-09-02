@@ -379,7 +379,7 @@ export default function InstallPage() {
           {/* System Requirements */}
           <div className="glass rounded-xl p-6 border border-white/10 mb-8">
             <h3 className="text-xl font-bold text-white mb-4">{t('systemRequirements.heading')}</h3>
-            <div className="grid md:grid-cols-3 gap-4 text-sm">
+            <div className="grid md:grid-cols-4 gap-4 text-sm">
               <div>
                 <p className="text-gray-400 mb-1">{t('systemRequirements.osLabel')}</p>
                 <p className="text-white font-semibold">
@@ -394,7 +394,33 @@ export default function InstallPage() {
                 <p className="text-gray-400 mb-1">{t('systemRequirements.storageLabel')}</p>
                 <p className="text-white font-semibold">{t('systemRequirements.storage')}</p>
               </div>
+              {/* Harte Voraussetzung: die App prüft Python beim ersten Start
+                  und bricht ohne 3.9+ ab. */}
+              <div>
+                <p className="text-gray-400 mb-1">{t('systemRequirements.pythonLabel')}</p>
+                <p className="text-white font-semibold">{t('systemRequirements.python')}</p>
+              </div>
             </div>
+
+            <div className="mt-5 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
+              <p className="text-amber-200/90 text-sm leading-relaxed">
+                {t('systemRequirements.pythonNote')}
+              </p>
+              <a
+                href="https://www.python.org/downloads/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-2 text-amber-300 hover:text-amber-200 text-sm font-semibold underline underline-offset-4"
+              >
+                {t('systemRequirements.pythonCta')}
+              </a>
+            </div>
+
+            {selectedPlatform === 'macos' && (
+              <p className="mt-4 text-sm text-gray-400 leading-relaxed">
+                {t('systemRequirements.macNote')}
+              </p>
+            )}
           </div>
 
           {/* Help */}

@@ -9,6 +9,7 @@ import {
   BookOpen, Play, ArrowRight, Check
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { trackPurchase, trackStartTrial } from '@/lib/analytics'
 
 // ─── Feature Showcase Data ─────────────────────────────────────────────────────
 const FEATURE_META = [
@@ -378,7 +379,28 @@ function PaymentSuccessContent() {
         const data = await res.json()
 
         if (data.valid && data.hasPaid) {
-          // Zahlung bestätigt + DB aktualisiert → Animation starten
+          // Zahlung bestätigt + DB aktualisiert → Conversion feuern, dann Animation.
+          // Werte kommen vom Server (Stripe), nie aus der URL. trackPurchase
+          // dedupliziert selbst über die Stripe-Session-ID und feuert nur bei
+          // erteiltem Consent. Bei Gratis-Trials (amountTotal = 0) bleibt es
+          // bewusst aus — dort entsteht noch kein Umsatz.
+          if (data.transactionId && data.amountTotal > 0 && data.currency) {
+            trackPurchase({
+              transactionId: data.transactionId,
+              value: data.amountTotal,
+              currency: data.currency,
+              plan: data.plan ?? undefined,
+            })
+          } else if (data.transactionId) {
+            // Gutschein-Checkout mit Gratiszeit: Stripe bucht jetzt 0 €.
+            // Kein purchase (kein Umsatz), aber sehr wohl ein Funnel-Signal —
+            // sonst erzeugt ein trial-first-Nutzer gar keine Conversion.
+            // Die spätere echte Abbuchung erfasst der Stripe-Webhook.
+            trackStartTrial({
+              promoType: 'stripe_trial',
+              dedupeId: data.transactionId,
+            })
+          }
           setView('check')
           return
         }

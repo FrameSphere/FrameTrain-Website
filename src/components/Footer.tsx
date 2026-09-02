@@ -1,6 +1,7 @@
 import { Heart } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
+import { CookieSettingsButton } from '@/components/CookieSettingsButton'
 
 /**
  * Fußzeilen-Link.
@@ -155,6 +156,11 @@ export function Footer() {
                 <Link href="/cookies" className={footerLink}>
                   {t('cookies')}
                 </Link>
+              </li>
+              {/* Widerruf der Analyse-Einwilligung – erscheint nur, wenn
+                  überhaupt ein Tag konfiguriert ist. */}
+              <li>
+                <CookieSettingsButton className={`${footerLink} text-left`} />
               </li>
             </ul>
           </div>

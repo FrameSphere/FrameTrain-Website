@@ -3,6 +3,7 @@ import Stripe from 'stripe'
 import { prisma } from '@/lib/prisma'
 import { generateApiKey } from '@/lib/api-key'
 import { consumeRedemptionSlot } from '@/lib/promo'
+import { sendServerPurchase } from '@/lib/server-analytics'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -115,6 +116,32 @@ async function logInvoice(invoice: Stripe.Invoice, ok: boolean) {
     create: { ...data, stripeInvoiceId: invoiceId },
     update: data,
   })
+}
+
+/**
+ * Dedupe-ID für das serverseitige Purchase-Event.
+ *
+ * Bei der ERSTEN Rechnung eines Abos (billing_reason = 'subscription_create')
+ * hat der Browser auf /payment/success bereits ein Purchase mit der
+ * Stripe-CHECKOUT-SESSION-ID als transaction_id/eventID gefeuert. Damit Meta
+ * und GA4 deduplizieren können, muss der Server exakt dieselbe ID verwenden —
+ * sie steht im Payment-Datensatz, den checkout.session.completed angelegt hat.
+ * Für alle weiteren Rechnungen (Verlängerung, trial → paid) gibt es kein
+ * Browser-Pendant; dort ist die Invoice-ID die natürliche, stabile ID.
+ */
+async function resolvePurchaseEventId(
+  invoice: Stripe.Invoice,
+  subscriptionId: string
+): Promise<string> {
+  const invoiceId = invoice.id as string
+  if ((invoice as any).billing_reason !== 'subscription_create') return invoiceId
+
+  const checkoutPayment = await prisma.payment.findFirst({
+    where: { stripeSubscriptionId: subscriptionId, stripeSessionId: { not: null } },
+    orderBy: { createdAt: 'asc' },
+    select: { stripeSessionId: true },
+  })
+  return checkoutPayment?.stripeSessionId ?? invoiceId
 }
 
 export async function POST(req: NextRequest) {
@@ -369,6 +396,26 @@ export async function POST(req: NextRequest) {
             updates.updatedAt = new Date()
             await prisma.user.update({ where: { id: user.id }, data: updates })
           }
+        }
+
+        // ── Serverseitige Conversion (Meta CAPI + GA4 Measurement Protocol) ──
+        // Erfasst insbesondere trial → paid: die erste echte Abbuchung nach
+        // Gratismonaten passiert ohne Browser, der Pixel sieht sie nie.
+        // Läuft bewusst NACH allen DB-Updates und wirft nie — ein Tracking-
+        // Fehler darf keinen Webhook-Retry auslösen.
+        // Ohne META_CAPI_ACCESS_TOKEN / GA4_API_SECRET ist der Aufruf ein No-Op.
+        const amountPaid = invoice.amount_paid ?? 0
+        if (amountPaid > 0) {
+          const eventId = await resolvePurchaseEventId(invoice, subscriptionId)
+          await sendServerPurchase({
+            eventId,
+            value: amountPaid / 100,
+            currency: invoice.currency ?? 'eur',
+            email: invoice.customer_email ?? user?.email ?? null,
+            stripeCustomerId: (invoice.customer as string) ?? null,
+            userId: user?.id ?? null,
+            billingReason: (invoice as any).billing_reason ?? null,
+          })
         }
       } catch (dbError) {
         console.error('❌ Database error in invoice.payment_succeeded:', dbError)
