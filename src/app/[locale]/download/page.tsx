@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import {
-  Download, Loader2, CheckCircle2, XCircle, Terminal, ArrowRight,
+  Download, Loader2, CheckCircle2, XCircle, ArrowRight,
   AlertTriangle, Apple, AppWindow, Monitor, KeyRound, ListOrdered,
 } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
@@ -111,7 +111,7 @@ export default function DownloadPage() {
 
           {/* ── Launch-kritischer Hinweis 1: Python ──
               Die Desktop-App bricht beim Pre-Flight-Check ab, wenn kein
-              Python 3.9+ installiert ist (vor allem unter Windows). Der Kasten
+              Python 3.8+ installiert ist (vor allem unter Windows). Der Kasten
               steht bewusst ÜBER der Download-Karte: wer das erst nach dem Kauf
               erfährt, sitzt in der Sackgasse. Nicht nach unten schieben und
               nicht einklappen. */}
@@ -300,25 +300,6 @@ export default function DownloadPage() {
               {t('installGuideLink')}
               <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
             </Link>
-          </div>
-
-          {/* CLI-Alternative */}
-          <div className="glass rounded-2xl border border-white/10 p-6 sm:p-8">
-            <h2 className="flex items-center gap-2.5 text-lg font-semibold text-white mb-3">
-              <Terminal className="w-5 h-5 text-purple-400" />
-              {t('cli.heading')}
-            </h2>
-            <p className="text-gray-400 text-sm leading-relaxed mb-5">{t('cli.intro')}</p>
-            <div className="rounded-xl bg-black/40 border border-white/5 p-4 font-mono text-[13px] overflow-x-auto">
-              <div className="text-gray-600">{t('cli.commentInstallCli')}</div>
-              <div className="text-green-400 mb-4">pip install frametrain-cli</div>
-
-              <div className="text-gray-600">{t('cli.commentInstallApp')}</div>
-              <div className="text-green-400 mb-4">frametrain install --key YOUR_API_KEY</div>
-
-              <div className="text-gray-600">{t('cli.commentStart')}</div>
-              <div className="text-green-400">frametrain start</div>
-            </div>
           </div>
 
           {/* Support */}

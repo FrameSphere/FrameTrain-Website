@@ -239,7 +239,7 @@ export async function GET(request: NextRequest) {
         size: asset.size,
         size_mb: (asset.size / 1024 / 1024).toFixed(2),
         ...(PLATFORM_NOTES[platform] ? { platform_note: PLATFORM_NOTES[platform] } : {}),
-        requires: 'Python 3.9+',
+        requires: 'Python 3.8+',
       });
     }
 

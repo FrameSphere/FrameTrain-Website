@@ -395,7 +395,7 @@ export default function InstallPage() {
                 <p className="text-white font-semibold">{t('systemRequirements.storage')}</p>
               </div>
               {/* Harte Voraussetzung: die App prüft Python beim ersten Start
-                  und bricht ohne 3.9+ ab. */}
+                  und bricht ohne 3.8+ ab. */}
               <div>
                 <p className="text-gray-400 mb-1">{t('systemRequirements.pythonLabel')}</p>
                 <p className="text-white font-semibold">{t('systemRequirements.python')}</p>

@@ -684,8 +684,8 @@
       "os": { "macos": "macOS 11+ – Apple Silicon only (M1/M2/M3/M4)", "windows": "Windows 10/11", "linux": "Ubuntu 20.04+ (or equivalent)" },
       "ramLabel": "Memory", "ram": "8GB (16GB recommended)",
       "storageLabel": "Storage", "storage": "10 GB free (50 GB+ recommended)",
-      "pythonLabel": "Python", "python": "3.9 or newer (required)",
-      "pythonNote": "FrameTrain runs on PyTorch and will not start without Python 3.9+ installed – the first launch checks for it and aborts otherwise. On Windows you usually have to install Python yourself.",
+      "pythonLabel": "Python", "python": "3.8 or newer (required)",
+      "pythonNote": "FrameTrain runs on PyTorch and will not start without Python 3.8+ installed – the first launch checks for it and aborts otherwise. On Windows you usually have to install Python yourself. PyTorch and all other packages are then installed automatically on first launch – only Python itself has to be present beforehand.",
       "pythonCta": "Download Python (python.org)",
       "macNote": "The macOS build is for Apple Silicon (M1/M2/M3/M4) only. Intel Macs are not supported because the PyTorch stack no longer ships the required versions for Intel Macs."
     },
@@ -975,7 +975,7 @@
         "faqs": [
           { "q": "What is FrameTrain?", "a": "FrameTrain is a desktop app for local machine learning training. You can use it to fine-tune HuggingFace models with LoRA and QLoRA on your own datasets – no cloud, no dependencies, running entirely on your own hardware.", "tags": ["general", "what is"] },
           { "q": "Who is FrameTrain for?", "a": "ML engineers, data scientists, researchers, and developers who want to train AI models locally and in a GDPR-compliant way. Even without deep ML knowledge you can get started with FrameTrain.", "tags": ["target audience"] },
-          { "q": "Which operating systems are supported?", "a": "FrameTrain runs on Windows 10/11, macOS 11+ on Apple Silicon (M1/M2/M3/M4), and Ubuntu 20.04+. All common Linux distributions with AppImage support work as well. Intel Macs are not supported, because the PyTorch stack no longer ships the required versions for Intel Macs. On every platform you also need Python 3.9 or newer – the app will not start without it.", "tags": ["os", "windows", "mac", "linux"] },
+          { "q": "Which operating systems are supported?", "a": "FrameTrain runs on Windows 10/11, macOS 11+ on Apple Silicon (M1/M2/M3/M4), and Ubuntu 20.04+. All common Linux distributions with AppImage support work as well. Intel Macs are not supported, because the PyTorch stack no longer ships the required versions for Intel Macs. On every platform you also need Python 3.8 or newer – the app will not start without it.", "tags": ["os", "windows", "mac", "linux"] },
           { "q": "Is an internet connection required?", "a": "Only at startup for license validation via API key. Training itself runs completely offline. Models from HuggingFace are downloaded once and stored locally.", "tags": ["internet", "offline"] },
           { "q": "Can I use FrameTrain in a company?", "a": "Yes. FrameTrain is deliberately built so that company data never leaves your own infrastructure. There is no automatic telemetry and no cloud uploads during training – your training data, datasets, and model weights never leave your machine. You can optionally enable error reporting in the settings, which sends anonymized diagnostic data (e.g. stack trace, app version) if a crash occurs – off by default and can be disabled at any time. Ideal for GDPR-compliant ML projects.", "tags": ["enterprise", "company"] },
           { "q": "Is there a free trial?", "a": "There is no open self-service trial, but there are voucher codes: a free-months code lets you use FrameTrain in full at no cost – either with no payment method at all (access then ends automatically) or with a card on file for a seamless continuation. There are also discount codes and lifetime codes. Redeem any code at /redeem. We hand out codes through promotions and partners – just email us. Without a code, the Early Access price starts at €4.99/month, cancellable monthly.", "tags": ["free", "trial", "free tier"] }
@@ -1114,7 +1114,7 @@
       "step2": { "heading": "2. Download", "text": "Download the desktop app for your operating system:", "os": [ { "name": "Windows", "desc": "Windows 10/11 (64-bit)", "file": "Download .msi" }, { "name": "macOS", "desc": "macOS 11+ (Apple Silicon M1–M4 only)", "file": "Download .dmg" }, { "name": "Linux", "desc": "Ubuntu 20.04+ (AppImage)", "file": "Download .AppImage" } ] },
       "step3": { "heading": "3. Enter your API key", "text": "On first launch you'll be asked for your API key. Enter the key you received by email. It's stored locally \u2013 you only need to enter it once." },
       "step4": { "heading": "4. Done!", "text": "FrameTrain is now ready to use. Continue to the Quick Start.", "successTitle": "Installation successful!", "successDesc": "FrameTrain now runs locally on your system. No server, no cloud, full control." },
-      "requirements": { "heading": "System Requirements", "minTitle": "Minimum", "recTitle": "Recommended", "minItems": ["CPU: 4 cores", "RAM: 8 GB", "GPU: NVIDIA GTX 1060 6GB or Apple M1", "Storage: 10 GB free (50 GB+ recommended)", "Python: 3.9 or newer – required, checked on first launch", "OS: Windows 10/11, macOS 11+ (Apple Silicon M1–M4 only), Ubuntu 20.04"], "recItems": ["CPU: 8+ cores", "RAM: 16 GB", "GPU: RTX 3060 12GB+ or Apple M2 Pro/Max", "Storage: 50 GB+ free (for large models)", "SSD recommended for fast data access"] }
+      "requirements": { "heading": "System Requirements", "minTitle": "Minimum", "recTitle": "Recommended", "minItems": ["CPU: 4 cores", "RAM: 8 GB", "GPU: NVIDIA GTX 1060 6GB or Apple M1", "Storage: 10 GB free (50 GB+ recommended)", "Python: 3.8 or newer – required, checked on first launch", "OS: Windows 10/11, macOS 11+ (Apple Silicon M1–M4 only), Ubuntu 20.04"], "recItems": ["CPU: 8+ cores", "RAM: 16 GB", "GPU: RTX 3060 12GB+ or Apple M2 Pro/Max", "Storage: 50 GB+ free (for large models)", "SSD recommended for fast data access"] }
     },
     "quickStart": {
       "heading": "Quick Start", "subtitle": "Your first model in 5 steps",
@@ -2479,7 +2479,7 @@
       "items": [
         {
           "question": "Does FrameTrain support Apple Silicon (M1, M2, M3, M4)?",
-          "answer": "Yes. FrameTrain runs natively on all Apple Silicon chips (M1/M2/M3/M4) and uses Metal MPS for GPU-accelerated training. There is deliberately no Intel Mac build – the PyTorch stack no longer ships the required versions for Intel Macs. You also need Python 3.9 or newer."
+          "answer": "Yes. FrameTrain runs natively on all Apple Silicon chips (M1/M2/M3/M4) and uses Metal MPS for GPU-accelerated training. There is deliberately no Intel Mac build – the PyTorch stack no longer ships the required versions for Intel Macs. You also need Python 3.8 or newer."
         },
         {
           "question": "Do I need an NVIDIA GPU or CUDA to train on a Mac?",

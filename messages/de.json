@@ -1127,8 +1127,8 @@
       "storageLabel": "Speicherplatz",
       "storage": "10 GB frei (50 GB+ empfohlen)",
       "pythonLabel": "Python",
-      "python": "3.9 oder neuer (zwingend erforderlich)",
-      "pythonNote": "FrameTrain nutzt PyTorch und startet ohne installiertes Python 3.9+ nicht – der erste Start prüft das und bricht sonst ab. Unter Windows musst du Python meist selbst installieren.",
+      "python": "3.8 oder neuer (zwingend erforderlich)",
+      "pythonNote": "FrameTrain nutzt PyTorch und startet ohne installiertes Python 3.8+ nicht – der erste Start prüft das und bricht sonst ab. Unter Windows musst du Python meist selbst installieren. PyTorch und alle weiteren Pakete installiert FrameTrain danach beim ersten Start automatisch – nur Python selbst muss vorher vorhanden sein.",
       "pythonCta": "Python herunterladen (python.org)",
       "macNote": "Der macOS-Build ist ausschließlich für Apple Silicon (M1/M2/M3/M4). Intel-Macs werden nicht unterstützt, weil der PyTorch-Stack in den benötigten Versionen keine Intel-Macs mehr bedient."
     },
@@ -1248,7 +1248,7 @@
           "RAM: 8 GB",
           "GPU: NVIDIA GTX 1060 6GB oder Apple M1",
           "Speicher: 10 GB frei (50 GB+ empfohlen)",
-          "Python: 3.9 oder neuer – zwingend erforderlich, wird beim ersten Start geprüft",
+          "Python: 3.8 oder neuer – zwingend erforderlich, wird beim ersten Start geprüft",
           "OS: Windows 10/11, macOS 11+ (nur Apple Silicon M1–M4), Ubuntu 20.04"
         ],
         "recItems": [
@@ -2132,7 +2132,7 @@
           },
           {
             "q": "Welche Betriebssysteme werden unterstützt?",
-            "a": "FrameTrain läuft auf Windows 10/11, macOS 11+ mit Apple Silicon (M1/M2/M3/M4) und Ubuntu 20.04+. Alle gängigen Linux-Distributionen mit AppImage-Unterstützung funktionieren ebenfalls. Intel-Macs werden nicht unterstützt, da der PyTorch-Stack die benötigten Versionen nicht mehr für Intel-Macs bereitstellt. Auf allen Plattformen ist zusätzlich Python 3.9 oder neuer erforderlich – ohne installiertes Python startet die App nicht.",
+            "a": "FrameTrain läuft auf Windows 10/11, macOS 11+ mit Apple Silicon (M1/M2/M3/M4) und Ubuntu 20.04+. Alle gängigen Linux-Distributionen mit AppImage-Unterstützung funktionieren ebenfalls. Intel-Macs werden nicht unterstützt, da der PyTorch-Stack die benötigten Versionen nicht mehr für Intel-Macs bereitstellt. Auf allen Plattformen ist zusätzlich Python 3.8 oder neuer erforderlich – ohne installiertes Python startet die App nicht.",
             "tags": [
               "os",
               "windows",
@@ -5689,7 +5689,7 @@
       "items": [
         {
           "question": "Unterstützt FrameTrain Apple Silicon (M1, M2, M3, M4)?",
-          "answer": "Ja. FrameTrain läuft nativ auf allen Apple-Silicon-Chips (M1/M2/M3/M4) und nutzt Metal MPS für GPU-beschleunigtes Training. Für Intel-Macs gibt es bewusst keinen Build – der PyTorch-Stack liefert die benötigten Versionen nicht mehr für Intel-Macs. Zusätzlich wird Python 3.9 oder neuer benötigt."
+          "answer": "Ja. FrameTrain läuft nativ auf allen Apple-Silicon-Chips (M1/M2/M3/M4) und nutzt Metal MPS für GPU-beschleunigtes Training. Für Intel-Macs gibt es bewusst keinen Build – der PyTorch-Stack liefert die benötigten Versionen nicht mehr für Intel-Macs. Zusätzlich wird Python 3.8 oder neuer benötigt."
         },
         {
           "question": "Brauche ich eine NVIDIA-GPU oder CUDA, um auf dem Mac zu trainieren?",
