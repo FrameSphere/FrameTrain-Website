@@ -396,7 +396,7 @@
         "steps": [
           { "title": "Copy your API key", "desc": "Go to the dashboard and copy your personal API key. It serves as the license for the desktop app." },
           { "title": "Download the app", "desc": "Download FrameTrain for Windows, macOS, or Linux – right from the dashboard." },
-          { "title": "Import a model", "desc": "Open the Model Manager and import your first model from the HuggingFace Hub or locally." },
+          { "title": "Import a model", "desc": "After signing in you land on the home screen. From there, open the Model Manager and import your first model from the HuggingFace Hub or locally." },
           { "title": "Start training", "desc": "Upload your dataset, set your hyperparameters, and click \"Start Training\". Done! 🚀" }
         ],
         "back": "← Back",
@@ -629,8 +629,8 @@
     "downloadButton": "Download for {platform}",
     "startingDownload": "Download is starting...",
     "versionInfo": "Version: {version} • Size: {size} MB",
-    "shotAlt": "FrameTrain after installation: model overview with imported HuggingFace models, local models and self-built networks",
-    "shotCaption": "What you get after installing: the model overview with everything stored locally – imported, self-trained or built in the Synapse Builder.",
+    "shotAlt": "FrameTrain after installation: home screen with attention hints, key figures for models, versions, datasets and trainings, plus the most recent trainings and tests",
+    "shotCaption": "What you get after installing: the home screen with your project status – running trainings, key figures and recent runs. From here you move on to models, datasets and training.",
     "shotLink": "See every screen of the app",
     "installGuideHeading": "Installation Guide",
     "installGuideLink": "Detailed guide: security warnings & system requirements",
@@ -974,6 +974,7 @@
         "label": "General",
         "faqs": [
           { "q": "What is FrameTrain?", "a": "FrameTrain is a desktop app for local machine learning training. You can use it to fine-tune HuggingFace models with LoRA and QLoRA on your own datasets – no cloud, no dependencies, running entirely on your own hardware.", "tags": ["general", "what is"] },
+          { "q": "What do I see when I open FrameTrain?", "a": "Since version 1.2.46 you land on the home screen after signing in – an overview of where your project stands: running trainings with progress, what finished or failed since your last visit, key figures for models, versions, datasets and trainings, the most recent runs, the loss trend and your best test results. A hint panel flags what needs attention, using plain rules rather than AI. From there every card leads into the matching area, and the home button at the top left of the sidebar brings you back at any time. Before that, the app opened straight into the model list.", "tags": ["home screen", "home", "overview", "dashboard"] },
           { "q": "Who is FrameTrain for?", "a": "ML engineers, data scientists, researchers, and developers who want to train AI models locally and in a GDPR-compliant way. Even without deep ML knowledge you can get started with FrameTrain.", "tags": ["target audience"] },
           { "q": "Which operating systems are supported?", "a": "FrameTrain runs on Windows 10/11, macOS 11+ on Apple Silicon (M1/M2/M3/M4), and Ubuntu 20.04+. All common Linux distributions with AppImage support work as well. Intel Macs are not supported, because the PyTorch stack no longer ships the required versions for Intel Macs. On every platform you also need Python 3.8 or newer – the app will not start without it.", "tags": ["os", "windows", "mac", "linux"] },
           { "q": "Is an internet connection required?", "a": "Only at startup for license validation via API key. Training itself runs completely offline. Models from HuggingFace are downloaded once and stored locally.", "tags": ["internet", "offline"] },
@@ -1103,7 +1104,7 @@
     "coachSidebar": { "title": "AI Training Coach", "desc": "ML theory & deep dives" },
     "navigation": {
       "gettingStarted": { "title": "Getting Started", "items": { "installation": "Installation", "quickStart": "Quick Start", "firstTraining": "First Training Run" } },
-      "appFeatures": { "title": "App Features", "items": { "modelManager": "Model Manager", "trainingPanel": "Training Panel", "datasetUpload": "Dataset Upload", "analysis": "Analysis", "testing": "Testing", "versioning": "Versioning" } },
+      "appFeatures": { "title": "App Features", "items": { "homePanel": "Home Screen", "modelManager": "Model Manager", "trainingPanel": "Training Panel", "datasetUpload": "Dataset Upload", "analysis": "Analysis", "testing": "Testing", "versioning": "Versioning" } },
       "training": { "title": "Training", "items": { "trainingBasics": "Training Basics", "hyperparameters": "Hyperparameters", "loraTraining": "LoRA Training", "datasetsFormat": "Dataset Formats", "monitoring": "Monitoring" } },
       "advanced": { "title": "Advanced", "items": { "optimization": "Optimization", "gpuSetup": "GPU Setup", "export": "Export", "troubleshooting": "Troubleshooting", "settings": "Settings" } },
       "resources": { "title": "Resources", "items": { "themes": "Themes", "presets": "Presets", "updates": "Updates" } }
@@ -1119,7 +1120,7 @@
     "quickStart": {
       "heading": "Quick Start", "subtitle": "Your first model in 5 steps",
       "steps": [
-        { "title": "Import a model", "desc": "Open the Model Manager and import a HuggingFace model (e.g. bert-base-uncased) or load a local model.", "details": "Just enter the HuggingFace model ID in the search field and click Download." },
+        { "title": "Import a model", "desc": "After signing in you land on the home screen. Switch to the Model Manager on the left and import a HuggingFace model (e.g. bert-base-uncased) or load a local model.", "details": "Just enter the HuggingFace model ID in the search field and click Download." },
         { "title": "Upload a dataset", "desc": "Upload your dataset as a CSV or JSONL file. Minimal structure: text + label columns.", "details": "FrameTrain validates the dataset automatically and shows a preview of the first rows." },
         { "title": "Configure training", "desc": "Choose epochs, batch size, learning rate, and LoRA parameters. We recommend the defaults to get started.", "details": "The Quick Start defaults are optimal for most 7B models with LoRA." },
         { "title": "Start training", "desc": "Click Start Training. FrameTrain trains locally on your GPU \u2013 no internet connection needed.", "details": "The progress bar and live charts show loss and accuracy in real time." },
@@ -1134,6 +1135,25 @@
       "step3": { "heading": "3. Set parameters", "text": "Recommended starting parameters for this example:" },
       "step4": { "heading": "4. Observe training", "text": "During training you'll see:", "items": [ { "label": "Training Loss", "desc": "should decrease steadily" }, { "label": "Validation Accuracy", "desc": "should increase toward 90%+" }, { "label": "GPU Utilization", "desc": "should be around 80-100%" }, { "label": "Time Remaining", "desc": "estimated training time" } ] },
       "tipTitle": "Pro Tip", "tipDesc": "For your first training run, always start with few epochs (2-3) and a small dataset. That way you quickly see whether the configuration works."
+    },
+    "homePanel": {
+      "heading": "Home Screen", "subtitle": "Where you land after signing in – project status instead of a model list",
+      "intro": "Since version 1.2.46, FrameTrain opens on the home screen after login instead of the model overview. It answers a single question: what happened while you were away? The home button at the top left of the sidebar brings you back at any time. Every card is a jump into the matching area – the home screen is deliberately not a second menu.",
+      "features": [ { "title": "Running now", "desc": "Active trainings with progress, current epoch, step and loss – without switching to the training panel." }, { "title": "Since your last visit", "desc": "What finished, stopped or failed since you last opened the app. The timestamp stays frozen while the page is open." }, { "title": "Key figures & recent runs", "desc": "Models, versions including disk usage, datasets and trainings, plus the most recent trainings and tests." }, { "title": "Loss trend & leaderboard", "desc": "Final loss of the last completed runs as a sparkline, and a ranking of the best test results by accuracy." } ],
+      "insightsHeading": "Needs attention",
+      "insightsText": "The hint panel at the top of the page runs on plain rules – no AI, no tokens, no cost. It only speaks up when there is something to report, and shows at most five hints at a time. One click jumps straight to where the problem can be fixed:",
+      "insights": [
+        "A training run is active, but sleep is not suppressed – the machine could doze off mid-run overnight.",
+        "A model's last run failed or was stopped, with no new attempt since (tracked per model).",
+        "Possible overfitting: in the most recent completed run, validation loss is more than 1.5× the training loss.",
+        "Weak test result: the most recent test scores below 60% accuracy.",
+        "Models that have never had a completed test.",
+        "Datasets that have never been used in a training run."
+      ],
+      "briefingHeading": "AI briefing",
+      "briefingText": "At the press of a button, your configured AI provider sums up the current state in a few sentences: a short intro, bullet points, and one highlighted recommendation. The briefing is stored together with a checksum of the underlying facts – as long as nothing substantial changes, the stored text is shown instead of spending tokens again. Without a configured AI assistant the card stays visible but inactive.",
+      "briefingTipTitle": "Never runs on its own",
+      "briefingTipDesc": "The briefing is only ever generated on click. Opening the home screen costs nothing – every other insight is derived locally from your own training data."
     },
     "modelManager": {
       "heading": "Model Manager", "subtitle": "All your models in one place",
@@ -2196,15 +2216,15 @@
   },
   "Screenshots": {
     "metaTitle": "FrameTrain Screenshots – the ML Training App in Detail",
-    "metaDescription": "Every FrameTrain screen explained: configure training, read loss curves, AI analysis, Synapse Builder, model versions – real screenshots from the desktop app.",
+    "metaDescription": "Every FrameTrain screen explained: the home screen with your project status, configure training, read loss curves, AI analysis, Synapse Builder, model versions – real screenshots from the desktop app.",
     "ogTitle": "FrameTrain Screenshots – local ML training in practice",
-    "ogDescription": "From the HuggingFace import through hyperparameters and LoRA to loss curves and AI analysis: every screen of the desktop app, explained.",
+    "ogDescription": "From the home screen through the HuggingFace import and LoRA to loss curves and AI analysis: every screen of the desktop app, explained.",
     "breadcrumb": "Screenshots",
     "tourLinkLabel": "See every screen of the app",
     "badge": "Product tour",
     "h1Line1": "FrameTrain screenshots:",
     "h1Line2": "what local ML training looks like",
-    "intro": "No mockups, and no video that loops back to the start after two minutes. The screenshots below show the desktop app as it runs on your machine – from importing a HuggingFace model through training configuration to loss curves and model versions. Each section explains what the panel does and where it sits in the workflow.",
+    "intro": "No mockups, and no video that loops back to the start after two minutes. The screenshots below show the desktop app as it runs on your machine, in the order you meet it: first the home screen you land on after signing in, then importing a HuggingFace model, configuring training, and finally loss curves and model versions. Each section explains what the panel does and where it sits in the workflow.",
     "introNote": "All screenshots come from the English interface. The app is fully bilingual – switch the language to see the same panels in German.",
     "jumpHeading": "Jump to a panel",
     "relatedLabel": "Read more",
@@ -2214,6 +2234,19 @@
     "ctaStart": "Get started",
     "ctaDownload": "Go to download",
     "items": [
+      {
+        "id": "home",
+        "slug": "home",
+        "title": "Home screen – what happened while you were away",
+        "text": "After signing in, FrameTrain no longer drops you into the middle of the model list. It opens on an overview of where the project stands: is a training run in progress, and how far along is it? What finished or failed since your last visit? Below that sit the key numbers including disk usage, the most recent trainings and tests, the loss trend across recent runs, and a leaderboard by accuracy. Every tile is a jump into the matching area – the home screen is a status report, not a second menu. The home button at the top left of the sidebar brings you back at any time.",
+        "alt": "FrameTrain home screen after login with greeting, a \"Needs attention\" panel, key figures for models, versions, datasets and trainings, plus the most recent trainings and tests",
+        "caption": "The home screen: what needs attention up top, key figures and recent runs below – every card leads straight into the matching area.",
+        "bullets": [
+          "Running trainings with progress, plus results since your last visit",
+          "\"Needs attention\" warns from plain rules – no AI involved, no cost",
+          "AI briefing on demand, stored and only regenerated when facts change"
+        ]
+      },
       {
         "id": "models",
         "slug": "models",

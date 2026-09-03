@@ -13,6 +13,7 @@ import {
   Shield, Package, BarChart3, Play, CheckCircle2, AlertCircle,
   Sparkles, Lightbulb, TrendingUp, GitBranch, Gauge, Layers,
   Brain, Workflow, Lock, Zap as ZapIcon,
+  Home, Activity, Trophy, HardDrive,
   AlertTriangle,
   TrendingDown,
   Clock
@@ -62,6 +63,7 @@ export default function DocsPage() {
       id: 'app-features',
       icon: <Sparkles className="w-4 h-4" />,
       items: [
+        { id: 'home-panel', title: t('navigation.appFeatures.items.homePanel') },
         { id: 'model-manager', title: t('navigation.appFeatures.items.modelManager') },
         { id: 'training-panel', title: t('navigation.appFeatures.items.trainingPanel') },
         { id: 'dataset-upload', title: t('navigation.appFeatures.items.datasetUpload') },
@@ -204,6 +206,7 @@ export default function DocsPage() {
                   <div className={activeSection === 'installation' ? '' : 'hidden'}><InstallationSection /></div>
                   <div className={activeSection === 'quick-start' ? '' : 'hidden'}><QuickStartSection /></div>
                   <div className={activeSection === 'first-training' ? '' : 'hidden'}><FirstTrainingSection /></div>
+                  <div className={activeSection === 'home-panel' ? '' : 'hidden'}><HomePanelSection /></div>
                   <div className={activeSection === 'model-manager' ? '' : 'hidden'}><ModelManagerSection /></div>
                   <div className={activeSection === 'training-panel' ? '' : 'hidden'}><TrainingPanelSection /></div>
                   <div className={activeSection === 'dataset-upload' ? '' : 'hidden'}><DatasetUploadSection /></div>
@@ -436,6 +439,63 @@ function FirstTrainingSection() {
           title={t('tipTitle')}
           description={t('tipDesc')}
         />
+      </div>
+    </div>
+  )
+}
+
+// Die Startseite ist seit 1.2.46 der Landepunkt nach dem Login – davor landete
+// man direkt in der Modell-Liste. Deshalb steht sie hier vor dem Model Manager.
+function HomePanelSection() {
+  const t = useTranslations('Docs.homePanel')
+  const features = t.raw('features') as { title: string; desc: string }[]
+  const insights = t.raw('insights') as string[]
+  const featureIcons = [
+    <Activity className="w-6 h-6" />,
+    <Clock className="w-6 h-6" />,
+    <HardDrive className="w-6 h-6" />,
+    <Trophy className="w-6 h-6" />,
+  ]
+  return (
+    <div>
+      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
+        <Home className="w-8 h-8 text-purple-400" />
+        {t('heading')}
+      </h2>
+      <p className="text-gray-400 mb-8">{t('subtitle')}</p>
+
+      <div className="space-y-8">
+        <div>
+          <p className="text-gray-400 mb-4">{t('intro')}</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {features.map((f, i) => (
+              <FeatureCard key={f.title} icon={featureIcons[i]} title={f.title} desc={f.desc} />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('insightsHeading')}</h2>
+          <p className="text-gray-400 mb-4">{t('insightsText')}</p>
+          <ul className="space-y-3 text-gray-400 text-sm">
+            {insights.map((item, i) => (
+              <li key={i} className="flex gap-3">
+                <AlertTriangle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('briefingHeading')}</h2>
+          <p className="text-gray-400 mb-4">{t('briefingText')}</p>
+          <InfoBox
+            type="info"
+            title={t('briefingTipTitle')}
+            description={t('briefingTipDesc')}
+          />
+        </div>
       </div>
     </div>
   )

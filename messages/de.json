@@ -651,7 +651,7 @@
           },
           {
             "title": "Modell importieren",
-            "desc": "Öffne den Model Manager und importiere dein erstes Modell von HuggingFace Hub oder lokal."
+            "desc": "Nach dem Login landest du auf der Startseite. Von dort in den Model Manager wechseln und das erste Modell von HuggingFace Hub oder lokal importieren."
           },
           {
             "title": "Training starten",
@@ -970,8 +970,8 @@
     "downloadButton": "Download für {platform}",
     "startingDownload": "Download wird gestartet...",
     "versionInfo": "Version: {version} • Größe: {size} MB",
-    "shotAlt": "FrameTrain nach der Installation: Modellübersicht mit importierten HuggingFace-Modellen, lokalen Modellen und selbst gebauten Netzen",
-    "shotCaption": "Das erwartet dich nach der Installation: die Modellübersicht mit allem, was lokal liegt – importiert, selbst trainiert oder im Synapse Builder gebaut.",
+    "shotAlt": "FrameTrain nach der Installation: Startseite mit Hinweisen, Kennzahlen zu Modellen, Versionen, Datasets und Trainings sowie den letzten Trainings und Tests",
+    "shotCaption": "Das erwartet dich nach der Installation: die Startseite mit dem Stand deines Projekts – laufende Trainings, Kennzahlen und die letzten Läufe. Von hier geht es in Modelle, Datensätze und Training.",
     "shotLink": "Alle Oberflächen der App ansehen",
     "installGuideHeading": "Installationsanleitung",
     "installGuideLink": "Ausführliche Anleitung: Sicherheitswarnungen & Systemanforderungen",
@@ -1163,6 +1163,7 @@
       "appFeatures": {
         "title": "App-Funktionen",
         "items": {
+          "homePanel": "Startseite",
           "modelManager": "Model Manager",
           "trainingPanel": "Training Panel",
           "datasetUpload": "Dataset Upload",
@@ -1266,7 +1267,7 @@
       "steps": [
         {
           "title": "Modell importieren",
-          "desc": "Öffne den Model Manager und importiere ein HuggingFace-Modell (z.B. bert-base-uncased) oder lade ein lokales Modell.",
+          "desc": "Nach dem Login landest du auf der Startseite. Wechsle links in den Model Manager und importiere ein HuggingFace-Modell (z.B. bert-base-uncased) oder lade ein lokales Modell.",
           "details": "Im Suchfeld einfach die HuggingFace Model-ID eingeben und auf Herunterladen klicken."
         },
         {
@@ -1346,6 +1347,43 @@
       },
       "tipTitle": "Profi-Tipp",
       "tipDesc": "Für das erste Training immer mit wenigen Epochs (2-3) und kleinem Datensatz starten. So siehst du schnell, ob die Konfiguration funktioniert."
+    },
+    "homePanel": {
+      "heading": "Startseite",
+      "subtitle": "Der Landepunkt nach dem Login – Projektstand statt Modell-Liste",
+      "intro": "Seit Version 1.2.46 öffnet FrameTrain nach dem Login die Startseite statt der Modellübersicht. Sie beantwortet eine einzige Frage: Was ist passiert, während du weg warst? Über den Home-Button oben links in der Seitenleiste kommst du jederzeit zurück. Jede Karte ist ein Sprung in den zugehörigen Bereich – die Startseite ist bewusst kein zweites Menü.",
+      "features": [
+        {
+          "title": "Läuft gerade",
+          "desc": "Aktive Trainings mit Fortschritt, aktueller Epoche, Schritt und Loss – ohne ins Training-Panel zu wechseln."
+        },
+        {
+          "title": "Seit deinem letzten Besuch",
+          "desc": "Was seit dem letzten Öffnen fertig wurde, gestoppt hat oder fehlgeschlagen ist. Der Zeitstempel friert ein, solange die Seite offen bleibt."
+        },
+        {
+          "title": "Kennzahlen & letzte Läufe",
+          "desc": "Modelle, Versionen inklusive Speicherbelegung, Datasets und Trainings, dazu die letzten Trainings und Tests."
+        },
+        {
+          "title": "Loss-Trend & Bestenliste",
+          "desc": "Final-Loss der letzten abgeschlossenen Trainings als Sparkline und eine Rangliste der besten Testergebnisse nach Accuracy."
+        }
+      ],
+      "insightsHeading": "Braucht Aufmerksamkeit",
+      "insightsText": "Der Hinweisbereich am Kopf der Seite arbeitet rein regelbasiert – keine KI, keine Tokens, keine Kosten. Er meldet sich nur, wenn es etwas zu melden gibt, und zeigt höchstens fünf Hinweise auf einmal. Ein Klick springt direkt an die Stelle, an der sich das Problem beheben lässt:",
+      "insights": [
+        "Ein Training läuft, aber der Ruhezustand ist nicht unterdrückt – der Rechner könnte mitten im Nachtlauf einschlafen.",
+        "Der letzte Lauf eines Modells ist fehlgeschlagen oder wurde gestoppt, ohne dass es seitdem einen neuen Versuch gab (pro Modell getrennt).",
+        "Overfitting-Verdacht: Im jüngsten abgeschlossenen Lauf liegt der Validation Loss mehr als 1,5-mal so hoch wie der Training Loss.",
+        "Schwaches Testergebnis: Der jüngste Test kommt auf weniger als 60 % Accuracy.",
+        "Modelle, für die es noch keinen abgeschlossenen Test gibt.",
+        "Datasets, die noch nie in einem Training benutzt wurden."
+      ],
+      "briefingHeading": "KI-Briefing",
+      "briefingText": "Auf Knopfdruck fasst der eingerichtete KI-Anbieter den Stand in wenigen Sätzen zusammen: kurze Einleitung, Stichpunkte und eine hervorgehobene Handlungsempfehlung. Das Briefing wird zusammen mit einer Prüfsumme der zugrunde liegenden Fakten gespeichert – solange sich nichts Wesentliches ändert, wird der gespeicherte Text angezeigt, statt erneut Tokens zu verbrauchen. Ohne eingerichteten KI-Assistenten bleibt die Karte sichtbar, aber inaktiv.",
+      "briefingTipTitle": "Läuft nie von allein",
+      "briefingTipDesc": "Das Briefing wird ausschließlich per Klick erzeugt. Beim Öffnen der Startseite entstehen keine KI-Kosten – alle anderen Auswertungen laufen lokal aus deinen eigenen Trainingsdaten."
     },
     "modelManager": {
       "heading": "Model Manager",
@@ -2121,6 +2159,16 @@
             "tags": [
               "allgemein",
               "was ist"
+            ]
+          },
+          {
+            "q": "Was sehe ich, wenn ich FrameTrain öffne?",
+            "a": "Seit Version 1.2.46 landest du nach dem Login auf der Startseite – einer Übersicht über den Stand deines Projekts: laufende Trainings mit Fortschritt, was seit deinem letzten Besuch fertig wurde oder fehlgeschlagen ist, Kennzahlen zu Modellen, Versionen, Datasets und Trainings, die letzten Läufe, der Loss-Trend und die besten Testergebnisse. Ein Hinweisbereich meldet regelbasiert, was gerade Aufmerksamkeit braucht. Von dort führt jede Karte in den passenden Bereich; der Home-Button oben links in der Seitenleiste bringt dich jederzeit zurück. Davor öffnete die App direkt die Modell-Liste.",
+            "tags": [
+              "startseite",
+              "home",
+              "übersicht",
+              "dashboard"
             ]
           },
           {
@@ -5391,15 +5439,15 @@
   },
   "Screenshots": {
     "metaTitle": "FrameTrain Screenshots – die ML-Training-App im Detail",
-    "metaDescription": "Alle Oberflächen von FrameTrain im Überblick: Training konfigurieren, Loss-Kurven lesen, KI-Analyse, Synapse Builder, Versionen – Screenshots aus der Desktop-App.",
+    "metaDescription": "Alle Oberflächen von FrameTrain im Überblick: Startseite mit Projektstand, Training konfigurieren, Loss-Kurven lesen, KI-Analyse, Synapse Builder, Versionen – Screenshots aus der Desktop-App.",
     "ogTitle": "FrameTrain Screenshots – lokales ML-Training in der Praxis",
-    "ogDescription": "Vom HuggingFace-Import über Hyperparameter und LoRA bis zu Loss-Kurven und KI-Analyse: jede Oberfläche der Desktop-App erklärt.",
+    "ogDescription": "Von der Startseite über den HuggingFace-Import und LoRA bis zu Loss-Kurven und KI-Analyse: jede Oberfläche der Desktop-App erklärt.",
     "breadcrumb": "Screenshots",
     "tourLinkLabel": "Alle Oberflächen der App im Überblick",
     "badge": "Produkt-Rundgang",
     "h1Line1": "FrameTrain Screenshots:",
     "h1Line2": "so sieht lokales ML-Training aus",
-    "intro": "Keine Mockups und kein Video, das nach zwei Minuten wieder von vorn läuft. Die folgenden Screenshots zeigen die Desktop-App so, wie sie auf dem Rechner läuft – vom Import eines HuggingFace-Modells über die Trainingskonfiguration bis zu Loss-Kurven und Modellversionen. Jeder Abschnitt erklärt, was das Panel tut und an welcher Stelle des Ablaufs es sitzt.",
+    "intro": "Keine Mockups und kein Video, das nach zwei Minuten wieder von vorn läuft. Die folgenden Screenshots zeigen die Desktop-App so, wie sie auf dem Rechner läuft – in der Reihenfolge, in der man ihr begegnet: zuerst die Startseite, auf der man nach dem Login landet, dann der Import eines HuggingFace-Modells, die Trainingskonfiguration und am Ende Loss-Kurven und Modellversionen. Jeder Abschnitt erklärt, was das Panel tut und an welcher Stelle des Ablaufs es sitzt.",
     "introNote": "Alle Screenshots stammen aus der deutschen Oberfläche. Die App ist vollständig zweisprachig – über die Sprachumschaltung siehst du dieselben Panels auf Englisch.",
     "jumpHeading": "Direkt zum Panel",
     "relatedLabel": "Mehr dazu",
@@ -5409,6 +5457,19 @@
     "ctaStart": "Jetzt starten",
     "ctaDownload": "Zum Download",
     "items": [
+      {
+        "id": "startseite",
+        "slug": "home",
+        "title": "Startseite – was passiert ist, während du weg warst",
+        "text": "Nach dem Login öffnet FrameTrain nicht mehr mitten in der Modell-Liste, sondern auf einer Übersicht des Projektstands: Läuft gerade ein Training, samt Fortschritt? Was ist seit dem letzten Besuch fertig geworden oder fehlgeschlagen? Darunter Kennzahlen inklusive Speicherbelegung, die letzten Trainings und Tests, der Loss-Trend der letzten Läufe und eine Bestenliste nach Accuracy. Jede Kachel ist ein Sprung in den passenden Bereich – die Startseite ist ein Statusbericht, kein zweites Menü. Über den Home-Button oben links in der Seitenleiste kommst du jederzeit zurück.",
+        "alt": "FrameTrain Startseite nach dem Login mit Begrüßung, Hinweisbereich „Braucht Aufmerksamkeit“, Kennzahlen zu Modellen, Versionen, Datasets und Trainings sowie den letzten Trainings und Tests",
+        "caption": "Die Startseite: oben die Hinweise, die gerade Aufmerksamkeit brauchen, darunter Kennzahlen und die letzten Läufe – jede Karte führt direkt in den zugehörigen Bereich.",
+        "bullets": [
+          "Laufende Trainings mit Fortschritt und Ergebnisse seit dem letzten Besuch",
+          "„Braucht Aufmerksamkeit“ warnt regelbasiert – ohne KI und ohne Kosten",
+          "KI-Briefing auf Knopfdruck, gespeichert und nur bei echter Änderung neu"
+        ]
+      },
       {
         "id": "modelle",
         "slug": "models",

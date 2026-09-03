@@ -22,6 +22,7 @@ export function GET() {
 FrameTrain is aimed at developers, researchers and privacy-conscious teams who want to fine-tune large language models and build custom neural networks without sending data to the cloud. It is GDPR-compliant by design because training runs entirely on the user's machine.
 
 ## What FrameTrain does
+- Home screen after login: project status with running trainings, results since the last visit, key figures, loss trend, accuracy leaderboard and rule-based "needs attention" hints
 - Local LLM fine-tuning with LoRA and QLoRA (no cloud lock-in, data stays on device)
 - Import and train Hugging Face models; export trained models (incl. GGUF)
 - Visual neural-network builder ("Synapse Builder") for Transformer, CNN and LSTM architectures

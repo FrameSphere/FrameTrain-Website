@@ -264,7 +264,7 @@ export default function DownloadPage() {
           <div className="mb-10">
             <AppScreenshot
               locale={locale}
-              slug="models"
+              slug="home"
               alt={t('shotAlt')}
               caption={t('shotCaption')}
             />
