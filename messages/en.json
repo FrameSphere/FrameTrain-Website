@@ -568,32 +568,75 @@
     "cta": { "heading": "Always up to date", "text": "FrameTrain automatically receives updates with every version via the built-in auto-updater. No manual downloads needed.", "ctaStart": "Get Started", "ctaDocs": "Documentation" },
     "staticReleases": [
       {
-        "version": "0.9.2", "date": "2025-01-15", "tag": "Early Access", "tagColor": "purple",
+        "version": "1.2.62",
+        "date": "2026-09-12",
+        "tag": "Early Access",
+        "tagColor": "purple",
         "entries": [
-          { "type": "feature", "text": "QLoRA (Quantized LoRA) – training now also on GPUs with 6 GB VRAM" },
-          { "type": "feature", "text": "Apple M4 chip: improved MPS performance through optimized Metal shaders" },
-          { "type": "improvement", "text": "Training dashboard: new loss curve with smoothing filter (EMA)" },
-          { "type": "fix", "text": "Fixed: gradient checkpointing caused a memory leak on Windows" },
-          { "type": "fix", "text": "Fixed: GGUF export for models above 7B parameters" }
+          {
+            "type": "fix",
+            "text": "RAM calculator and AI coach only suggest measures the model type supports – for YOLO that is batch, imgsz and FP16. Apply buttons for settings without effect are filtered out."
+          },
+          {
+            "type": "improvement",
+            "text": "Gradient checkpointing and group by length are hidden for YOLO."
+          },
+          {
+            "type": "feature",
+            "text": "The RAM estimate for image models uses the image size (imgsz) instead of the text length (1.2.61)."
+          },
+          {
+            "type": "fix",
+            "text": "The Linux build no longer fails because of a single unreachable package server; Linux packages are back from 1.2.61."
+          }
         ]
       },
       {
-        "version": "0.9.1", "date": "2024-12-10", "tag": "Early Access", "tagColor": "purple",
+        "version": "1.2.58",
+        "date": "2026-09-10",
+        "tag": "Early Access",
+        "tagColor": "purple",
         "entries": [
-          { "type": "feature", "text": "BF16 mixed precision training for NVIDIA Ampere+ GPUs" },
-          { "type": "feature", "text": "Dataset validation: automatic detection of malformed JSON/JSONL lines" },
-          { "type": "improvement", "text": "Startup time reduced by ~40% through lazy loading of ML libraries" },
-          { "type": "security", "text": "Dependency updates: PyTorch 2.2.1, Transformers 4.38.x, Safetensors 0.4.x" }
+          {
+            "type": "feature",
+            "text": "Skills in the AI coach: typing / in the input field opens prepared questions for the current page, such as /ram, /assess or /review."
+          },
+          {
+            "type": "feature",
+            "text": "The RAM estimate is compared with your actual memory and reports “fits”, “tight” or “not enough” – in the panel and in the coach with the same formula (1.2.57)."
+          },
+          {
+            "type": "improvement",
+            "text": "Coach buttons only appear where they have an effect on the page; token usage per round drops by 52–65% (1.2.57)."
+          },
+          {
+            "type": "fix",
+            "text": "A code suggestion that does not fit is marked “not applicable” instead of reporting success; applied code can no longer break the script (1.2.55, 1.2.56)."
+          }
         ]
       },
       {
-        "version": "0.9.0", "date": "2024-11-01", "tag": "Early Access Launch", "tagColor": "green",
+        "version": "1.2.49",
+        "date": "2026-09-09",
+        "tag": "Early Access",
+        "tagColor": "purple",
         "entries": [
-          { "type": "feature", "text": "🚀 First public Early Access launch of FrameTrain" },
-          { "type": "feature", "text": "LoRA fine-tuning: configurable rank, alpha, dropout, and target modules" },
-          { "type": "feature", "text": "HuggingFace Hub integration: direct model import via search" },
-          { "type": "feature", "text": "Live training monitor: real-time charts for loss, accuracy, and learning rate" },
-          { "type": "feature", "text": "GPU support: NVIDIA CUDA from GTX 1060, Apple Silicon M1/M2/M3" }
+          {
+            "type": "feature",
+            "text": "One API key per AI provider: Claude, OpenAI and Groq each keep their key, switching no longer loses one."
+          },
+          {
+            "type": "improvement",
+            "text": "Every AI feature works reliably at every token budget; Claude's reasoning effort scales with the budget (1.2.48)."
+          },
+          {
+            "type": "fix",
+            "text": "Empty AI answers show an explanatory error; the AI proxy has timeouts instead of loading forever (1.2.48)."
+          },
+          {
+            "type": "fix",
+            "text": "Saving with an empty key field no longer deletes a stored key."
+          }
         ]
       }
     ]
@@ -975,6 +1018,31 @@
         "faqs": [
           { "q": "What is FrameTrain?", "a": "FrameTrain is a desktop app for local machine learning training. You can use it to fine-tune HuggingFace models with LoRA and QLoRA on your own datasets – no cloud, no dependencies, running entirely on your own hardware.", "tags": ["general", "what is"] },
           { "q": "What do I see when I open FrameTrain?", "a": "Since version 1.2.46 you land on the home screen after signing in – an overview of where your project stands: running trainings with progress, what finished or failed since your last visit, key figures for models, versions, datasets and trainings, the most recent runs, the loss trend and your best test results. A hint panel flags what needs attention, using plain rules rather than AI. From there every card leads into the matching area, and the home button at the top left of the sidebar brings you back at any time. Before that, the app opened straight into the model list.", "tags": ["home screen", "home", "overview", "dashboard"] },
+          {
+            "q": "Which AI features does the app have and what do they cost?",
+            "a": "The AI features are optional and off by default. Once enabled, an AI coach helps on every page, and there is a code assistant for your own scripts in Dev Train and Dev Test, a metrics assistant in training, the AI training analysis, Synapse Magic in the Synapse Builder and the AI briefing on the home screen. You choose Claude, OpenAI or Groq with your own API key – each provider keeps its own key, stored securely in your system keychain – or Ollama, fully local and without a key. FrameTrain charges nothing extra for this: any cost comes from the provider you pick, and the token budget from Minimal to Unlimited sets how detailed and thorough all AI features are.",
+            "tags": [
+              "ai",
+              "coach",
+              "assistant",
+              "token budget",
+              "api key",
+              "ollama",
+              "claude",
+              "openai",
+              "groq"
+            ]
+          },
+          {
+            "q": "What are skills in the AI coach?",
+            "a": "Since version 1.2.58, typing / in the coach's input field opens a list of prepared questions for the current page – for example /ram on the training page (“Will this run fit on my machine?”), /assess in the analysis or /review in Dev Train. /here and /next are available everywhere. Pick one with the arrow keys and Enter, with Tab or by clicking. Skills cost no extra tokens; they just ask the question more precisely.",
+            "tags": [
+              "skills",
+              "coach",
+              "slash",
+              "commands"
+            ]
+          },
           { "q": "Who is FrameTrain for?", "a": "ML engineers, data scientists, researchers, and developers who want to train AI models locally and in a GDPR-compliant way. Even without deep ML knowledge you can get started with FrameTrain.", "tags": ["target audience"] },
           { "q": "Which operating systems are supported?", "a": "FrameTrain runs on Windows 10/11, macOS 11+ on Apple Silicon (M1/M2/M3/M4), and Ubuntu 20.04+. All common Linux distributions with AppImage support work as well. Intel Macs are not supported, because the PyTorch stack no longer ships the required versions for Intel Macs. On every platform you also need Python 3.8 or newer – the app will not start without it.", "tags": ["os", "windows", "mac", "linux"] },
           { "q": "Is an internet connection required?", "a": "Only at startup for license validation via API key. Training itself runs completely offline. Models from HuggingFace are downloaded once and stored locally.", "tags": ["internet", "offline"] },
@@ -1046,10 +1114,10 @@
       "privacy": {
         "label": "Privacy & Security",
         "faqs": [
-          { "q": "Are my training data uploaded anywhere?", "a": "No. Your training data never leaves your machine. All training runs locally. Only at startup does the app check the API key against our servers – no data or model weights are transferred in that process.", "tags": ["privacy", "upload", "local"] },
+          { "q": "Are my training data uploaded anywhere?", "a": "No. Your training data never leaves your machine. All training runs locally. Only at startup does the app check the API key against our servers – no data or model weights are transferred in that process. The only exception: if you use the optional AI features with Claude, OpenAI or Groq, the context of your request (e.g. configuration, figures or script code) goes to that provider. With Ollama, that stays local too.", "tags": ["privacy", "upload", "local"] },
           { "q": "Is FrameTrain GDPR-compliant?", "a": "Yes. Since no training data leaves your own infrastructure, FrameTrain is ideal for GDPR-compliant ML projects. There is no telemetry and no hidden data transfers. Payment data is processed exclusively by Stripe (PCI-DSS Level 1).", "tags": ["gdpr", "compliance"] },
           { "q": "Are my models stored in the cloud?", "a": "No. All trained models and checkpoints are stored exclusively locally on your device. FrameTrain has no cloud storage for models.", "tags": ["cloud", "storage", "models"] },
-          { "q": "Is there telemetry or tracking?", "a": "No automatic telemetry. FrameTrain does not collect usage data, training data, or model metrics. The only default network communication is license validation (API key check) at startup. You can optionally opt in to anonymized crash/error reporting in the app's settings to help us fix bugs – off by default, never includes training data, and can be disabled at any time.", "tags": ["telemetry", "tracking"] },
+          { "q": "Is there telemetry or tracking?", "a": "No automatic telemetry. FrameTrain does not collect usage data, training data, or model metrics. The only default network communication is license validation (API key check) at startup. You can optionally opt in to anonymized crash/error reporting in the app's settings to help us fix bugs – off by default, never includes training data, and can be disabled at any time. The AI features are off by default as well; if you enable them with a cloud provider, requests go directly to that provider, not to FrameTrain.", "tags": ["telemetry", "tracking"] },
           { "q": "How is my payment data protected?", "a": "Payment data is processed exclusively through Stripe, a PCI-DSS Level 1 certified payment service provider. We do not store any credit card data ourselves.", "tags": ["payment", "security", "stripe"] }
         ]
       },
@@ -1060,7 +1128,7 @@
           { "q": "Which file formats are supported for models?", "a": "PyTorch models (.pt, .bin), SafeTensors (.safetensors), and GGUF format (.gguf). Import from the HuggingFace Hub works directly via model ID.", "tags": ["formats", "safetensors", "gguf"] },
           { "q": "How do I import models from HuggingFace?", "a": "In the Model Manager, simply enter the HuggingFace model ID (e.g. meta-llama/Llama-3-8B) and click \"Download\". FrameTrain downloads all necessary files and sets the model up automatically.", "tags": ["huggingface", "import"] },
           { "q": "Can I use locally stored models?", "a": "Yes. In the Model Manager you can also provide the path to a locally stored model. Supported formats: HuggingFace format (model.safetensors / config.json), GGUF.", "tags": ["local", "offline", "model path"] },
-          { "q": "How do I export a trained model?", "a": "In the Versioning panel you can export any model version as SafeTensors, GGUF, or a PyTorch checkpoint. The export goes to your local machine, not the cloud.", "tags": ["export", "save"] }
+          { "q": "How do I export a trained model?", "a": "In version management you export any model version to your Downloads folder with one click – as a copy of all the files the training run produced, for HuggingFace models e.g. SafeTensors weights, config.json and the tokenizer. There is currently no built-in GGUF export. Everything stays on your machine; nothing goes to the cloud.", "tags": ["export", "save"] }
         ]
       },
       "monitoring": {
@@ -1090,7 +1158,7 @@
           { "q": "How do I install FrameTrain on Linux?", "a": "1. Install libfuse2: sudo apt install libfuse2t64 (Ubuntu 22.04+). 2. Download the .AppImage file. 3. Make it executable: chmod +x FrameTrain.AppImage. 4. Run: ./FrameTrain.AppImage. Detailed guide: /install", "tags": ["installation", "linux", "ubuntu"] },
           { "q": "What is an API key and where do I find it?", "a": "The API key is your license key for the desktop app. You receive it after purchase on the payment page. It is entered once when the app starts and then stored locally.", "tags": ["api-key", "license"] },
           { "q": "The app won't start – what can I do?", "a": "Common causes: 1. API key not entered or invalid. 2. No internet connection for license validation. 3. macOS: quarantine flag still active (sudo xattr -cr). 4. Windows: file not unblocked (Properties → Unblock). For further help: framesphere@gmx.net", "tags": ["error", "startup", "debug"] },
-          { "q": "How do I update FrameTrain?", "a": "FrameTrain has a built-in auto-updater. It automatically checks for a new version at startup. You can also check manually via Settings → Check for updates.", "tags": ["update"] }
+          { "q": "How do I update FrameTrain?", "a": "FrameTrain checks for a new version at startup. On Windows and Linux the app downloads the signed update on request, installs it and restarts. On macOS it tells you about the new version and you get the download from the dashboard. You can check manually at any time under Settings → Updates.", "tags": ["update"] }
         ]
       }
     }
@@ -1104,7 +1172,7 @@
     "coachSidebar": { "title": "AI Training Coach", "desc": "ML theory & deep dives" },
     "navigation": {
       "gettingStarted": { "title": "Getting Started", "items": { "installation": "Installation", "quickStart": "Quick Start", "firstTraining": "First Training Run" } },
-      "appFeatures": { "title": "App Features", "items": { "homePanel": "Home Screen", "modelManager": "Model Manager", "trainingPanel": "Training Panel", "datasetUpload": "Dataset Upload", "analysis": "Analysis", "testing": "Testing", "versioning": "Versioning" } },
+      "appFeatures": { "title": "App Features", "items": { "homePanel": "Home Screen", "modelManager": "Model Manager", "trainingPanel": "Training Panel", "datasetUpload": "Dataset Upload", "analysis": "Analysis", "testing": "Testing", "versioning": "Versioning", "aiAssistant": "AI Assistant & Coach" } },
       "training": { "title": "Training", "items": { "trainingBasics": "Training Basics", "hyperparameters": "Hyperparameters", "loraTraining": "LoRA Training", "datasetsFormat": "Dataset Formats", "monitoring": "Monitoring" } },
       "advanced": { "title": "Advanced", "items": { "optimization": "Optimization", "gpuSetup": "GPU Setup", "export": "Export", "troubleshooting": "Troubleshooting", "settings": "Settings" } },
       "resources": { "title": "Resources", "items": { "themes": "Themes", "presets": "Presets", "updates": "Updates" } }
@@ -1122,7 +1190,7 @@
       "steps": [
         { "title": "Import a model", "desc": "After signing in you land on the home screen. Switch to the Model Manager on the left and import a HuggingFace model (e.g. bert-base-uncased) or load a local model.", "details": "Just enter the HuggingFace model ID in the search field and click Download." },
         { "title": "Upload a dataset", "desc": "Upload your dataset as a CSV or JSONL file. Minimal structure: text + label columns.", "details": "FrameTrain validates the dataset automatically and shows a preview of the first rows." },
-        { "title": "Configure training", "desc": "Choose epochs, batch size, learning rate, and LoRA parameters. We recommend the defaults to get started.", "details": "The Quick Start defaults are optimal for most 7B models with LoRA." },
+        { "title": "Configure training", "desc": "Choose epochs, batch size and learning rate – or start from a template.", "details": "The “Standard” template is a good start. The RAM estimate shows right away whether the run fits your machine." },
         { "title": "Start training", "desc": "Click Start Training. FrameTrain trains locally on your GPU \u2013 no internet connection needed.", "details": "The progress bar and live charts show loss and accuracy in real time." },
         { "title": "Test the model", "desc": "After training you can test the model right in the app. Enter text and see the predictions.", "details": "The model stays stored locally and can be reloaded at any time." }
       ],
@@ -1160,7 +1228,7 @@
       "featuresHeading": "Features",
       "features": [ { "title": "HuggingFace Import", "desc": "Import any model directly from the HuggingFace Hub via model ID" }, { "title": "Local Models", "desc": "Load models from a local path (SafeTensors, GGUF, PyTorch)" }, { "title": "Model Overview", "desc": "All imported models with size, format, and origin" }, { "title": "Versions", "desc": "Each model can have multiple trained versions" } ],
       "importHeading": "Importing a model", "importText": "How to import a model from HuggingFace:",
-      "importSteps": ["Open the Model Manager tab", "Click \"New Model\" or \"HuggingFace Import\"", "Enter the model ID (e.g. meta-llama/Llama-3-8B)", "Optional: provide a HuggingFace token for private/gated models", "Click Download \u2013 FrameTrain automatically downloads all necessary files"],
+      "importSteps": ["Open the Model Manager tab", "Click \"New Model\" or \"HuggingFace Import\"", "Enter the model ID (e.g. meta-llama/Llama-3-8B)", "Click Download \u2013 FrameTrain automatically downloads all necessary files"],
       "startersHeading": "Recommended starter models",
       "starters": [
         { "name": "bert-base-uncased", "task": "Classification", "params": "110M", "desc": "Classic model for English text classification. Fast and well-tested." },
@@ -1174,7 +1242,7 @@
       "workflowHeading": "Training Workflow",
       "workflow": [
         { "icon": "1\ufe0f\u20e3", "title": "Choose model & dataset", "desc": "Select an imported model and your uploaded dataset from the dropdown menus." },
-        { "icon": "2\ufe0f\u20e3", "title": "Configure hyperparameters", "desc": "Set epochs, batch size, learning rate, and LoRA parameters. Presets for common tasks are available." },
+        { "icon": "2\ufe0f\u20e3", "title": "Configure hyperparameters", "desc": "Set epochs, batch size, learning rate and more. Templates provide starting values, and the RAM estimate shows whether the run fits your machine." },
         { "icon": "3\ufe0f\u20e3", "title": "Start training", "desc": "Click Start Training. FrameTrain trains entirely locally \u2013 no cloud, no queue." },
         { "icon": "4\ufe0f\u20e3", "title": "Monitor progress", "desc": "Live charts show loss, accuracy, and GPU utilization in real time. Automatic checkpoints." },
         { "icon": "5\ufe0f\u20e3", "title": "Save the result", "desc": "After training, the model is automatically versioned and stored locally." }
@@ -1182,15 +1250,45 @@
       "controlsHeading": "Training Controls",
       "controls": [
         { "title": "Start training:", "desc": "Starts training with the current settings. All parameters are validated before starting." },
-        { "title": "Pause / stop training:", "desc": "Training can be stopped at any time. The last checkpoint is preserved." },
-        { "title": "Resume training:", "desc": "After a stop, training can be resumed from the last checkpoint." }
+        {
+          "title": "Stop training:",
+          "desc": "Training can be stopped at any time. The last checkpoint is saved as a new version."
+        },
+        {
+          "title": "Prevent sleep:",
+          "desc": "While a training run is active, FrameTrain keeps your machine awake (anti-sleep) so overnight runs are not interrupted."
+        }
       ],
-      "presetsHeading": "Quick Presets", "presetsText": "FrameTrain offers preconfigured training profiles for common use cases:",
+      "presetsHeading": "Templates", "presetsText": "FrameTrain ships built-in templates for common starting points (a selection – all of them in the “Presets” section):",
       "presets": [
-        { "name": "Quick Start (7B LoRA)", "lr": "2e-4", "epochs": 3, "batch": 4, "desc": "Fast & stable" },
-        { "name": "Quality (7B QLoRA)", "lr": "1e-4", "epochs": 5, "batch": 2, "desc": "Higher quality" },
-        { "name": "Classification (BERT)", "lr": "2e-5", "epochs": 3, "batch": 16, "desc": "For classifiers" },
-        { "name": "Experimental", "lr": "5e-5", "epochs": 1, "batch": 8, "desc": "Quick test" }
+        {
+          "name": "Standard",
+          "lr": "2e-5",
+          "epochs": 3,
+          "batch": 8,
+          "desc": "For most tasks"
+        },
+        {
+          "name": "Small dataset (<5k)",
+          "lr": "3e-5",
+          "epochs": 5,
+          "batch": 8,
+          "desc": "More epochs"
+        },
+        {
+          "name": "Large dataset (>50k)",
+          "lr": "1e-5",
+          "epochs": 2,
+          "batch": 32,
+          "desc": "Bigger batch"
+        },
+        {
+          "name": "Low RAM",
+          "lr": "2e-5",
+          "epochs": 4,
+          "batch": 2,
+          "desc": "FP16 + grad accumulation"
+        }
       ]
     },
     "datasetUpload": {
@@ -1245,10 +1343,164 @@
         { "step": "Training complete", "desc": "After a successful training run, a checkpoint is created automatically." },
         { "step": "Name the version", "desc": "Give your version a descriptive name (e.g. \"v1.0-sentiment-en\")." },
         { "step": "Compare", "desc": "Select two versions and compare their metrics side by side." },
-        { "step": "Export", "desc": "Export any version as SafeTensors, GGUF, or PyTorch format." }
+        { "step": "Export", "desc": "Export any version to your Downloads folder – as a copy of all the files the training run produced." }
       ],
       "historyHeading": "Training History", "historyText": "In the history panel you can see all past training runs with:",
       "historyItems": ["Date & time", "Model & dataset used", "Final loss and accuracy", "Hyperparameters used", "Training duration"]
+    },
+    "aiAssistant": {
+      "heading": "AI Assistant & Coach",
+      "subtitle": "Coach with skills, token budget, providers and API keys – optional AI help in every area",
+      "intro": "The AI features are optional and switched off by default. You enable them under Settings → AI Assistant, where you also choose the provider, model and token budget. These settings apply to every AI feature in the app. Training itself does not depend on them and always runs locally.",
+      "providersHeading": "Providers and API keys",
+      "providersText": "You can choose Claude (Anthropic), OpenAI, Groq or Ollama. Claude, OpenAI and Groq need your own API key from that provider. Ollama runs entirely on your machine without a key.",
+      "providers": [
+        {
+          "title": "One key per provider:",
+          "desc": "Claude, OpenAI and Groq each keep their own key. Switching providers no longer loses a key, and the provider tiles show “Key stored”. Keys from older versions are migrated automatically."
+        },
+        {
+          "title": "Stored securely:",
+          "desc": "Keys live in your operating system's keychain (macOS Keychain, Windows Credential Manager), never in plain text, and are never sent to FrameTrain."
+        },
+        {
+          "title": "Nothing gets lost by accident:",
+          "desc": "Changes only take effect after “Save”. Saving with an empty key field does not delete a stored key. “Test connection” checks both key and model."
+        },
+        {
+          "title": "Custom model ID:",
+          "desc": "If a provider retires a model, you can enter the new ID yourself. OpenAI reasoning models (o-series, GPT-5) are supported."
+        },
+        {
+          "title": "Ollama:",
+          "desc": "The context window grows with the prompt instead of silently truncating it. If the selected model is not installed locally, the app explains what to do. Internal <think> blocks no longer show up in the chat."
+        }
+      ],
+      "budgetHeading": "Token budget",
+      "budgetText": "The token budget controls, for every AI feature at once, how long answers get, how thoroughly the model reasons, how much context is sent and how much chat history is kept. With Claude, reasoning effort scales with the budget. Every level works fully: Minimal means short, not broken – no empty reports, empty chat bubbles or cut-off answers.",
+      "budgetLevels": [
+        {
+          "name": "Minimal",
+          "desc": "Very short answers, minimal usage. Fits Groq's free tier."
+        },
+        {
+          "name": "Balanced",
+          "desc": "Default. A good balance of quality and usage – the right choice for most people."
+        },
+        {
+          "name": "Quality",
+          "desc": "More detailed answers with more context, e.g. for Claude or OpenAI."
+        },
+        {
+          "name": "Maximum",
+          "desc": "Maximum depth. Makes sense with paid APIs and a high rate limit."
+        },
+        {
+          "name": "Unlimited",
+          "desc": "No truncation, highest reasoning effort, highest usage. For paid APIs or subscription tokens."
+        }
+      ],
+      "budgetTipTitle": "Maximum and Unlimited take time",
+      "budgetTipDesc": "At these levels the loading indicator tells you an answer can take up to a minute. Well-defined tasks such as code fixes or chat titles still cap the reasoning effort so they stay fast. If an answer is cut off at the limit, the app marks it.",
+      "coachHeading": "AI coach",
+      "coachText": "The coach is a chat window you can open on every page. With every message it knows the current state of the page – your training configuration, the analysis figures (loss reduction, overfitting gap, gradient norm, duration, status) or the home screen status – and answers about that instead of in generalities. It quotes hints the way the page words them, and every chat keeps its history.",
+      "coachFeatures": [
+        {
+          "title": "Apply buttons",
+          "desc": "Concrete suggestions appear as buttons right below the answer – only where they have an effect on the current page, and never for settings the model type ignores."
+        },
+        {
+          "title": "RAM estimate",
+          "desc": "Coach and training panel use the same formula and compare the result with your machine's memory: “fits”, “tight” or “not enough”. For image models the image size (imgsz) counts."
+        },
+        {
+          "title": "Knows your model",
+          "desc": "The coach knows the parameters of the responsible plugin, such as imgsz or the optimizer for YOLO, and never recommends something the model type does not support."
+        },
+        {
+          "title": "Start and stop training",
+          "desc": "With automation switched on, the coach may start or stop a training run – each time only after you confirm."
+        }
+      ],
+      "skillsHeading": "Skills: prepared questions via /",
+      "skillsText": "Type / in the coach's input field and a list of prepared questions for the current page opens. Pick one with the arrow keys and Enter, with Tab or by clicking. Skills cost no extra tokens – they just ask the question more precisely than “help me out”.",
+      "skillsPageLabel": "Page",
+      "skillsCommandLabel": "Skills",
+      "skills": [
+        {
+          "page": "Everywhere",
+          "commands": "/here, /next"
+        },
+        {
+          "page": "Home",
+          "commands": "/status"
+        },
+        {
+          "page": "Models",
+          "commands": "/pick-model"
+        },
+        {
+          "page": "Training",
+          "commands": "/config, /ram, /oom, /faster"
+        },
+        {
+          "page": "Dev Train & Dev Test",
+          "commands": "/review, /error"
+        },
+        {
+          "page": "Datasets",
+          "commands": "/data"
+        },
+        {
+          "page": "Analysis",
+          "commands": "/assess, /next-run, /curves"
+        },
+        {
+          "page": "Tests",
+          "commands": "/result"
+        },
+        {
+          "page": "Versions",
+          "commands": "/version"
+        },
+        {
+          "page": "Settings",
+          "commands": "/budget, /provider"
+        },
+        {
+          "page": "Laboratory",
+          "commands": "/experiment"
+        },
+        {
+          "page": "Synapse Builder",
+          "commands": "/graph"
+        }
+      ],
+      "areasHeading": "AI in the individual areas",
+      "areas": [
+        {
+          "title": "Code assistant (Dev Train, Dev Test):",
+          "desc": "Suggests changes to your script as a diff. Applied code contains no leftover Markdown or protocol fragments. If a suggestion does not fit the script, it is marked red as “not applicable” and the script stays untouched. Paths follow the app convention via os.environ.get(...)."
+        },
+        {
+          "title": "Metrics assistant (Training):",
+          "desc": "Recommends training parameters, including plugin parameters such as those for YOLO, and only shows real changes compared with your current configuration."
+        },
+        {
+          "title": "Training analysis:",
+          "desc": "Writes a report for a model version. Its depth scales with the budget, and long runs are sampled. Follow-up questions in the analysis chat are answered directly instead of producing a whole new report each time."
+        },
+        {
+          "title": "Synapse Magic:",
+          "desc": "Builds or changes graphs in the Synapse Builder and then reports “Done – N changes on the canvas”."
+        },
+        {
+          "title": "Laboratory and home screen:",
+          "desc": "The lab assistant helps you experiment with individual samples, and the AI briefing sums up your project status at the press of a button."
+        }
+      ],
+      "privacyTitle": "What is sent to the provider",
+      "privacyDesc": "With Claude, OpenAI or Groq, the context of your request is sent to that provider – for example configuration, figures or script code. With Ollama everything stays on your machine. As long as the AI assistant is switched off, none of it leaves the app."
     },
     "trainingBasics": {
       "heading": "Training Basics", "subtitle": "The most important concepts in ML training",
@@ -1331,7 +1583,7 @@
       "cudaSteps": [
         { "title": "Install NVIDIA drivers", "desc": "Download and install the latest driver from nvidia.com/drivers (version 525+)." },
         { "title": "CUDA automatically", "desc": "CUDA is automatically installed with FrameTrain \u2013 no separate installation needed." },
-        { "title": "Verify the GPU", "desc": "In the FrameTrain dashboard: Settings \u2192 GPU Info. Shows VRAM, CUDA version, and GPU name." }
+        { "title": "Verify the GPU", "desc": "In the app: Settings → System → Hardware & acceleration. It shows whether CUDA is available." }
       ],
       "appleHeading": "Apple Silicon (M1-M4)", "appleText": "Apple Silicon is fully supported \u2013 no additional configuration needed. FrameTrain automatically uses Metal Performance Shaders (MPS) for GPU acceleration.",
       "supportedHeading": "Supported Hardware",
@@ -1339,20 +1591,44 @@
       "appleTitle": "Apple Silicon (MPS)", "appleItems": ["M1 (8 GB+ unified memory)", "M1 Pro / M1 Max", "M2 / M2 Pro / M2 Max / M2 Ultra", "M3 / M3 Pro / M3 Max", "M4 / M4 Pro / M4 Max"]
     },
     "export": {
-      "heading": "Export", "subtitle": "Export and deploy trained models",
-      "formatsHeading": "Export Formats",
+      "heading": "Export", "subtitle": "Export trained versions and use them elsewhere",
+      "formatsHeading": "What gets exported",
       "formats": [
-        { "format": "SafeTensors (.safetensors)", "use": "Recommended \u2013 safe and fast to load" },
-        { "format": "PyTorch (.pt / .bin)", "use": "Compatible with all PyTorch-based frameworks" },
-        { "format": "GGUF (.gguf)", "use": "For llama.cpp, Ollama, LM Studio" },
-        { "format": "LoRA adapter only", "desc": "Just the adapter (small), requires the base model for inference", "use": "Sharing and distributed deployment" }
+        {
+          "format": "Version folder",
+          "use": "A copy of all the version's files in your Downloads folder"
+        },
+        {
+          "format": "Model weights",
+          "use": "In the plugin's format, e.g. SafeTensors for HuggingFace models, .pt for YOLO"
+        },
+        {
+          "format": "Configuration & tokenizer",
+          "use": "Everything needed to load the model again"
+        },
+        {
+          "format": "GGUF",
+          "use": "No built-in export – convert with llama.cpp if you need it"
+        }
       ],
-      "deployHeading": "Deployment Options",
+      "deployHeading": "Using the result",
       "deployItems": [
-        { "title": "Local:", "desc": "Use the model directly in FrameTrain or a local application." },
-        { "title": "llama.cpp:", "desc": "GGUF export for efficient inference on CPU or GPU with llama.cpp." },
-        { "title": "HuggingFace:", "desc": "SafeTensors export for direct loading with HuggingFace Transformers." },
-        { "title": "Ollama:", "desc": "GGUF export for easy deployment with Ollama as a local LLM server." }
+        {
+          "title": "In FrameTrain:",
+          "desc": "Check the version right away under Tests or in the Laboratory on real samples."
+        },
+        {
+          "title": "HuggingFace Transformers:",
+          "desc": "Load HuggingFace models from the exported folder with from_pretrained()."
+        },
+        {
+          "title": "Your own application:",
+          "desc": "Plug the exported folder into your own Python scripts or services."
+        },
+        {
+          "title": "SphereNet:",
+          "desc": "Sharing models with the community is in preparation."
+        }
       ]
     },
     "troubleshooting": {
@@ -1361,50 +1637,183 @@
       "errors": [
         { "problem": "CUDA out of memory", "causes": ["Batch size too large", "Model too large for VRAM"], "solution": "Halve the batch size, enable gradient checkpointing, use QLoRA instead of LoRA." },
         { "problem": "Training loss explodes (NaN/Inf)", "causes": ["Learning rate too high", "Data issue"], "solution": "Reduce the learning rate by a factor of 10. Check the dataset for NaN values." },
-        { "problem": "Invalid API key", "causes": ["Key expired", "Wrong format"], "solution": "Generate a new key on the payment page. Make sure there's no whitespace at the start/end." },
+        { "problem": "Invalid FrameTrain API key", "causes": ["Key expired", "Wrong format"], "solution": "Generate a new key on the payment page. Make sure there's no whitespace at the start/end." },
         { "problem": "GPU not detected", "causes": ["Driver outdated", "CUDA not installed"], "solution": "Update the NVIDIA driver (525+). On Windows: Device Manager \u2192 NVIDIA. On Linux: nvidia-smi." },
-        { "problem": "Model download fails", "causes": ["No internet connection", "Missing HuggingFace token"], "solution": "Check your internet connection. For gated models: enter your HuggingFace token in Settings." }
+        {
+          "problem": "Model download fails",
+          "causes": [
+            "No internet connection",
+            "Gated model without access"
+          ],
+          "solution": "Check your internet connection. Models that require approval on huggingface.co (e.g. Llama) cannot be loaded directly in the app – pick a freely available model, or download it beforehand and import the folder as a local model."
+        },
+        {
+          "problem": "RAM estimate says “not enough”",
+          "causes": [
+            "Batch too large",
+            "Model too large for your memory",
+            "For image models: imgsz too large"
+          ],
+          "solution": "The RAM calculator in the training panel only suggests measures the model type supports – for YOLO that is batch, imgsz and FP16. Ask the coach with /ram for the most effective lever for your run."
+        },
+        {
+          "problem": "Ollama model not found",
+          "causes": [
+            "Model is not installed locally",
+            "Ollama is not running"
+          ],
+          "solution": "Run ollama pull with the model name in a terminal (e.g. ollama pull llama3.2) and check that Ollama is running in the background."
+        },
+        {
+          "problem": "Groq reports a rate limit",
+          "causes": [
+            "Budget Quality or higher on the free tier (6,000 tokens per minute)"
+          ],
+          "solution": "Set the budget to Balanced or Minimal, or wait a moment. Use /budget on the settings page to ask the coach which level suits your provider."
+        },
+        {
+          "problem": "AI answer empty or cut off",
+          "causes": [
+            "Token budget very small for a long task",
+            "Provider returned no text"
+          ],
+          "solution": "Empty answers show an explanatory error instead of an empty bubble, and cut-off answers are marked. Choose a larger token budget under Settings → AI Assistant and send the message again."
+        }
       ]
     },
     "settings": {
       "heading": "Settings", "subtitle": "Configure FrameTrain",
       "mainHeading": "All Settings",
       "items": [
-        { "setting": "API Key", "desc": "Your license key. Change it here if you have a new key." },
-        { "setting": "Language", "desc": "Interface language: German or English." },
-        { "setting": "Model storage path", "desc": "Where models are stored locally. Default: ~/FrameTrain/models" },
-        { "setting": "HuggingFace Token", "desc": "Required for gated models (e.g. Llama, Mistral). Create a token at huggingface.co/settings/tokens." },
-        { "setting": "GPU selection", "desc": "With multiple GPUs: choose which GPU to use for training." },
-        { "setting": "Theme", "desc": "Light or dark design, or one of the 8 predefined themes." },
-        { "setting": "Auto-updates", "desc": "Enable/disable automatic update checks at startup." }
+        {
+          "setting": "Account",
+          "desc": "Email, user ID and your FrameTrain API key (license key), plus your community name for uploads to the Open Library."
+        },
+        {
+          "setting": "Appearance",
+          "desc": "18 color schemes, from Purple Passion (default) to the light themes Light Gray and Pure White."
+        },
+        {
+          "setting": "Language",
+          "desc": "German or English. The change applies immediately, no restart needed."
+        },
+        {
+          "setting": "Notifications",
+          "desc": "Desktop notifications when a training run finishes, on errors and warnings, and when updates are available."
+        },
+        {
+          "setting": "AI Assistant",
+          "desc": "AI features on or off, provider (Claude, OpenAI, Groq, Ollama), model, one API key per provider and the token budget. Details in the “AI Assistant & Coach” section."
+        },
+        {
+          "setting": "System",
+          "desc": "Status of the Python packages used for training with “Install missing”, hardware and GPU acceleration, and the anti-sleep status that keeps your machine awake during training."
+        },
+        {
+          "setting": "Updates",
+          "desc": "Installed and available version, check on demand."
+        },
+        {
+          "setting": "Documentation & Support",
+          "desc": "Links to the documentation and the AI Training Guide, support tickets straight from the app."
+        },
+        {
+          "setting": "About",
+          "desc": "App version, model families supported by the train engine, and links."
+        }
       ]
     },
     "themes": {
-      "heading": "Themes", "subtitle": "Customize FrameTrain's appearance",
-      "darkHeading": "Dark Themes", "darkText": "Default for evening and nighttime work:",
-      "darkThemes": ["Cosmic Dark (default)", "Midnight Blue", "Forest Green", "Deep Purple"],
+      "heading": "Themes", "subtitle": "Settings → Appearance: 18 color schemes",
+      "darkHeading": "Dark Themes", "darkText": "16 dark color schemes, the default is Purple Passion:",
+      "darkThemes": [
+        "Purple Passion",
+        "Ocean Breeze",
+        "Forest Green",
+        "Sunset Orange",
+        "Midnight Blue",
+        "Rose Gold",
+        "Dark Minimal",
+        "Cyber Yellow",
+        "Arctic White",
+        "Neon Pink",
+        "Blood Red",
+        "Toxic Green",
+        "Golden Hour",
+        "Monochrome",
+        "Lavender Dream",
+        "Fire & Ice"
+      ],
       "darkModeLabel": "Dark Mode",
       "lightHeading": "Light Themes", "lightText": "For working in bright daylight:",
-      "lightThemes": ["Arctic White", "Warm Sand", "Soft Mint", "Rose Quartz"],
+      "lightThemes": [
+        "Light Gray",
+        "Pure White"
+      ],
       "lightModeLabel": "Light Mode"
     },
     "presets": {
-      "heading": "Presets", "subtitle": "Preconfigured training profiles",
-      "availableHeading": "Available Presets",
+      "heading": "Presets", "subtitle": "Built-in templates in the training panel",
+      "availableHeading": "Built-in templates",
+      "customTitle": "Your own templates",
       "epochsLabel": "Epochs:", "batchLabel": "Batch:", "lrLabel": "LR:", "useLabel": "Use case:",
       "presets": [
-        { "preset": "Quick Start (7B LoRA)", "epochs": 3, "bs": 4, "lr": "2e-4", "use": "7B LLMs, quick test" },
-        { "preset": "Max Quality (7B QLoRA)", "epochs": 5, "bs": 2, "lr": "1e-4", "use": "Maximum quality, 7B models" },
-        { "preset": "BERT Classification", "epochs": 3, "bs": 16, "lr": "2e-5", "use": "BERT/RoBERTa classification" },
-        { "preset": "Micro Fine-Tune", "epochs": 1, "bs": 8, "lr": "5e-5", "use": "Quick test of new datasets" }
-      ]
+        {
+          "preset": "Standard",
+          "epochs": 3,
+          "bs": 8,
+          "lr": "2e-5",
+          "use": "Balanced for most tasks, max seq length 128"
+        },
+        {
+          "preset": "Small dataset (<5k)",
+          "epochs": 5,
+          "bs": 8,
+          "lr": "3e-5",
+          "use": "More epochs and a higher LR, max seq length 64"
+        },
+        {
+          "preset": "Large dataset (>50k)",
+          "epochs": 2,
+          "bs": 32,
+          "lr": "1e-5",
+          "use": "Fewer epochs, bigger batch, max seq length 256"
+        },
+        {
+          "preset": "Low RAM",
+          "epochs": 4,
+          "bs": 2,
+          "lr": "2e-5",
+          "use": "Gradient accumulation 8, FP16 and gradient checkpointing"
+        },
+        {
+          "preset": "LoRA (memory-saving)",
+          "epochs": "–",
+          "bs": 4,
+          "lr": "–",
+          "use": "LoRA r=8, alpha 16, gradient checkpointing; epochs and LR stay as they are"
+        },
+        {
+          "preset": "QLoRA 4-bit",
+          "epochs": "–",
+          "bs": 2,
+          "lr": "–",
+          "use": "4-bit, LoRA r=16, alpha 32, gradient accumulation 8; epochs and LR stay as they are"
+        }
+      ],
+      "customNote": "Your own templates can come from the AI training analysis, for example: save the parameter suggestion as a template with one click and it shows up in the training panel next to the built-in ones."
     },
     "updates": {
       "heading": "Updates", "subtitle": "Keep FrameTrain always up to date",
-      "autoHeading": "Automatic Updates", "autoText": "FrameTrain automatically checks for new versions at startup.",
-      "autoItems": ["New releases are detected automatically", "You're informed about changes", "One-click installation", "All settings are preserved"],
+      "autoHeading": "Automatic Updates", "autoText": "FrameTrain automatically checks for a new version at startup.",
+      "autoItems": [
+        "Windows and Linux: on request, the app downloads the signed update, installs it and restarts.",
+        "macOS: the app tells you about the new version; you get the download from the dashboard on frame-train.com.",
+        "Under Settings → Updates you see the installed and available version and can check again at any time.",
+        "Your settings and data are preserved during an update."
+      ],
       "versionHeading": "Checking your version", "versionText": "You can find your current version under:",
-      "versionCode": "Settings \u2192 About FrameTrain \u2192 Version"
+      "versionCode": "Settings → About"
     }
   },
   "AICoach": {
@@ -2320,13 +2729,13 @@
         "id": "ai-coach",
         "slug": "ai-coach",
         "title": "AI coach – follow-up questions in the panel's context",
-        "text": "The AI coach is a chat that knows which panel you are standing in. Ask it how to improve validation loss for this run and it answers against the values actually loaded rather than in generalities – learning rate, dropout, weight decay, LoRA capacity. Concrete suggestions can be applied without retyping fields by hand.",
+        "text": "The AI coach is a chat that knows which panel you are standing in. Ask it how to improve validation loss for this run and it answers against the values actually loaded rather than in generalities – learning rate, dropout, weight decay, LoRA capacity. Concrete suggestions are applied via buttons right below the answer, and typing / in the input field opens prepared questions for the page.",
         "alt": "FrameTrain AI coach as a chat window over the training screen, answering with learning rate, epochs, dropout and LoRA rank suggestions",
         "caption": "The coach sits on top of the panel it draws its context from – here the training panel.",
         "bullets": [
-          "Context taken from the panel currently open",
-          "Suggestions can be applied straight into the fields",
-          "Every chat keeps its own history"
+          "Knows the state of the current page with every message",
+          "Skills via / – prepared questions for every page",
+          "Apply buttons only where they have an effect"
         ],
         "relatedHref": "/docs/ai-training-guide",
         "relatedLabel": "AI training guide"
@@ -2335,13 +2744,13 @@
         "id": "ai-providers",
         "slug": "ai-providers",
         "title": "AI providers – your own key, or fully local",
-        "text": "You decide which language model sits behind analysis and coach: Claude, GPT-4o and Groq run on your own API key, Ollama runs fully locally without one. If you want no AI features at all, switch the assistant off globally. Training itself is independent of this and always runs on your hardware.",
+        "text": "You decide which language model powers the coach, analysis and assistants: Claude, OpenAI and Groq run on your own API key, Ollama fully locally without a key. Each provider keeps its own key, so switching never loses one. The token budget from Minimal to Unlimited sets how detailed and thorough every AI feature is. If you want no AI features at all, switch the assistant off globally. Training itself is independent of this and always runs on your hardware.",
         "alt": "FrameTrain AI assistant settings with a choice between Claude, GPT-4o, Groq and local Ollama, plus Ollama model configuration",
         "caption": "Provider choice for the AI features. Ollama runs locally and needs no API key.",
         "bullets": [
-          "Ollama locally, no API key and no data leaving the machine",
-          "Your own key for Claude, GPT-4o or Groq",
-          "The AI assistant can be switched off globally"
+          "Ollama locally, no API key, no data leaving your machine",
+          "One key per provider, stored securely in the system keychain",
+          "Five-level token budget, AI can be switched off globally"
         ],
         "relatedHref": "/faq",
         "relatedLabel": "Frequently asked questions"
@@ -2493,7 +2902,7 @@
         },
         {
           "title": "Version & export",
-          "desc": "Every run is versioned; export the result (incl. GGUF) or run it locally via Ollama."
+          "desc": "Every run is versioned; test the version right in the app or export it as a folder."
         }
       ]
     },

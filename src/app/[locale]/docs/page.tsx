@@ -16,7 +16,8 @@ import {
   Home, Activity, Trophy, HardDrive,
   AlertTriangle,
   TrendingDown,
-  Clock
+  Clock,
+  Bot, KeyRound, SlidersHorizontal, MemoryStick, MousePointerClick
 } from 'lucide-react'
 
 export default function DocsPage() {
@@ -70,6 +71,7 @@ export default function DocsPage() {
         { id: 'analysis', title: t('navigation.appFeatures.items.analysis') },
         { id: 'testing', title: t('navigation.appFeatures.items.testing') },
         { id: 'versioning', title: t('navigation.appFeatures.items.versioning') },
+        { id: 'ai-assistant', title: t('navigation.appFeatures.items.aiAssistant') },
       ]
     },
     {
@@ -213,6 +215,7 @@ export default function DocsPage() {
                   <div className={activeSection === 'analysis' ? '' : 'hidden'}><AnalysisSection /></div>
                   <div className={activeSection === 'testing' ? '' : 'hidden'}><TestingSection /></div>
                   <div className={activeSection === 'versioning' ? '' : 'hidden'}><VersioningSection /></div>
+                  <div className={activeSection === 'ai-assistant' ? '' : 'hidden'}><AIAssistantSection /></div>
                   <div className={activeSection === 'training-basics' ? '' : 'hidden'}><TrainingBasicsSection /></div>
                   <div className={activeSection === 'hyperparameters' ? '' : 'hidden'}><HyperparametersSection /></div>
                   <div className={activeSection === 'lora-training' ? '' : 'hidden'}><LoRASection /></div>
@@ -840,6 +843,118 @@ function VersioningSection() {
   )
 }
 
+// KI-Funktionen der Desktop-App (Anbieter, Token-Budget, Coach, Skills).
+// Nicht zu verwechseln mit dem "KI-Training Coach" der Website unter
+// /docs/ai-training-guide – das ist ein Theorie-Guide, dieser Abschnitt
+// beschreibt den Chat-Coach und die Assistenten in der App.
+function AIAssistantSection() {
+  const t = useTranslations('Docs.aiAssistant')
+  const providers = t.raw('providers') as { title: string; desc: string }[]
+  const budgetLevels = t.raw('budgetLevels') as { name: string; desc: string }[]
+  const coachFeatures = t.raw('coachFeatures') as { title: string; desc: string }[]
+  const skills = t.raw('skills') as { page: string; commands: string }[]
+  const areas = t.raw('areas') as { title: string; desc: string }[]
+  const coachIcons = [
+    <MousePointerClick className="w-6 h-6" />,
+    <MemoryStick className="w-6 h-6" />,
+    <Layers className="w-6 h-6" />,
+    <Play className="w-6 h-6" />,
+  ]
+  return (
+    <div>
+      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
+        <Bot className="w-8 h-8 text-purple-400" />
+        {t('heading')}
+      </h2>
+      <p className="text-gray-400 mb-8">{t('subtitle')}</p>
+
+      <div className="space-y-8">
+        <p className="text-gray-400">{t('intro')}</p>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <KeyRound className="w-6 h-6 text-purple-400" />
+            {t('providersHeading')}
+          </h2>
+          <p className="text-gray-400 mb-4">{t('providersText')}</p>
+          <ul className="space-y-3 text-gray-400 text-sm">
+            {providers.map((item) => (
+              <li key={item.title} className="flex gap-3">
+                <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0" />
+                <span><span className="text-white font-semibold">{item.title}</span> {item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <SlidersHorizontal className="w-6 h-6 text-purple-400" />
+            {t('budgetHeading')}
+          </h2>
+          <p className="text-gray-400 mb-4">{t('budgetText')}</p>
+          <div className="space-y-2 mb-4">
+            {budgetLevels.map((level) => (
+              <div key={level.name} className="glass border border-white/10 rounded-lg p-4 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+                <span className="text-purple-400 font-semibold sm:w-28 flex-shrink-0">{level.name}</span>
+                <span className="text-gray-400 text-sm">{level.desc}</span>
+              </div>
+            ))}
+          </div>
+          <InfoBox type="warning" title={t('budgetTipTitle')} description={t('budgetTipDesc')} />
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('coachHeading')}</h2>
+          <p className="text-gray-400 mb-4">{t('coachText')}</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {coachFeatures.map((f, i) => (
+              <FeatureCard key={f.title} icon={coachIcons[i]} title={f.title} desc={f.desc} />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('skillsHeading')}</h2>
+          <p className="text-gray-400 mb-4">{t('skillsText')}</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-white/10 text-left">
+                  <th className="py-2 pr-4 text-gray-300 font-semibold">{t('skillsPageLabel')}</th>
+                  <th className="py-2 text-gray-300 font-semibold">{t('skillsCommandLabel')}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {skills.map((row) => (
+                  <tr key={row.page}>
+                    <td className="py-2 pr-4 text-gray-400 whitespace-nowrap">{row.page}</td>
+                    <td className="py-2 font-mono text-purple-300">{row.commands}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('areasHeading')}</h2>
+          <ul className="space-y-3 text-gray-400 text-sm">
+            {areas.map((item) => (
+              <li key={item.title} className="flex gap-3">
+                <Sparkles className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                <span><span className="text-white font-semibold">{item.title}</span> {item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <InfoBox type="info" title={t('privacyTitle')} description={t('privacyDesc')} />
+      </div>
+    </div>
+  )
+}
+
 function TrainingBasicsSection() {
   const t = useTranslations('Docs.trainingBasics')
   const fineTuneItems = t.raw('fineTuneItems') as string[]
@@ -1321,7 +1436,7 @@ function ThemesSection() {
         <div>
           <h2 className="text-2xl font-bold text-white mb-4">{t('darkHeading')}</h2>
           <p className="text-gray-400 mb-4">{t('darkText')}</p>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {darkThemes.map((theme) => (
               <div key={theme} className="glass border border-white/10 rounded-lg p-4 text-center">
                 <p className="text-white font-semibold">{theme}</p>
@@ -1334,7 +1449,7 @@ function ThemesSection() {
         <div>
           <h2 className="text-2xl font-bold text-white mb-4">{t('lightHeading')}</h2>
           <p className="text-gray-400 mb-4">{t('lightText')}</p>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {lightThemes.map((theme) => (
               <div key={theme} className="glass border border-white/10 rounded-lg p-4 text-center">
                 <p className="text-white font-semibold">{theme}</p>
@@ -1350,7 +1465,8 @@ function ThemesSection() {
 
 function PresetsSection() {
   const t = useTranslations('Docs.presets')
-  const presets = t.raw('presets') as { preset: string; epochs: number; bs: number; lr: string; use: string }[]
+  // Die LoRA-/QLoRA-Templates setzen weder Epochen noch LR – dort steht "–".
+  const presets = t.raw('presets') as { preset: string; epochs: number | string; bs: number; lr: string; use: string }[]
   return (
     <div>
       <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
@@ -1376,6 +1492,8 @@ function PresetsSection() {
             ))}
           </div>
         </div>
+
+        <InfoBox type="info" title={t('customTitle')} description={t('customNote')} />
       </div>
     </div>
   )

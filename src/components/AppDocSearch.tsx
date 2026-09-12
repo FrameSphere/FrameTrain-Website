@@ -18,6 +18,7 @@ const SECTIONS: { id: string; ns: string; group: string }[] = [
   { id: 'analysis', ns: 'analysis', group: 'appFeatures' },
   { id: 'testing', ns: 'testing', group: 'appFeatures' },
   { id: 'versioning', ns: 'versioning', group: 'appFeatures' },
+  { id: 'ai-assistant', ns: 'aiAssistant', group: 'appFeatures' },
   { id: 'training-basics', ns: 'trainingBasics', group: 'training' },
   { id: 'hyperparameters', ns: 'hyperparameters', group: 'training' },
   { id: 'lora-training', ns: 'lora', group: 'training' },

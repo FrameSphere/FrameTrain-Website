@@ -24,13 +24,14 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 ## What FrameTrain does
 - Home screen after login: project status with running trainings, results since the last visit, key figures, loss trend, accuracy leaderboard and rule-based "needs attention" hints
 - Local LLM fine-tuning with LoRA and QLoRA (no cloud lock-in, data stays on device)
-- Import and train Hugging Face models; export trained models (incl. GGUF)
+- Import and train Hugging Face models; export trained model versions as a local folder
 - Visual neural-network builder ("Synapse Builder") for Transformer, CNN and LSTM architectures
 - Dataset management: import, Parquet, train/validation/test splitting
 - Live training monitoring with loss curves and AI training analysis / coach
 - Automatic model versioning and comparison of training runs
 - Runs on NVIDIA CUDA and Apple Silicon (M1/M2/M3/M4) via Metal MPS — no CUDA required on Mac
-- Ollama integration for running trained models locally
+- Optional AI assistant, off by default: Claude, OpenAI or Groq with the user's own API key (one key per provider, stored in the OS keychain) or fully local via Ollama; adjustable token budget (Minimal to Unlimited)
+- Page-aware AI coach with slash-command skills, apply buttons and a RAM estimate checked against the machine's actual memory; code assistant for custom training/test scripts; AI training analysis with follow-up chat
 
 ## Documentation
 - [Documentation home](${base}/en/docs): overview of all guides and references
