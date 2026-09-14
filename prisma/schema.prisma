@@ -48,7 +48,7 @@ model User {
 // Promo-Codes (werden von der Admin-Webseite aus angelegt und verwaltet)
 model PromoCode {
   id                    String    @id @default(cuid())
-  code                  String    @unique                        // immer normalisiert: GROSSBUCHSTABEN, A-Z 0-9 und "-"
+  code                  String    @unique                        // immer normalisiert: GROSSBUCHSTABEN, A-Z 0-9, "-" und "_"
   type                  String                                   // "percent" | "free_months" | "lifetime"
   percentOff            Int?      @map("percent_off")            // 1–100, nur bei type=percent
   percentDuration       String?   @map("percent_duration")       // "once" | "forever" | "repeating" (Stripe-Coupon-Duration)

@@ -15,9 +15,10 @@ import type { PromoCode } from '@prisma/client'
 export const PROMO_TYPES = ['percent', 'free_months', 'lifetime'] as const
 export type PromoType = (typeof PROMO_TYPES)[number]
 
-// Nur Großbuchstaben, Ziffern und Bindestriche, 4–32 Zeichen.
+// Nur Großbuchstaben, Ziffern, Bindestriche und Unterstriche, 4–32 Zeichen
+// (Unterstriche für Kanal-Codes wie FRAMETRAIN_REDDIT01).
 // Verhindert nebenbei seltsame Inputs (Whitespace, Unicode-Tricks, SQL-Smuggling-Versuche).
-const CODE_FORMAT = /^[A-Z0-9][A-Z0-9-]{2,30}[A-Z0-9]$/
+const CODE_FORMAT = /^[A-Z0-9][A-Z0-9_-]{2,30}[A-Z0-9]$/
 
 export function normalizePromoCode(input: unknown): string | null {
   if (typeof input !== 'string') return null
