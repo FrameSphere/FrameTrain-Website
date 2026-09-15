@@ -100,7 +100,7 @@
       "heading": "5. Third-Party Providers",
       "items": [
         { "name": "Stripe", "role": "Payment processing", "privacy": "https://stripe.com/privacy" },
-        { "name": "Vercel", "role": "Website hosting", "privacy": "https://vercel.com/legal/privacy-policy" },
+        { "name": "Vercel", "role": "Website hosting & cookieless reach measurement (Vercel Web Analytics, no personal profiles)", "privacy": "https://vercel.com/legal/privacy-policy" },
         { "name": "Cloudflare", "role": "API infrastructure / CDN", "privacy": "https://www.cloudflare.com/privacypolicy/" },
         { "name": "Google", "role": "OAuth login (optional)", "privacy": "https://policies.google.com/privacy" },
         { "name": "Google Analytics / Google Ads", "role": "Reach measurement & conversion tracking – only with consent", "privacy": "https://policies.google.com/privacy" },

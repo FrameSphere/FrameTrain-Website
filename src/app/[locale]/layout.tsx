@@ -7,6 +7,7 @@ import { routing } from '@/i18n/routing'
 import '../globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { Analytics } from '@/components/Analytics'
+import { VercelAnalytics } from '@/components/VercelAnalytics'
 import { CookieBanner } from '@/components/CookieBanner'
 import { siteUrl, pageAlternates, pageOpenGraph } from '@/lib/seo'
 
@@ -232,6 +233,7 @@ try {
           <CookieBanner />
         </NextIntlClientProvider>
         <Analytics />
+        <VercelAnalytics />
       </body>
     </html>
   )
