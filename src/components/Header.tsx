@@ -1,6 +1,6 @@
 'use client'
 
-import { Home, Sparkles, Bell, Menu, X } from 'lucide-react'
+import { Home, Bell, Menu, X } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEffect, useState, useCallback } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
@@ -160,9 +160,8 @@ export function Header() {
             <Link href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0" onClick={closeMenu}>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur-md opacity-75 group-hover:opacity-100 transition" />
-                <div className="relative bg-gradient-to-br from-purple-600 to-pink-600 p-2 rounded-xl">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element -- SVG, next/image bringt hier nichts */}
+                <img src="/favicon.svg" alt="" width={36} height={36} className="relative w-9 h-9 rounded-xl" />
               </div>
               <span className="text-lg sm:text-xl font-bold text-gradient-brand">
                 FrameTrain
