@@ -5,6 +5,8 @@ import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { VideoEmbed } from '@/components/VideoEmbed'
+import { VIDEOS } from '@/lib/videos'
 import {
   HelpCircle, Search, Cpu, Shield, DollarSign, Download,
   Brain, Code2, Zap, Settings, Package, BarChart3,
@@ -48,6 +50,7 @@ function useSpecialAnswers() {
   const tHp = useTranslations('FAQ.categories.training.hyperparamsCode')
   const tDur = useTranslations('FAQ.categories.training.durationTable')
   const tLoss = useTranslations('FAQ.categories.monitoring.lossProblems')
+  const tVid = useTranslations('FAQ.videoAnswers')
 
   const vramRows = t.raw('rows') as string[][]
   const vramHeaders = t.raw('headers') as string[]
@@ -135,11 +138,32 @@ function useSpecialAnswers() {
     </div>
   )
 
+  // Video-Antworten: klick-vor-Laden-Fassade (lädt nichts von YouTube bis
+  // zum bewussten Klick). Breite bewusst begrenzt, damit die Antwort in die
+  // Accordion-Höhe passt.
+  const INSTALL_VIDEO = (
+    <div className="space-y-3">
+      <p>{tVid('installIntro')}</p>
+      <VideoEmbed id={VIDEOS.install} title={tVid('installTitle')} className="max-w-lg" />
+      <p className="text-gray-400 text-sm">{tVid('installOutro')}</p>
+    </div>
+  )
+
+  const TRAIN_VIDEO = (
+    <div className="space-y-3">
+      <p>{tVid('trainIntro')}</p>
+      <VideoEmbed id={VIDEOS.train} title={tVid('trainTitle')} className="max-w-lg" />
+      <p className="text-gray-400 text-sm">{tVid('trainOutro')}</p>
+    </div>
+  )
+
   return {
     __VRAM_TABLE__: VRAM_TABLE,
     __HYPERPARAMS_CODE__: HYPERPARAMS_CODE,
     __DURATION_TABLE__: DURATION_TABLE,
     __LOSS_PROBLEMS__: LOSS_PROBLEMS,
+    __INSTALL_VIDEO__: INSTALL_VIDEO,
+    __TRAIN_VIDEO__: TRAIN_VIDEO,
   } as Record<string, React.ReactNode>
 }
 

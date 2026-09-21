@@ -3,13 +3,15 @@
 import { useState, useEffect } from 'react';
 import {
   Download, Loader2, CheckCircle2, XCircle, ArrowRight,
-  AlertTriangle, Apple, AppWindow, Monitor, KeyRound, ListOrdered,
+  AlertTriangle, Apple, AppWindow, Monitor, KeyRound, ListOrdered, PlayCircle,
 } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { AppScreenshot } from '@/components/AppScreenshot';
+import { VideoEmbed } from '@/components/VideoEmbed';
+import { VIDEOS } from '@/lib/videos';
 
 type Platform = 'windows' | 'mac' | 'linux';
 
@@ -257,6 +259,19 @@ export default function DownloadPage() {
                 <p className="text-red-300 text-sm">{error}</p>
               </div>
             )}
+          </div>
+
+          {/* Install-Video – die Stelle mit der höchsten Absicht: direkt unter
+              der Download-Karte fängt es die Leute ab, die runterladen,
+              hängenbleiben und sonst wieder gehen. Die Fassade lädt nichts von
+              YouTube, bis bewusst auf Play geklickt wird. */}
+          <div className="glass rounded-2xl border border-white/10 p-6 sm:p-8 mb-8">
+            <h2 className="flex items-center gap-2.5 text-lg font-semibold text-white mb-1.5">
+              <PlayCircle className="w-5 h-5 text-purple-400" />
+              {t('installVideoHeading')}
+            </h2>
+            <p className="text-gray-400 text-sm mb-5">{t('installVideoSubtitle')}</p>
+            <VideoEmbed id={VIDEOS.install} title={t('installVideoTitle')} />
           </div>
 
           {/* Was nach dem Download auf einen zukommt – steht bewusst unter der

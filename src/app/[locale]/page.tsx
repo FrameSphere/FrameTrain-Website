@@ -7,11 +7,14 @@ import { Link, useRouter } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { AppScreenshot } from '@/components/AppScreenshot'
+import { VideoEmbed } from '@/components/VideoEmbed'
+import { VIDEOS } from '@/lib/videos'
 import { GlowCard } from '@/components/ui/spotlight-card'
 import {
   Sparkles, Lock, Rocket, Zap, Code2, Database,
   BarChart3, Package, Shield, ArrowRight, Check,
-  Brain, Cpu, Cloud, Download, Book, ChevronDown, Ticket
+  Brain, Cpu, Cloud, Download, Book, ChevronDown, Ticket,
+  Wallet, WifiOff, Unlock
 } from 'lucide-react'
 /* Temporäre UI Anfang, bald herausnehmen */
 import { ReleaseBanner, ComingSoonBadge, ReleasePromoSection } from '@/components/ReleaseCountdown'
@@ -21,7 +24,7 @@ type Stat = { number: string; label: string }
 type Feature = { title: string; description: string }
 type Step = { number: string; title: string; description: string }
 type Chapter = { emoji: string; title: string; num: string }
-type Reason = { icon: string; title: string; description: string }
+type Reason = { title: string; description: string }
 type UseCase = { tag: string; title: string; description: string; keywords: string[]; href?: string }
 type FaqEntry = { question: string; answer: string }
 type DocCardData = { title: string; description: string; href: string }
@@ -287,6 +290,26 @@ export default function HomePage() {
                 />
               ))}
             </div>
+
+            {/* Tutorial-Videos. Wer lieber zusieht als liest, bekommt hier die
+                zwei Schritte als Video – erst installieren, dann trainieren.
+                Das führt Besucher zum Aha-Moment und speist die Funnel-Logik
+                (ein Video führt ins nächste). Die Fassade lädt nichts von
+                YouTube, bis bewusst auf Play geklickt wird. */}
+            <div className="mt-16 sm:mt-20">
+              <div className="text-center mb-8">
+                <h3 className="text-xl sm:text-2xl font-bold text-white">
+                  {t('howItWorks.videos.heading')}
+                </h3>
+                <p className="mt-2 text-gray-500 text-sm sm:text-base max-w-xl mx-auto">
+                  {t('howItWorks.videos.subtitle')}
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+                <VideoEmbed id={VIDEOS.install} title={t('howItWorks.videos.installTitle')} />
+                <VideoEmbed id={VIDEOS.train} title={t('howItWorks.videos.trainTitle')} />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -496,7 +519,19 @@ export default function HomePage() {
             <SectionHeading title={t('whyLocal.title')} subtitle={t('whyLocal.subtitle')} />
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {reasons.map((r, i) => (
-                <ReasonCard key={i} icon={r.icon} title={r.title} description={r.description} />
+                <ReasonCard
+                  key={i}
+                  icon={[
+                    <Wallet key="0" />,
+                    <Lock key="1" />,
+                    <Cpu key="2" />,
+                    <WifiOff key="3" />,
+                    <Unlock key="4" />,
+                    <Rocket key="5" />,
+                  ][i]}
+                  title={r.title}
+                  description={r.description}
+                />
               ))}
             </div>
           </div>
@@ -716,10 +751,14 @@ function StepCard({ number, icon, title, description }: any) {
   )
 }
 
-function ReasonCard({ icon, title, description }: { icon: string; title: string; description: string }) {
+function ReasonCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   return (
     <div className="card-lift glass-strong rounded-2xl p-7">
-      <div className="text-[28px] mb-4 leading-none">{icon}</div>
+      <div className="w-11 h-11 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-5">
+        <div className="text-white [&>svg]:w-[18px] [&>svg]:h-[18px]">
+          {icon}
+        </div>
+      </div>
       <h3 className="text-[17px] font-semibold text-white mb-2">{title}</h3>
       <p className="text-[15px] text-gray-400 leading-[1.65]">{description}</p>
     </div>
