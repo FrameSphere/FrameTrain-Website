@@ -2233,6 +2233,36 @@
                             "full fine-tuning",
                             "comparison"
                         ]
+                    },
+                    {
+                        "q": "Can I create my own datasets with FrameTrain?",
+                        "a": "Yes. Since version 1.3.4 there is the Dataset Builder with seven project types: mark objects (boxes, YOLO export), class per image, per text, per recording and per video segment, text → answer, and transcripts. You collect data from folders, the microphone, the web or let the AI assistant generate examples, label with the keyboard and export ready for training – split into train, val and test.",
+                        "tags": [
+                            "dataset",
+                            "dataset builder",
+                            "labeling",
+                            "annotation"
+                        ]
+                    },
+                    {
+                        "q": "Can FrameTrain collect training data from the web?",
+                        "a": "Yes, in the Dataset Builder via single URLs, whole websites (with depth and page limit) or sitemaps. robots.txt is respected, every server gets at least one second between requests, and every file keeps its URL, source page and stated license (PROVENANCE.csv). Whether you may use the content for training is up to you to check against the license. Pages that load their content via JavaScript yield little so far.",
+                        "tags": [
+                            "web",
+                            "crawler",
+                            "scraping",
+                            "robots.txt",
+                            "dataset"
+                        ]
+                    },
+                    {
+                        "q": "Do I have to label every sample myself?",
+                        "a": "No. A model you have already trained can suggest boxes, classes, transcripts (Whisper) or answers. The “Uncertain” filter shows the least confident suggestions first, and nothing counts as confirmed until you press Enter. On top of that, wrong and uncertain results from the Laboratory go back into a builder project as new work.",
+                        "tags": [
+                            "labeling",
+                            "suggestions",
+                            "active learning"
+                        ]
                     }
                 ]
             },
@@ -2493,6 +2523,7 @@
                     "modelManager": "Model Manager",
                     "trainingPanel": "Training Panel",
                     "datasetUpload": "Dataset Upload",
+                    "datasetBuilder": "Dataset Builder",
                     "analysis": "Analysis",
                     "testing": "Testing",
                     "versioning": "Versioning",
@@ -2899,6 +2930,199 @@
                     "desc": "FrameTrain splits the dataset automatically (80/20). You can adjust the split manually."
                 }
             ]
+        },
+        "datasetBuilder": {
+            "heading": "Dataset Builder",
+            "subtitle": "Build your own image, text, audio and video datasets – collect, label, check, export",
+            "badge": "New in 1.3.4",
+            "intro": "No ready-made dataset? Since version 1.3.4 you build it right inside FrameTrain: collect data, label it, check it and hand it straight to training – locally on your machine, with provenance for every file.",
+            "flowHeading": "How it works",
+            "flowText": "The builder is not a one-way import but a loop: after training, the Laboratory shows where your model gets it wrong – and exactly those samples go back to be labeled.",
+            "flow": [
+                {
+                    "title": "Collect",
+                    "desc": "Folders, mic, web, AI"
+                },
+                {
+                    "title": "Label",
+                    "desc": "Keyboard, 1 to 9"
+                },
+                {
+                    "title": "Get suggestions",
+                    "desc": "Least certain first"
+                },
+                {
+                    "title": "Check quality",
+                    "desc": "Duplicates, balance"
+                },
+                {
+                    "title": "Export",
+                    "desc": "Leak-free splits"
+                },
+                {
+                    "title": "Train",
+                    "desc": "Matching plugin"
+                },
+                {
+                    "title": "Test in the Laboratory",
+                    "desc": "Right or wrong?"
+                }
+            ],
+            "flowLoop": "Wrong and uncertain results from the Laboratory go back to the builder as new work.",
+            "typesHeading": "Seven project types",
+            "typesText": "You choose what you want to train – not a file format. Each project type exports exactly the format the matching training plugin reads.",
+            "typesColType": "Project type",
+            "typesColExport": "Export",
+            "typesColModels": "Trains with (examples)",
+            "typesColSuggest": "Suggestions by",
+            "types": [
+                {
+                    "type": "Mark objects (boxes)",
+                    "export": "YOLO: images/, labels/, classes.txt",
+                    "models": "YOLOv8, YOLO11",
+                    "suggest": "YOLO model"
+                },
+                {
+                    "type": "Class per image",
+                    "export": "One folder per class",
+                    "models": "ViT, ResNet, ConvNeXt, Swin",
+                    "suggest": "Image classifier"
+                },
+                {
+                    "type": "Class per video segment",
+                    "export": "Cut clips, one folder per class",
+                    "models": "VideoMAE, TimeSformer, ViViT",
+                    "suggest": "Video classifier"
+                },
+                {
+                    "type": "Class per text",
+                    "export": "daten.csv with text and label",
+                    "models": "BERT, DistilBERT, XLM-RoBERTa, DeBERTa",
+                    "suggest": "Text classifier"
+                },
+                {
+                    "type": "Text → answer",
+                    "export": "daten.jsonl with source and target",
+                    "models": "T5, mT5, BART",
+                    "suggest": "Text-to-text model"
+                },
+                {
+                    "type": "Class per recording",
+                    "export": "One folder per class (WAV)",
+                    "models": "Wav2Vec2, HuBERT, WavLM, AST",
+                    "suggest": "Audio classifier"
+                },
+                {
+                    "type": "Wording (transcript)",
+                    "export": "Recording with a .txt of the same name",
+                    "models": "Speech-to-text models",
+                    "suggest": "Whisper, Wav2Vec2-CTC"
+                }
+            ],
+            "typesNote": "If no matching model is available yet, the app names one to download when you export – for example MCG-NJU/videomae-base for video or openai/whisper-small for transcripts.",
+            "featuresHeading": "All features",
+            "features": [
+                {
+                    "title": "Import",
+                    "desc": "Folders (subfolder = class), existing FrameTrain datasets, CSV, JSONL, TXT, YOLO labels, frames from videos and images from the clipboard. Keep working on half-finished datasets instead of starting over."
+                },
+                {
+                    "title": "Record",
+                    "desc": "Microphone right in the app, saved as 16 kHz mono WAV – speech and sound data without a second program."
+                },
+                {
+                    "title": "Create",
+                    "desc": "Write texts yourself, one by one or as a list, or let the AI assistant generate examples per class – with preview and correction."
+                },
+                {
+                    "title": "Video",
+                    "desc": "Split videos into fixed-length segments; a segment plays only its part, X splits it at the current position. Clips are cut only on export."
+                },
+                {
+                    "title": "Label",
+                    "desc": "Keyboard for everything (1 to 9, Enter, S, N, arrows) plus a context menu. For boxes: draw, move, copy, duplicate, zoom, undo."
+                },
+                {
+                    "title": "Model suggestions",
+                    "desc": "A trained model suggests boxes, classes, transcripts or answers. Nothing counts as confirmed until you press Enter."
+                },
+                {
+                    "title": "Active learning",
+                    "desc": "The “Uncertain” filter shows the least confident suggestions first – your time goes where the model learns the most."
+                },
+                {
+                    "title": "Review",
+                    "desc": "The model looks at confirmed samples; contradictions end up in the “Doubt” filter. That is how you find errors in imported labels."
+                },
+                {
+                    "title": "Quality",
+                    "desc": "Near-duplicates for texts and images with a dialog to sort them out, balance warning per class, warning when there is only one class."
+                },
+                {
+                    "title": "Export",
+                    "desc": "Split into train, val and test by group – segments of one video, page or recording stay together. Plus EXPORT_REPORT.md, PROVENANCE.csv and DATA_CARD.md."
+                }
+            ],
+            "webHeading": "Data from the web – politely",
+            "webText": "FrameTrain collects images, audio, video and text paragraphs from the web like a polite visitor: robots.txt is respected, every server gets pauses, and every file keeps its origin. It fetches originals, not thumbnails.",
+            "webModes": [
+                {
+                    "title": "URLs",
+                    "desc": "Each address on its own – a gallery, an article or a list of direct files."
+                },
+                {
+                    "title": "Website",
+                    "desc": "Follow links from start pages up to the chosen depth and page count, on the same domains only – a blog or documentation, for example."
+                },
+                {
+                    "title": "Sitemap",
+                    "desc": "The pages from sitemap.xml, including sitemap indexes and robots.txt – targeted and complete for large websites."
+                }
+            ],
+            "webRulesHeading": "Rules that always apply",
+            "webRules": [
+                "robots.txt is read and respected, including Crawl-delay; anything disallowed is listed in the report.",
+                "At least one second between requests per server.",
+                "Domain allowlist; without one, a crawl stays on the domains of the start URLs.",
+                "Size limit per file; large files are streamed straight to disk.",
+                "Defaults: images 500 files at 25 MB, audio 300 at 200 MB, video 100 at 4 GB, texts 2000 paragraphs.",
+                "Icons and tracking pixels are dropped; for text, navigation, headers and footers are dropped.",
+                "Every file carries its URL, source page and stated license; samples from one page stay together when splitting.",
+                "Stop at any time – whatever has been fetched stays."
+            ],
+            "beginnerTitle": "Ready without prior knowledge",
+            "beginnerDesc": "Create a project, fetch data, label with number keys, export – you can do that without a manual. Project types are named after the goal instead of formats, matching models are preselected, and the app warns in plain words about too few examples, unbalanced classes, an empty validation set, copies across splits and missing licenses. Model suggestions stay suggestions, and removing needs a second click.",
+            "limitsTitle": "Not included yet (as of 1.3.4)",
+            "limits": [
+                "No mask segmentation and no SAM or CLIP assistance – boxes are drawn or suggested by a model.",
+                "No marking of individual words in texts (named entities).",
+                "No camera or screen recording as a source.",
+                "Pages that load their content via JavaScript yield little; search and image search APIs are not connected.",
+                "No COCO export and no augmentation on export.",
+                "Near-duplicates only for texts and images; for audio and video, exact copies are detected."
+            ],
+            "shots": {
+                "newProject": {
+                    "alt": "FrameTrain Dataset Builder “New project” dialog with the seven project types grouped by data type, “Class per image” selected",
+                    "caption": "You choose what gets labeled – images, texts, audio or video. The export format follows from that."
+                },
+                "imageBoxes": {
+                    "alt": "Dataset Builder image workbench with bounding boxes for tree, lift and offroad, class list, counters and distribution warnings",
+                    "caption": "Draw boxes and confirm with the keyboard. On the right: classes, state and hints on class balance."
+                },
+                "video": {
+                    "alt": "Dataset Builder video workbench with segment list, player for the selected segment and the Skip and Split here buttons",
+                    "caption": "Split videos into fixed segments; each segment plays only its part and can be split at the current position."
+                },
+                "web": {
+                    "alt": "“Fetch from the web” dialog in website mode with start page, limits for depth, pages, files and file size, license field and robots.txt note",
+                    "caption": "Collect whole websites – with limits, a license per file and robots.txt, which is always respected."
+                },
+                "exportReport": {
+                    "alt": "Dataset Builder export report with sample count, near-duplicates and distribution per class",
+                    "caption": "After the export: distribution per class and hints – also saved as EXPORT_REPORT.md next to the dataset."
+                }
+            }
         },
         "analysis": {
             "heading": "Analysis",
@@ -6840,6 +7064,45 @@
                 }
             ]
         },
+        "datasetBuilder": {
+            "badge": "New in 1.3.4",
+            "headingPre": "From raw material to a",
+            "headingHighlight": "trainable dataset",
+            "headingPost": "– in one app.",
+            "paragraph": "Collect, label and check images, texts, recordings and videos. A model suggests, you confirm. The export fits training with no detour.",
+            "benefits": [
+                {
+                    "title": "Seven project types",
+                    "desc": "Mark objects, classify images, texts, recordings and video segments, text pairs, transcripts."
+                },
+                {
+                    "title": "Data from anywhere",
+                    "desc": "Folders, microphone, writing, AI generation, web pages, whole websites and sitemaps."
+                },
+                {
+                    "title": "Label faster",
+                    "desc": "Model suggestions, least certain first, keyboard for everything."
+                },
+                {
+                    "title": "Quality before training",
+                    "desc": "Near-duplicates, balance warnings, leak-free splits, export report and provenance per file."
+                }
+            ],
+            "loopLabel": "The loop",
+            "loop": [
+                "Collect",
+                "Label",
+                "Suggest",
+                "Check",
+                "Export",
+                "Train",
+                "Test in the Laboratory"
+            ],
+            "loopBack": "Mistakes from the Laboratory flow back into the builder",
+            "cta": "How the Dataset Builder works",
+            "shotAlt": "FrameTrain Dataset Builder: image with bounding boxes for tree, lift and offroad, next to classes, state and distribution hints",
+            "shotCaption": "The image workbench: draw boxes, confirm with the keyboard, keep an eye on class balance."
+        },
         "howItWorks": {
             "title": "How it works",
             "subtitle": "From installation to training in just a few minutes",
@@ -7053,6 +7316,10 @@
                 {
                     "question": "Can I fine-tune LLMs with FrameTrain?",
                     "answer": "Yes. FrameTrain supports fine-tuning of Large Language Models (LLMs) via LoRA and QLoRA. You can import models like Llama, Mistral, or Phi directly from HuggingFace and adapt them to your own datasets."
+                },
+                {
+                    "question": "Can I create my own datasets with FrameTrain?",
+                    "answer": "Yes. Since version 1.3.4 FrameTrain includes a Dataset Builder for images, text, audio and video: collect data from folders, the microphone, the web or the AI assistant, label it with the keyboard, confirm suggestions from a trained model, check duplicates and class balance, and export in exactly the format training expects – including a train/val/test split and provenance for every file."
                 },
                 {
                     "question": "Which GPUs are supported?",
@@ -7287,6 +7554,36 @@
                     "Train/val/test split without touching the command line",
                     "Compatibility check against the selected model"
                 ]
+            },
+            {
+                "id": "dataset-builder",
+                "slug": "dataset-builder-image-boxes",
+                "title": "Dataset Builder – label your own datasets",
+                "text": "Since version 1.3.4 you build datasets right inside FrameTrain. The image workbench shows the idea: drag boxes, pick the class with a number key, confirm with Enter. A trained model can make suggestions, the “Uncertain” filter brings the hardest cases forward, and on the right you see which classes still have too few examples. Besides images there are project types for texts, recordings, transcripts and video segments.",
+                "alt": "Dataset Builder image workbench with bounding boxes for tree, lift and offroad, class list, counters and distribution warnings",
+                "caption": "Labeling by keyboard, with suggestions and warnings about class balance.",
+                "bullets": [
+                    "Seven project types for image, text, audio and video",
+                    "Model suggestions, least certain first",
+                    "Export straight into the format of the matching training plugin"
+                ],
+                "relatedHref": "/docs#dataset-builder",
+                "relatedLabel": "Dataset Builder in the docs"
+            },
+            {
+                "id": "dataset-builder-web",
+                "slug": "dataset-builder-web",
+                "title": "Fetch from the web – collect data with provenance",
+                "text": "Instead of downloading files one by one, you give the builder URLs, whole websites or a sitemap. FrameTrain follows links only up to the chosen depth and only on the same domains, keeps limits for pages, files and file size, and respects robots.txt including Crawl-delay. Every fetched file gets its URL, source page and license in PROVENANCE.csv.",
+                "alt": "“Fetch from the web” dialog in website mode with start page, limits for depth, pages, files and file size, license field and robots.txt note",
+                "caption": "Website mode with the limits expanded. robots.txt is always respected.",
+                "bullets": [
+                    "URLs, whole websites or sitemaps",
+                    "At least one second between requests per server",
+                    "Provenance and license per file"
+                ],
+                "relatedHref": "/docs#dataset-builder",
+                "relatedLabel": "Web collection in the docs"
             },
             {
                 "id": "training",

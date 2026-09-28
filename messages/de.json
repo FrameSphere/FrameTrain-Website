@@ -1200,6 +1200,7 @@
                     "modelManager": "Model Manager",
                     "trainingPanel": "Training Panel",
                     "datasetUpload": "Dataset Upload",
+                    "datasetBuilder": "Datensatz-Werkstatt",
                     "analysis": "Analyse",
                     "testing": "Testing",
                     "versioning": "Versioning",
@@ -1606,6 +1607,199 @@
                     "desc": "FrameTrain teilt den Datensatz automatisch (80/20). Du kannst den Split manuell anpassen."
                 }
             ]
+        },
+        "datasetBuilder": {
+            "heading": "Datensatz-Werkstatt",
+            "subtitle": "Eigene Datensätze für Bild, Text, Audio und Video bauen – sammeln, beschriften, prüfen, exportieren",
+            "badge": "Neu in 1.3.4",
+            "intro": "Kein fertiger Datensatz? Seit Version 1.3.4 baust du ihn direkt in FrameTrain: Daten sammeln, beschriften, prüfen und ohne Umweg ans Training übergeben – lokal auf deinem Rechner und mit Herkunft je Datei.",
+            "flowHeading": "Der Ablauf",
+            "flowText": "Die Werkstatt ist kein Einweg-Import, sondern ein Kreislauf: Nach dem Training zeigt das Labor, wo dein Modell danebenliegt – genau diese Samples gehen zurück zum Beschriften.",
+            "flow": [
+                {
+                    "title": "Sammeln",
+                    "desc": "Ordner, Mikrofon, Web, KI"
+                },
+                {
+                    "title": "Beschriften",
+                    "desc": "Tastatur, 1 bis 9"
+                },
+                {
+                    "title": "Vorschlagen lassen",
+                    "desc": "Unsicherste zuerst"
+                },
+                {
+                    "title": "Qualität prüfen",
+                    "desc": "Dubletten, Balance"
+                },
+                {
+                    "title": "Exportieren",
+                    "desc": "Aufteilung ohne Lecks"
+                },
+                {
+                    "title": "Trainieren",
+                    "desc": "Passendes Plugin"
+                },
+                {
+                    "title": "Im Labor testen",
+                    "desc": "Richtig oder falsch?"
+                }
+            ],
+            "flowLoop": "Falsche und unsichere Ergebnisse aus dem Labor gehen als neue Arbeit zurück in die Werkstatt.",
+            "typesHeading": "Sieben Projektarten",
+            "typesText": "Du wählst, was du trainieren willst – nicht ein Dateiformat. Jede Projektart exportiert genau das Format, das das passende Trainings-Plugin liest.",
+            "typesColType": "Projektart",
+            "typesColExport": "Export",
+            "typesColModels": "Trainiert mit (Beispiele)",
+            "typesColSuggest": "Vorschläge durch",
+            "types": [
+                {
+                    "type": "Objekte markieren (Boxen)",
+                    "export": "YOLO: images/, labels/, classes.txt",
+                    "models": "YOLOv8, YOLO11",
+                    "suggest": "YOLO-Modell"
+                },
+                {
+                    "type": "Klasse je Bild",
+                    "export": "Ein Ordner je Klasse",
+                    "models": "ViT, ResNet, ConvNeXt, Swin",
+                    "suggest": "Bildklassifikator"
+                },
+                {
+                    "type": "Klasse je Videoabschnitt",
+                    "export": "Geschnittene Clips, ein Ordner je Klasse",
+                    "models": "VideoMAE, TimeSformer, ViViT",
+                    "suggest": "Videoklassifikator"
+                },
+                {
+                    "type": "Klasse je Text",
+                    "export": "daten.csv mit text und label",
+                    "models": "BERT, DistilBERT, XLM-RoBERTa, DeBERTa",
+                    "suggest": "Textklassifikator"
+                },
+                {
+                    "type": "Text → Antwort",
+                    "export": "daten.jsonl mit source und target",
+                    "models": "T5, mT5, BART",
+                    "suggest": "Text-zu-Text-Modell"
+                },
+                {
+                    "type": "Klasse je Aufnahme",
+                    "export": "Ein Ordner je Klasse (WAV)",
+                    "models": "Wav2Vec2, HuBERT, WavLM, AST",
+                    "suggest": "Audioklassifikator"
+                },
+                {
+                    "type": "Wortlaut (Transkript)",
+                    "export": "Aufnahme mit gleichnamiger .txt",
+                    "models": "Sprach-zu-Text-Modelle",
+                    "suggest": "Whisper, Wav2Vec2-CTC"
+                }
+            ],
+            "typesNote": "Ist noch kein passendes Modell da, nennt die App beim Export eines zum Herunterladen – etwa MCG-NJU/videomae-base für Video oder openai/whisper-small für Transkripte.",
+            "featuresHeading": "Alle Funktionen",
+            "features": [
+                {
+                    "title": "Einlesen",
+                    "desc": "Ordner (Unterordner = Klasse), vorhandene FrameTrain-Datensätze, CSV, JSONL, TXT, YOLO-Labels, Einzelbilder aus Videos und Bilder aus der Zwischenablage. Halbfertige Datensätze bearbeitest du weiter, statt neu anzufangen."
+                },
+                {
+                    "title": "Aufnehmen",
+                    "desc": "Mikrofon direkt in der App, gespeichert als 16-kHz-Mono-WAV – Sprach- und Geräuschdaten ohne zweites Programm."
+                },
+                {
+                    "title": "Erstellen",
+                    "desc": "Texte selbst schreiben, einzeln oder als Liste, oder Beispiele je Klasse vom KI-Assistenten erzeugen lassen – mit Vorschau und Korrektur."
+                },
+                {
+                    "title": "Video",
+                    "desc": "Videos in Abschnitte fester Länge zerlegen; ein Abschnitt spielt nur seinen Teil, X teilt ihn an der aktuellen Stelle. Geschnitten wird erst beim Export."
+                },
+                {
+                    "title": "Beschriften",
+                    "desc": "Tastatur für alles (1 bis 9, Enter, S, N, Pfeile) plus Rechtsklick-Menü. Bei Boxen: zeichnen, verschieben, kopieren, duplizieren, zoomen, rückgängig machen."
+                },
+                {
+                    "title": "Modellvorschläge",
+                    "desc": "Ein trainiertes Modell schlägt Boxen, Klassen, Transkripte oder Antworten vor. Nichts gilt als bestätigt, bis du Enter drückst."
+                },
+                {
+                    "title": "Aktives Lernen",
+                    "desc": "Der Filter „Unsicher“ zeigt die Vorschläge mit der geringsten Sicherheit zuerst – deine Zeit fließt dorthin, wo das Modell am meisten lernt."
+                },
+                {
+                    "title": "Prüfen",
+                    "desc": "Das Modell sieht sich bestätigte Samples an; Widersprüche landen im Filter „Zweifel“. So findest du Fehler in übernommenen Labels."
+                },
+                {
+                    "title": "Qualität",
+                    "desc": "Beinahe-Dubletten bei Texten und Bildern mit Dialog zum Aussortieren, Balance-Warnung je Klasse, Warnung bei nur einer Klasse."
+                },
+                {
+                    "title": "Export",
+                    "desc": "Aufteilung in train, val und test nach Gruppen – Abschnitte eines Videos, einer Seite oder einer Aufnahme bleiben zusammen. Dazu EXPORT_REPORT.md, PROVENANCE.csv und DATA_CARD.md."
+                }
+            ],
+            "webHeading": "Daten aus dem Netz – mit Anstand",
+            "webText": "FrameTrain sammelt Bilder, Audio, Video und Textabsätze aus dem Netz wie ein höflicher Besucher: robots.txt wird befolgt, jeder Server bekommt Pausen, und jede Datei behält ihre Herkunft. Es werden Originale geholt, keine Vorschaubilder.",
+            "webModes": [
+                {
+                    "title": "Adressen",
+                    "desc": "Jede Adresse einzeln – etwa eine Galerie, ein Artikel oder eine Liste direkter Dateien."
+                },
+                {
+                    "title": "Website",
+                    "desc": "Von Startseiten aus Links folgen, bis zur gewählten Tiefe und Seitenzahl, nur auf denselben Domains – etwa ein Blog oder eine Doku."
+                },
+                {
+                    "title": "Sitemap",
+                    "desc": "Die Seiten aus der sitemap.xml, auch aus Sitemap-Verzeichnissen und robots.txt – für große Websites gezielt und vollständig."
+                }
+            ],
+            "webRulesHeading": "Die Regeln, die immer gelten",
+            "webRules": [
+                "robots.txt wird gelesen und befolgt, inklusive Crawl-delay; Untersagtes steht im Bericht.",
+                "Mindestens eine Sekunde Abstand je Server.",
+                "Allowlist für Domains; ohne Allowlist bleibt ein Crawl auf den Domains der Startadressen.",
+                "Größenlimit je Datei; große Dateien gehen als Stream direkt auf die Platte.",
+                "Startwerte: Bilder 500 Dateien à 25 MB, Audio 300 à 200 MB, Video 100 à 4 GB, Texte 2000 Absätze.",
+                "Symbole und Zählpixel fallen weg; bei Text fallen Navigation, Kopf- und Fußzeilen weg.",
+                "Jede Datei trägt Adresse, Fundseite und die angegebene Lizenz; Samples einer Seite bleiben beim Aufteilen zusammen.",
+                "Anhalten jederzeit – was bis dahin geholt ist, bleibt."
+            ],
+            "beginnerTitle": "Ohne Vorwissen startklar",
+            "beginnerDesc": "Projekt anlegen, Daten holen, mit Zahlen beschriften, exportieren – das schaffst du ohne Anleitung. Projektarten heißen nach dem Ziel statt nach Formaten, passende Modelle sind vorausgewählt, und die App warnt in Klartext vor zu wenigen Beispielen, unausgewogenen Klassen, leerer Validierung, Kopien über Teilgrenzen und fehlenden Lizenzen. Modellvorschläge bleiben Vorschläge, Entfernen braucht einen zweiten Klick.",
+            "limitsTitle": "Noch nicht enthalten (Stand 1.3.4)",
+            "limits": [
+                "Kein Segmentieren mit Masken und keine Assistenz durch SAM oder CLIP – Boxen werden gezeichnet oder vom Modell vorgeschlagen.",
+                "Keine Markierung einzelner Wörter in Texten (Named Entities).",
+                "Keine Kamera oder Bildschirmaufnahme als Quelle.",
+                "Seiten, die ihren Inhalt erst per JavaScript nachladen, liefern wenig; Such- und Bildsuche-Schnittstellen sind nicht angebunden.",
+                "Kein COCO-Export und keine Augmentierung beim Export.",
+                "Beinahe-Dubletten nur bei Texten und Bildern; bei Audio und Video werden exakte Kopien erkannt."
+            ],
+            "shots": {
+                "newProject": {
+                    "alt": "Dialog „Neues Projekt“ der FrameTrain Datensatz-Werkstatt mit den sieben Projektarten nach Datenart gruppiert, „Klasse je Bild“ ausgewählt",
+                    "caption": "Du wählst, was gelabelt werden soll – Bilder, Texte, Audio oder Video. Das Exportformat folgt daraus."
+                },
+                "imageBoxes": {
+                    "alt": "Bild-Werkbank der Datensatz-Werkstatt mit Bounding-Boxen für Baum, Lift und Offroad, Klassenliste, Zählern und Verteilungswarnungen",
+                    "caption": "Boxen zeichnen und per Tastatur bestätigen. Rechts: Klassen, Stand und Hinweise zur Klassenverteilung."
+                },
+                "video": {
+                    "alt": "Video-Werkbank der Datensatz-Werkstatt mit Abschnittsliste, Player für den gewählten Abschnitt und den Schaltflächen Überspringen und Hier teilen",
+                    "caption": "Videos in feste Abschnitte zerlegen; jeder Abschnitt spielt nur seinen Teil und lässt sich an der aktuellen Stelle teilen."
+                },
+                "web": {
+                    "alt": "Dialog „Aus dem Netz holen“ im Website-Modus mit Startseite, Grenzen für Tiefe, Seiten, Dateien und Dateigröße, Lizenzfeld und robots.txt-Hinweis",
+                    "caption": "Ganze Websites einsammeln – mit Grenzen, Lizenz je Datei und robots.txt, das immer befolgt wird."
+                },
+                "exportReport": {
+                    "alt": "Export-Bericht der Datensatz-Werkstatt mit Sample-Zahl, Beinahe-Dubletten und Verteilung je Klasse",
+                    "caption": "Nach dem Export: Verteilung je Klasse und Hinweise – auch als EXPORT_REPORT.md neben dem Datensatz."
+                }
+            }
         },
         "analysis": {
             "heading": "Analyse",
@@ -2801,6 +2995,39 @@
                         "tags": [
                             "full fine-tuning",
                             "vergleich"
+                        ]
+                    },
+                    {
+                        "q": "Kann ich mit FrameTrain eigene Datensätze erstellen?",
+                        "a": "Ja. Seit Version 1.3.4 gibt es die Datensatz-Werkstatt mit sieben Projektarten: Objekte markieren (Boxen, YOLO-Export), Klasse je Bild, je Text, je Aufnahme und je Videoabschnitt, Text → Antwort sowie Transkripte. Du sammelst Daten aus Ordnern, dem Mikrofon, dem Netz oder lässt Beispiele vom KI-Assistenten erzeugen, beschriftest per Tastatur und exportierst direkt trainierbar – aufgeteilt in train, val und test.",
+                        "tags": [
+                            "dataset",
+                            "datensatz",
+                            "werkstatt",
+                            "labeling",
+                            "beschriften",
+                            "annotation"
+                        ]
+                    },
+                    {
+                        "q": "Kann FrameTrain Trainingsdaten aus dem Internet sammeln?",
+                        "a": "Ja, in der Datensatz-Werkstatt über einzelne Adressen, ganze Websites (mit Tiefe und Seitengrenze) oder Sitemaps. Dabei wird robots.txt befolgt, jeder Server bekommt mindestens eine Sekunde Pause, und jede Datei behält Adresse, Fundseite und die angegebene Lizenz (PROVENANCE.csv). Ob du die Inhalte für dein Training nutzen darfst, musst du selbst anhand der Lizenz prüfen. Seiten, die ihren Inhalt erst per JavaScript nachladen, liefern bisher wenig.",
+                        "tags": [
+                            "web",
+                            "crawler",
+                            "scraping",
+                            "robots.txt",
+                            "datensatz"
+                        ]
+                    },
+                    {
+                        "q": "Muss ich jedes Sample selbst beschriften?",
+                        "a": "Nein. Ein bereits trainiertes Modell kann Boxen, Klassen, Transkripte (Whisper) oder Antworten vorschlagen. Der Filter „Unsicher“ zeigt die Vorschläge mit der geringsten Sicherheit zuerst, und nichts gilt als bestätigt, bis du Enter drückst. Zusätzlich gehen falsche und unsichere Ergebnisse aus dem Labor als neue Arbeit zurück in ein Werkstatt-Projekt.",
+                        "tags": [
+                            "labeling",
+                            "vorschläge",
+                            "aktives lernen",
+                            "active learning"
                         ]
                     }
                 ]
@@ -6838,6 +7065,45 @@
                 }
             ]
         },
+        "datasetBuilder": {
+            "badge": "Neu in 1.3.4",
+            "headingPre": "Vom Rohmaterial zum",
+            "headingHighlight": "trainierbaren Datensatz",
+            "headingPost": "– in einer App.",
+            "paragraph": "Bilder, Texte, Aufnahmen und Videos sammeln, beschriften und prüfen. Ein Modell schlägt vor, du bestätigst. Der Export passt ohne Umweg zum Training.",
+            "benefits": [
+                {
+                    "title": "Sieben Projektarten",
+                    "desc": "Objekte markieren, Bilder, Texte, Aufnahmen und Videoabschnitte klassifizieren, Textpaare, Transkripte."
+                },
+                {
+                    "title": "Daten von überall",
+                    "desc": "Ordner, Mikrofon, selbst schreiben, KI-Erzeugung, Webseiten, ganze Websites und Sitemaps."
+                },
+                {
+                    "title": "Schneller beschriften",
+                    "desc": "Modellvorschläge, die unsichersten zuerst, Tastatur für alles."
+                },
+                {
+                    "title": "Qualität vor dem Training",
+                    "desc": "Beinahe-Dubletten, Balance-Warnung, Aufteilung ohne Lecks, Export-Bericht und Herkunft je Datei."
+                }
+            ],
+            "loopLabel": "Der Kreislauf",
+            "loop": [
+                "Sammeln",
+                "Beschriften",
+                "Vorschlagen",
+                "Prüfen",
+                "Exportieren",
+                "Trainieren",
+                "Im Labor testen"
+            ],
+            "loopBack": "Fehler aus dem Labor fließen zurück in die Werkstatt",
+            "cta": "So funktioniert die Werkstatt",
+            "shotAlt": "FrameTrain Datensatz-Werkstatt: Bild mit Bounding-Boxen für Baum, Lift und Offroad, daneben Klassen, Stand und Verteilungshinweise",
+            "shotCaption": "Die Bild-Werkbank: Boxen zeichnen, per Tastatur bestätigen, Klassenverteilung im Blick."
+        },
         "howItWorks": {
             "title": "So funktioniert's",
             "subtitle": "Von Installation bis zum Training in wenigen Minuten",
@@ -7051,6 +7317,10 @@
                 {
                     "question": "Kann ich LLMs mit FrameTrain fine-tunen?",
                     "answer": "Ja. FrameTrain unterstützt das Fine-Tuning von Large Language Models (LLMs) via LoRA und QLoRA. Du kannst Modelle wie Llama, Mistral oder Phi direkt aus HuggingFace importieren und auf eigene Datensätze anpassen."
+                },
+                {
+                    "question": "Kann ich mit FrameTrain eigene Datensätze erstellen?",
+                    "answer": "Ja. Seit Version 1.3.4 hat FrameTrain eine Datensatz-Werkstatt für Bild, Text, Audio und Video: Daten aus Ordnern, dem Mikrofon, dem Netz oder per KI-Assistent sammeln, per Tastatur beschriften, Vorschläge eines trainierten Modells bestätigen, Dubletten und Klassen-Balance prüfen und in genau dem Format exportieren, das das Training erwartet – inklusive train/val/test-Aufteilung und Herkunft je Datei."
                 },
                 {
                     "question": "Welche GPUs werden unterstützt?",
@@ -7285,6 +7555,36 @@
                     "Train-/Val-/Test-Split ohne Umweg über die Kommandozeile",
                     "Kompatibilitätsprüfung gegen das gewählte Modell"
                 ]
+            },
+            {
+                "id": "datensatz-werkstatt",
+                "slug": "dataset-builder-image-boxes",
+                "title": "Datensatz-Werkstatt – eigene Datensätze beschriften",
+                "text": "Seit Version 1.3.4 baust du Datensätze direkt in FrameTrain. Die Bild-Werkbank zeigt das Prinzip: Boxen aufziehen, Klasse per Zifferntaste wählen, mit Enter bestätigen. Ein trainiertes Modell kann Vorschläge machen, der Filter „Unsicher“ bringt die schwierigsten Fälle nach vorn, und rechts siehst du, welche Klassen noch zu wenige Beispiele haben. Neben Bildern gibt es Projektarten für Texte, Aufnahmen, Transkripte und Videoabschnitte.",
+                "alt": "Bild-Werkbank der Datensatz-Werkstatt mit Bounding-Boxen für Baum, Lift und Offroad, Klassenliste, Zählern und Verteilungswarnungen",
+                "caption": "Beschriften per Tastatur, mit Vorschlägen und Warnungen zur Klassenverteilung.",
+                "bullets": [
+                    "Sieben Projektarten für Bild, Text, Audio und Video",
+                    "Modellvorschläge, die unsichersten zuerst",
+                    "Export direkt im Format des passenden Trainings-Plugins"
+                ],
+                "relatedHref": "/docs#dataset-builder",
+                "relatedLabel": "Datensatz-Werkstatt in der Doku"
+            },
+            {
+                "id": "werkstatt-web",
+                "slug": "dataset-builder-web",
+                "title": "Aus dem Netz holen – Daten sammeln mit Herkunft",
+                "text": "Statt Dateien einzeln herunterzuladen, gibst du der Werkstatt Adressen, ganze Websites oder eine Sitemap. FrameTrain folgt Links nur bis zur gewählten Tiefe und nur auf denselben Domains, hält Grenzen für Seiten, Dateien und Dateigröße ein und befolgt robots.txt samt Crawl-delay. Jede geholte Datei bekommt Adresse, Fundseite und Lizenz in PROVENANCE.csv.",
+                "alt": "Dialog „Aus dem Netz holen“ im Website-Modus mit Startseite, Grenzen für Tiefe, Seiten, Dateien und Dateigröße, Lizenzfeld und robots.txt-Hinweis",
+                "caption": "Website-Modus mit aufgeklappten Grenzen. robots.txt wird immer befolgt.",
+                "bullets": [
+                    "Adressen, ganze Websites oder Sitemaps",
+                    "Mindestens eine Sekunde Pause je Server",
+                    "Herkunft und Lizenz je Datei"
+                ],
+                "relatedHref": "/docs#dataset-builder",
+                "relatedLabel": "Web-Erfassung in der Doku"
             },
             {
                 "id": "training",

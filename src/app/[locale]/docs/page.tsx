@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { siteUrl } from '@/lib/seo'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { AppDocSearch } from '@/components/AppDocSearch'
+import { AppScreenshot } from '@/components/AppScreenshot'
 import {
   Book, Code2, Zap, Download, Key, Settings, Database,
   Terminal, Rocket, ChevronRight, FileCode, Cpu, Cloud,
@@ -17,7 +18,9 @@ import {
   AlertTriangle,
   TrendingDown,
   Clock,
-  Bot, KeyRound, SlidersHorizontal, MemoryStick, MousePointerClick
+  Bot, KeyRound, SlidersHorizontal, MemoryStick, MousePointerClick,
+  Hammer, Globe, FolderInput, Mic, PenLine, Film, Keyboard, Wand2, Target,
+  Eye, ShieldCheck, FileOutput, RotateCcw, GraduationCap
 } from 'lucide-react'
 
 export default function DocsPage() {
@@ -25,6 +28,22 @@ export default function DocsPage() {
   const locale = useLocale()
   const [activeSection, setActiveSection] = useState('installation')
   const navigateTo = (section: string) => setActiveSection(section)
+
+  // Deep-Links wie /docs#dataset-builder (z.B. von der Startseite) öffnen
+  // direkt den passenden Abschnitt statt immer "Installation".
+  useEffect(() => {
+    const openFromHash = () => {
+      const id = window.location.hash.slice(1)
+      if (!navigation.some((group) => group.items.some((item) => item.id === id))) return
+      setActiveSection(id)
+      // Kurz warten: Next scrollt nach der Navigation selbst noch nach oben.
+      setTimeout(() => document.getElementById('docs-content')?.scrollIntoView({ block: 'start' }), 150)
+    }
+    openFromHash()
+    window.addEventListener('hashchange', openFromHash)
+    return () => window.removeEventListener('hashchange', openFromHash)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const pageUrl = `${siteUrl}/${locale}/docs`
   const jsonLd = {
@@ -68,6 +87,7 @@ export default function DocsPage() {
         { id: 'model-manager', title: t('navigation.appFeatures.items.modelManager') },
         { id: 'training-panel', title: t('navigation.appFeatures.items.trainingPanel') },
         { id: 'dataset-upload', title: t('navigation.appFeatures.items.datasetUpload') },
+        { id: 'dataset-builder', title: t('navigation.appFeatures.items.datasetBuilder') },
         { id: 'analysis', title: t('navigation.appFeatures.items.analysis') },
         { id: 'testing', title: t('navigation.appFeatures.items.testing') },
         { id: 'versioning', title: t('navigation.appFeatures.items.versioning') },
@@ -201,7 +221,7 @@ export default function DocsPage() {
               </aside>
 
               {/* Content Area */}
-              <div className="flex-1 max-w-4xl">
+              <div id="docs-content" className="flex-1 max-w-4xl scroll-mt-24">
                 <div className="glass-strong rounded-2xl p-8 md:p-12 border border-white/10 prose prose-invert max-w-none">
                   {/* SEO: alle Sections bleiben im DOM, nur die inaktive wird per CSS (hidden) ausgeblendet,
                       damit Googlebot den gesamten Doku-Inhalt sieht statt nur den aktiven Tab. */}
@@ -212,6 +232,7 @@ export default function DocsPage() {
                   <div className={activeSection === 'model-manager' ? '' : 'hidden'}><ModelManagerSection /></div>
                   <div className={activeSection === 'training-panel' ? '' : 'hidden'}><TrainingPanelSection /></div>
                   <div className={activeSection === 'dataset-upload' ? '' : 'hidden'}><DatasetUploadSection /></div>
+                  <div className={activeSection === 'dataset-builder' ? '' : 'hidden'}><DatasetBuilderSection /></div>
                   <div className={activeSection === 'analysis' ? '' : 'hidden'}><AnalysisSection /></div>
                   <div className={activeSection === 'testing' ? '' : 'hidden'}><TestingSection /></div>
                   <div className={activeSection === 'versioning' ? '' : 'hidden'}><VersioningSection /></div>
@@ -678,6 +699,176 @@ function DatasetUploadSection() {
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Datensatz-Werkstatt der Desktop-App (seit 1.3.4): Datensätze in der App
+// sammeln, beschriften, prüfen und exportieren. Die Grenzen am Ende stammen
+// aus dem Prüfbericht zur 1.3.4 – dort nichts versprechen, was fehlt.
+function DatasetBuilderSection() {
+  const t = useTranslations('Docs.datasetBuilder')
+  const locale = useLocale()
+  // Screenshots aus der App 1.3.4 (public/images/screenshots/<locale>/frametrain-dataset-builder-*)
+  const shot = (key: string, slug: string) => (
+    <AppScreenshot
+      locale={locale}
+      slug={`dataset-builder-${slug}`}
+      alt={t(`shots.${key}.alt`)}
+      caption={t(`shots.${key}.caption`)}
+      sizes="(min-width: 1024px) 800px, 100vw"
+      className="not-prose"
+    />
+  )
+  const flow = t.raw('flow') as { title: string; desc: string }[]
+  const types = t.raw('types') as { type: string; export: string; models: string; suggest: string }[]
+  const features = t.raw('features') as { title: string; desc: string }[]
+  const webModes = t.raw('webModes') as { title: string; desc: string }[]
+  const webRules = t.raw('webRules') as string[]
+  const limits = t.raw('limits') as string[]
+  const featureIcons = [FolderInput, Mic, PenLine, Film, Keyboard, Wand2, Target, Eye, ShieldCheck, FileOutput]
+  return (
+    <div>
+      <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 bg-purple-500/15 border border-purple-400/25 rounded-full text-purple-300 text-xs font-semibold">
+        <Sparkles className="w-3.5 h-3.5" />
+        {t('badge')}
+      </div>
+      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
+        <Hammer className="w-8 h-8 text-purple-400" />
+        {t('heading')}
+      </h2>
+      <p className="text-gray-400 mb-8">{t('subtitle')}</p>
+
+      <div className="space-y-8">
+        <p className="text-gray-400">{t('intro')}</p>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <RotateCcw className="w-6 h-6 text-purple-400" />
+            {t('flowHeading')}
+          </h2>
+          <p className="text-gray-400 mb-4">{t('flowText')}</p>
+          <ol className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
+            {flow.map((step, i) => (
+              <li
+                key={step.title}
+                className={`glass rounded-lg p-4 border ${i === flow.length - 1 ? 'border-purple-400/40 bg-purple-500/[0.07]' : 'border-white/10'}`}
+              >
+                <span className="text-purple-400 font-mono text-xs">{String(i + 1).padStart(2, '0')}</span>
+                <p className="text-white font-semibold mt-1">{step.title}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{step.desc}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-3 flex items-start gap-2 text-sm text-purple-300">
+            <RotateCcw className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <span>{t('flowLoop')}</span>
+          </p>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('typesHeading')}</h2>
+          <p className="text-gray-400 mb-4">{t('typesText')}</p>
+          <div className="mb-6">{shot('newProject', 'new-project')}</div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-white/10 text-left">
+                  <th className="py-2 pr-4 text-gray-300 font-semibold">{t('typesColType')}</th>
+                  <th className="py-2 pr-4 text-gray-300 font-semibold">{t('typesColExport')}</th>
+                  <th className="py-2 pr-4 text-gray-300 font-semibold">{t('typesColModels')}</th>
+                  <th className="py-2 text-gray-300 font-semibold">{t('typesColSuggest')}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {types.map((row) => (
+                  <tr key={row.type}>
+                    <td className="py-2 pr-4 text-white font-medium">{row.type}</td>
+                    <td className="py-2 pr-4 text-gray-400">{row.export}</td>
+                    <td className="py-2 pr-4 text-purple-300">{row.models}</td>
+                    <td className="py-2 text-gray-400">{row.suggest}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-gray-500 text-sm mt-4">{t('typesNote')}</p>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('featuresHeading')}</h2>
+          <div className="space-y-6 mb-6">
+            {shot('imageBoxes', 'image-boxes')}
+            {shot('video', 'video')}
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {features.map((f, i) => {
+              const Icon = featureIcons[i] ?? Sparkles
+              return (
+                <div key={f.title} className="glass border border-white/10 rounded-lg p-4 flex gap-3">
+                  <Icon className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h3 className="text-white font-semibold text-sm mb-1">{f.title}</h3>
+                    <p className="text-gray-400 text-sm">{f.desc}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <Globe className="w-6 h-6 text-purple-400" />
+            {t('webHeading')}
+          </h2>
+          <p className="text-gray-400 mb-4">{t('webText')}</p>
+          <div className="mb-6">{shot('web', 'web')}</div>
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            {webModes.map((mode) => (
+              <div key={mode.title} className="glass border border-white/10 rounded-lg p-4">
+                <h3 className="text-white font-semibold mb-1">{mode.title}</h3>
+                <p className="text-gray-400 text-sm">{mode.desc}</p>
+              </div>
+            ))}
+          </div>
+          <h3 className="text-white font-semibold mb-3">{t('webRulesHeading')}</h3>
+          <ul className="space-y-3 text-gray-400 text-sm">
+            {webRules.map((rule) => (
+              <li key={rule} className="flex gap-3">
+                <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0" />
+                <span>{rule}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {shot('exportReport', 'export-report')}
+
+        <div className="glass rounded-lg p-5 border border-green-400/20 bg-green-400/5">
+          <div className="flex items-start gap-3">
+            <GraduationCap className="w-5 h-5 text-green-400 flex-shrink-0" />
+            <div>
+              <p className="text-green-400 font-semibold mb-1">{t('beginnerTitle')}</p>
+              <p className="text-gray-400 text-sm">{t('beginnerDesc')}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="glass rounded-lg p-5 border border-yellow-400/20 bg-yellow-400/5">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+            <div>
+              <p className="text-yellow-400 font-semibold mb-2">{t('limitsTitle')}</p>
+              <ul className="list-disc pl-4 space-y-1 text-gray-400 text-sm">
+                {limits.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

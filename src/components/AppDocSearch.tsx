@@ -15,6 +15,7 @@ const SECTIONS: { id: string; ns: string; group: string }[] = [
   { id: 'model-manager', ns: 'modelManager', group: 'appFeatures' },
   { id: 'training-panel', ns: 'trainingPanel', group: 'appFeatures' },
   { id: 'dataset-upload', ns: 'datasetUpload', group: 'appFeatures' },
+  { id: 'dataset-builder', ns: 'datasetBuilder', group: 'appFeatures' },
   { id: 'analysis', ns: 'analysis', group: 'appFeatures' },
   { id: 'testing', ns: 'testing', group: 'appFeatures' },
   { id: 'versioning', ns: 'versioning', group: 'appFeatures' },

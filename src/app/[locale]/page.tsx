@@ -14,7 +14,7 @@ import {
   Sparkles, Lock, Rocket, Zap, Code2, Database,
   BarChart3, Package, Shield, ArrowRight, Check,
   Brain, Cpu, Cloud, Download, Book, ChevronDown, Ticket,
-  Wallet, WifiOff, Unlock
+  Wallet, WifiOff, Unlock, Hammer, Layers, Globe, Keyboard, ShieldCheck, RotateCcw
 } from 'lucide-react'
 /* Temporäre UI Anfang, bald herausnehmen */
 import { ReleaseBanner, ComingSoonBadge, ReleasePromoSection } from '@/components/ReleaseCountdown'
@@ -91,6 +91,8 @@ export default function HomePage() {
   const useCases = t.raw('useCases.items') as UseCase[]
   const faqItems = t.raw('faq.items') as FaqEntry[]
   const docCards = t.raw('docsPreview.cards') as DocCardData[]
+  const builderBenefits = t.raw('datasetBuilder.benefits') as { title: string; desc: string }[]
+  const builderLoop = t.raw('datasetBuilder.loop') as string[]
 
   const featureColors = ['purple', 'pink', 'blue', 'green', 'yellow', 'cyan'] as const
 
@@ -270,6 +272,90 @@ export default function HomePage() {
                   color={featureColors[i]}
                 />
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Datensatz-Werkstatt (App 1.3.4) ──
+            Steht direkt hinter den Features: Sie schließt die Lücke vor dem
+            Training ("ich habe keinen Datensatz") und ist damit ein Grund,
+            FrameTrain überhaupt auszuprobieren. */}
+        <section className="py-20 sm:py-28 px-4 relative" id="dataset-builder">
+          <div className="max-w-7xl mx-auto">
+            <div className="glass-strong rounded-3xl p-6 sm:p-12 border border-white/10 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/5 to-transparent pointer-events-none" />
+              <div className="relative grid lg:grid-cols-2 gap-10 items-start">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/15 border border-blue-400/25 rounded-full text-blue-300 text-xs font-semibold mb-5">
+                    <Hammer className="w-3.5 h-3.5" />
+                    {t('datasetBuilder.badge')}
+                  </div>
+                  <h2 className="text-[1.75rem] sm:text-4xl md:text-[2.75rem] font-bold text-white mb-4 leading-[1.12]">
+                    {t('datasetBuilder.headingPre')}{' '}
+                    <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                      {t('datasetBuilder.headingHighlight')}
+                    </span>{' '}
+                    {t('datasetBuilder.headingPost')}
+                  </h2>
+                  <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+                    {t('datasetBuilder.paragraph')}
+                  </p>
+                  <Link
+                    href="/docs#dataset-builder"
+                    className="press inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-[15px] rounded-xl hover:from-blue-500 hover:to-purple-500 transition-colors duration-200 ease-out shadow-lg shadow-blue-500/25"
+                  >
+                    {t('datasetBuilder.cta')}
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+
+                <div className="space-y-3">
+                  {builderBenefits.map((b, i) => (
+                    <div key={b.title} className="glass border border-white/[0.08] rounded-xl p-4 flex gap-3">
+                      <span className="text-blue-300 flex-shrink-0 mt-0.5">
+                        {[<Layers key="0" className="w-5 h-5" />, <Globe key="1" className="w-5 h-5" />, <Keyboard key="2" className="w-5 h-5" />, <ShieldCheck key="3" className="w-5 h-5" />][i]}
+                      </span>
+                      <div>
+                        <h3 className="text-white font-semibold text-[15px]">{b.title}</h3>
+                        <p className="text-gray-400 text-sm mt-0.5">{b.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative mt-10">
+                <AppScreenshot
+                  locale={locale}
+                  slug="dataset-builder-image-boxes"
+                  alt={t('datasetBuilder.shotAlt')}
+                  caption={t('datasetBuilder.shotCaption')}
+                />
+              </div>
+
+              {/* Der Kreislauf: Fehler aus dem Labor gehen zurück in die
+                  Werkstatt – das unterscheidet sie von einem reinen Import. */}
+              <div className="relative mt-10 pt-8 border-t border-white/10">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">
+                  {t('datasetBuilder.loopLabel')}
+                </p>
+                <ol className="flex flex-wrap items-center gap-2">
+                  {builderLoop.map((step, i) => (
+                    <li key={step} className="flex items-center gap-2">
+                      <span
+                        className={`px-3 py-1.5 rounded-lg text-sm border ${i === builderLoop.length - 1 ? 'border-purple-400/40 bg-purple-500/10 text-purple-200' : 'border-white/10 bg-white/[0.03] text-gray-300'}`}
+                      >
+                        {step}
+                      </span>
+                      {i < builderLoop.length - 1 && <ArrowRight className="w-3.5 h-3.5 text-gray-600" aria-hidden="true" />}
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-4 flex items-center gap-2 text-sm text-purple-300">
+                  <RotateCcw className="w-4 h-4 flex-shrink-0" />
+                  {t('datasetBuilder.loopBack')}
+                </p>
+              </div>
             </div>
           </div>
         </section>

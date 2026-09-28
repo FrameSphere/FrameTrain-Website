@@ -27,6 +27,7 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 - Import and train Hugging Face models; export trained model versions as a local folder
 - Visual neural-network builder ("Synapse Builder") for Transformer, CNN and LSTM architectures
 - Dataset management: import, Parquet, train/validation/test splitting
+- Dataset Builder (since app 1.3.4): build trainable image, text, audio and video datasets inside the app — seven project types (object boxes with YOLO export, image/text/audio/video-segment classification, text-to-answer pairs, transcripts); import from folders, CSV/JSONL/TXT, YOLO labels, clipboard and video frames; microphone recording (16 kHz WAV); AI-generated examples; polite web collection from URLs, whole websites or sitemaps (robots.txt respected, per-file URL and license); keyboard labeling with model suggestions, least-confident first; near-duplicate and class-balance checks; grouped train/val/test export with EXPORT_REPORT.md, PROVENANCE.csv and DATA_CARD.md
 - Live training monitoring with loss curves and AI training analysis / coach
 - Automatic model versioning and comparison of training runs
 - Runs on NVIDIA CUDA and Apple Silicon (M1/M2/M3/M4) via Metal MPS — no CUDA required on Mac
