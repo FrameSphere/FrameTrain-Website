@@ -578,7 +578,7 @@
             "headingLine2": "jetzt frei.",
             "subtitleWelcome": "Willkommen, {name}.",
             "subtitleDefaultName": "Trainer",
-            "subtitlePrice": "4,99 €/Monat · Early Access · jederzeit kündbar.",
+            "subtitlePrice": "Ab 3,33 €/Monat · Early Access · jederzeit kündbar.",
             "errorFallback": "Fehler beim Erstellen der Checkout-Session",
             "loadingText": "Lädt…",
             "redirecting": "Weiterleitung zu Stripe…",
@@ -6990,7 +6990,8 @@
             "redirecting": "Weiterleitung...",
             "redirectNote": "Du wirst zu Stripe weitergeleitet und danach automatisch hierher zurückgeführt.",
             "errorGeneric": "Fehler",
-            "errorPortal": "Fehler beim Öffnen des Portals"
+            "errorPortal": "Fehler beim Öffnen des Portals",
+            "statusTrial": "Testphase (14 Tage)"
         },
         "cli": {
             "comingSoonBadge": "Coming Soon",
@@ -7032,6 +7033,10 @@
             "in_progress": "In Bearbeitung",
             "resolved": "Gelöst",
             "closed": "Geschlossen"
+        },
+        "trialAccess": {
+            "title": "Deine Testphase läuft noch {days, plural, one {# Tag} other {# Tage}}",
+            "text": "Kostenlos bis {date}. Danach endet sie automatisch, es wird nichts abgebucht. Mit einem Abo trainierst du einfach weiter."
         }
     },
     "Home": {

@@ -261,7 +261,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
                 <div
                   key={`s-${item.data.id}`}
                   className={`rounded-lg border p-4 transition duration-200 ease-out ${
-                    isNew ? 'border-line bg-indigo-soft' : 'border-line bg-ghost-fill'
+                    isNew ? 'border-line-strong bg-surface-raised' : 'border-line bg-ghost-fill'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
@@ -300,7 +300,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
               <div
                 key={`r-${item.data.id}`}
                 className={`rounded-lg border p-4 transition duration-200 ease-out ${
-                  isNew ? 'border-line bg-indigo-soft' : 'border-line bg-ghost-fill'
+                  isNew ? 'border-line-strong bg-surface-raised' : 'border-line bg-ghost-fill'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3 mb-1.5">

@@ -124,6 +124,7 @@ function DashboardPageInner() {
   const [subscriptionCancelAt, setSubscriptionCancelAt] = useState<string | null>(null)
   const [lifetimeAccess, setLifetimeAccess] = useState(false)
   const [promoAccessUntil, setPromoAccessUntil] = useState<string | null>(null)
+  const [isTrial, setIsTrial] = useState(false)
   const [hasSubscription, setHasSubscription] = useState(false)
   const [subscriptionTrialEnd, setSubscriptionTrialEnd] = useState<string | null>(null)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
@@ -244,6 +245,7 @@ function DashboardPageInner() {
       setSubscriptionCancelAt(data.subscriptionCancelAt ?? null)
       setLifetimeAccess(!!data.lifetimeAccess)
       setPromoAccessUntil(data.promoAccessUntil ?? null)
+      setIsTrial(!!data.isTrial)
       setHasSubscription(!!data.hasSubscription)
       setSubscriptionTrialEnd(data.subscriptionTrialEnd ?? null)
       setIsOAuthUser(!!data.isOAuthUser)
@@ -537,18 +539,21 @@ function DashboardPageInner() {
             const now = new Date()
             const diffDays = Math.max(0, Math.ceil((untilDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)))
             const formattedDate = untilDate.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' })
+            // Testphase ruhig anzeigen; Warnfarbe erst kurz vor dem Ende
+            const urgent = diffDays <= 3
+            const k = isTrial ? 'trialAccess' : 'promoAccess'
             return (
-              <div className="mb-8 p-5 rounded-lg border border-warning bg-ghost-fill flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className={`mb-8 p-5 rounded-lg border bg-surface flex flex-col sm:flex-row items-start sm:items-center gap-4 ${urgent ? 'border-warning' : 'border-line'}`}>
                 <div className="flex items-center gap-3 flex-1">
                   <div className="w-10 h-10 rounded-full bg-ghost-fill flex items-center justify-center flex-shrink-0">
-                    <AlertCircle className="w-5 h-5 text-warning" />
+                    {urgent ? <AlertCircle className="w-5 h-5 text-warning" /> : <span className="ft-dot ft-dot--live" aria-hidden="true" />}
                   </div>
                   <div>
                     <p className="text-ink font-semibold">
-                      {t('promoAccess.title', { days: diffDays })}
+                      {t(`${k}.title`, { days: diffDays })}
                     </p>
-                    <p className="text-warning text-sm mt-0.5">
-                      {t('promoAccess.text', { date: formattedDate })}
+                    <p className={`text-sm mt-0.5 ${urgent ? 'text-warning' : 'text-ink-muted'}`}>
+                      {t(`${k}.text`, { date: formattedDate })}
                     </p>
                   </div>
                 </div>
@@ -564,7 +569,7 @@ function DashboardPageInner() {
                   </button>
                   <button
                     onClick={() => router.push('/redeem')}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 border border-warning text-warning hover:bg-ghost-fill font-semibold rounded-md transition duration-200 ease-out text-sm"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 border border-line text-ink hover:bg-ghost-fill font-semibold rounded-md transition duration-200 ease-out text-sm"
                   >
                     {t('promoAccess.redeemButton')}
                   </button>
@@ -850,7 +855,7 @@ function DashboardPageInner() {
                   <>
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border bg-ghost-fill border-warning text-warning">
                       <span className="w-2 h-2 rounded-full bg-warning" />
-                      {t('subscription.statusPromo')}
+                      {isTrial ? t('subscription.statusTrial') : t('subscription.statusPromo')}
                     </div>
                     {(() => {
                       const d = new Date(promoAccessUntil)

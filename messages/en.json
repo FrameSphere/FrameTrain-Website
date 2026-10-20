@@ -582,7 +582,7 @@
             "headingLine2": "right now.",
             "subtitleWelcome": "Welcome, {name}.",
             "subtitleDefaultName": "Trainer",
-            "subtitlePrice": "€4.99/month · Early Access · cancel anytime.",
+            "subtitlePrice": "From €3.33/month · Early Access · cancel anytime.",
             "errorFallback": "Error creating checkout session",
             "loadingText": "Loading…",
             "redirecting": "Redirecting to Stripe…",
@@ -6989,7 +6989,8 @@
             "redirecting": "Redirecting...",
             "redirectNote": "You'll be redirected to Stripe and brought back here automatically afterward.",
             "errorGeneric": "Error",
-            "errorPortal": "Error opening the portal"
+            "errorPortal": "Error opening the portal",
+            "statusTrial": "Trial (14 days)"
         },
         "cli": {
             "comingSoonBadge": "Coming Soon",
@@ -7031,6 +7032,10 @@
             "in_progress": "In progress",
             "resolved": "Resolved",
             "closed": "Closed"
+        },
+        "trialAccess": {
+            "title": "Your trial has {days, plural, one {# day} other {# days}} left",
+            "text": "Free until {date}. It ends on its own and nothing is charged. Subscribe to keep training."
         }
     },
     "Home": {

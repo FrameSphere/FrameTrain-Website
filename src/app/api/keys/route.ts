@@ -29,6 +29,8 @@ export async function GET(req: NextRequest) {
         provider: true,
         passwordHash: true,
         desktopPasswordHash: true,
+        // Testphase = Gratiszugang ohne eingelösten Gutschein (siehe lib/trial.ts)
+        _count: { select: { promoRedemptions: { where: { status: 'completed' } } } },
         apiKeys: {
           orderBy: { createdAt: 'desc' },
           select: {
@@ -57,6 +59,11 @@ export async function GET(req: NextRequest) {
       lifetimeAccess: dbUser.lifetimeAccess,
       promoAccessUntil: dbUser.promoAccessUntil?.toISOString() ?? null,
       hasSubscription: dbUser.stripeSubscriptionId !== null,
+      isTrial:
+        dbUser.promoAccessUntil !== null &&
+        dbUser.stripeSubscriptionId === null &&
+        !dbUser.lifetimeAccess &&
+        dbUser._count.promoRedemptions === 0,
       isOAuthUser,
       hasDesktopPassword,
     })
