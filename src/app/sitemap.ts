@@ -18,6 +18,11 @@ const pages: PageDef[] = [
   { path: '/screenshots', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/apple-silicon', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/compare', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/compare/unsloth', changeFrequency: 'monthly', priority: 0.82 },
+  { path: '/compare/google-colab', changeFrequency: 'monthly', priority: 0.82 },
+  { path: '/computer-vision', changeFrequency: 'monthly', priority: 0.88 },
+  { path: '/gdpr', changeFrequency: 'monthly', priority: 0.85 },
+  // Kanalseiten (/reddit, /youtube …) bewusst nicht gelistet: noindex
   { path: '/install', changeFrequency: 'monthly', priority: 0.85 },
   { path: '/changelog', changeFrequency: 'weekly', priority: 0.8 },
   // /library bewusst nicht gelistet, solange die Seite noindex ist (siehe
@@ -40,6 +45,7 @@ const pages: PageDef[] = [
   { path: '/guides/lora-finetuning', changeFrequency: 'monthly', priority: 0.85 },
   { path: '/guides/local-vs-cloud', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/guides/gpu-guide', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/guides/mlx-vs-pytorch', changeFrequency: 'monthly', priority: 0.85 },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -54,7 +54,14 @@
         "learnHeading": "Lernen",
         "coach": "KI Training Coach",
         "madeIn": "Allein entwickelt in Mainz",
-        "status": "Plattform-Status"
+        "status": "Plattform-Status",
+        "audienceHeading": "Für dich",
+        "computerVision": "Objekterkennung",
+        "mac": "Mac & Apple Silicon",
+        "gdpr": "DSGVO & Unternehmen",
+        "vsUnsloth": "vs. Unsloth",
+        "vsColab": "vs. Google Colab",
+        "mlxVsPytorch": "MLX vs. PyTorch"
     },
     "Imprint": {
         "metaTitle": "Impressum – FrameTrain",
@@ -3319,6 +3326,16 @@
                     "VRAM"
                 ],
                 "href": "/guides/gpu-guide"
+            },
+            {
+                "title": "MLX vs. PyTorch auf dem Mac",
+                "description": "Welches Framework fürs Training auf Apple Silicon? Unterschiede bei Speicher, Ökosystem und LLM-Fine-Tuning – und wie FrameTrain beide nutzt.",
+                "tags": [
+                    "Apple Silicon",
+                    "MLX",
+                    "PyTorch"
+                ],
+                "href": "/guides/mlx-vs-pytorch"
             }
         ]
     },
@@ -7833,6 +7850,11 @@
             "text": "Lade FrameTrain und starte dein erstes lokales Fine-Tuning auf Apple Silicon in wenigen Minuten.",
             "ctaDownload": "Für Mac herunterladen",
             "ctaDocs": "Zur Dokumentation"
+        },
+        "mlx": {
+            "heading": "MLX oder PyTorch?",
+            "text": "Auf dem Mac gibt es zwei Wege zur GPU: PyTorch über Metal und Apples eigenes Framework MLX. Beim LLM-Fine-Tuning kannst du in FrameTrain zwischen beiden wählen.",
+            "cta": "MLX vs. PyTorch im Vergleich"
         }
     },
     "Compare": {
@@ -8004,6 +8026,23 @@
             "text": "Der fairste Vergleich ist dein eigener. Lade FrameTrain und starte ein lokales Fine-Tuning auf deiner Hardware.",
             "ctaDownload": "FrameTrain herunterladen",
             "ctaDocs": "Zu den Guides"
+        },
+        "more": {
+            "heading": "Einzelvergleiche",
+            "items": [
+                {
+                    "href": "/compare/unsloth",
+                    "label": "FrameTrain vs. Unsloth"
+                },
+                {
+                    "href": "/compare/google-colab",
+                    "label": "FrameTrain vs. Google Colab"
+                },
+                {
+                    "href": "/guides/mlx-vs-pytorch",
+                    "label": "MLX vs. PyTorch auf dem Mac"
+                }
+            ]
         }
     },
     "Landing": {
@@ -8149,7 +8188,7 @@
                     ],
                     "shot": "hosting",
                     "alt": "Hosting-Ansicht: ein YOLO11-Modell erkennt drei Personen auf einem Foto",
-                    "href": "/docs#dataset-builder"
+                    "href": "/computer-vision"
                 },
                 {
                     "key": "text",
@@ -8411,6 +8450,791 @@
             "docs": "Dokumentation",
             "about": "Über FrameTrain",
             "faq": "FAQ"
+        }
+    },
+    "Marketing": {
+        "home": "Start",
+        "trial": "Kostenlos testen",
+        "dashboard": "Zum Dashboard",
+        "demo": "Demo ansehen",
+        "trialNote": "14 Tage · Keine Zahlungsdaten · Endet automatisch",
+        "faqTitle": "Häufige Fragen",
+        "related": "Weiterlesen",
+        "ctaLead": "14 Tage kostenlos, ohne Zahlungsdaten. Wenn es dir nichts bringt, endet der Test einfach.",
+        "yes": "Ja",
+        "no": "Nein",
+        "partial": "Teilweise"
+    },
+    "PageComputerVision": {
+        "metaTitle": "Eigene Objekterkennung trainieren – YOLO ohne Code | FrameTrain",
+        "metaDescription": "Trainiere ein YOLO-Modell auf deine eigenen Objekte: Fotos labeln, trainieren, im Labor testen und über die lokale API nutzen – auf deinem Rechner. 14 Tage kostenlos.",
+        "breadcrumb": [
+            {
+                "name": "Objekterkennung",
+                "path": "/computer-vision"
+            }
+        ],
+        "eyebrow": "Für Maker · Computer Vision",
+        "titleA": "Bring deiner Kamera bei, was sie sehen soll.",
+        "titleB": "Eigene Objekterkennung, ohne Code.",
+        "lead": "Werkzeuge in der Werkstatt, Vögel am Futterhaus, Bauteile auf dem Band: Mit FrameTrain labelst du deine Fotos, trainierst ein <b>YOLO-Modell</b> und testest es – alles in einer App, lokal auf deinem Rechner.",
+        "heroShot": "studio-boxes",
+        "heroShotAlt": "FrameTrain Dataset Studio: Foto einer Skipiste mit gezeichneten Boxen für Lift, Baum und Offroad",
+        "sections": [
+            {
+                "type": "steps",
+                "eyebrow": "So geht's",
+                "title": "Vom Foto zum Modell in vier Schritten.",
+                "items": [
+                    {
+                        "title": "Fotos sammeln",
+                        "text": "Aus einem Ordner, von Webseiten oder von Hugging Face. Bilder von Kameras zu Hause oder aus der Firma bleiben dabei auf deinem Rechner."
+                    },
+                    {
+                        "title": "Boxen ziehen",
+                        "text": "Im Dataset Studio markierst du Objekte und vergibst Klassen – per Tastatur, mit Vorschlägen eines bereits trainierten Modells. Die App warnt, wenn eine Klasse <b>weniger als 10 Beispiele</b> hat."
+                    },
+                    {
+                        "title": "YOLO trainieren",
+                        "text": "Basismodell wählen (zum Beispiel YOLO11 oder YOLOv8 über Ultralytics), Vorlage übernehmen, starten. Den Verlauf siehst du live."
+                    },
+                    {
+                        "title": "Testen und verbessern",
+                        "text": "Im Labor lässt du echte Bilder durchlaufen und bewertest die Treffer. Falsch erkannte Bilder gehen mit einem Klick als Korrektur zurück in den Datensatz."
+                    }
+                ],
+                "shot": "lab-pose",
+                "shotAlt": "FrameTrain Laboratory: Posen-Erkennung auf einem Foto mit 92 % Konfidenz und den Buttons Richtig und Falsch"
+            },
+            {
+                "type": "points",
+                "eyebrow": "Warum lokal",
+                "title": "Bilderkennung gehört auf deinen Rechner.",
+                "items": [
+                    {
+                        "title": "Deine Bilder bleiben privat",
+                        "text": "Kamerabilder aus Wohnung, Garten oder Betrieb werden nicht hochgeladen. Das Training läuft auf deiner GPU."
+                    },
+                    {
+                        "title": "Kein Upload von Tausenden Fotos",
+                        "text": "Große Bildordner einfach auswählen statt stundenlang in eine Cloud zu laden."
+                    },
+                    {
+                        "title": "Keine Stundenpreise",
+                        "text": "Du trainierst so oft du willst. Experimente kosten keine Rechenzeit-Guthaben."
+                    },
+                    {
+                        "title": "Direkt nutzbar",
+                        "text": "Im Hosting-Bereich lädst du dein Modell und sprichst es über die <b>lokale API</b> an – etwa aus einem eigenen Skript."
+                    }
+                ]
+            },
+            {
+                "type": "table",
+                "eyebrow": "Was du brauchst",
+                "title": "Die Voraussetzungen, ehrlich aufgelistet.",
+                "cols": [
+                    "",
+                    "Minimum",
+                    "Besser"
+                ],
+                "rows": [
+                    [
+                        "Rechner",
+                        "Mac mit Apple Silicon oder PC mit Windows/Linux",
+                        "NVIDIA-Grafikkarte oder M-Chip mit viel Unified Memory"
+                    ],
+                    [
+                        "Arbeitsspeicher",
+                        "8 GB",
+                        "16 GB oder mehr"
+                    ],
+                    [
+                        "Bilder pro Klasse",
+                        "10 (darunter warnt die App)",
+                        "deutlich mehr, aus verschiedenen Blickwinkeln und Lichtverhältnissen"
+                    ],
+                    [
+                        "Vorwissen",
+                        "keins – alles läuft über die Oberfläche",
+                        "–"
+                    ]
+                ],
+                "note": "Auch ohne GPU ist Training möglich, dauert auf der CPU aber deutlich länger."
+            },
+            {
+                "type": "shot",
+                "slug": "hosting",
+                "alt": "FrameTrain Hosting: ein YOLO11-Modell erkennt drei Personen auf einem Foto",
+                "caption": "Im Hosting-Bereich: das fertige Modell erkennt Objekte auf neuen Bildern."
+            }
+        ],
+        "faq": [
+            {
+                "question": "Brauche ich eine NVIDIA-Grafikkarte?",
+                "answer": "Nein. FrameTrain trainiert auf NVIDIA-GPUs mit CUDA und auf Macs mit Apple Silicon über Metal. Ohne GPU läuft das Training auf der CPU – das funktioniert, ist aber deutlich langsamer."
+            },
+            {
+                "question": "Welche YOLO-Modelle kann ich trainieren?",
+                "answer": "FrameTrain nutzt Ultralytics und unterstützt damit YOLO-Modelle wie YOLOv8 und YOLO11 – für Erkennung, Segmentierung, Keypoints (Posen), gedrehte Boxen und Klassifikation."
+            },
+            {
+                "question": "Läuft mein Modell danach auf einem Raspberry Pi?",
+                "answer": "Das trainierte Modell liegt als Datei auf deinem Rechner. YOLO-Modelle von Ultralytics lassen sich mit den Ultralytics-Werkzeugen in Formate wie ONNX exportieren, die auf kleinen Geräten wie dem Raspberry Pi laufen. Den Export selbst übernimmt FrameTrain derzeit nicht."
+            },
+            {
+                "question": "Wie viele Bilder brauche ich?",
+                "answer": "Unter 10 Beispielen pro Klasse warnt die App. Für verlässliche Ergebnisse sind deutlich mehr sinnvoll – vor allem aus unterschiedlichen Blickwinkeln, Abständen und Lichtverhältnissen. Im Labor siehst du schnell, wo das Modell noch Beispiele braucht."
+            }
+        ],
+        "related": [
+            {
+                "href": "/apple-silicon",
+                "label": "Training auf dem Mac"
+            },
+            {
+                "href": "/docs/ai-training-guide/dataset-mastery",
+                "label": "Coach: Gute Datensätze bauen"
+            },
+            {
+                "href": "/guides/gpu-guide",
+                "label": "Welche GPU brauche ich?"
+            }
+        ],
+        "ctaTitle": "Trainiere heute Abend deine erste Objekterkennung."
+    },
+    "PageGdpr": {
+        "metaTitle": "KI-Modelle DSGVO-konform trainieren – lokal statt Cloud | FrameTrain",
+        "metaDescription": "Trainiere KI-Modelle auf sensiblen Daten, ohne sie hochzuladen: FrameTrain läuft lokal auf deinem Rechner. Entwickelt in Mainz. 14 Tage kostenlos testen.",
+        "breadcrumb": [
+            {
+                "name": "DSGVO",
+                "path": "/gdpr"
+            }
+        ],
+        "eyebrow": "Für Unternehmen in DACH · DSGVO",
+        "titleA": "KI auf euren Daten trainieren.",
+        "titleB": "Ohne dass sie das Haus verlassen.",
+        "lead": "Kundentickets, Verträge, interne Dokumente: Wer KI-Modelle in der Cloud trainiert, muss diese Daten übertragen. Mit FrameTrain läuft das Training <b>auf euren eigenen Rechnern</b> – entwickelt in Mainz.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Der Unterschied",
+                "title": "Cloud-Training und lokales Training im Vergleich.",
+                "cols": [
+                    "",
+                    "FrameTrain (lokal)",
+                    "Cloud-Training"
+                ],
+                "rows": [
+                    [
+                        "Trainingsdaten verlassen das Unternehmen",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Auftragsverarbeitung für Trainingsdaten nötig",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Möglicher Drittlandtransfer",
+                        "no",
+                        "Je nach Anbieter"
+                    ],
+                    [
+                        "Kosten pro Trainingsstunde",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Training ohne Internetverbindung",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Eigene Hardware nötig",
+                        "yes",
+                        "no"
+                    ]
+                ],
+                "note": "Keine Rechtsberatung. Prüft die Einordnung im Zweifel mit eurem Datenschutzbeauftragten."
+            },
+            {
+                "type": "points",
+                "eyebrow": "Genau formuliert",
+                "title": "Was lokal bleibt – und was nicht.",
+                "items": [
+                    {
+                        "title": "Lokal: Daten und Modelle",
+                        "text": "Datensätze, Trainingsläufe und fertige Modelle liegen ausschließlich auf euren Rechnern. Wir bekommen sie nie zu sehen."
+                    },
+                    {
+                        "title": "Lokal: Nutzung",
+                        "text": "Die App sendet keine Nutzungs-Telemetrie. Anonyme Fehlerberichte gehen nur raus, wenn ihr bei der Registrierung zustimmt."
+                    },
+                    {
+                        "title": "Online: Konto und Lizenz",
+                        "text": "Anmeldung, Lizenz und Zahlung laufen über frame-train.com und Stripe. Modelle von Hugging Face herunterzuladen braucht ebenfalls Internet."
+                    }
+                ]
+            },
+            {
+                "type": "steps",
+                "eyebrow": "Typische Projekte",
+                "title": "Wofür Teams FrameTrain einsetzen können.",
+                "items": [
+                    {
+                        "title": "Tickets und E-Mails sortieren",
+                        "text": "Ein Textklassifizierer ordnet Anfragen euren Kategorien zu – trainiert auf euren echten, vertraulichen Beispielen."
+                    },
+                    {
+                        "title": "Dokumente klassifizieren",
+                        "text": "Verträge, Rechnungen oder Befunde automatisch einer Art zuordnen, ohne sie an einen Cloud-Dienst zu geben."
+                    },
+                    {
+                        "title": "Internes Sprachmodell anpassen",
+                        "text": "Ein kleines Sprachmodell mit LoRA auf Handbücher und interne FAQs abstimmen."
+                    },
+                    {
+                        "title": "Qualitätsprüfung per Bild",
+                        "text": "Eine Objekterkennung findet Fehler oder fehlende Teile auf Fotos aus der Fertigung."
+                    }
+                ],
+                "shot": "analysis",
+                "shotAlt": "FrameTrain Trainingsanalyse eines Textklassifizierers mit Loss-Kurve"
+            },
+            {
+                "type": "text",
+                "eyebrow": "Wer dahintersteht",
+                "title": "Entwickelt in Mainz.",
+                "paragraphs": [
+                    "FrameTrain wird von <b>Karol Paschek</b> in Mainz entwickelt. Der Ausgangspunkt war ein eigenes Projekt: ein Sprachmodell auf sensible Daten anpassen, ohne sie in die Cloud zu geben.",
+                    "Die Datenschutzerklärung und das Impressum findet ihr wie gewohnt im Fußbereich jeder Seite. Fragen zu Datenschutz oder Einsatz im Unternehmen beantworten wir direkt per E-Mail."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Ist FrameTrain DSGVO-konform?",
+                "answer": "Das Training selbst verarbeitet keine personenbezogenen Daten auf unseren Servern – Datensätze und Modelle bleiben auf euren Rechnern. Für Konto und Zahlung gilt unsere Datenschutzerklärung. Ob euer konkretes Projekt datenschutzrechtlich zulässig ist, hängt von den Daten und dem Zweck ab; das kann eine Software allein nicht garantieren."
+            },
+            {
+                "question": "Brauchen wir einen Auftragsverarbeitungsvertrag?",
+                "answer": "Für die Trainingsdaten in der Regel nicht, weil wir sie nie erhalten. Für die Kontodaten gelten die Angaben in unserer Datenschutzerklärung. Klärt das im Zweifel mit eurem Datenschutzbeauftragten."
+            },
+            {
+                "question": "Funktioniert FrameTrain ohne Internet?",
+                "answer": "Das Training läuft lokal. Für Anmeldung, Lizenzprüfung und das Herunterladen von Modellen aus Hugging Face braucht ihr eine Verbindung."
+            },
+            {
+                "question": "Gibt es Team- oder Firmenlizenzen?",
+                "answer": "Aktuell gibt es Einzellizenzen pro Konto. Wenn ihr FrameTrain im Team einsetzen wollt, schreibt uns – wir finden eine Lösung."
+            }
+        ],
+        "related": [
+            {
+                "href": "/guides/local-vs-cloud",
+                "label": "Lokal oder Cloud? Der ehrliche Vergleich"
+            },
+            {
+                "href": "/privacy",
+                "label": "Datenschutzerklärung"
+            },
+            {
+                "href": "/about",
+                "label": "Über FrameTrain"
+            }
+        ],
+        "ctaTitle": "Testet FrameTrain mit euren eigenen Daten."
+    },
+    "PageVsUnsloth": {
+        "metaTitle": "FrameTrain vs. Unsloth – Desktop-App oder Python-Bibliothek? | FrameTrain",
+        "metaDescription": "FrameTrain oder Unsloth für lokales LLM-Fine-Tuning? Ehrlicher Vergleich: GUI vs. Code, Plattformen, Apple Silicon, LoRA/QLoRA und für wen sich was lohnt.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. Unsloth",
+                "path": "/compare/unsloth"
+            }
+        ],
+        "eyebrow": "Vergleich",
+        "titleA": "FrameTrain vs. Unsloth.",
+        "titleB": "Oberfläche oder Python-Code?",
+        "lead": "Beide trainieren Modelle mit LoRA auf eigener Hardware. <b>Unsloth</b> ist eine Python-Bibliothek, optimiert auf Geschwindigkeit auf NVIDIA-GPUs. <b>FrameTrain</b> ist eine Desktop-App, die den ganzen Weg vom Datensatz bis zum getesteten Modell abdeckt.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Was beide können – und was nicht.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Unsloth"
+                ],
+                "rows": [
+                    [
+                        "Bedienung",
+                        "Desktop-App mit Oberfläche",
+                        "Python-Code, z. B. in Notebooks"
+                    ],
+                    [
+                        "Plattformen",
+                        "Windows, macOS, Linux",
+                        "Linux, Windows (oft über WSL)"
+                    ],
+                    [
+                        "Apple Silicon (M1–M4)",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "NVIDIA CUDA",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "LoRA",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "QLoRA (4-bit)",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Datensätze erstellen und labeln",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Modelle testen und bewerten",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Versionierung der Trainingsläufe",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "Open Source",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Kosten",
+                        "ab 3,33 € im Monat",
+                        "Open-Source-Version kostenlos"
+                    ]
+                ],
+                "note": "Stand: Oktober 2026. Beide Projekte entwickeln sich schnell – prüft die Details bei Unsloth im Zweifel selbst."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Was passt zu dir?",
+                "cards": [
+                    {
+                        "title": "Nimm FrameTrain, wenn …",
+                        "items": [
+                            "du nicht programmieren willst oder kannst",
+                            "du auf einem Mac oder unter Windows ohne WSL trainierst",
+                            "du deinen Datensatz erst noch bauen und labeln musst",
+                            "du Modelle nach dem Training testen und verbessern willst",
+                            "du Bild-, Text- und Sprachmodelle in einer App willst"
+                        ]
+                    },
+                    {
+                        "title": "Nimm Unsloth, wenn …",
+                        "items": [
+                            "du Python sicher beherrschst",
+                            "du auf einer NVIDIA-GPU das Maximum an Geschwindigkeit willst",
+                            "dein Datensatz schon fertig ist",
+                            "du dein Training in eigene Skripte oder Pipelines einbauen willst",
+                            "du ausschließlich Sprachmodelle feinjustierst"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "eyebrow": "Der Kern",
+                "title": "Unterschiedliche Werkzeuge für unterschiedliche Leute.",
+                "paragraphs": [
+                    "Unsloth ist exzellent darin, LoRA-Fine-Tuning von Sprachmodellen schneller und speichersparender zu machen. Dafür setzt es voraus, dass du in Python arbeitest und deine Daten schon in der richtigen Form vorliegen.",
+                    "FrameTrain setzt früher an: beim Sammeln und Labeln der Daten. Und es hört später auf: beim Testen im Labor, beim Zurückspielen von Fehlern und beim Bereitstellen über die lokale API. Dafür ist es kein Werkzeug, um das letzte Prozent Geschwindigkeit aus einer GPU zu holen."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Ist FrameTrain eine Oberfläche für Unsloth?",
+                "answer": "Nein. FrameTrain ist eine eigenständige Desktop-App auf Basis von PyTorch und Hugging Face. Wer eigene Trainingsskripte nutzen will, kann sie im Dev-Train-Modus ausführen."
+            },
+            {
+                "question": "Was ist schneller?",
+                "answer": "Auf NVIDIA-GPUs ist Unsloth auf Geschwindigkeit optimiert und beim reinen LLM-Fine-Tuning in der Regel schneller. FrameTrain spart Zeit an anderer Stelle: beim Datensatz, beim Testen und weil kein Code geschrieben werden muss."
+            },
+            {
+                "question": "Funktioniert Unsloth auf dem Mac?",
+                "answer": "Unsloth richtet sich in erster Linie an NVIDIA-GPUs; die Unterstützung für Apple Silicon ist eingeschränkt. FrameTrain läuft auf M1 bis M4 über Metal."
+            }
+        ],
+        "related": [
+            {
+                "href": "/compare",
+                "label": "FrameTrain vs. MLX LoRA Studio vs. Unsloth"
+            },
+            {
+                "href": "/compare/google-colab",
+                "label": "FrameTrain vs. Google Colab"
+            },
+            {
+                "href": "/guides/lora-finetuning",
+                "label": "LoRA Fine-Tuning erklärt"
+            }
+        ],
+        "ctaTitle": "Probier den Weg ohne Code aus."
+    },
+    "PageVsColab": {
+        "metaTitle": "FrameTrain vs. Google Colab – lokal trainieren statt Notebook | FrameTrain",
+        "metaDescription": "Google Colab oder lokales Training mit FrameTrain? Vergleich zu Datenschutz, Sitzungslimits, Kosten, Code und GPU – und wann Colab die bessere Wahl ist.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. Google Colab",
+                "path": "/compare/google-colab"
+            }
+        ],
+        "eyebrow": "Vergleich",
+        "titleA": "FrameTrain vs. Google Colab.",
+        "titleB": "Dein Rechner oder Googles Notebook?",
+        "lead": "Colab ist für viele der erste Kontakt mit Machine Learning: ein Notebook im Browser, eine GPU aus der Cloud. FrameTrain verfolgt den anderen Ansatz – <b>eine App auf deinem Rechner</b>, ohne Code und ohne Upload.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Die Unterschiede, die im Alltag zählen.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Google Colab"
+                ],
+                "rows": [
+                    [
+                        "Wo das Training läuft",
+                        "auf deinem Rechner",
+                        "auf Googles Servern"
+                    ],
+                    [
+                        "Programmieren nötig",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Daten hochladen",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Sitzungen enden nach Zeit oder Inaktivität",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Funktioniert ohne eigene GPU",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Datensätze labeln in der App",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Notebooks teilen und gemeinsam bearbeiten",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Kosten",
+                        "ab 3,33 € im Monat",
+                        "kostenlos mit Limits, kostenpflichtige Tarife"
+                    ]
+                ],
+                "note": "Stand: Oktober 2026. Konditionen von Colab ändern sich; aktuelle Tarife findest du bei Google."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Was passt zu dir?",
+                "cards": [
+                    {
+                        "title": "Nimm FrameTrain, wenn …",
+                        "items": [
+                            "deine Daten vertraulich sind",
+                            "du einen Rechner mit NVIDIA-GPU oder Apple Silicon hast",
+                            "du ohne Code arbeiten willst",
+                            "Trainings länger laufen und nicht abbrechen sollen",
+                            "du Datensätze erst bauen und labeln musst"
+                        ]
+                    },
+                    {
+                        "title": "Nimm Colab, wenn …",
+                        "items": [
+                            "du keine eigene GPU hast",
+                            "du ohnehin in Python arbeitest",
+                            "du Notebooks mit anderen teilen willst",
+                            "deine Daten öffentlich oder unkritisch sind",
+                            "du nur kurz etwas ausprobieren willst"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "points",
+                "eyebrow": "Warum lokal",
+                "title": "Was sich ändert, wenn du nicht mehr in der Cloud trainierst.",
+                "items": [
+                    {
+                        "title": "Kein Upload",
+                        "text": "Große Datensätze liegen schon auf deinem Rechner. Du wählst den Ordner – fertig."
+                    },
+                    {
+                        "title": "Keine abgebrochenen Sitzungen",
+                        "text": "Ein Training läuft, bis es fertig ist. Kein Browser-Tab, der offen bleiben muss."
+                    },
+                    {
+                        "title": "Modelle bleiben da",
+                        "text": "Jede Version liegt mit Parametern und Metriken lokal und lässt sich sofort testen."
+                    },
+                    {
+                        "title": "Planbare Kosten",
+                        "text": "Ein fester Monats- oder Jahrespreis statt Rechenzeit-Guthaben."
+                    }
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Ist Colab nicht kostenlos?",
+                "answer": "Colab hat einen kostenlosen Tarif mit begrenzter und wechselnder GPU-Verfügbarkeit und zeitlich begrenzten Sitzungen. Für mehr Rechenleistung gibt es kostenpflichtige Tarife. FrameTrain kostet ab 3,33 € im Monat und nutzt deine eigene Hardware."
+            },
+            {
+                "question": "Ich habe keine GPU. Kann ich FrameTrain trotzdem nutzen?",
+                "answer": "Ja, das Training läuft dann auf der CPU – für kleine Modelle und Datensätze funktioniert das, größere dauern deutlich länger. Wenn du gar keine Hardware hast, ist ein Cloud-Notebook wie Colab die bessere Wahl."
+            },
+            {
+                "question": "Kann ich meine Colab-Notebooks weiterverwenden?",
+                "answer": "Nicht direkt. Wer eigene Python-Skripte nutzen möchte, kann sie im Dev-Train-Modus von FrameTrain ausführen."
+            }
+        ],
+        "related": [
+            {
+                "href": "/guides/local-vs-cloud",
+                "label": "Lokal oder Cloud? Kosten und Datenschutz"
+            },
+            {
+                "href": "/compare/unsloth",
+                "label": "FrameTrain vs. Unsloth"
+            },
+            {
+                "href": "/guides/gpu-guide",
+                "label": "Welche GPU brauche ich?"
+            }
+        ],
+        "ctaTitle": "Trainiere ohne Upload und ohne Zeitlimit."
+    },
+    "PageMlxVsPytorch": {
+        "metaTitle": "MLX vs. PyTorch auf dem Mac – was ist besser fürs Training? | FrameTrain",
+        "metaDescription": "MLX oder PyTorch (MPS) für Machine Learning auf Apple Silicon? Unterschiede bei Speicher, Ökosystem und LLM-Fine-Tuning – und wie FrameTrain beide nutzt.",
+        "breadcrumb": [
+            {
+                "name": "Guides",
+                "path": "/guides"
+            },
+            {
+                "name": "MLX vs. PyTorch",
+                "path": "/guides/mlx-vs-pytorch"
+            }
+        ],
+        "eyebrow": "Guide · Apple Silicon",
+        "titleA": "MLX vs. PyTorch auf dem Mac.",
+        "titleB": "Welches Framework fürs Training?",
+        "lead": "Wer auf einem Mac mit M-Chip Modelle trainiert, landet bei zwei Optionen: <b>PyTorch</b> mit dem Metal-Backend (MPS) oder Apples eigenem Framework <b>MLX</b>. Beide nutzen die GPU des M-Chips – aber auf unterschiedliche Weise.",
+        "sections": [
+            {
+                "type": "text",
+                "eyebrow": "Die Kurzfassung",
+                "title": "Zwei Wege zur Mac-GPU.",
+                "paragraphs": [
+                    "<b>PyTorch</b> ist das Standard-Framework der ML-Welt. Auf dem Mac läuft es über das Metal-Backend MPS. Der große Vorteil ist das Ökosystem: Hugging Face Transformers, PEFT/LoRA und unzählige Beispiele funktionieren direkt. Einzelne Operationen werden von MPS noch nicht unterstützt und fallen dann auf die CPU zurück.",
+                    "<b>MLX</b> ist ein Open-Source-Framework von Apple, das 2023 erschienen ist und gezielt für Apple Silicon gebaut wurde. Es nutzt den gemeinsamen Arbeitsspeicher (Unified Memory) von CPU und GPU direkt. Mit <b>mlx-lm</b> gibt es eine eigene Bibliothek, um Sprachmodelle mit LoRA feinzujustieren."
+                ]
+            },
+            {
+                "type": "table",
+                "eyebrow": "Im Vergleich",
+                "title": "MLX und PyTorch (MPS) nebeneinander.",
+                "cols": [
+                    "",
+                    "PyTorch (MPS)",
+                    "MLX"
+                ],
+                "rows": [
+                    [
+                        "Entwickelt von",
+                        "Meta und Community",
+                        "Apple"
+                    ],
+                    [
+                        "Plattformen",
+                        "macOS, Windows, Linux",
+                        "nur Apple Silicon"
+                    ],
+                    [
+                        "Nutzt Unified Memory",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Ökosystem (Hugging Face, PEFT)",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "LoRA für Sprachmodelle",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Bild- und Spezialmodelle (z. B. YOLO)",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "Gleicher Code auf NVIDIA und Mac",
+                        "yes",
+                        "no"
+                    ]
+                ],
+                "note": "Stand: Oktober 2026. Konkrete Geschwindigkeiten hängen stark von Modell, Chip und Speicher ab – deshalb hier bewusst keine Benchmark-Zahlen."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Wann was?",
+                "cards": [
+                    {
+                        "title": "PyTorch (MPS), wenn …",
+                        "items": [
+                            "du Bild-, Text- oder Audiomodelle aus Hugging Face trainierst",
+                            "dein Projekt auch auf NVIDIA-Rechnern laufen soll",
+                            "du bestehende Tutorials und Skripte nutzen willst",
+                            "du YOLO oder andere Spezialmodelle brauchst"
+                        ]
+                    },
+                    {
+                        "title": "MLX, wenn …",
+                        "items": [
+                            "du ausschließlich auf Apple Silicon arbeitest",
+                            "du Sprachmodelle mit LoRA feinjustierst",
+                            "du den gemeinsamen Speicher deines Macs voll ausnutzen willst",
+                            "du mit einem jüngeren, kleineren Ökosystem leben kannst"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "steps",
+                "eyebrow": "In FrameTrain",
+                "title": "Du musst dich nicht festlegen.",
+                "items": [
+                    {
+                        "title": "PyTorch für alles",
+                        "text": "FrameTrain trainiert auf dem Mac standardmäßig mit PyTorch über Metal – für Bild-, Text-, Audio- und Sprachmodelle."
+                    },
+                    {
+                        "title": "MLX für Sprachmodelle",
+                        "text": "Beim LLM-Fine-Tuning gibt es das Feld <b>Backend</b> mit den Optionen auto, torch und mlx. Für MLX muss das Paket mlx-lm installiert sein; die App zeigt an, wenn es fehlt."
+                    },
+                    {
+                        "title": "Ergebnisse vergleichen",
+                        "text": "Jeder Lauf wird als eigene Version gespeichert. So siehst du in der Analyse direkt, welches Backend auf deinem Mac besser abschneidet."
+                    }
+                ],
+                "shot": "training-lora",
+                "shotAlt": "FrameTrain Trainingseinstellungen mit LoRA-Abschnitt und dem Feld Backend (auto, torch, mlx)"
+            }
+        ],
+        "faq": [
+            {
+                "question": "Ist MLX schneller als PyTorch?",
+                "answer": "Beim LoRA-Fine-Tuning von Sprachmodellen auf Apple Silicon wird MLX häufig als schneller und speichersparender beschrieben. Wie groß der Unterschied ist, hängt von Modell, Chip und Speicher ab. Für andere Modelltypen ist PyTorch wegen des größeren Ökosystems meist die praktischere Wahl."
+            },
+            {
+                "question": "Kann ich MLX-Modelle in PyTorch weiterverwenden?",
+                "answer": "Teilweise. Gewichte lassen sich zwischen den Formaten konvertieren, das ist aber ein zusätzlicher Schritt. Wenn dein Modell später auch auf NVIDIA-Hardware laufen soll, ist PyTorch der direktere Weg."
+            },
+            {
+                "question": "Läuft MLX auf Intel-Macs?",
+                "answer": "Nein, MLX ist nur für Apple Silicon gebaut. Auch FrameTrain unterstützt auf dem Mac ausschließlich Apple Silicon."
+            }
+        ],
+        "related": [
+            {
+                "href": "/apple-silicon",
+                "label": "KI-Training auf Apple Silicon"
+            },
+            {
+                "href": "/compare",
+                "label": "FrameTrain vs. MLX LoRA Studio vs. Unsloth"
+            },
+            {
+                "href": "/guides/lora-finetuning",
+                "label": "LoRA Fine-Tuning erklärt"
+            }
+        ],
+        "ctaTitle": "Probier beide Backends auf deinem Mac aus."
+    },
+    "Channel": {
+        "metaTitle": "Willkommen bei FrameTrain",
+        "metaDescription": "Trainiere dein eigenes KI-Modell ohne Code, lokal auf deinem Rechner. 14 Tage kostenlos testen.",
+        "eyebrow": "Hallo aus Mainz",
+        "lead": "FrameTrain ist eine Desktop-App, mit der du eigene KI-Modelle trainierst – ohne Code, lokal auf deinem Rechner. Ein Solo-Projekt, gebaut in der Öffentlichkeit.",
+        "codeLabel": "Dein Code",
+        "codeSaved": "Ist gespeichert und wird bei der Registrierung automatisch eingetragen.",
+        "points": [
+            "14 Tage kostenlos, ohne Zahlungsdaten",
+            "Daten und Modelle bleiben auf deinem Rechner",
+            "Dataset Builder, Training und Labor in einer App"
+        ],
+        "more": "Mehr über FrameTrain",
+        "channels": {
+            "reddit": {
+                "title": "Willkommen aus Reddit.",
+                "back": "Zurück zu r/FrameTrain"
+            },
+            "youtube": {
+                "title": "Willkommen aus YouTube.",
+                "back": "Die Tutorials ansehen"
+            },
+            "tiktok": {
+                "title": "Willkommen aus TikTok.",
+                "back": ""
+            },
+            "instagram": {
+                "title": "Willkommen aus Instagram.",
+                "back": ""
+            }
         }
     }
 }

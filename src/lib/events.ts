@@ -16,6 +16,7 @@ export type FunnelEvent =
   | 'code_captured'
   | 'code_redeemed'
   | 'pricing_toggle'
+  | 'channel_visit'
 
 export function trackEvent(name: FunnelEvent, props?: Record<string, string | number | boolean>) {
   try {

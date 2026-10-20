@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { Brain, Laptop, Cpu, Shield, ArrowRight } from 'lucide-react'
+import { Brain, Laptop, Cpu, Shield, ArrowRight, Apple } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const icons = [<Brain key="0" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Laptop key="1" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Cpu key="2" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />]
-const colors = ['purple', 'green', 'orange']
+const icons = [<Brain key="0" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Laptop key="1" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Cpu key="2" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Apple key="3" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />]
+const colors = ['purple', 'green', 'orange', 'purple']
 const colorMap: Record<string, string> = {
   purple: 'bg-ghost-fill',
   green: 'bg-ghost-fill',

@@ -20,7 +20,6 @@ export function Footer() {
     { href: '/screenshots', label: t('screenshots') },
     { href: '/#pricing', label: t('pricing') },
     { href: '/changelog', label: t('changelog') },
-    { href: '/apple-silicon', label: t('appleSilicon') },
     { href: '/compare', label: t('compare') },
   ]
   const learn = [
@@ -30,6 +29,14 @@ export function Footer() {
     { href: '/faq', label: t('faq') },
     { href: '/library', label: t('library') },
     { href: '/about', label: t('about') },
+  ]
+  const audience = [
+    { href: '/computer-vision', label: t('computerVision') },
+    { href: '/apple-silicon', label: t('mac') },
+    { href: '/gdpr', label: t('gdpr') },
+    { href: '/compare/unsloth', label: t('vsUnsloth') },
+    { href: '/compare/google-colab', label: t('vsColab') },
+    { href: '/guides/mlx-vs-pytorch', label: t('mlxVsPytorch') },
   ]
   const legal = [
     { href: '/privacy', label: t('privacy') },
@@ -41,7 +48,7 @@ export function Footer() {
   return (
     <footer className="border-t border-line mt-16">
       <div className="ft-container pt-16 pb-10">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="inline-flex items-center gap-2.5 text-ink">
               {/* eslint-disable-next-line @next/next/no-img-element -- SVG-Logo */}
@@ -71,6 +78,7 @@ export function Footer() {
 
           {[
             { heading: t('productHeading'), items: product },
+            { heading: t('audienceHeading'), items: audience },
             { heading: t('learnHeading'), items: learn },
             { heading: t('legalHeading'), items: legal },
           ].map((col, i) => (
@@ -84,7 +92,7 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
-                {i === 2 && (
+                {i === 3 && (
                   <li>
                     {/* Widerruf der Analyse-Einwilligung – erscheint nur, wenn ein Tag konfiguriert ist */}
                     <CookieSettingsButton className={`${footerLink} text-left`} />

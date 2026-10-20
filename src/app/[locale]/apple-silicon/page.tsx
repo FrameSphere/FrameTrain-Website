@@ -249,6 +249,18 @@ export default async function AppleSiliconPage({ params }: Props) {
               </div>
             </div>
 
+            {/* MLX vs. PyTorch */}
+            <div className="rounded-lg border border-line bg-bg p-7 flex flex-col md:flex-row md:items-center justify-between gap-5">
+              <div className="max-w-[620px]">
+                <h2 className="text-xl font-semibold text-ink m-0">{t('mlx.heading')}</h2>
+                <p className="text-ink-muted text-[15px] leading-6 mt-2 mb-0">{t('mlx.text')}</p>
+              </div>
+              <Link href="/guides/mlx-vs-pytorch" className="ft-btn ft-btn--ghost flex-none">
+                {t('mlx.cta')}
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+              </Link>
+            </div>
+
             {/* CTA */}
             <div className="bg-surface border border-line rounded-lg p-8 border border-line text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-ghost-fill border border-line rounded-lg mb-6">
