@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     icons: {
       icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
-      apple: '/apple-touch-icon.svg',
+      apple: '/apple-touch-icon.png',
       shortcut: '/favicon.svg',
     },
     openGraph: pageOpenGraph({
@@ -139,7 +139,7 @@ export default async function RootLayout({ children, params }: Props) {
         '@type': 'Organization',
         name: 'FrameTrain',
         url: baseUrl,
-        logo: `${baseUrl}/favicon.svg`,
+        logo: `${baseUrl}/brand/frametrain-icon-512.png`,
         sameAs: ['https://github.com/FrameSphere/FrameTrain-App'],
       },
       {
