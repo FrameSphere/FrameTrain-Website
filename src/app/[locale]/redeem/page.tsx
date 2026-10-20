@@ -9,6 +9,8 @@ import {
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { trackStartTrial } from '@/lib/analytics'
+import { trackEvent } from '@/lib/events'
+import { normalizePromoCode, readStoredPromoCode, clearStoredPromoCode } from '@/components/PromoCapture'
 
 type Plan = 'monthly' | 'yearly'
 
@@ -66,6 +68,12 @@ export default function RedeemPage() {
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 80)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Kanal-Code vorausfüllen: ?code=… oder vorher irgendwo auf der Seite gemerkt
+  useEffect(() => {
+    const code = normalizePromoCode(new URLSearchParams(window.location.search).get('code')) || readStoredPromoCode()
+    if (code) setCodeInput((current) => current || code)
   }, [])
 
   // ── Schritt 1: Code prüfen ──
@@ -129,6 +137,8 @@ export default function RedeemPage() {
           freeMonths: promo.freeMonths,
           dedupeId: promo.code,
         })
+        trackEvent('code_redeemed', { code: promo.code, type: promo.type })
+        clearStoredPromoCode()
         // Weiter zur Success-Seite (mit Animation), von dort ins Dashboard
         window.location.href = '/payment/success?promo=redeemed'
         return

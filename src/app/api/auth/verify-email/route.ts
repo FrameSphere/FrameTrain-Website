@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { hashVerificationToken } from '@/lib/email-verification'
+import { grantTrialIfEligible } from '@/lib/trial'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -46,7 +47,13 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ message: 'E-Mail-Adresse erfolgreich bestätigt' })
+    // Bestätigtes E-Mail-Konto: jetzt startet die Testphase (einmal pro Konto)
+    const trialUntil = await grantTrialIfEligible(user.id)
+
+    return NextResponse.json({
+      message: 'E-Mail-Adresse erfolgreich bestätigt',
+      trialUntil: trialUntil ? trialUntil.toISOString() : null,
+    })
   } catch (error) {
     console.error('Verify-email error:', error)
     return NextResponse.json({ error: 'Ein Fehler ist aufgetreten' }, { status: 500 })
