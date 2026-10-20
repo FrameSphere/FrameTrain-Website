@@ -39,16 +39,16 @@ export function EmailVerificationBanner() {
   }
 
   return (
-    <div className="mb-8 p-5 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <div className="mb-8 p-5 rounded-lg border border-warning bg-ghost-fill flex flex-col sm:flex-row items-start sm:items-center gap-4">
       <div className="flex items-center gap-3 flex-1">
-        <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-          <Mail className="w-5 h-5 text-amber-400" />
+        <div className="w-10 h-10 rounded-full bg-ghost-fill flex items-center justify-center flex-shrink-0">
+          <Mail className="w-5 h-5 text-warning" />
         </div>
         <div>
-          <p className="text-white font-bold">{t('title')}</p>
-          <p className="text-amber-300 text-sm mt-0.5">{t('text')}</p>
+          <p className="text-ink font-semibold">{t('title')}</p>
+          <p className="text-warning text-sm mt-0.5">{t('text')}</p>
           {feedback && (
-            <p className={`text-sm mt-1 ${feedback.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+            <p className={`text-sm mt-1 ${feedback.type === 'success' ? 'text-success' : 'text-danger'}`}>
               {feedback.text}
             </p>
           )}
@@ -57,7 +57,7 @@ export function EmailVerificationBanner() {
       <button
         onClick={handleResend}
         disabled={sending}
-        className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
+        className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-ghost-fill hover:bg-ghost-fill border border-warning text-warning font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50 text-sm"
       >
         {sending ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('sending')}</> : t('resendButton')}
       </button>

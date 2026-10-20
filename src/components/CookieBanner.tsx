@@ -71,23 +71,23 @@ export function CookieBanner() {
       aria-label={t('heading')}
       className="fixed bottom-0 left-0 right-0 z-[100] p-3 sm:p-5"
     >
-      <div className="mx-auto max-w-3xl rounded-2xl border border-white/15 bg-gray-950/95 backdrop-blur-md shadow-2xl shadow-black/40 p-5 sm:p-6">
+      <div className="mx-auto max-w-3xl rounded-lg border border-line-strong bg-surface p-5 sm:p-6">
         <div className="flex items-start gap-3">
-          <Cookie className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" aria-hidden />
+          <Cookie className="w-5 h-5 text-indigo-text flex-shrink-0 mt-0.5" aria-hidden />
           <div className="flex-1 min-w-0">
-            <h2 className="text-white font-semibold text-[15px] mb-1.5">{t('heading')}</h2>
+            <h2 className="text-ink font-semibold text-[15px] mb-1.5">{t('heading')}</h2>
             {reopened && current !== 'unknown' && (
-              <p className="text-xs text-gray-500 mb-2">
+              <p className="text-xs text-ink-faint mb-2">
                 {current === 'granted' ? t('statusGranted') : t('statusDenied')}
               </p>
             )}
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-ink-muted text-sm leading-relaxed">
               {t('text')}{' '}
-              <Link href="/cookies" className="text-purple-400 hover:text-purple-300 underline">
+              <Link href="/cookies" className="text-indigo-text hover:text-indigo-text underline">
                 {t('cookiesLink')}
               </Link>
               {' · '}
-              <Link href="/privacy" className="text-purple-400 hover:text-purple-300 underline">
+              <Link href="/privacy" className="text-indigo-text hover:text-indigo-text underline">
                 {t('privacyLink')}
               </Link>
             </p>
@@ -98,7 +98,7 @@ export function CookieBanner() {
             type="button"
             onClick={() => (reopened ? (setReopened(false), setVisible(false)) : decide('denied'))}
             aria-label={reopened ? t('close') : t('decline')}
-            className={`flex-shrink-0 text-gray-600 hover:text-gray-300 transition-colors ${reopened ? '' : 'sm:hidden'}`}
+            className={`flex-shrink-0 text-ink-faint hover:text-ink transition-colors ${reopened ? '' : 'sm:hidden'}`}
           >
             <X className="w-5 h-5" />
           </button>
@@ -108,14 +108,14 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={() => decide('denied')}
-            className="press px-5 py-2.5 rounded-xl border border-white/15 text-gray-300 hover:text-white hover:border-white/30 text-sm font-semibold transition-colors"
+            className="press px-5 py-2.5 rounded-md border border-line-strong text-ink hover:text-ink hover:border-line-strong text-sm font-semibold transition-colors"
           >
             {reopened && current === 'granted' ? t('revoke') : t('decline')}
           </button>
           <button
             type="button"
             onClick={() => decide('granted')}
-            className="press px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold shadow-lg shadow-purple-500/20 hover:from-purple-500 hover:to-pink-500 transition-colors"
+            className="press px-5 py-2.5 rounded-md bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge text-sm font-semibold     transition-colors"
           >
             {t('accept')}
           </button>

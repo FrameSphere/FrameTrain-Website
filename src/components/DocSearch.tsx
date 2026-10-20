@@ -9,28 +9,28 @@ import { Search, X, ArrowRight } from 'lucide-react'
 // Titel/Beschreibung werden zur Laufzeit aus den AICoach-Übersetzungen gezogen,
 // damit der Suchindex automatisch DE/EN korrekt ist und nicht dupliziert wird.
 const CHAPTERS: { key: string; emoji: string; href: string; items: { id: string; key: string }[] }[] = [
-  { key: 'mlGrundlagen', emoji: '🧠', href: '/docs/ai-training-guide/ml-grundlagen', items: [
+  { key: 'mlGrundlagen', emoji: '', href: '/docs/ai-training-guide/ml-grundlagen', items: [
     { id: 'was-ist-ml', key: 'wasIstMl' }, { id: 'neuronale-netze', key: 'neuronaleNetze' }, { id: 'transformer', key: 'transformer' }, { id: 'wie-ki-lernt', key: 'wieKiLernt' },
   ]},
-  { key: 'trainingVerstehen', emoji: '📊', href: '/docs/ai-training-guide/training-verstehen', items: [
+  { key: 'trainingVerstehen', emoji: '', href: '/docs/ai-training-guide/training-verstehen', items: [
     { id: 'training-loop', key: 'trainingLoop' }, { id: 'loss-funktionen', key: 'lossFunktionen' }, { id: 'metriken', key: 'metriken' }, { id: 'train-val-test', key: 'trainValTest' },
   ]},
-  { key: 'trainingsverlauf', emoji: '📈', href: '/docs/ai-training-guide/trainingsverlauf', items: [
+  { key: 'trainingsverlauf', emoji: '', href: '/docs/ai-training-guide/trainingsverlauf', items: [
     { id: 'loss-kurven', key: 'lossKurven' }, { id: 'gutes-training', key: 'gutesTraining' }, { id: 'overfitting', key: 'overfitting' }, { id: 'underfitting', key: 'underfitting' }, { id: 'instabiles-training', key: 'instabilesTraining' },
   ]},
-  { key: 'diagnose', emoji: '🩺', href: '/docs/ai-training-guide/diagnose', items: [
+  { key: 'diagnose', emoji: '', href: '/docs/ai-training-guide/diagnose', items: [
     { id: 'overfitting-fix', key: 'overfittingFix' }, { id: 'underfitting-fix', key: 'underfittingFix' }, { id: 'lr-probleme', key: 'lrProbleme' }, { id: 'loss-spike', key: 'lossSpike' },
   ]},
-  { key: 'hyperparameter', emoji: '⚙️', href: '/docs/ai-training-guide/hyperparameter', items: [
+  { key: 'hyperparameter', emoji: '', href: '/docs/ai-training-guide/hyperparameter', items: [
     { id: 'learning-rate-deep', key: 'learningRateDeep' }, { id: 'lr-scheduler', key: 'lrScheduler' }, { id: 'batch-size-deep', key: 'batchSizeDeep' }, { id: 'optimizer-vergleich', key: 'optimizerVergleich' }, { id: 'regularisierung', key: 'regularisierung' },
   ]},
-  { key: 'fineTuning', emoji: '🔧', href: '/docs/ai-training-guide/fine-tuning', items: [
+  { key: 'fineTuning', emoji: '', href: '/docs/ai-training-guide/fine-tuning', items: [
     { id: 'full-finetuning', key: 'fullFinetuning' }, { id: 'lora-deep', key: 'loraDeep' }, { id: 'qlora', key: 'qlora' }, { id: 'peft-methoden', key: 'peftMethoden' }, { id: 'wann-was', key: 'wannWas' },
   ]},
-  { key: 'datasetMastery', emoji: '📦', href: '/docs/ai-training-guide/dataset-mastery', items: [
+  { key: 'datasetMastery', emoji: '', href: '/docs/ai-training-guide/dataset-mastery', items: [
     { id: 'daten-qualitaet', key: 'datenQualitaet' }, { id: 'preprocessing', key: 'preprocessing' }, { id: 'augmentation', key: 'augmentation' }, { id: 'balancing', key: 'balancing' },
   ]},
-  { key: 'fortgeschrittene', emoji: '🚀', href: '/docs/ai-training-guide/fortgeschrittene', items: [
+  { key: 'fortgeschrittene', emoji: '', href: '/docs/ai-training-guide/fortgeschrittene', items: [
     { id: 'mixed-precision', key: 'mixedPrecision' }, { id: 'gradient-checkpointing', key: 'gradientCheckpointing' }, { id: 'early-stopping', key: 'earlyStopping' }, { id: 'ensembles', key: 'ensembles' },
   ]},
 ]
@@ -126,28 +126,28 @@ export function DocSearch() {
       {/* Search trigger */}
       <button
         onClick={() => { setOpen(true); setTimeout(() => inputRef.current?.focus(), 50) }}
-        className="card-lift w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-400 hover:border-violet-400/30 hover:text-gray-300 transition duration-200 ease-out text-sm"
+        className="card-lift w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink-muted hover:border-line hover:text-ink transition duration-200 ease-out text-sm"
       >
         <Search className="w-4 h-4 flex-shrink-0" />
         <span className="flex-1 text-left">{tSearch('triggerPlaceholder')}</span>
-        <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-white/5 border border-white/10 rounded text-gray-500">⌘K</kbd>
+        <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-ghost-fill border border-line rounded text-ink-faint">⌘K</kbd>
       </button>
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute top-full mt-2 left-0 right-0 z-50 glass-strong border border-white/15 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden">
+        <div className="absolute top-full mt-2 left-0 right-0 z-50 bg-surface border border-line border border-line-strong rounded-lg overflow-hidden">
           {/* Input */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
-            <Search className="w-4 h-4 text-violet-400 flex-shrink-0" />
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-line">
+            <Search className="w-4 h-4 text-indigo-text flex-shrink-0" />
             <input
               ref={inputRef}
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder={tSearch('inputPlaceholder')}
-              className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
+              className="flex-1 bg-transparent text-ink placeholder-ink-faint outline-none text-sm"
             />
             {query && (
-              <button onClick={() => setQuery('')} className="text-gray-500 hover:text-gray-300">
+              <button onClick={() => setQuery('')} className="text-ink-faint hover:text-ink">
                 <X className="w-4 h-4" />
               </button>
             )}
@@ -156,15 +156,15 @@ export function DocSearch() {
           {/* Results */}
           <div className="max-h-80 overflow-y-auto">
             {results.length === 0 && query.trim() && (
-              <p className="text-gray-500 text-sm text-center py-8">{tSearch('noResultsFor')} „{query}"</p>
+              <p className="text-ink-faint text-sm text-center py-8">{tSearch('noResultsFor')} „{query}"</p>
             )}
             {results.length === 0 && !query.trim() && (
               <div className="px-4 py-4">
-                <p className="text-gray-600 text-xs uppercase tracking-wider mb-3">{tSearch('popularTopics')}</p>
+                <p className="text-ink-faint text-xs uppercase tracking-wider mb-3">{tSearch('popularTopics')}</p>
                 <div className="flex flex-wrap gap-2">
                   {popularTags.map(tag => (
                     <button key={tag} onClick={() => setQuery(tag)}
-                      className="px-3 py-1.5 bg-violet-500/10 border border-violet-400/20 rounded-lg text-violet-300 text-xs hover:bg-violet-500/20 transition-colors">
+                      className="px-3 py-1.5 bg-indigo-soft border border-line rounded-sm text-indigo-text text-xs hover:bg-indigo-soft transition-colors">
                       {tag}
                     </button>
                   ))}
@@ -175,16 +175,16 @@ export function DocSearch() {
               <button
                 key={i}
                 onClick={() => navigate(result)}
-                className="w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                className="w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-ghost-fill transition-colors border-b border-line last:border-0"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-gray-500 text-xs">{result.chapter}</span>
+                    <span className="text-ink-faint text-xs">{result.chapter}</span>
                   </div>
-                  <p className="text-white text-sm font-semibold">{result.title}</p>
-                  <p className="text-gray-500 text-xs truncate">{result.desc}</p>
+                  <p className="text-ink text-sm font-semibold">{result.title}</p>
+                  <p className="text-ink-faint text-xs truncate">{result.desc}</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-gray-600 flex-shrink-0 mt-1" />
+                <ArrowRight className="w-4 h-4 text-ink-faint flex-shrink-0 mt-1" />
               </button>
             ))}
           </div>

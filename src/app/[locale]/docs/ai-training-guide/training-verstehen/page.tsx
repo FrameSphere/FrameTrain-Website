@@ -26,17 +26,17 @@ function TrainingLoopSection({ c }: { c: any }) {
       <H2>{c.modeHeading}</H2>
       <P><Rich html={c.modeIntro} /></P>
       <div className="grid md:grid-cols-2 gap-4">
-        <div className="glass border border-violet-400/20 rounded-xl p-5">
-          <h3 className="text-violet-300 font-bold mb-3">{c.trainModeTitle}</h3>
-          <ul className="space-y-2 text-gray-400 text-sm">
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-indigo-text font-semibold mb-3">{c.trainModeTitle}</h3>
+          <ul className="space-y-2 text-ink-muted text-sm">
             {c.trainModeItems.map((it: string, i: number) => (
               <li key={i}><Rich html={it} /></li>
             ))}
           </ul>
         </div>
-        <div className="glass border border-cyan-400/20 rounded-xl p-5">
-          <h3 className="text-cyan-300 font-bold mb-3">{c.evalModeTitle}</h3>
-          <ul className="space-y-2 text-gray-400 text-sm">
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-indigo-text font-semibold mb-3">{c.evalModeTitle}</h3>
+          <ul className="space-y-2 text-ink-muted text-sm">
             {c.evalModeItems.map((it: string, i: number) => (
               <li key={i}><Rich html={it} /></li>
             ))}
@@ -55,10 +55,10 @@ function TrainingLoopSection({ c }: { c: any }) {
       <H2>{c.checkpointHeading}</H2>
       <div className="space-y-3">
         {c.checkpointStrategies.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-xl p-4 flex justify-between items-start gap-4">
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-4 flex justify-between items-start gap-4">
             <div className="flex-1">
-              <h3 className="text-white font-semibold mb-1">{item.name}</h3>
-              <p className="text-gray-400 text-sm">{item.desc}</p>
+              <h3 className="text-ink font-semibold mb-1">{item.name}</h3>
+              <p className="text-ink-muted text-sm">{item.desc}</p>
             </div>
             <Tag color="green">{item.rec}</Tag>
           </div>
@@ -69,7 +69,7 @@ function TrainingLoopSection({ c }: { c: any }) {
 }
 
 function LossFunktionenSection({ c }: { c: any }) {
-  const colors = ['border-violet-400/20', 'border-blue-400/20', 'border-cyan-400/20', 'border-green-400/20']
+  const colors = ['border-line', 'border-line', 'border-line', 'border-line']
   return (
     <div className="space-y-6">
       <SectionTitle icon={<Target className="w-9 h-9" />} title={c.title} subtitle={c.subtitle} />
@@ -78,17 +78,17 @@ function LossFunktionenSection({ c }: { c: any }) {
       <H2>{c.mainHeading}</H2>
       <div className="space-y-5">
         {c.losses.map((item: any, i: number) => (
-          <div key={i} className={`glass border rounded-xl p-6 ${colors[i]}`}>
+          <div key={i} className={`bg-surface border border-line border rounded-md p-6 ${colors[i]}`}>
             <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
-              <h3 className="text-white font-bold text-lg">{item.name}</h3>
+              <h3 className="text-ink font-semibold text-lg">{item.name}</h3>
               <Tag color="purple">{item.use}</Tag>
             </div>
-            <code className="text-violet-300 text-sm font-mono block mb-3 bg-gray-900/40 rounded-lg px-3 py-2">{item.formula}</code>
-            <p className="text-gray-400 text-sm mb-2">{item.desc}</p>
-            <p className="text-gray-500 text-xs mb-3">{c.exampleLabel} {item.example}</p>
-            <div className="flex items-start gap-2 bg-white/3 rounded-lg p-3">
-              <span className="text-blue-400 text-xs">💡</span>
-              <p className="text-blue-300 text-xs">{item.tip}</p>
+            <code className="text-indigo-text text-sm font-mono block mb-3 bg-surface rounded-sm px-3 py-2">{item.formula}</code>
+            <p className="text-ink-muted text-sm mb-2">{item.desc}</p>
+            <p className="text-ink-faint text-xs mb-3">{c.exampleLabel} {item.example}</p>
+            <div className="flex items-start gap-2 bg-ghost-fill rounded-sm p-3">
+              <span className="text-indigo-text text-xs"></span>
+              <p className="text-indigo-text text-xs">{item.tip}</p>
             </div>
           </div>
         ))}
@@ -96,14 +96,14 @@ function LossFunktionenSection({ c }: { c: any }) {
 
       <H2>{c.llmHeading}</H2>
       <div className="space-y-3">
-        <div className="glass border border-white/10 rounded-xl p-5">
-          <h3 className="text-white font-bold mb-2">{c.clmTitle}</h3>
-          <p className="text-gray-400 text-sm mb-3">{c.clmText}</p>
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-ink font-semibold mb-2">{c.clmTitle}</h3>
+          <p className="text-ink-muted text-sm mb-3">{c.clmText}</p>
           <CodeBlock>{c.clmCode}</CodeBlock>
         </div>
-        <div className="glass border border-white/10 rounded-xl p-5">
-          <h3 className="text-white font-bold mb-2">{c.mlmTitle}</h3>
-          <p className="text-gray-400 text-sm mb-3">{c.mlmText}</p>
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-ink font-semibold mb-2">{c.mlmTitle}</h3>
+          <p className="text-ink-muted text-sm mb-3">{c.mlmText}</p>
           <CodeBlock>{c.mlmCode}</CodeBlock>
         </div>
       </div>
@@ -124,28 +124,28 @@ function MetrikenSection({ c }: { c: any }) {
       <H2>{c.classificationHeading}</H2>
 
       <H3>{c.confusionHeading}</H3>
-      <div className="glass border border-white/10 rounded-xl p-5 mb-4">
+      <div className="bg-surface border border-line border border-line rounded-md p-5 mb-4">
         <div className="grid grid-cols-3 gap-2 text-sm text-center max-w-sm mx-auto">
-          <div className="text-gray-600 col-start-2 pb-2">{c.confusion.predPos}</div>
-          <div className="text-gray-600 pb-2">{c.confusion.predNeg}</div>
-          <div className="text-gray-600 flex items-center justify-end pr-2">{c.confusion.actualPos}</div>
-          <div className="bg-green-500/20 border border-green-400/30 rounded p-3 font-bold text-green-400">TP<br/><span className="text-xs font-normal">{c.confusion.tp}</span></div>
-          <div className="bg-red-500/20 border border-red-400/30 rounded p-3 font-bold text-red-400">FN<br/><span className="text-xs font-normal">{c.confusion.fn}</span></div>
-          <div className="text-gray-600 flex items-center justify-end pr-2">{c.confusion.actualNeg}</div>
-          <div className="bg-red-500/20 border border-red-400/30 rounded p-3 font-bold text-orange-400">FP<br/><span className="text-xs font-normal">{c.confusion.fp}</span></div>
-          <div className="bg-green-500/20 border border-green-400/30 rounded p-3 font-bold text-cyan-400">TN<br/><span className="text-xs font-normal">{c.confusion.tn}</span></div>
+          <div className="text-ink-faint col-start-2 pb-2">{c.confusion.predPos}</div>
+          <div className="text-ink-faint pb-2">{c.confusion.predNeg}</div>
+          <div className="text-ink-faint flex items-center justify-end pr-2">{c.confusion.actualPos}</div>
+          <div className="bg-ghost-fill border border-success rounded p-3 font-semibold text-success">TP<br/><span className="text-xs font-normal">{c.confusion.tp}</span></div>
+          <div className="bg-ghost-fill border border-danger rounded p-3 font-semibold text-danger">FN<br/><span className="text-xs font-normal">{c.confusion.fn}</span></div>
+          <div className="text-ink-faint flex items-center justify-end pr-2">{c.confusion.actualNeg}</div>
+          <div className="bg-ghost-fill border border-danger rounded p-3 font-semibold text-warning">FP<br/><span className="text-xs font-normal">{c.confusion.fp}</span></div>
+          <div className="bg-ghost-fill border border-success rounded p-3 font-semibold text-indigo-text">TN<br/><span className="text-xs font-normal">{c.confusion.tn}</span></div>
         </div>
       </div>
 
       <div className="space-y-4">
         {c.metrics.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-xl p-5">
-            <h3 className="text-white font-bold mb-1">{item.name}</h3>
-            <code className="text-violet-300 text-sm font-mono block mb-2">{item.formula}</code>
-            <p className="text-gray-400 text-sm mb-2">{item.desc}</p>
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-5">
+            <h3 className="text-ink font-semibold mb-1">{item.name}</h3>
+            <code className="text-indigo-text text-sm font-mono block mb-2">{item.formula}</code>
+            <p className="text-ink-muted text-sm mb-2">{item.desc}</p>
             {item.warning && (
-              <div className="bg-yellow-400/5 border border-yellow-400/20 rounded-lg p-3">
-                <p className="text-yellow-400 text-xs">⚠️ {item.warning}</p>
+              <div className="bg-ghost-fill border border-line rounded-sm p-3">
+                <p className="text-warning text-xs">{item.warning}</p>
               </div>
             )}
           </div>
@@ -154,29 +154,29 @@ function MetrikenSection({ c }: { c: any }) {
 
       <H2>{c.lmHeading}</H2>
       <div className="space-y-4">
-        <div className="glass border border-white/10 rounded-xl p-5">
-          <h3 className="text-white font-bold mb-2">{c.pplTitle}</h3>
-          <p className="text-gray-400 text-sm mb-3"><Rich html={c.pplText} /></p>
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-ink font-semibold mb-2">{c.pplTitle}</h3>
+          <p className="text-ink-muted text-sm mb-3"><Rich html={c.pplText} /></p>
           <CodeBlock>{c.pplCode}</CodeBlock>
         </div>
-        <div className="glass border border-white/10 rounded-xl p-5">
-          <h3 className="text-white font-bold mb-2">{c.bleuTitle}</h3>
-          <p className="text-gray-400 text-sm mb-2">{c.bleuText}</p>
-          <p className="text-gray-500 text-xs">{c.bleuGuidelines}</p>
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-ink font-semibold mb-2">{c.bleuTitle}</h3>
+          <p className="text-ink-muted text-sm mb-2">{c.bleuText}</p>
+          <p className="text-ink-faint text-xs">{c.bleuGuidelines}</p>
         </div>
-        <div className="glass border border-white/10 rounded-xl p-5">
-          <h3 className="text-white font-bold mb-2">{c.rougeTitle}</h3>
-          <p className="text-gray-400 text-sm">{c.rougeText}</p>
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-ink font-semibold mb-2">{c.rougeTitle}</h3>
+          <p className="text-ink-muted text-sm">{c.rougeText}</p>
         </div>
       </div>
 
       <H2>{c.whichHeading}</H2>
       <div className="space-y-2">
         {c.whichTable.map((row: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-lg p-3 grid md:grid-cols-3 gap-2 text-sm">
-            <span className="text-gray-400">{row.situation}</span>
-            <span className="text-violet-300 font-semibold">{row.metric}</span>
-            <span className="text-gray-500">{row.reason}</span>
+          <div key={i} className="bg-surface border border-line border border-line rounded-sm p-3 grid md:grid-cols-3 gap-2 text-sm">
+            <span className="text-ink-muted">{row.situation}</span>
+            <span className="text-indigo-text font-semibold">{row.metric}</span>
+            <span className="text-ink-faint">{row.reason}</span>
           </div>
         ))}
       </div>
@@ -185,7 +185,7 @@ function MetrikenSection({ c }: { c: any }) {
 }
 
 function TrainValTestSection({ c }: { c: any }) {
-  const colors = ['border-violet-400/30', 'border-cyan-400/30', 'border-green-400/30']
+  const colors = ['border-line', 'border-line', 'border-success']
   return (
     <div className="space-y-6">
       <SectionTitle icon={<GitBranch className="w-9 h-9" />} title={c.title} subtitle={c.subtitle} />
@@ -195,18 +195,18 @@ function TrainValTestSection({ c }: { c: any }) {
 
       <div className="space-y-4">
         {c.splits.map((item: any, i: number) => (
-          <div key={i} className={`glass border rounded-xl p-6 ${colors[i]}`}>
-            <h3 className="text-white font-bold text-lg mb-2">{item.name}</h3>
-            <p className="text-gray-400 text-sm mb-3">{item.role}</p>
-            <p className="text-gray-600 text-xs italic mb-4">{c.ruleLabel} {item.rule}</p>
+          <div key={i} className={`bg-surface border border-line border rounded-md p-6 ${colors[i]}`}>
+            <h3 className="text-ink font-semibold text-lg mb-2">{item.name}</h3>
+            <p className="text-ink-muted text-sm mb-3">{item.role}</p>
+            <p className="text-ink-faint text-xs italic mb-4">{c.ruleLabel} {item.rule}</p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <p className="text-green-400 text-xs font-semibold mb-2">✓ {c.allowedLabel}</p>
-                {item.dos.map((d: string, j: number) => <p key={j} className="text-gray-400 text-xs">• {d}</p>)}
+                <p className="text-success text-xs font-semibold mb-2">✓ {c.allowedLabel}</p>
+                {item.dos.map((d: string, j: number) => <p key={j} className="text-ink-muted text-xs">• {d}</p>)}
               </div>
               <div>
-                <p className="text-red-400 text-xs font-semibold mb-2">✗ {c.forbiddenLabel}</p>
-                {item.donts.map((d: string, j: number) => <p key={j} className="text-gray-400 text-xs">• {d}</p>)}
+                <p className="text-danger text-xs font-semibold mb-2">✗ {c.forbiddenLabel}</p>
+                {item.donts.map((d: string, j: number) => <p key={j} className="text-ink-muted text-xs">• {d}</p>)}
               </div>
             </div>
           </div>
@@ -244,16 +244,16 @@ export default function TrainingVerstehenPage() {
     'train-val-test': <TrainValTestSection c={content.trainValTest} />,
   }
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
+    <div className="min-h-screen flex flex-col bg-bg ">
       <Header />
       <main className="flex-1 py-10 px-4">
         <div className="max-w-7xl mx-auto mb-6">
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
+          <div className="flex items-center gap-2 text-sm text-ink-faint">
+            <Link href="/docs" className="hover:text-ink transition-colors">Docs</Link>
             <ChevronRight className="w-3 h-3" />
-            <Link href="/docs/ai-training-guide" className="hover:text-white transition-colors">{tDocs('coachSidebar.title')}</Link>
+            <Link href="/docs/ai-training-guide" className="hover:text-ink transition-colors">{tDocs('coachSidebar.title')}</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-300">{CHAPTER.emoji} {t(`chapters.${CHAPTER.key}.title`)}</span>
+            <span className="text-ink">{CHAPTER.emoji} {t(`chapters.${CHAPTER.key}.title`)}</span>
           </div>
         </div>
         <div className="max-w-7xl mx-auto">

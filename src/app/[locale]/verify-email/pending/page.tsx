@@ -124,7 +124,7 @@ export default function VerifyEmailPendingPage() {
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1 flex items-center justify-center px-4 py-12">
-          <div className="text-gray-400">{t('loadingText')}</div>
+          <div className="text-ink-muted">{t('loadingText')}</div>
         </main>
         <Footer />
       </div>
@@ -137,43 +137,43 @@ export default function VerifyEmailPendingPage() {
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
-          <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10 text-center">
+          <div className="bg-surface border border-line rounded-lg p-8 border border-line text-center">
             <div
-              className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 bg-gradient-to-br ${
-                verified ? 'from-emerald-500 to-green-500' : 'from-purple-500 to-pink-500'
+              className={`inline-flex items-center justify-center w-16 h-16 rounded-lg mb-4 ${
+                verified ? ' ' : ' '
               }`}
             >
               {verified ? (
-                <CheckCircle2 className="w-8 h-8 text-white" />
+                <CheckCircle2 className="w-8 h-8 text-ink" />
               ) : (
-                <MailCheck className="w-8 h-8 text-white" />
+                <MailCheck className="w-8 h-8 text-ink" />
               )}
             </div>
 
-            <h1 className="text-2xl font-bold text-white mb-2">
+            <h1 className="text-2xl font-semibold text-ink mb-2">
               {verified ? t('verifiedTitle') : t('heading')}
             </h1>
 
             {verified ? (
-              <p className="text-gray-400 mb-6">{t('verifiedText')}</p>
+              <p className="text-ink-muted mb-6">{t('verifiedText')}</p>
             ) : (
               <>
-                <p className="text-gray-400 mb-1">{t('subtitle')}</p>
-                <p className="text-white font-semibold break-all mb-6">{user?.email}</p>
+                <p className="text-ink-muted mb-1">{t('subtitle')}</p>
+                <p className="text-ink font-semibold break-all mb-6">{user?.email}</p>
 
-                <div className="flex items-center justify-center gap-2 mb-6 px-4 py-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                  <Loader2 className="w-4 h-4 text-purple-300 animate-spin flex-shrink-0" />
-                  <span className="text-sm text-purple-200">{t('waiting')}</span>
+                <div className="flex items-center justify-center gap-2 mb-6 px-4 py-3 rounded-md bg-indigo-soft border border-line">
+                  <Loader2 className="w-4 h-4 text-indigo-text animate-spin flex-shrink-0" />
+                  <span className="text-sm text-indigo-text">{t('waiting')}</span>
                 </div>
 
                 {feedback && (
                   <p
                     className={`text-sm mb-4 ${
                       feedback.type === 'success'
-                        ? 'text-green-400'
+                        ? 'text-success'
                         : feedback.type === 'error'
-                          ? 'text-red-400'
-                          : 'text-amber-300'
+                          ? 'text-danger'
+                          : 'text-warning'
                     }`}
                   >
                     {feedback.text}
@@ -184,7 +184,7 @@ export default function VerifyEmailPendingPage() {
                   <button
                     onClick={handleManualCheck}
                     disabled={checking}
-                    className="w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold   transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {checking ? t('checking') : t('checkButton')}
                   </button>
@@ -192,7 +192,7 @@ export default function VerifyEmailPendingPage() {
                   <button
                     onClick={handleResend}
                     disabled={sending}
-                    className="press w-full flex items-center justify-center gap-2 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/5 transition duration-200 ease-out disabled:opacity-50 text-sm font-medium"
+                    className="press w-full flex items-center justify-center gap-2 py-3 bg-surface border border-line border border-line rounded-md text-ink hover:border-line-strong hover:text-ink hover:bg-ghost-fill transition duration-200 ease-out disabled:opacity-50 text-sm font-medium"
                   >
                     {sending ? (
                       <>
@@ -204,11 +204,11 @@ export default function VerifyEmailPendingPage() {
                   </button>
                 </div>
 
-                <p className="mt-6 text-xs text-gray-500 leading-relaxed">{t('spamHint')}</p>
+                <p className="mt-6 text-xs text-ink-faint leading-relaxed">{t('spamHint')}</p>
 
-                <p className="mt-4 text-xs text-gray-600">
+                <p className="mt-4 text-xs text-ink-faint">
                   {t('wrongEmail')}{' '}
-                  <button onClick={logout} className="text-purple-400 hover:text-purple-300 transition underline">
+                  <button onClick={logout} className="text-indigo-text hover:text-indigo-text transition underline">
                     {t('logoutLink')}
                   </button>
                 </p>

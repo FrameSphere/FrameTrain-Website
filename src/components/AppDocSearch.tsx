@@ -110,31 +110,31 @@ export function AppDocSearch({ onNavigate }: AppDocSearchProps) {
       {/* Trigger */}
       <button
         onClick={() => { setOpen(true); setTimeout(() => inputRef.current?.focus(), 50) }}
-        className="press w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-400 hover:border-purple-400/30 hover:text-gray-300 transition-colors duration-200 ease-out text-sm"
+        className="press w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink-muted hover:border-line hover:text-ink transition-colors duration-200 ease-out text-sm"
       >
         <Search className="w-4 h-4 flex-shrink-0" />
         <span className="flex-1 text-left">{tSearch('triggerPlaceholder')}</span>
-        <kbd className="hidden md:inline-flex items-center px-2 py-0.5 text-xs bg-white/5 border border-white/10 rounded text-gray-500">⌘K</kbd>
+        <kbd className="hidden md:inline-flex items-center px-2 py-0.5 text-xs bg-ghost-fill border border-line rounded text-ink-faint">⌘K</kbd>
       </button>
 
       {open && (
-        <div className="absolute top-full mt-2 left-0 right-0 z-50 glass-strong border border-white/15 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden">
+        <div className="absolute top-full mt-2 left-0 right-0 z-50 bg-surface border border-line border border-line-strong rounded-lg overflow-hidden">
           {/* Input row */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
-            <Search className="w-4 h-4 text-purple-400 flex-shrink-0" />
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-line">
+            <Search className="w-4 h-4 text-indigo-text flex-shrink-0" />
             <input
               ref={inputRef}
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder={tSearch('inputPlaceholder')}
-              className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
+              className="flex-1 bg-transparent text-ink placeholder-ink-faint outline-none text-sm"
             />
             {query ? (
-              <button onClick={() => setQuery('')} className="text-gray-500 hover:text-gray-300">
+              <button onClick={() => setQuery('')} className="text-ink-faint hover:text-ink">
                 <X className="w-4 h-4" />
               </button>
             ) : (
-              <button onClick={() => setOpen(false)} className="text-gray-500 hover:text-gray-300">
+              <button onClick={() => setOpen(false)} className="text-ink-faint hover:text-ink">
                 <X className="w-4 h-4" />
               </button>
             )}
@@ -144,11 +144,11 @@ export function AppDocSearch({ onNavigate }: AppDocSearchProps) {
             {/* Empty state – show popular */}
             {!query.trim() && (
               <div className="px-4 py-4">
-                <p className="text-gray-600 text-xs uppercase tracking-wider mb-3">{tSearch('popularTopics')}</p>
+                <p className="text-ink-faint text-xs uppercase tracking-wider mb-3">{tSearch('popularTopics')}</p>
                 <div className="flex flex-wrap gap-2">
                   {popular.map(tag => (
                     <button key={tag} onClick={() => setQuery(tag)}
-                      className="px-3 py-1.5 bg-purple-500/10 border border-purple-400/20 rounded-lg text-purple-300 text-xs hover:bg-purple-500/20 transition-colors">
+                      className="px-3 py-1.5 bg-indigo-soft border border-line rounded-sm text-indigo-text text-xs hover:bg-indigo-soft transition-colors">
                       {tag}
                     </button>
                   ))}
@@ -158,7 +158,7 @@ export function AppDocSearch({ onNavigate }: AppDocSearchProps) {
 
             {/* No results */}
             {query.trim() && results.length === 0 && (
-              <p className="text-gray-500 text-sm text-center py-8">{tSearch('noResultsFor')} „{query}"</p>
+              <p className="text-ink-faint text-sm text-center py-8">{tSearch('noResultsFor')} „{query}"</p>
             )}
 
             {/* Results */}
@@ -166,14 +166,14 @@ export function AppDocSearch({ onNavigate }: AppDocSearchProps) {
               <button
                 key={i}
                 onClick={() => handleSelect(result)}
-                className="w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                className="w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-ghost-fill transition-colors border-b border-line last:border-0"
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-gray-500 text-xs mb-0.5">{result.chapter}</p>
-                  <p className="text-white text-sm font-semibold">{result.title}</p>
-                  <p className="text-gray-500 text-xs truncate">{result.desc}</p>
+                  <p className="text-ink-faint text-xs mb-0.5">{result.chapter}</p>
+                  <p className="text-ink text-sm font-semibold">{result.title}</p>
+                  <p className="text-ink-faint text-xs truncate">{result.desc}</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-gray-600 flex-shrink-0 mt-1" />
+                <ArrowRight className="w-4 h-4 text-ink-faint flex-shrink-0 mt-1" />
               </button>
             ))}
           </div>

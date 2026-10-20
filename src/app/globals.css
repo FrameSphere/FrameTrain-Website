@@ -89,18 +89,6 @@
     --radius-island: 26px;
     --radius-pill: 999px;
 
-    /* Alt-Variablen (HSL-Tripel) für Seiten, die noch nicht auf Neuron
-       umgestellt sind. --success ist oben neu belegt. */
-    --background: 0 0% 3%;
-    --foreground: 0 0% 98%;
-    --primary: 280 100% 70%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 200 100% 60%;
-    --accent: 340 100% 65%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 70%;
-    --border: 0 0% 20%;
-    --ring: 280 100% 70%;
 
     /* ── Motion ──────────────────────────────────────────────────
        Die eingebauten CSS-Easings sind für UI zu weich. Diese Kurven
@@ -426,55 +414,7 @@ html[data-ft-menu-open] .ft-mobile-pill { display: none; }
   .ft-btn:active { transform: none; }
 }
 
-/* Glassmorphism utilities */
 @layer utilities {
-  .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-
-  .glass-dark {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .glow-purple {
-    box-shadow: 0 0 40px rgba(168, 85, 247, 0.4),
-                0 0 80px rgba(168, 85, 247, 0.2);
-  }
-
-  /* .glow-blue / .glow-pink / .glow-green und .text-glow-blue entfernt –
-     in keiner Komponente verwendet. */
-
-  /* Deutlich zurückgenommen: der frühere Doppel-Schatten mit 0.8/0.4
-     Alpha war ein Neon-Halo, der die Buchstabenkanten aufgeweicht und
-     die Headline unscharf gemacht hat. Jetzt nur noch ein Hauch
-     Farblicht hinter dem Text. */
-  .text-glow-purple {
-    text-shadow: 0 0 32px rgba(168, 85, 247, 0.28);
-  }
-
-  /* ── Marken-Farbverlauf ───────────────────────────────────────
-     Eine einzige Verlaufsdefinition statt 15 verschiedener
-     from-x-via-y-to-z-Kombinationen quer über die Seite. */
-  .text-gradient-brand {
-    background-image: linear-gradient(100deg, #c4b5fd 0%, #f0abfc 45%, #93c5fd 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
   /* ── Interaktions-Bausteine ───────────────────────────────────── */
 
   /* Druckfeedback. Der Wert ist bewusst subtil – man sieht ihn nicht,
@@ -517,43 +457,9 @@ html[data-ft-menu-open] .ft-mobile-pill { display: none; }
     font-feature-settings: 'tnum' 1;
   }
 
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-pulse-slow {
-    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 8s ease infinite;
-  }
-
   /* Einblenden beim Mounten – ersetzt "Element ist einfach da". */
   .animate-enter {
     animation: enter 320ms var(--ease-out) both;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
   }
 
   @keyframes enter {
@@ -575,106 +481,6 @@ html[data-ft-menu-open] .ft-mobile-pill { display: none; }
     color: var(--on-indigo);
   }
 
-  /* Grid background */
-  .grid-bg {
-    background-image:
-      linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
-
-  /* .neon-border entfernt – wurde nirgends verwendet, brachte aber eine
-     endlos laufende background-position-Animation samt Masken-Compositing
-     mit. Toter Code, der bei Verwendung teuer geworden wäre. */
-}
-
-/* ── GlowCard (components/ui/spotlight-card.tsx) ────────────────────
-   Standen vorher als <style dangerouslySetInnerHTML> im Komponenten-JSX und
-   landeten damit einmal pro Instanz im DOM (auf der Pricing-Sektion also
-   doppelt). Die Regeln sind statisch und global, gehören also hierher. */
-[data-glow]::before,
-[data-glow]::after {
-  pointer-events: none;
-  content: '';
-  position: absolute;
-  inset: calc(var(--border-size) * -1);
-  border: var(--border-size) solid transparent;
-  border-radius: calc(var(--radius) * 1px);
-  background-attachment: scroll;
-  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
-  mask-clip: padding-box, border-box;
-  mask-composite: intersect;
-}
-
-[data-glow]::before {
-  background-image: radial-gradient(
-    calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
-    calc(var(--x, 0) * 1px)
-    calc(var(--y, 0) * 1px),
-    hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)), transparent 100%
-  );
-  filter: brightness(2);
-}
-
-[data-glow]::after {
-  background-image: radial-gradient(
-    calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
-    calc(var(--x, 0) * 1px)
-    calc(var(--y, 0) * 1px),
-    hsl(0 100% 100% / var(--border-light-opacity, 1)), transparent 100%
-  );
-}
-
-[data-glow] [data-glow] {
-  position: absolute;
-  inset: 0;
-  will-change: filter;
-  opacity: var(--outer, 1);
-  border-radius: calc(var(--radius) * 1px);
-  border-width: calc(var(--border-size) * 20);
-  filter: blur(calc(var(--border-size) * 10));
-  background: none;
-  pointer-events: none;
-  border: none;
-}
-
-[data-glow] > [data-glow]::before {
-  inset: -10px;
-  border-width: 10px;
-}
-
-/* ── backdrop-filter auf kleinen Viewports ──────────────────────────
-   Die Startseite rendert 62 Elemente mit backdrop-filter. Jedes davon ist
-   eine eigene Compositing-Ebene, deren Unschärfe neu berechnet werden muss,
-   sobald sich etwas dahinter bewegt – also bei jedem Scroll-Frame. Auf
-   Mittelklasse-Android ist das die teuerste Einzelposition der Seite.
-
-   Der Hintergrund ist ohnehin nahezu schwarz, die Unschärfe trägt optisch
-   fast nichts bei. Unter md ersetzen wir sie deshalb durch eine etwas
-   deckendere Fläche: gleiche Anmutung, keine Blur-Kosten. Ab md (Tablet
-   quer / Desktop, wo GPU-Budget da ist) bleibt der Effekt unverändert. */
-@media (max-width: 767px) {
-  .glass,
-  .glass-strong,
-  .glass-dark {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .glass {
-    background: rgba(255, 255, 255, 0.055);
-  }
-
-  .glass-strong {
-    background: rgba(30, 27, 42, 0.72);
-  }
-
-  .glass-dark {
-    background: rgba(0, 0, 0, 0.72);
-  }
 }
 
 /* Custom scrollbar – neutral statt kräftig lila. Ein Scrollbalken ist
@@ -713,18 +519,10 @@ html {
     scroll-behavior: auto;
   }
 
-  .animate-float,
-  .animate-pulse-slow,
-  .animate-gradient,
   .animate-enter,
   .animate-pulse,
-  .animate-ping,
-  .neon-border::before {
+  .animate-ping {
     animation: none !important;
-  }
-
-  .animate-gradient {
-    background-position: 50% 50%;
   }
 
   .press:active,

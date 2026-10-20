@@ -557,13 +557,13 @@
             "planToggle": {
                 "monthly": "Monatlich",
                 "yearly": "Jährlich",
-                "savePercent": "−20%"
+                "savePercent": "−33 %"
             },
             "priceDisplay": {
                 "perMonth": "pro Monat",
                 "perYear": "pro Jahr",
                 "earlyAccessSuffix": "Early Access",
-                "saveYearly": "Spare 20 % vs. monatlich",
+                "saveYearly": "Entspricht 3,33 € im Monat – 33 % günstiger",
                 "cancelMonthly": "Monatlich kündbar"
             },
             "topLabel": "EIN SCHRITT VOR DEM ZUGANG",
@@ -656,7 +656,7 @@
                 "ctaPayment": "Zur Zahlung",
                 "ctaDashboard": "Zum Dashboard"
             },
-            "successHeading": "Zahlung erfolgreich! 🎉",
+            "successHeading": "Zahlung erfolgreich! ",
             "successText": "Willkommen in der FrameTrain-Familie. Dein Account ist jetzt aktiv.",
             "loadingFallback": "Lädt...",
             "showcase": {
@@ -700,7 +700,7 @@
                     },
                     {
                         "title": "Training starten",
-                        "desc": "Lade dein Dataset hoch, stelle Hyperparameter ein und klicke auf \"Start Training\". Fertig! 🚀"
+                        "desc": "Lade dein Dataset hoch, stelle Hyperparameter ein und klicke auf \"Start Training\". Fertig! "
                     }
                 ],
                 "back": "← Zurück",
@@ -824,9 +824,9 @@
                 "text": "Wir haben dir eine Bestätigungsmail geschickt. Ohne Bestätigung sind manche Funktionen eingeschränkt.",
                 "resendButton": "Mail erneut senden",
                 "sending": "Sende...",
-                "sent": "✅ Mail wurde erneut versendet. Bitte prüfe dein Postfach (auch den Spam-Ordner).",
+                "sent": "Mail wurde erneut versendet. Bitte prüfe dein Postfach (auch den Spam-Ordner).",
                 "rateLimited": "Zu viele Anfragen. Bitte versuche es in ein paar Minuten erneut.",
-                "sendError": "❌ Mail konnte nicht versendet werden. Bitte versuche es später erneut."
+                "sendError": "Mail konnte nicht versendet werden. Bitte versuche es später erneut."
             },
             "page": {
                 "verifyingTitle": "E-Mail wird bestätigt...",
@@ -853,9 +853,9 @@
                 "checkError": "Status konnte nicht geprüft werden. Bitte versuche es gleich noch einmal.",
                 "resendButton": "Mail erneut senden",
                 "sending": "Sende...",
-                "sent": "✅ Mail wurde erneut versendet. Bitte prüfe dein Postfach (auch den Spam-Ordner).",
+                "sent": "Mail wurde erneut versendet. Bitte prüfe dein Postfach (auch den Spam-Ordner).",
                 "rateLimited": "Zu viele Anfragen. Bitte versuche es in ein paar Minuten erneut.",
-                "sendError": "❌ Mail konnte nicht versendet werden. Bitte versuche es später erneut.",
+                "sendError": "Mail konnte nicht versendet werden. Bitte versuche es später erneut.",
                 "spamHint": "Keine Mail erhalten? Schau auch im Spam-Ordner nach. Die Seite erkennt automatisch, sobald du bestätigt hast – du kannst den Link auch auf dem Handy öffnen.",
                 "wrongEmail": "Falsche E-Mail-Adresse?",
                 "logoutLink": "Abmelden",
@@ -1196,7 +1196,7 @@
         "heroTitle": "Dokumentation",
         "heroSubtitle": "Alles was du brauchst, um FrameTrain zu installieren, konfigurieren und effektiv zu nutzen.",
         "coachBanner": {
-            "title": "KI-Training Coach ✨ – ML-Grundlagen, Loss-Kurven, LoRA & mehr",
+            "title": "KI-Training Coach – ML-Grundlagen, Loss-Kurven, LoRA & mehr",
             "desc": "Der komplette Theorie-Guide für alle, die verstehen wollen wie ML-Training wirklich funktioniert"
         },
         "coachSidebar": {
@@ -3798,12 +3798,12 @@
         "loginCta": "Anmelden um hochzuladen",
         "searchPlaceholder": "Skripte suchen (Name, Beschreibung, Tags)...",
         "filterAll": "Alle",
-        "filterTrain": "🏋️ Training",
-        "filterTest": "🧪 Test",
+        "filterTrain": "Training",
+        "filterTest": "Test",
         "allFrameworks": "Alle Frameworks",
         "sortDownloads": "↓ Downloads",
-        "sortStars": "⭐ Stars",
-        "sortNewest": "🕐 Neueste",
+        "sortStars": "Stars",
+        "sortNewest": "Neueste",
         "verifiedToggle": "Verified",
         "loadingText": "Laden...",
         "resultsFound": "{count, plural, one {{count} Skript gefunden} other {{count} Skripte gefunden}}",
@@ -3830,7 +3830,7 @@
         "duplicateNameTitle": "Name bereits vergeben",
         "duplicateNameSubtitle": "Dieser Community-Name ist schon in Verwendung.",
         "duplicateNameText": "Der Name <b>@{name}</b> wird bereits von jemandem anderem verwendet.",
-        "duplicateNameTip": "💡 <b>Tipp:</b> Versuche einen anderen Community-Namen, z. B. mit Zahlen oder Unterstrichen.",
+        "duplicateNameTip": "<b>Tipp:</b> Versuche einen anderen Community-Namen, z. B. mit Zahlen oder Unterstrichen.",
         "duplicateNameRetry": "Einen anderen Namen versuchen",
         "upload": {
             "title": "Skript hochladen",
@@ -3845,8 +3845,8 @@
             "descriptionLabel": "Beschreibung",
             "descriptionPlaceholder": "Kurze Beschreibung was das Skript macht...",
             "typeLabel": "Typ *",
-            "typeTraining": "🏋️ Training",
-            "typeTest": "🧪 Test / Evaluation",
+            "typeTraining": "Training",
+            "typeTest": "Test / Evaluation",
             "frameworkLabel": "Framework",
             "modelTypeLabel": "Modell-Typ",
             "modelTypePlaceholder": "LLM, Classifier, Vision...",
@@ -4054,21 +4054,21 @@
                         "paradigms": [
                             {
                                 "title": "Supervised Learning",
-                                "emoji": "🎯",
+                                "emoji": "",
                                 "desc": "Du gibst dem Modell Daten MIT korrekten Antworten (Labels). Es lernt die Zuordnung von Eingabe zu Ausgabe.",
                                 "example": "E-Mail → \"Spam\" oder \"Kein Spam\"",
                                 "useCase": "Klassifikation, Regression, NLP"
                             },
                             {
                                 "title": "Unsupervised Learning",
-                                "emoji": "🔍",
+                                "emoji": "",
                                 "desc": "Das Modell bekommt nur Daten OHNE Labels. Es sucht selbst nach Mustern, Clustern und Strukturen.",
                                 "example": "Kunden nach Kaufverhalten gruppieren",
                                 "useCase": "Clustering, Dimensionsreduktion"
                             },
                             {
                                 "title": "Reinforcement Learning",
-                                "emoji": "🎮",
+                                "emoji": "",
                                 "desc": "Das Modell lernt durch Belohnung und Bestrafung in einer Umgebung. Es optimiert seine Strategie.",
                                 "example": "Schach spielen, RLHF bei ChatGPT",
                                 "useCase": "Robotik, Spiele, RLHF"
@@ -4131,19 +4131,19 @@
                         "whyFtText": "Ein LLM wie GPT oder LLaMA von Grund auf zu trainieren kostet <b>Millionen von Euro</b> und erfordert tausende GPUs über Wochen. Mit <b>Fine-Tuning</b> nimmst du ein bereits vortrainiertes Modell – das schon Sprache, Fakten und Logik kennt – und spezialisierst es für deine Aufgabe. In Stunden statt Monaten, auf deiner eigenen GPU.",
                         "pretrainTitle": "Training von Grund auf (Pretraining)",
                         "pretrainItems": [
-                            "⏱ Wochen bis Monate Rechenzeit",
-                            "💰 Hunderttausende bis Millionen €",
-                            "📦 Milliarden Trainingsdaten benötigt",
-                            "🖥 Hunderte bis tausende GPUs gleichzeitig",
-                            "🧑‍💻 Nur für große Organisationen realistisch"
+                            "Wochen bis Monate Rechenzeit",
+                            "Hunderttausende bis Millionen €",
+                            "Milliarden Trainingsdaten benötigt",
+                            "Hunderte bis tausende GPUs gleichzeitig",
+                            "‍ Nur für große Organisationen realistisch"
                         ],
                         "ftTitle": "Fine-Tuning (mit FrameTrain)",
                         "ftItems": [
-                            "⏱ Minuten bis wenige Stunden",
-                            "💰 Praktisch kostenlos (eigene Hardware)",
-                            "📦 Hundert bis tausend Beispiele reichen",
-                            "🖥 1 GPU – dein eigener Computer",
-                            "🧑‍💻 Für jeden machbar"
+                            "Minuten bis wenige Stunden",
+                            "Praktisch kostenlos (eigene Hardware)",
+                            "Hundert bis tausend Beispiele reichen",
+                            "1 GPU – dein eigener Computer",
+                            "‍ Für jeden machbar"
                         ],
                         "transferHeading": "Transferlernen: Das Fundament von Fine-Tuning",
                         "transferText": "Fine-Tuning basiert auf <b>Transfer Learning</b>: Das Vorwissen eines großen vortrainierten Modells (Grammatik, Fakten, Logik, Code) wird auf eine neue, spezifische Aufgabe übertragen. Nur ein Bruchteil der Parameter muss angepasst werden.",
@@ -4393,23 +4393,23 @@
                             {
                                 "name": "Full Batch GD",
                                 "batch": "Alle Daten",
-                                "speed": "🐌 Langsam",
-                                "quality": "🎯 Stabil",
-                                "memory": "💾 Viel"
+                                "speed": "Langsam",
+                                "quality": "Stabil",
+                                "memory": "Viel"
                             },
                             {
-                                "name": "Mini-Batch GD ⭐",
+                                "name": "Mini-Batch GD ",
                                 "batch": "Kleine Batches (8–64)",
-                                "speed": "⚡ Schnell",
-                                "quality": "🎯 Gut",
-                                "memory": "💾 Wenig"
+                                "speed": "Schnell",
+                                "quality": "Gut",
+                                "memory": "Wenig"
                             },
                             {
                                 "name": "Stochastic GD",
                                 "batch": "1 Beispiel",
-                                "speed": "⚡ Sehr schnell",
-                                "quality": "📉 Noisig",
-                                "memory": "💾 Minimal"
+                                "speed": "Sehr schnell",
+                                "quality": "Noisig",
+                                "memory": "Minimal"
                             }
                         ],
                         "sgdLabels": {
@@ -4484,7 +4484,7 @@
                             {
                                 "name": "Best Checkpoint",
                                 "desc": "Speichere nur das Modell mit dem besten Validation Loss. Spart Speicherplatz. Empfohlen für Produktion.",
-                                "rec": "⭐ Standard"
+                                "rec": "Standard"
                             },
                             {
                                 "name": "Every N Steps/Epochs",
@@ -4648,7 +4648,7 @@
                         "forbiddenLabel": "Verboten:",
                         "splits": [
                             {
-                                "name": "🏋️ Trainings-Set (60–80%)",
+                                "name": "Trainings-Set (60–80%)",
                                 "role": "Das Modell lernt AUSSCHLIESSLICH auf diesen Daten. Gewichte werden angepasst.",
                                 "rule": "Einzige Daten, die das Modell \"sehen\" darf beim Lernen.",
                                 "dos": [
@@ -4661,7 +4661,7 @@
                                 ]
                             },
                             {
-                                "name": "🔍 Validation-Set (10–20%)",
+                                "name": "Validation-Set (10–20%)",
                                 "role": "Nach jeder Epoche gemessen. Dient zur Hyperparameter-Auswahl und Early Stopping. Modell lernt NICHT darauf.",
                                 "rule": "Darf mehrfach verwendet werden, aber nicht zum Lernen!",
                                 "dos": [
@@ -4675,7 +4675,7 @@
                                 ]
                             },
                             {
-                                "name": "🎯 Test-Set (10–20%)",
+                                "name": "Test-Set (10–20%)",
                                 "role": "Nur EINMAL am absoluten Ende verwendet. Gibt die ehrliche finale Performance-Schätzung.",
                                 "rule": "Das Test-Set ist heilig. Nur EINMAL anfassen!",
                                 "dos": [
@@ -5400,7 +5400,7 @@
                         "impactCards": [
                             {
                                 "lr": "LR zu groß (z.B. 1e-2)",
-                                "label": "⚡ Chaos",
+                                "label": "Chaos",
                                 "key": "chaos",
                                 "effects": [
                                     "Loss oszilliert extrem",
@@ -5420,7 +5420,7 @@
                             },
                             {
                                 "lr": "LR zu klein (z.B. 1e-8)",
-                                "label": "🐌 Zu langsam",
+                                "label": "Zu langsam",
                                 "key": "slow",
                                 "effects": [
                                     "Kaum Fortschritt pro Epoche",
@@ -5484,12 +5484,12 @@
                         "subtitle": "Die Learning Rate intelligent über das Training steuern",
                         "intro": "Ein <b>LR Scheduler</b> passt die LR während des Trainings automatisch an. Statt einer konstanten LR ermöglicht er schnelles Lernen am Anfang und präzises Fine-Tuning am Ende.",
                         "schedulersHeading": "Die 5 wichtigsten Scheduler im Detail",
-                        "recommendedLabel": "⭐ Empfohlen",
+                        "recommendedLabel": "Empfohlen",
                         "prosLabel": "Vorteile:",
                         "consLabel": "Nachteile:",
                         "schedulers": [
                             {
-                                "name": "Warmup + Cosine Decay ⭐ (Goldstandard)",
+                                "name": "Warmup + Cosine Decay (Goldstandard)",
                                 "desc": "LR steigt linear von 0 auf Ziel-LR (Warmup), danach sanfte Cosinus-Kurve bis fast 0.",
                                 "use": "Goldstandard für alle LLM Fine-Tuning-Jobs",
                                 "config": "warmup_steps = 5–10% total; scheduler_type = \"cosine\"",
@@ -5663,14 +5663,14 @@
                         "consLabel": "Nachteile:",
                         "optimizers": [
                             {
-                                "name": "AdamW ⭐ (Standard)",
+                                "name": "AdamW (Standard)",
                                 "formula": "Adam + korrektes Weight Decay (decoupled)",
                                 "params": "lr=2e-5, betas=(0.9, 0.999), eps=1e-8, weight_decay=0.01",
                                 "use": "Standard für alle modernen Transformer-Modelle",
                                 "desc": "Kombiniert adaptives Lernen (Adam) mit korrekt entkoppeltem Weight Decay. Der Unterschied zu Adam: Weight Decay wird direkt auf Gewichte angewendet, nicht in den Gradienten integriert. Ergebnis: bessere Regularisierung.",
                                 "pros": "Stabil, schnell, robust. Funktioniert out-of-the-box für fast alle LLM Fine-Tuning-Jobs.",
                                 "cons": "Benötigt ~3× den Speicher der Modellgewichte (Moment-Statistiken). Bei 7B = ~14 GB extra.",
-                                "rec": "⭐ Nutze immer AdamW als ersten Versuch",
+                                "rec": "Nutze immer AdamW als ersten Versuch",
                                 "colorKey": "violet"
                             },
                             {
@@ -5938,42 +5938,42 @@
                                 "m": "Full FT (fp32)",
                                 "v": "~60 GB",
                                 "q": "100%",
-                                "s": "⭐⭐⭐",
+                                "s": "",
                                 "r": "A100/H100 Cluster"
                             },
                             {
                                 "m": "Full FT (bf16)",
                                 "v": "~40 GB",
                                 "q": "99%",
-                                "s": "⭐⭐⭐",
+                                "s": "",
                                 "r": "A100 40GB"
                             },
                             {
                                 "m": "Full FT (8-bit)",
                                 "v": "~30 GB",
                                 "q": "97%",
-                                "s": "⭐⭐",
+                                "s": "",
                                 "r": "A100/RTX 3090×2"
                             },
                             {
                                 "m": "LoRA (bf16)",
                                 "v": "~16 GB",
                                 "q": "97%",
-                                "s": "⭐⭐⭐⭐",
+                                "s": "",
                                 "r": "RTX 3090 / A6000"
                             },
                             {
-                                "m": "QLoRA (4-bit) ⭐",
+                                "m": "QLoRA (4-bit) ",
                                 "v": "~6 GB",
                                 "q": "93–96%",
-                                "s": "⭐⭐⭐",
+                                "s": "",
                                 "r": "RTX 3070/4060 Ti"
                             },
                             {
                                 "m": "QLoRA (4-bit, GC)",
                                 "v": "~4–5 GB",
                                 "q": "92–95%",
-                                "s": "⭐⭐",
+                                "s": "",
                                 "r": "GTX 1660 Ti oder besser"
                             }
                         ],
@@ -5990,10 +5990,10 @@
                         "memoryLabel": "Speicher:",
                         "qualityLabel": "Qualität:",
                         "speedLabel": "Speed:",
-                        "whenLabel": "💡 Wann:",
+                        "whenLabel": "Wann:",
                         "methods": [
                             {
-                                "name": "LoRA ⭐ (Low-Rank Adaptation)",
+                                "name": "LoRA (Low-Rank Adaptation)",
                                 "trainable": "0.1–1%",
                                 "memory": "Sehr gut",
                                 "quality": "Sehr gut (97%+)",
@@ -6405,7 +6405,7 @@
                         "consLabel": "✗ Nachteile:",
                         "techniques": [
                             {
-                                "name": "Back-Translation ⭐",
+                                "name": "Back-Translation ",
                                 "quality": "Sehr hoch",
                                 "desc": "Text in eine andere Sprache übersetzen, dann zurückübersetzten. Erstellt semantisch identische, sprachlich diverse Varianten.",
                                 "example": "\"Das Produkt ist sehr hochwertig.\" → EN: \"The product is very high-quality.\" → DE: \"Das Produkt ist äußerst qualitativ.\"",
@@ -6414,7 +6414,7 @@
                                 "cons": "Langsam (2× Übersetzung), API-Kosten"
                             },
                             {
-                                "name": "LLM-basierte Paraphrase ⭐",
+                                "name": "LLM-basierte Paraphrase ",
                                 "quality": "Sehr hoch",
                                 "desc": "Ein LLM generiert semantisch äquivalente Varianten eines Textes. Aktuell beste Methode für NLP-Augmentation.",
                                 "example": "\"Generiere 3 verschiedene Formulierungen mit gleicher Bedeutung: Das Gerät ist defekt.\"",
@@ -6455,7 +6455,7 @@
                         "strategiesHeading": "Lösungsstrategien im Detail",
                         "strategies": [
                             {
-                                "name": "Class Weights ⭐ (Empfohlen)",
+                                "name": "Class Weights (Empfohlen)",
                                 "desc": "Im Training werden seltene Klassen stärker gewichtet. Keine Datenveränderung nötig. Einfachste und sauberste Methode.",
                                 "code": "# Class Weights berechnen:\nfrom sklearn.utils.class_weight import compute_class_weight\nimport numpy as np\n\nweights = compute_class_weight(\n    'balanced',\n    classes=np.unique(labels),\n    y=labels\n)\nclass_weights = dict(enumerate(weights))\n# {0: 0.53, 1: 10.0}  ← seltene Klasse 19× stärker\n\n# In FrameTrain: \"Class Weighting\" aktivieren",
                                 "pros": "Keine Datenverfälschung, einfach, direkt in den Optimizer",
@@ -6557,7 +6557,7 @@
                                 "m": "10",
                                 "range": "±65.504",
                                 "prec": "Mittel",
-                                "rec": "⚠️ Overflow-Risiko",
+                                "rec": "Overflow-Risiko",
                                 "color": "text-yellow-300"
                             },
                             {
@@ -6567,7 +6567,7 @@
                                 "m": "7",
                                 "range": "±3.4e38",
                                 "prec": "Niedrig-Mittel",
-                                "rec": "⭐ Beste Wahl",
+                                "rec": "Beste Wahl",
                                 "color": "text-green-300"
                             }
                         ],
@@ -6729,7 +6729,7 @@
                                 "improvement": "+1–5% Accuracy typisch"
                             },
                             {
-                                "name": "Probability Averaging ⭐ (Empfohlen)",
+                                "name": "Probability Averaging (Empfohlen)",
                                 "desc": "Softmax-Wahrscheinlichkeiten aller Modelle werden gemittelt. Dann höchste Wahrscheinlichkeit als Klasse.",
                                 "code": "# Wahrscheinlichkeiten mitteln:\nprobs_1 = model1.predict_proba(x)  # [0.8, 0.2]\nprobs_2 = model2.predict_proba(x)  # [0.6, 0.4]\nprobs_3 = model3.predict_proba(x)  # [0.9, 0.1]\n\navg_probs = np.mean([probs_1, probs_2, probs_3], axis=0)\n# → [0.77, 0.23]\nfinal_class = np.argmax(avg_probs)  # Klasse 0 = \"positiv\"",
                                 "use": "Wenn Softmax-Wahrscheinlichkeiten verfügbar – fast immer besser als Majority Voting",
@@ -6900,8 +6900,8 @@
             "regenerateButton": "Neuen Key generieren",
             "regenerating": "Generiere...",
             "confirmRegenerate": "Möchtest du wirklich einen neuen API-Key generieren? Der alte wird ungültig!",
-            "successRegenerate": "✅ Neuer API-Key erfolgreich generiert!",
-            "errorRegenerate": "❌ Fehler beim Generieren des neuen Keys",
+            "successRegenerate": "Neuer API-Key erfolgreich generiert!",
+            "errorRegenerate": "Fehler beim Generieren des neuen Keys",
             "emptyText1": "Du hast noch keine API-Keys.",
             "emptyText2": "API-Keys werden automatisch nach erfolgreicher Zahlung erstellt.",
             "payButton": "Jetzt bezahlen & API-Key erhalten",
@@ -6911,9 +6911,9 @@
             "passwordMissing": "Passwort fehlt noch",
             "active": "Aktiv",
             "deactivatedExpired": "Deaktiviert · Abo abgelaufen",
-            "noKeyAlert": "❌ Du brauchst einen aktiven API-Key",
-            "errorRedirectPayment": "❌ Fehler beim Weiterleiten zur Zahlung",
-            "errorEmailNotVerified": "❌ Bitte bestätige zuerst deine E-Mail-Adresse, bevor du einen API-Key erstellst."
+            "noKeyAlert": "Du brauchst einen aktiven API-Key",
+            "errorRedirectPayment": "Fehler beim Weiterleiten zur Zahlung",
+            "errorEmailNotVerified": "Bitte bestätige zuerst deine E-Mail-Adresse, bevor du einen API-Key erstellst."
         },
         "download": {
             "title": "Desktop-App herunterladen",
@@ -6921,8 +6921,8 @@
             "downloadButton": "Download {ext}",
             "securityWarningText": "Beim ersten Öffnen könnte eine Sicherheitswarnung erscheinen.",
             "installGuideLink": "Siehe Installations-Guide",
-            "downloadFailedAlert": "❌ {message}",
-            "downloadErrorAlert": "❌ Fehler beim Herunterladen"
+            "downloadFailedAlert": "{message}",
+            "downloadErrorAlert": "Fehler beim Herunterladen"
         },
         "communityName": {
             "title": "Community-Name",
@@ -6939,7 +6939,7 @@
             "title": "Name bereits vergeben",
             "subtitle": "Dieser Community-Name ist schon in Verwendung.",
             "text": "Der Name <b>@{name}</b> wird bereits von jemandem anderem verwendet.",
-            "tip": "💡 <b>Tipp:</b> Versuche einen anderen Community-Namen, z. B. mit Zahlen oder Unterstrichen.",
+            "tip": "<b>Tipp:</b> Versuche einen anderen Community-Namen, z. B. mit Zahlen oder Unterstrichen.",
             "retryButton": "Einen anderen Namen versuchen"
         },
         "desktopPassword": {
@@ -6984,8 +6984,8 @@
         "support": {
             "title": "Support",
             "ticketCount": "{count, plural, one {# Ticket} other {# Tickets}}",
-            "tabTickets": "📬 Meine Tickets",
-            "tabNew": "✏️ Neues Ticket",
+            "tabTickets": "Meine Tickets",
+            "tabNew": "Neues Ticket",
             "newTitle": "Neues Support-Ticket",
             "subjectLabel": "Betreff",
             "subjectPlaceholder": "Kurze Beschreibung deines Problems...",
@@ -6995,7 +6995,7 @@
             "submitButton": "Ticket einreichen",
             "submitting": "Wird gesendet...",
             "requiredAlert": "Bitte Betreff und Nachricht ausfüllen",
-            "submitError": "❌ Fehler beim Einreichen des Tickets",
+            "submitError": "Fehler beim Einreichen des Tickets",
             "emptyTitle": "Du hast noch keine Support-Tickets.",
             "emptyText": "Hast du ein Problem oder eine Frage? Wir helfen gerne.",
             "emptyButton": "Erstes Ticket erstellen",
@@ -7005,10 +7005,10 @@
             "backToOverview": "← Zurück zur Übersicht",
             "noMessages": "Noch keine Nachrichten",
             "you": "Du",
-            "supportLabel": "🔧 Support",
+            "supportLabel": "Support",
             "statusClosedNote": "Dieses Ticket ist {status} – du kannst kein weiteres Ticket erstellen wenn du noch Fragen hast.",
             "replyPlaceholder": "Nachricht schreiben... (Strg+Enter zum Senden)",
-            "sendError": "❌ Senden fehlgeschlagen"
+            "sendError": "Senden fehlgeschlagen"
         },
         "status": {
             "open": "Offen",
@@ -7157,53 +7157,53 @@
             "headingHighlight": "KI-Training Coach",
             "paragraph": "Neu zu ML? Kämpfst du mit Overfitting, Loss-Spikes oder LoRA-Konfiguration? Unser kostenloser Guide erklärt alles – von Grundlagen bis zu fortgeschrittenen Techniken.",
             "checklist": [
-                "🧠 ML-Grundlagen & Transformer",
-                "📈 Loss-Kurven lesen & verstehen",
-                "🩺 Overfitting & Underfitting fixen",
-                "🔧 LoRA & QLoRA im Detail",
-                "⚙️ Hyperparameter-Coaching",
-                "📦 Dataset-Mastery"
+                "ML-Grundlagen & Transformer",
+                "Loss-Kurven lesen & verstehen",
+                "Overfitting & Underfitting fixen",
+                "LoRA & QLoRA im Detail",
+                "Hyperparameter-Coaching",
+                "Dataset-Mastery"
             ],
             "ctaMain": "Zum Training Coach",
             "ctaChapter1": "Kapitel 1 starten",
             "chapters": [
                 {
-                    "emoji": "🧠",
+                    "emoji": "",
                     "title": "ML Grundlagen",
                     "num": "01"
                 },
                 {
-                    "emoji": "📊",
+                    "emoji": "",
                     "title": "Training verstehen",
                     "num": "02"
                 },
                 {
-                    "emoji": "📈",
+                    "emoji": "",
                     "title": "Trainingsverlauf lesen",
                     "num": "03"
                 },
                 {
-                    "emoji": "🩺",
+                    "emoji": "",
                     "title": "Diagnose & Fixes",
                     "num": "04"
                 },
                 {
-                    "emoji": "⚙️",
+                    "emoji": "",
                     "title": "Hyperparameter",
                     "num": "05"
                 },
                 {
-                    "emoji": "🔧",
+                    "emoji": "",
                     "title": "Fine-Tuning Methoden",
                     "num": "06"
                 },
                 {
-                    "emoji": "📦",
+                    "emoji": "",
                     "title": "Dataset-Mastery",
                     "num": "07"
                 },
                 {
-                    "emoji": "🚀",
+                    "emoji": "",
                     "title": "Fortgeschrittene Techniken",
                     "num": "08"
                 }
@@ -7212,7 +7212,7 @@
         "pricing": {
             "title": "Early Access Pricing",
             "subtitle": "Jetzt einsteigen bevor der Preis steigt.",
-            "increaseNote": "⚡ Preis steigt auf 9,99 € nach 100 Nutzern",
+            "increaseNote": "Preis steigt auf 9,99 € nach 100 Nutzern",
             "promoHint": "Du hast einen Gutschein-Code?",
             "promoCta": "Code einlösen",
             "monthly": {
@@ -7228,7 +7228,7 @@
                 "cta": "Jetzt starten"
             },
             "yearly": {
-                "badge": "SPARE 20 %",
+                "badge": "SPARE 33 %",
                 "label": "Jährlich",
                 "price": "39,99€",
                 "billing": "pro Jahr · entspricht 3,33 €/Monat",
@@ -7405,7 +7405,7 @@
                     "href": "/docs#optimization"
                 }
             ],
-            "bannerTitle": "KI-Training Coach ✨ – Der komplette Guide",
+            "bannerTitle": "KI-Training Coach – Der komplette Guide",
             "bannerDesc": "8 Kapitel: ML-Grundlagen, Loss-Kurven, LoRA & QLoRA, Hyperparameter, Datasets und mehr",
             "ctaFull": "Zur vollständigen Dokumentation"
         },
@@ -7414,54 +7414,6 @@
             "subtitle": "Schließ dich Hunderten von ML Engineers an, die lokal mit FrameTrain trainieren.",
             "ctaAuthenticated": "Zum Dashboard",
             "ctaGuest": "Jetzt trainieren"
-        }
-    },
-    "ReleaseCountdown": {
-        "downloadLock": {
-            "availableFrom": "Download verfügbar ab 20. Juli 2026",
-            "days": "Tage",
-            "hours": "Std",
-            "minutes": "Min",
-            "seconds": "Sek",
-            "note": "Du kannst dich schon jetzt anmelden & zahlen – der Download wird automatisch freigeschaltet.",
-            "releasedTitle": "🎉 FrameTrain ist jetzt verfügbar!",
-            "releasedDesc": "Du kannst die App jetzt herunterladen."
-        },
-        "banner": {
-            "label": "Release Countdown",
-            "days": "Tage",
-            "hours": "Stunden",
-            "minutes": "Minuten",
-            "seconds": "Sekunden",
-            "date": "20. Juli 2026",
-            "note1": "Du kannst schon jetzt zahlen & registrieren.",
-            "note2": "Der Download wird automatisch am Release-Tag freigeschaltet.",
-            "liveTitle": "FrameTrain ist live!",
-            "liveDesc": "Die Desktop-App ist jetzt im Dashboard verfügbar."
-        },
-        "badge": {
-            "text": "Desktop-App – Release 20. Juli"
-        },
-        "promo": {
-            "tag": "Bald verfügbar",
-            "titlePre": "Die Desktop-App",
-            "titleHighlight": "kommt am 20. Juli",
-            "paragraph": "FrameTrain Desktop wird am <b>20. Juli 2026</b> offiziell released. Melde dich jetzt an, zahle den Early-Access-Preis und erhalte <b>sofortigen Download-Zugang</b> am Release-Tag.",
-            "features": [
-                {
-                    "emoji": "🔒",
-                    "text": "Preis sichern – steigt nach 100 Nutzern"
-                },
-                {
-                    "emoji": "⚡",
-                    "text": "Sofort-Zugang ab Release"
-                },
-                {
-                    "emoji": "🎁",
-                    "text": "Early Adopter Vorteile"
-                }
-            ],
-            "footer": "Registrierung & Zahlung jetzt möglich · Download ab 20. Juli 12:00 UTC"
         }
     },
     "ChangelogModal": {

@@ -32,11 +32,11 @@ type GpuItem = {
 type SummaryItem = { vram: string; desc: string; example: string }
 
 const tierColors: Record<string, string> = {
-  green: 'text-green-400 bg-green-500/10 border-green-500/30',
-  purple: 'text-purple-400 bg-purple-500/10 border-purple-500/30',
-  blue: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
-  pink: 'text-pink-400 bg-pink-500/10 border-pink-500/30',
-  gray: 'text-gray-400 bg-gray-500/10 border-gray-500/30',
+  green: 'text-success bg-ghost-fill border-success',
+  purple: 'text-indigo-text bg-indigo-soft border-line',
+  blue: 'text-indigo-text bg-indigo-soft border-line',
+  pink: 'text-indigo-text bg-indigo-soft border-line',
+  gray: 'text-ink-muted bg-surface-raised border-line',
 }
 
 export default async function GpuGuidePage({ params }: Props) {
@@ -81,30 +81,30 @@ export default async function GpuGuidePage({ params }: Props) {
 
       <main className="flex-1">
         {/* Breadcrumb */}
-        <div className="px-4 py-4 border-b border-white/5">
-          <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm text-gray-500">
-            <Link href="/" className="hover:text-purple-400 transition">Home</Link>
+        <div className="px-4 py-4 border-b border-line">
+          <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm text-ink-faint">
+            <Link href="/" className="hover:text-indigo-text transition">Home</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/guides" className="hover:text-purple-400 transition">Guides</Link>
+            <Link href="/guides" className="hover:text-indigo-text transition">Guides</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gray-300">{t('breadcrumb')}</span>
+            <span className="text-ink">{t('breadcrumb')}</span>
           </div>
         </div>
 
         {/* Hero */}
-        <section className="py-16 px-4 border-b border-white/10">
+        <section className="py-16 px-4 border-b border-line">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">{badges[0]}</span>
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">{badges[1]}</span>
+              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-ghost-fill text-warning border border-warning">{badges[0]}</span>
+              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-soft text-indigo-text border border-line">{badges[1]}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-semibold text-ink mb-6 leading-tight">
               {t('heroTitleLine1')}<br />
-              <span className="text-gradient-brand">
+              <span className="text-ink">
                 {t('heroTitleLine2')}
               </span>
             </h1>
-            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl">
+            <p className="text-xl text-ink-muted leading-relaxed max-w-3xl">
               {t('heroSubtitle')}
             </p>
           </div>
@@ -114,14 +114,14 @@ export default async function GpuGuidePage({ params }: Props) {
           <div className="max-w-4xl mx-auto space-y-8">
 
             {/* Quick Summary */}
-            <div className="glass-strong rounded-2xl p-6 border border-white/10">
-              <h2 className="text-xl font-bold text-white mb-4">{t('quickSummary.heading')}</h2>
+            <div className="bg-surface border border-line rounded-lg p-6 border border-line">
+              <h2 className="text-xl font-semibold text-ink mb-4">{t('quickSummary.heading')}</h2>
               <div className="grid md:grid-cols-3 gap-4">
                 {summaryItems.map(({ vram, desc, example }) => (
-                  <div key={vram} className="glass rounded-xl p-4 border border-white/10">
-                    <div className="text-2xl font-bold text-purple-400 mb-1">{vram}</div>
-                    <p className="text-gray-300 text-sm mb-2">{desc}</p>
-                    <p className="text-xs text-gray-600 font-mono">{example}</p>
+                  <div key={vram} className="bg-surface border border-line rounded-md p-4 border border-line">
+                    <div className="text-2xl font-semibold text-indigo-text mb-1">{vram}</div>
+                    <p className="text-ink text-sm mb-2">{desc}</p>
+                    <p className="text-xs text-ink-faint font-mono">{example}</p>
                   </div>
                 ))}
               </div>
@@ -129,54 +129,54 @@ export default async function GpuGuidePage({ params }: Props) {
 
             {/* GPU Cards */}
             {gpus.map((gpu) => (
-              <div key={gpu.name} className="glass-strong rounded-2xl p-8 border border-white/10">
+              <div key={gpu.name} className="bg-surface border border-line rounded-lg p-8 border border-line">
                 <div className="flex items-start justify-between gap-4 mb-6">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-2xl font-bold text-white">{gpu.name}</h3>
-                      <span className={`text-xs font-bold px-3 py-1 rounded-full border ${tierColors[gpu.tierColor]}`}>
+                      <h3 className="text-2xl font-semibold text-ink">{gpu.name}</h3>
+                      <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${tierColors[gpu.tierColor]}`}>
                         {gpu.tier}
                       </span>
                     </div>
                     <div className="flex gap-4 text-sm">
-                      <span className="text-gray-400"><span className="text-white font-semibold">{gpu.vram}</span> {t('vramLabel')}</span>
-                      <span className="text-gray-400">{t('priceApprox')} <span className="text-yellow-400 font-semibold">{gpu.price}</span></span>
+                      <span className="text-ink-muted"><span className="text-ink font-semibold">{gpu.vram}</span> {t('vramLabel')}</span>
+                      <span className="text-ink-muted">{t('priceApprox')} <span className="text-warning font-semibold">{gpu.price}</span></span>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-center justify-center w-14 h-14 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl border border-white/10">
-                    <Cpu className="w-7 h-7 text-gray-400" />
+                  <div className="hidden md:flex items-center justify-center w-14 h-14 bg-ghost-fill border border-line rounded-md border border-line">
+                    <Cpu className="w-7 h-7 text-ink-muted" />
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
-                    <h4 className="text-xs font-bold text-green-400 uppercase tracking-wider mb-3">{t('prosLabel')}</h4>
+                    <h4 className="text-xs font-semibold text-success uppercase tracking-wider mb-3">{t('prosLabel')}</h4>
                     <ul className="space-y-2">
                       {gpu.pros.map((p) => (
-                        <li key={p} className="flex items-start gap-2 text-gray-300 text-sm">
-                          <Check className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                        <li key={p} className="flex items-start gap-2 text-ink text-sm">
+                          <Check className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                           {p}
                         </li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">{t('consLabel')}</h4>
+                    <h4 className="text-xs font-semibold text-danger uppercase tracking-wider mb-3">{t('consLabel')}</h4>
                     <ul className="space-y-2">
                       {gpu.cons.map((c) => (
-                        <li key={c} className="flex items-start gap-2 text-gray-300 text-sm">
-                          <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-red-400 font-bold text-xs leading-4">✕</span>
+                        <li key={c} className="flex items-start gap-2 text-ink text-sm">
+                          <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-danger font-semibold text-xs leading-4">✕</span>
                           {c}
                         </li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-3">{t('suitableLabel')}</h4>
+                    <h4 className="text-xs font-semibold text-indigo-text uppercase tracking-wider mb-3">{t('suitableLabel')}</h4>
                     <ul className="space-y-2">
                       {gpu.suitable.map((s) => (
-                        <li key={s} className="flex items-start gap-2 text-gray-300 text-sm">
-                          <Zap className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                        <li key={s} className="flex items-start gap-2 text-ink text-sm">
+                          <Zap className="w-4 h-4 text-indigo-text flex-shrink-0 mt-0.5" />
                           {s}
                         </li>
                       ))}
@@ -187,22 +187,22 @@ export default async function GpuGuidePage({ params }: Props) {
             ))}
 
             {/* CTA */}
-            <div className="glass-strong rounded-2xl p-8 border border-purple-500/20 text-center">
-              <h3 className="text-2xl font-bold text-white mb-4">
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line text-center">
+              <h3 className="text-2xl font-semibold text-ink mb-4">
                 {t('cta.heading')}
               </h3>
-              <p className="text-gray-400 mb-6 max-w-lg mx-auto">
+              <p className="text-ink-muted mb-6 max-w-lg mx-auto">
                 {t('cta.text')}
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
-                <Link href="/register" className="relative group inline-block px-8 py-3 rounded-xl overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600" />
-                  <div className="relative flex items-center gap-2 text-white font-semibold">
+                <Link href="/register" className="relative group inline-block px-8 py-3 rounded-md overflow-hidden">
+                  <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
+                  <div className="relative flex items-center gap-2 text-ink font-semibold">
                     <span>{t('cta.ctaStart')}</span>
                     <ArrowRight className="w-4 h-4" />
                   </div>
                 </Link>
-                <Link href="/guides/lora-finetuning" className="glass-strong px-8 py-3 rounded-xl text-gray-300 hover:text-white transition font-semibold">
+                <Link href="/guides/lora-finetuning" className="bg-surface border border-line px-8 py-3 rounded-md text-ink hover:text-ink transition font-semibold">
                   {t('cta.ctaLora')}
                 </Link>
               </div>

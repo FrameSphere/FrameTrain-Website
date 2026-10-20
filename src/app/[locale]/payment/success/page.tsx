@@ -13,10 +13,10 @@ import { trackPurchase, trackStartTrial } from '@/lib/analytics'
 
 // ─── Feature Showcase Data ─────────────────────────────────────────────────────
 const FEATURE_META = [
-  { key: 'modelManager' as const, icon: <Brain className="w-7 h-7 text-violet-400" />, color: 'from-violet-500/20 to-purple-500/10', border: 'border-violet-400/25' },
-  { key: 'trainingPanel' as const, icon: <Zap className="w-7 h-7 text-pink-400" />, color: 'from-pink-500/20 to-rose-500/10', border: 'border-pink-400/25' },
-  { key: 'liveMonitoring' as const, icon: <BarChart3 className="w-7 h-7 text-cyan-400" />, color: 'from-cyan-500/20 to-teal-500/10', border: 'border-cyan-400/25' },
-  { key: 'loraFineTuning' as const, icon: <Layers className="w-7 h-7 text-green-400" />, color: 'from-green-500/20 to-emerald-500/10', border: 'border-green-400/25' },
+  { key: 'modelManager' as const, icon: <Brain className="w-7 h-7 text-indigo-text" />, color: ' ', border: 'border-line' },
+  { key: 'trainingPanel' as const, icon: <Zap className="w-7 h-7 text-indigo-text" />, color: ' ', border: 'border-line' },
+  { key: 'liveMonitoring' as const, icon: <BarChart3 className="w-7 h-7 text-indigo-text" />, color: ' ', border: 'border-line' },
+  { key: 'loraFineTuning' as const, icon: <Layers className="w-7 h-7 text-success" />, color: ' ', border: 'border-line' },
 ]
 
 // ─── Animated Check Circle ─────────────────────────────────────────────────────
@@ -62,23 +62,9 @@ function AnimatedCheck({ onDone }: { onDone: () => void }) {
   // Circle: radius 54, circumference ≈ 339
   const r = 54
   const circ = 2 * Math.PI * r
-  // Color: interpolate from violet (#8b5cf6) → magenta (#e879f9) → green (#22c55e)
-  // split: 0–0.5 = violet→magenta, 0.5–1 = magenta→green
-  function lerpColor(a: [number,number,number], b: [number,number,number], t: number): string {
-    const r = Math.round(a[0] + (b[0] - a[0]) * t)
-    const g = Math.round(a[1] + (b[1] - a[1]) * t)
-    const bl = Math.round(a[2] + (b[2] - a[2]) * t)
-    return `rgb(${r},${g},${bl})`
-  }
-  const violet: [number,number,number] = [139, 92, 246]
-  const magenta: [number,number,number] = [232, 121, 249]
-  const green: [number,number,number] = [34, 197, 94]
-  let arcColor: string
-  if (fillProgress <= 0.5) {
-    arcColor = lerpColor(violet, magenta, fillProgress / 0.5)
-  } else {
-    arcColor = lerpColor(magenta, green, (fillProgress - 0.5) / 0.5)
-  }
+  // Neuron: der Ring läuft in Orange (ein Ergebnis entsteht) und wird
+  // grün, sobald die Zahlung bestätigt ist.
+  const arcColor = fillProgress >= 1 ? 'var(--success)' : 'var(--output)'
 
   // Check path: two segments
   // First segment: (28,64) → (44,80)  length ~22.6
@@ -99,20 +85,9 @@ function AnimatedCheck({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="relative flex items-center justify-center">
-      {/* Glow ring */}
-      {phase === 'done' && (
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 160, height: 160,
-            background: 'radial-gradient(circle, rgba(34,197,94,0.25) 0%, transparent 70%)',
-            animation: 'ping 1s ease-out',
-          }}
-        />
-      )}
       <svg width="140" height="140" viewBox="0 0 120 120">
         {/* Background track */}
-        <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="8" />
+        <circle cx="60" cy="60" r={r} fill="none" stroke="var(--line)" strokeWidth="8" />
         {/* Animated fill arc */}
         <circle
           cx="60" cy="60" r={r}
@@ -123,7 +98,7 @@ function AnimatedCheck({ onDone }: { onDone: () => void }) {
           strokeDasharray={`${fillProgress * circ} ${circ}`}
           strokeDashoffset="0"
           transform="rotate(-90 60 60)"
-          style={{ transition: 'stroke 0.05s linear', filter: `drop-shadow(0 0 8px ${arcColor})` }}
+          style={{ transition: 'stroke 150ms ease-out' }}
         />
         {/* Checkmark drawn progressively */}
         {checkProgress > 0 && (
@@ -169,13 +144,13 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
     >
       {/* Header */}
       <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+        <h2 className="text-3xl md:text-4xl font-semibold text-ink mb-3">
           {t('headingPre')}{' '}
-          <span className="text-gradient-brand">
+          <span className="text-ink">
             FrameTrain
           </span>
         </h2>
-        <p className="text-gray-400 text-lg">{t('subtitle')}</p>
+        <p className="text-ink-muted text-lg">{t('subtitle')}</p>
       </div>
 
       {/* Feature Cards */}
@@ -183,15 +158,15 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
         {FEATURE_META.map((f, i) => (
           <div
             key={f.key}
-            className={`bg-gradient-to-br ${f.color} border ${f.border} rounded-2xl p-6 transition duration-300 ease-out ${
-              activeIdx === i ? 'scale-[1.03] shadow-lg' : 'scale-100'
+            className={` ${f.color} border ${f.border} rounded-lg p-6 transition duration-300 ease-out ${
+              activeIdx === i ? 'scale-[1.03] ' : 'scale-100'
             }`}
           >
             <div className="flex items-center gap-3 mb-3">
               {f.icon}
-              <h3 className="text-white font-bold text-lg">{t(`features.${f.key}.title`)}</h3>
+              <h3 className="text-ink font-semibold text-lg">{t(`features.${f.key}.title`)}</h3>
             </div>
-            <p className="text-gray-300 text-sm leading-relaxed">{t(`features.${f.key}.desc`)}</p>
+            <p className="text-ink text-sm leading-relaxed">{t(`features.${f.key}.desc`)}</p>
           </div>
         ))}
       </div>
@@ -200,7 +175,7 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <button
           onClick={onTutorial}
-          className="press flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-2xl font-bold text-lg shadow-lg shadow-violet-500/30 transition duration-200 ease-out"
+          className="press flex items-center gap-2 px-8 py-4 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-lg font-semibold text-lg   transition duration-200 ease-out"
         >
           <BookOpen className="w-5 h-5" />
           {t('ctaTutorial')}
@@ -208,7 +183,7 @@ function FeatureShowcase({ onSkip, onTutorial }: { onSkip: () => void; onTutoria
         </button>
         <button
           onClick={onSkip}
-          className="press flex items-center gap-2 px-8 py-4 glass border border-white/15 text-gray-300 hover:text-white hover:border-white/30 rounded-2xl font-semibold transition duration-200 ease-out"
+          className="press flex items-center gap-2 px-8 py-4 bg-surface border border-line border border-line-strong text-ink hover:text-ink hover:border-line-strong rounded-lg font-semibold transition duration-200 ease-out"
         >
           <Play className="w-5 h-5" />
           {t('ctaSkip')}
@@ -225,10 +200,10 @@ function TutorialView({ onDone }: { onDone: () => void }) {
   const [visible, setVisible] = useState(false)
 
   const stepsMeta = [
-    { color: 'text-violet-400', bg: 'bg-violet-500/15 border-violet-400/25', icon: <Key className="w-8 h-8 text-violet-400" /> },
-    { color: 'text-pink-400', bg: 'bg-pink-500/15 border-pink-400/25', icon: <Download className="w-8 h-8 text-pink-400" /> },
-    { color: 'text-cyan-400', bg: 'bg-cyan-500/15 border-cyan-400/25', icon: <Layers className="w-8 h-8 text-cyan-400" /> },
-    { color: 'text-green-400', bg: 'bg-green-500/15 border-green-400/25', icon: <Zap className="w-8 h-8 text-green-400" /> },
+    { color: 'text-indigo-text', bg: 'bg-indigo-soft border-line', icon: <Key className="w-8 h-8 text-indigo-text" /> },
+    { color: 'text-indigo-text', bg: 'bg-indigo-soft border-line', icon: <Download className="w-8 h-8 text-indigo-text" /> },
+    { color: 'text-indigo-text', bg: 'bg-indigo-soft border-line', icon: <Layers className="w-8 h-8 text-indigo-text" /> },
+    { color: 'text-success', bg: 'bg-ghost-fill border-line', icon: <Zap className="w-8 h-8 text-success" /> },
   ]
   const stepTexts = t.raw('steps') as { title: string; desc: string }[]
 
@@ -256,25 +231,25 @@ function TutorialView({ onDone }: { onDone: () => void }) {
             key={i}
             className={`rounded-full transition duration-200 ease-out ${
               i === step
-                ? 'w-8 h-2.5 bg-violet-400'
+                ? 'w-8 h-2.5 bg-indigo-soft'
                 : i < step
-                ? 'w-2.5 h-2.5 bg-green-400'
-                : 'w-2.5 h-2.5 bg-white/15'
+                ? 'w-2.5 h-2.5 bg-success'
+                : 'w-2.5 h-2.5 bg-surface-raised'
             }`}
           />
         ))}
       </div>
 
       {/* Step card */}
-      <div className={`rounded-3xl border p-10 mb-8 text-center ${meta.bg} transition duration-300 ease-out`}>
+      <div className={`rounded-xl border p-10 mb-8 text-center ${meta.bg} transition duration-300 ease-out`}>
         <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 glass rounded-3xl flex items-center justify-center">
+          <div className="w-20 h-20 bg-surface border border-line rounded-xl flex items-center justify-center">
             {meta.icon}
           </div>
         </div>
-        <div className={`text-xs font-bold uppercase tracking-widest mb-2 ${meta.color}`}>{t('stepLabel')} {String(step + 1).padStart(2, '0')}</div>
-        <h3 className="text-2xl font-bold text-white mb-4">{text.title}</h3>
-        <p className="text-gray-300 text-base leading-relaxed max-w-sm mx-auto">{text.desc}</p>
+        <div className={`text-xs font-semibold uppercase tracking-widest mb-2 ${meta.color}`}>{t('stepLabel')} {String(step + 1).padStart(2, '0')}</div>
+        <h3 className="text-2xl font-semibold text-ink mb-4">{text.title}</h3>
+        <p className="text-ink text-base leading-relaxed max-w-sm mx-auto">{text.desc}</p>
       </div>
 
       {/* Controls */}
@@ -282,13 +257,13 @@ function TutorialView({ onDone }: { onDone: () => void }) {
         <button
           onClick={() => setStep(s => Math.max(0, s - 1))}
           disabled={step === 0}
-          className="px-5 py-2.5 glass border border-white/10 text-gray-400 hover:text-white rounded-xl disabled:opacity-30 transition duration-200 ease-out text-sm"
+          className="px-5 py-2.5 bg-surface border border-line border border-line text-ink-muted hover:text-ink rounded-md disabled:opacity-30 transition duration-200 ease-out text-sm"
         >
           {t('back')}
         </button>
         <button
           onClick={next}
-          className="press flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-xl font-bold shadow-lg shadow-violet-500/25 transition duration-200 ease-out"
+          className="press flex items-center gap-2 px-8 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold   transition duration-200 ease-out"
         >
           {step < stepsMeta.length - 1 ? (
             <>{t('next')} <ChevronRight className="w-4 h-4" /></>
@@ -300,7 +275,7 @@ function TutorialView({ onDone }: { onDone: () => void }) {
 
       {/* Skip */}
       <div className="text-center mt-5">
-        <button onClick={onDone} className="text-gray-600 hover:text-gray-400 text-sm transition-colors">
+        <button onClick={onDone} className="text-ink-faint hover:text-ink-muted text-sm transition-colors">
           {t('skip')}
         </button>
       </div>
@@ -427,7 +402,7 @@ function PaymentSuccessContent() {
     setTimeout(() => setView('showcase'), 2200)
   }
 
-  const bgClass = 'min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950'
+  const bgClass = 'min-h-screen flex flex-col bg-bg   '
 
   // Verifizierung läuft noch
   if (view === 'verifying') {
@@ -436,8 +411,8 @@ function PaymentSuccessContent() {
         <Header />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <div className="w-12 h-12 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-6" />
-            <p className="text-gray-400 text-lg">{promoRedeemed ? t('activating') : t('verifying')}</p>
+            <div className="w-12 h-12 border-2 border-indigo-text border-t-transparent rounded-full animate-spin mx-auto mb-6" />
+            <p className="text-ink-muted text-lg">{promoRedeemed ? t('activating') : t('verifying')}</p>
           </div>
         </main>
       </div>
@@ -451,19 +426,19 @@ function PaymentSuccessContent() {
         <Header />
         <main className="flex-1 flex items-center justify-center px-4">
           <div className="text-center max-w-md">
-            <div className="text-5xl mb-6">⚠️</div>
-            <h1 className="text-2xl font-bold text-white mb-3">{t('invalid.heading')}</h1>
-            <p className="text-gray-400 mb-8">{t('invalid.text')}</p>
+            <div className="text-5xl mb-6"></div>
+            <h1 className="text-2xl font-semibold text-ink mb-3">{t('invalid.heading')}</h1>
+            <p className="text-ink-muted mb-8">{t('invalid.text')}</p>
             <div className="flex gap-4 justify-center">
               <button
                 onClick={() => router.push('/payment')}
-                className="px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-bold"
+                className="px-6 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold"
               >
                 {t('invalid.ctaPayment')}
               </button>
               <button
                 onClick={() => router.push('/dashboard')}
-                className="px-6 py-3 glass border border-white/15 text-gray-300 rounded-xl font-semibold"
+                className="px-6 py-3 bg-surface border border-line border border-line-strong text-ink rounded-md font-semibold"
               >
                 {t('invalid.ctaDashboard')}
               </button>
@@ -488,10 +463,10 @@ function PaymentSuccessContent() {
               <div
                 className={`transition duration-300 ease-out mt-8 ${successVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
-                <h1 className="text-4xl font-bold text-white mb-3">
+                <h1 className="text-4xl font-semibold text-ink mb-3">
                   {t('successHeading')}
                 </h1>
-                <p className="text-gray-400 text-lg">
+                <p className="text-ink-muted text-lg">
                   {t('successText')}
                 </p>
               </div>
@@ -529,8 +504,8 @@ export default function PaymentSuccessPage() {
   const t = useTranslations('Payment.success')
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
-        <div className="text-white text-xl">{t('loadingFallback')}</div>
+      <div className="min-h-screen flex items-center justify-center bg-bg ">
+        <div className="text-ink text-xl">{t('loadingFallback')}</div>
       </div>
     }>
       <PaymentSuccessContent />

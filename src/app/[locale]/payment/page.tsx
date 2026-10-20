@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef, Suspense } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 // Locale-bewusster Router: sonst würde /en/payment auf /de/... weiterleiten.
 import { useRouter } from '@/i18n/navigation'
@@ -8,218 +8,57 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import {
   CreditCard, Shield, Zap, Brain, BarChart3, Layers,
-  Lock, Sparkles, ArrowRight, CheckCircle2, Ticket
+  Lock, ArrowRight, CheckCircle2, Check, Ticket
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { trackSignUp } from '@/lib/analytics'
 
 // ─── Feature items ─────────────────────────────────────────────────────────────
 const FEATURE_META = [
-  { key: 'modelManager' as const, icon: Brain, color: '#a78bfa', glow: 'rgba(167,139,250,0.35)' },
-  { key: 'trainingPanel' as const, icon: Zap, color: '#f472b6', glow: 'rgba(244,114,182,0.35)' },
-  { key: 'liveMonitoring' as const, icon: BarChart3, color: '#22d3ee', glow: 'rgba(34,211,238,0.35)' },
-  { key: 'loraFineTuning' as const, icon: Layers, color: '#34d399', glow: 'rgba(52,211,153,0.35)' },
+  { key: 'modelManager' as const, icon: Brain },
+  { key: 'trainingPanel' as const, icon: Zap },
+  { key: 'liveMonitoring' as const, icon: BarChart3 },
+  { key: 'loraFineTuning' as const, icon: Layers },
 ]
-
-// ─── Animated background orbs ─────────────────────────────────────────────────
-function BackgroundOrbs() {
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden>
-      {/* Large violet orb */}
-      <div
-        style={{
-          position: 'absolute',
-          width: 700,
-          height: 700,
-          borderRadius: '50%',
-          top: '-200px',
-          right: '-150px',
-          background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)',
-          animation: 'orbFloat1 12s ease-in-out infinite',
-        }}
-      />
-      {/* Pink orb */}
-      <div
-        style={{
-          position: 'absolute',
-          width: 500,
-          height: 500,
-          borderRadius: '50%',
-          bottom: '-100px',
-          left: '-100px',
-          background: 'radial-gradient(circle, rgba(236,72,153,0.14) 0%, transparent 70%)',
-          animation: 'orbFloat2 15s ease-in-out infinite',
-        }}
-      />
-      {/* Cyan orb */}
-      <div
-        style={{
-          position: 'absolute',
-          width: 400,
-          height: 400,
-          borderRadius: '50%',
-          top: '40%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          background: 'radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%)',
-          animation: 'orbFloat3 18s ease-in-out infinite',
-        }}
-      />
-      {/* Grid overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
-      />
-    </div>
-  )
-}
-
-// ─── Feature icon card ─────────────────────────────────────────────────────────
-function FeatureChip({ icon: Icon, label, color, glow, delay }: {
-  icon: any; label: string; color: string; glow: string; delay: number
-}) {
-  const [visible, setVisible] = useState(false)
-  const [hovered, setHovered] = useState(false)
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), delay)
-    return () => clearTimeout(t)
-  }, [delay])
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.9)',
-        transition: 'opacity 0.5s ease, transform 0.5s ease',
-        background: hovered
-          ? `linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04))`
-          : 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
-        border: `1px solid ${hovered ? color + '55' : 'rgba(255,255,255,0.08)'}`,
-        borderRadius: 16,
-        padding: '14px 18px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        backdropFilter: 'blur(12px)',
-        boxShadow: hovered ? `0 0 24px ${glow}` : 'none',
-        cursor: 'default',
-        userSelect: 'none',
-      }}
-    >
-      <div
-        style={{
-          width: 36,
-          height: 36,
-          borderRadius: 10,
-          background: `${color}22`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'transform 0.3s ease',
-          transform: hovered ? 'scale(1.15) rotate(-5deg)' : 'scale(1) rotate(0deg)',
-        }}
-      >
-        <Icon size={18} color={color} />
-      </div>
-      <span style={{ color: '#e2e8f0', fontSize: 14, fontWeight: 600 }}>{label}</span>
-    </div>
-  )
-}
 
 // ─── Plan Selector + Price Display ───────────────────────────────────────────
 type Plan = 'monthly' | 'yearly'
 
-function PriceDisplay({ visible, plan, onPlanChange }: { visible: boolean; plan: Plan; onPlanChange: (p: Plan) => void }) {
+function PriceDisplay({ plan, onPlanChange }: { plan: Plan; onPlanChange: (p: Plan) => void }) {
   const t = useTranslations('Payment.page')
-  const [shown, setShown] = useState(false)
-  useEffect(() => {
-    if (visible) setTimeout(() => setShown(true), 100)
-  }, [visible])
-
   const isYearly = plan === 'yearly'
   const price = isYearly ? '39,99' : '4,99'
   const sub = isYearly ? t('priceDisplay.perYear') : t('priceDisplay.perMonth')
 
   return (
-    <div style={{ textAlign: 'center', marginBottom: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Plan toggle */}
-      <div style={{
-        display: 'inline-flex',
-        background: 'rgba(255,255,255,0.05)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: 100,
-        padding: 4,
-        marginBottom: 20,
-        gap: 4,
-      }}>
-        {(['monthly', 'yearly'] as Plan[]).map(p => (
+    <div className="flex flex-col items-center text-center">
+      <div role="radiogroup" className="inline-flex p-1 rounded-pill bg-bg border border-line">
+        {(['monthly', 'yearly'] as Plan[]).map((p) => (
           <button
             key={p}
+            type="button"
+            role="radio"
+            aria-checked={plan === p}
             onClick={() => onPlanChange(p)}
-            style={{
-              padding: '7px 20px',
-              borderRadius: 100,
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: 13,
-              fontWeight: 600,
-              transition: 'all 0.2s ease',
-              background: plan === p ? 'linear-gradient(135deg, #7c3aed, #a855f7)' : 'transparent',
-              color: plan === p ? 'white' : '#64748b',
-              boxShadow: plan === p ? '0 2px 12px rgba(139,92,246,0.4)' : 'none',
-            }}
+            className={`h-10 px-5 rounded-pill text-[14px] font-medium transition-colors duration-150 ease-out ${
+              plan === p ? 'bg-surface-raised text-ink' : 'text-ink-muted hover:text-ink'
+            }`}
           >
             {p === 'monthly' ? t('planToggle.monthly') : t('planToggle.yearly')}
-            {p === 'yearly' && (
-              <span style={{
-                marginLeft: 6, fontSize: 10,
-                background: 'rgba(52,211,153,0.2)', color: '#34d399',
-                border: '1px solid rgba(52,211,153,0.3)',
-                borderRadius: 100, padding: '1px 6px',
-              }}>{t('planToggle.savePercent')}</span>
-            )}
+            {p === 'yearly' && <span className="ml-2 ft-data text-success">{t('planToggle.savePercent')}</span>}
           </button>
         ))}
       </div>
-      {/* Price number */}
-      <div
-        style={{
-          opacity: shown ? 1 : 0,
-          transform: shown ? 'scale(1) translateY(0)' : 'scale(0.7) translateY(20px)',
-          transition: 'opacity 0.7s cubic-bezier(0.34,1.56,0.64,1), transform 0.7s cubic-bezier(0.34,1.56,0.64,1)',
-          display: 'inline-flex',
-          alignItems: 'flex-start',
-          gap: 4,
-        }}
-      >
-        <span style={{ fontSize: 22, fontWeight: 700, color: '#a78bfa', marginTop: 14, lineHeight: 1 }}>€</span>
-        <span
-          style={{
-            fontSize: 88,
-            fontWeight: 900,
-            lineHeight: 1,
-            background: 'linear-gradient(135deg, #c4b5fd, #f9a8d4, #67e8f9)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            letterSpacing: '-4px',
-            transition: 'all 0.3s ease',
-          }}
-        >
-          {price}
-        </span>
+      <div className="mt-7 flex items-start gap-1" aria-live="polite">
+        <span className="mt-2 text-[22px] font-semibold text-ink-muted">€</span>
+        <span key={plan} className="ft-stat !text-[72px] animate-enter">{price}</span>
       </div>
-      <div style={{ color: '#94a3b8', fontSize: 15, marginTop: 4 }}>{sub} · {t('priceDisplay.earlyAccessSuffix')}</div>
-      <div style={{ marginTop: 6, fontSize: 12, fontWeight: 600, color: isYearly ? '#34d399' : '#64748b' }}>
+      <p className="m-0 mt-2 text-[15px] text-ink-muted">
+        {sub} · {t('priceDisplay.earlyAccessSuffix')}
+      </p>
+      <p className={`m-0 mt-1.5 ft-data ${isYearly ? 'text-success' : 'text-ink-faint'}`}>
         {isYearly ? t('priceDisplay.saveYearly') : t('priceDisplay.cancelMonthly')}
-      </div>
+      </p>
     </div>
   )
 }
@@ -233,13 +72,10 @@ function PaymentPageInner() {
   const tFeatures = useTranslations('Payment.page.features')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [mounted, setMounted] = useState(false)
   const [plan, setPlan] = useState<Plan>(() => {
     // Wird während SSR immer 'monthly' sein; useSearchParams läuft nur client-side
     return 'monthly'
   })
-  const [btnHovered, setBtnHovered] = useState(false)
-  const [btnPressed, setBtnPressed] = useState(false)
 
   const PERKS = t.raw('perks') as string[]
 
@@ -280,11 +116,6 @@ function PaymentPageInner() {
     if (user && user.emailVerified === false) router.push('/verify-email/pending')
   }, [authLoading, isAuthenticated, user, router])
 
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 80)
-    return () => clearTimeout(t)
-  }, [])
-
   const handlePayment = async () => {
     setLoading(true)
     setError('')
@@ -313,8 +144,8 @@ function PaymentPageInner() {
 
   if (authLoading) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#030712' }}>
-        <div style={{ color: '#6b7280' }}>{t('loadingText')}</div>
+      <div className="min-h-screen flex items-center justify-center bg-bg">
+        <p className="ft-data text-ink-faint">{t('loadingText')}</p>
       </div>
     )
   }
@@ -323,344 +154,110 @@ function PaymentPageInner() {
   // Warteseite läuft
   if (user?.emailVerified === false) return null
 
-  // Stagger delays
-  const d = (n: number) => n * 120 + 200
-
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
+    <div className="min-h-screen flex flex-col bg-bg text-ink">
+      <Header />
 
-        @keyframes orbFloat1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(-40px, 60px) scale(1.05); }
-          66% { transform: translate(30px, -40px) scale(0.97); }
-        }
-        @keyframes orbFloat2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(60px, -50px) scale(1.08); }
-        }
-        @keyframes orbFloat3 {
-          0%, 100% { transform: translate(-50%, -50%) scale(1); }
-          40% { transform: translate(-50%, -50%) scale(1.3); }
-          70% { transform: translate(-45%, -55%) scale(0.9); }
-        }
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        @keyframes pulseRing {
-          0% { transform: scale(1); opacity: 0.6; }
-          100% { transform: scale(1.6); opacity: 0; }
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .pay-btn-shimmer {
-          background: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899, #a855f7, #7c3aed);
-          background-size: 300% 100%;
-          animation: shimmer 2.5s linear infinite;
-        }
-        .pay-btn-shimmer:hover {
-          animation: shimmer 1.2s linear infinite;
-        }
-        * { box-sizing: border-box; }
-      `}</style>
+      <main className="flex-1 ft-container py-12 md:py-20">
+        <div className="max-w-[560px] mx-auto">
+          <div className="text-center">
+            <p className="ft-label m-0">{t('topLabel')}</p>
+            <h1 className="ft-display-l mt-4 mb-0">
+              {t('headingLine1')} <span className="text-ink-muted">{t('headingLine2')}</span>
+            </h1>
+            <p className="ft-lead mt-4 mb-0">
+              {t('subtitleWelcome', { name: user?.email?.split('@')[0] || t('subtitleDefaultName') })}{' '}
+              {t('subtitlePrice')}
+            </p>
+          </div>
 
-      <BackgroundOrbs />
+          <div className="mt-10 rounded-xl border border-line bg-surface p-6 sm:p-10">
+            <PriceDisplay plan={plan} onPlanChange={setPlan} />
 
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#030712', fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
-        <Header />
+            <ul className="mt-8 pt-8 border-t border-line p-0 list-none flex flex-col gap-3">
+              {PERKS.map((perk, i) => (
+                <li key={i} className="flex items-start gap-3 text-[16px] leading-6 text-ink">
+                  <Check className="w-[18px] h-[18px] mt-[3px] flex-none text-ink-muted" strokeWidth={1.5} aria-hidden="true" />
+                  {perk}
+                </li>
+              ))}
+            </ul>
 
-        <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 16px 60px' }}>
-          <div style={{ width: '100%', maxWidth: 560, position: 'relative' }}>
-
-            {/* ── Top label ── */}
-            <div
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(-16px)',
-                transition: 'opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 8,
-                marginBottom: 28,
-              }}
-            >
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: 8,
-                background: 'rgba(167,139,250,0.12)',
-                border: '1px solid rgba(167,139,250,0.25)',
-                borderRadius: 100,
-                padding: '6px 16px',
-              }}>
-                <Sparkles size={14} color="#c4b5fd" />
-                <span style={{ fontSize: 13, fontWeight: 600, color: '#c4b5fd', letterSpacing: '0.05em' }}>
-                  {t('topLabel')}
-                </span>
-              </div>
+            <div className="mt-7 flex flex-wrap gap-2">
+              {FEATURE_META.map((f) => {
+                const Icon = f.icon
+                return (
+                  <span key={f.key} className="inline-flex items-center gap-2 h-9 px-3.5 rounded-pill bg-ghost-fill text-[14px] text-ink-muted">
+                    <Icon className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                    {tFeatures(f.key)}
+                  </span>
+                )
+              })}
             </div>
 
-            {/* ── Headline ── */}
-            <div
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(24px)',
-                transition: 'opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s',
-                textAlign: 'center',
-                marginBottom: 40,
-              }}
+            <button
+              type="button"
+              onClick={() => router.push('/redeem')}
+              className="mt-7 inline-flex items-center gap-2 text-[15px] font-medium ft-link"
             >
-              <h1 style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: 'clamp(32px, 6vw, 52px)',
-                fontWeight: 900,
-                color: '#f1f5f9',
-                lineHeight: 1.1,
-                margin: '0 0 14px',
-                letterSpacing: '-1.5px',
-              }}>
-                {t('headingLine1')}
-                <br />
-                <span style={{
-                  background: 'linear-gradient(90deg, #c4b5fd, #f9a8d4, #67e8f9)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}>
-                  {t('headingLine2')}
-                </span>
-              </h1>
-              <p style={{ color: '#64748b', fontSize: 16, margin: 0, lineHeight: 1.6 }}>
-                {t('subtitleWelcome', { name: user?.email?.split('@')[0] || t('subtitleDefaultName') })} <br />
-                {t('subtitlePrice')}
-              </p>
-            </div>
+              <Ticket className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+              {t('promo.toggle')}
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+            </button>
 
-            {/* ── Main card ── */}
-            <div
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0) scale(1)' : 'translateY(32px) scale(0.97)',
-                transition: 'opacity 0.7s ease 0.3s, transform 0.7s cubic-bezier(0.34,1.2,0.64,1) 0.3s',
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-                border: '1px solid rgba(255,255,255,0.09)',
-                borderRadius: 28,
-                padding: 'clamp(24px, 5vw, 44px)',
-                backdropFilter: 'blur(24px)',
-                boxShadow: '0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
-              }}
+            {error && (
+              <div role="alert" className="mt-6 px-4 py-3 rounded-sm border border-danger text-danger text-[14px]">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={handlePayment}
+              disabled={loading}
+              className="ft-btn ft-btn--primary w-full mt-7"
             >
-              {/* Price + plan selector */}
-              <PriceDisplay visible={mounted} plan={plan} onPlanChange={setPlan} />
-
-              {/* Divider */}
-              <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)', margin: '28px 0' }} />
-
-              {/* Perks list */}
-              <ul style={{ listStyle: 'none', margin: '0 0 28px', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {PERKS.map((perk, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 12,
-                      opacity: mounted ? 1 : 0,
-                      transform: mounted ? 'translateX(0)' : 'translateX(-16px)',
-                      transition: `opacity 0.4s ease ${d(i)}ms, transform 0.4s ease ${d(i)}ms`,
-                    }}
-                  >
-                    <div style={{
-                      width: 22, height: 22, borderRadius: '50%',
-                      background: 'rgba(52,211,153,0.15)',
-                      border: '1px solid rgba(52,211,153,0.35)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      flexShrink: 0,
-                    }}>
-                      <CheckCircle2 size={13} color="#34d399" />
-                    </div>
-                    <span style={{ color: '#cbd5e1', fontSize: 15, fontWeight: 500 }}>{perk}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Divider */}
-              <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)', margin: '0 0 28px' }} />
-
-              {/* Feature chips */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 32 }}>
-                {FEATURE_META.map((f, i) => (
-                  <FeatureChip key={f.key} icon={f.icon} label={tFeatures(f.key)} color={f.color} glow={f.glow} delay={d(i + PERKS.length)} />
-                ))}
-              </div>
-
-              {/* ── Promo code: führt zur eigenen Gutschein-Seite ── */}
-              <div style={{ marginBottom: 24 }}>
-                <button
-                  onClick={() => router.push('/redeem')}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: '#94a3b8', fontSize: 15, fontWeight: 600,
-                    display: 'flex', alignItems: 'center', gap: 8,
-                    padding: 0,
-                    fontFamily: "'DM Sans', sans-serif",
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#a78bfa')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
-                >
-                  <Ticket size={17} />
-                  {t('promo.toggle')}
-                  <ArrowRight size={15} />
-                </button>
-              </div>
-
-              {/* Error */}
-              {error && (
-                <div style={{
-                  marginBottom: 20,
-                  padding: '12px 16px',
-                  background: 'rgba(239,68,68,0.1)',
-                  border: '1px solid rgba(239,68,68,0.25)',
-                  borderRadius: 12,
-                  color: '#fca5a5',
-                  fontSize: 14,
-                }}>
-                  {error}
-                </div>
+              {loading ? (
+                <>
+                  <span className="w-4 h-4 rounded-pill border-2 border-[rgba(255,255,255,0.3)] border-t-on-indigo animate-spin" aria-hidden="true" />
+                  {t('redirecting')}
+                </>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                  {plan === 'yearly' ? t('ctaYearly') : t('ctaMonthly')}
+                </>
               )}
+            </button>
 
-              {/* CTA Button */}
-              <div style={{ position: 'relative' }}>
-                {/* Pulse ring */}
-                {!loading && (
-                  <div style={{
-                    position: 'absolute',
-                    inset: -2,
-                    borderRadius: 18,
-                    border: '2px solid rgba(167,139,250,0.4)',
-                    animation: 'pulseRing 2s ease-out infinite',
-                    pointerEvents: 'none',
-                  }} />
-                )}
-                <button
-                  onClick={handlePayment}
-                  disabled={loading}
-                  onMouseEnter={() => setBtnHovered(true)}
-                  onMouseLeave={() => { setBtnHovered(false); setBtnPressed(false) }}
-                  onMouseDown={() => setBtnPressed(true)}
-                  onMouseUp={() => setBtnPressed(false)}
-                  className="pay-btn-shimmer"
-                  style={{
-                    width: '100%',
-                    padding: '18px 24px',
-                    borderRadius: 16,
-                    border: 'none',
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    opacity: loading ? 0.6 : 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 10,
-                    color: 'white',
-                    fontSize: 17,
-                    fontWeight: 700,
-                    fontFamily: "'DM Sans', sans-serif",
-                    transform: btnPressed ? 'scale(0.98)' : btnHovered ? 'scale(1.02)' : 'scale(1)',
-                    transition: 'transform 0.15s ease, opacity 0.2s ease',
-                    boxShadow: btnHovered
-                      ? '0 20px 50px rgba(168,85,247,0.5), 0 0 0 1px rgba(255,255,255,0.1)'
-                      : '0 10px 30px rgba(168,85,247,0.3)',
-                    letterSpacing: '-0.3px',
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {loading ? (
-                    <>
-                      <div style={{
-                        width: 18, height: 18,
-                        border: '2px solid rgba(255,255,255,0.3)',
-                        borderTopColor: 'white',
-                        borderRadius: '50%',
-                        animation: 'spin 0.7s linear infinite',
-                      }} />
-                      {t('redirecting')}
-                    </>
-                  ) : (
-                    <>
-                      <Lock size={18} />
-                      {plan === 'yearly' ? t('ctaYearly') : t('ctaMonthly')}
-                      <ArrowRight size={18} style={{ marginLeft: 4 }} />
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Trust badges */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 20,
-                marginTop: 20,
-                flexWrap: 'wrap',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#475569', fontSize: 12 }}>
-                  <Shield size={13} color="#34d399" />
-                  <span>{t('trust.stripeSecured')}</span>
-                </div>
-                <div style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.08)' }} />
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#475569', fontSize: 12 }}>
-                  <CreditCard size={13} color="#67e8f9" />
-                  <span>{t('trust.allCards')}</span>
-                </div>
-                <div style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.08)' }} />
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#475569', fontSize: 12 }}>
-                  <CheckCircle2 size={13} color="#a78bfa" />
-                  <span>{t('trust.instantAccess')}</span>
-                </div>
-              </div>
-
-              {/* Skip link */}
-              <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <button
-                  onClick={() => router.push('/dashboard')}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: '#374151', fontSize: 13,
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#6b7280')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#374151')}
-                >
-                  {t('skipLink')}
-                </button>
-              </div>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 ft-data text-ink-faint">
+              <span className="inline-flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+                {t('trust.stripeSecured')}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <CreditCard className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+                {t('trust.allCards')}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+                {t('trust.instantAccess')}
+              </span>
             </div>
 
-            {/* ── Feature icons row below card ── */}
-            <div
-              style={{
-                opacity: mounted ? 1 : 0,
-                transition: 'opacity 0.6s ease 1s',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 24,
-                marginTop: 32,
-                color: '#1e293b',
-                fontSize: 13,
-              }}
-            >
-              <span>{t('trustedBy')}</span>
+            <div className="mt-6 text-center">
+              <button
+                type="button"
+                onClick={() => router.push('/dashboard')}
+                className="text-[14px] text-ink-faint hover:text-ink transition-colors duration-150"
+              >
+                {t('skipLink')}
+              </button>
             </div>
           </div>
-        </main>
-      </div>
-    </>
+        </div>
+      </main>
+    </div>
   )
 }
 

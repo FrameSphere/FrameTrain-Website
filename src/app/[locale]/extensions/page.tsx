@@ -6,7 +6,7 @@ import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 
 const previewIcons = [Brain, Zap, Code2]
-const previewColors = ['from-purple-600 to-pink-600', 'from-blue-600 to-cyan-600', 'from-green-600 to-emerald-600']
+const previewColors = [' ', ' ', ' ']
 
 export default function ExtensionsPage() {
   const t = useTranslations('Extensions')
@@ -21,31 +21,31 @@ export default function ExtensionsPage() {
 
           {/* Icon */}
           <div className="relative inline-flex mb-8">
-            <div className="w-24 h-24 bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/40">
-              <Package className="w-12 h-12 text-white" />
+            <div className="w-24 h-24 bg-ghost-fill border border-line rounded-xl flex items-center justify-center  ">
+              <Package className="w-12 h-12 text-ink" />
             </div>
-            <div className="absolute -top-1 -right-1 w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/50">
-              <span className="text-white text-xs font-bold">!</span>
+            <div className="absolute -top-1 -right-1 w-6 h-6 bg-warning rounded-full flex items-center justify-center ">
+              <span className="text-ink text-xs font-semibold">!</span>
             </div>
           </div>
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-bold mb-6">
-            <span className="inline-flex rounded-full h-1.5 w-1.5 bg-amber-500" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ghost-fill border border-warning text-warning text-sm font-semibold mb-6">
+            <span className="inline-flex rounded-full h-1.5 w-1.5 bg-warning" />
             {t('comingSoon')}
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-gradient-brand">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-6">
+            <span className="text-ink">
               {t('heading')}
             </span>
           </h1>
 
-          <p className="text-xl text-gray-400 mb-4 leading-relaxed">
+          <p className="text-xl text-ink-muted mb-4 leading-relaxed">
             {t('notOpenYet')}
           </p>
-          <p className="text-gray-500 mb-12 max-w-lg mx-auto">
+          <p className="text-ink-faint mb-12 max-w-lg mx-auto">
             {t('description')}
           </p>
 
@@ -54,12 +54,12 @@ export default function ExtensionsPage() {
             {previewCards.map((card, i) => {
               const Icon = previewIcons[i]
               return (
-                <div key={card.label} className="glass-strong rounded-2xl p-5 border border-white/10">
-                  <div className={`w-10 h-10 bg-gradient-to-br ${previewColors[i]} rounded-xl flex items-center justify-center mb-3 mx-auto`}>
-                    <Icon className="w-5 h-5 text-white" />
+                <div key={card.label} className="bg-surface border border-line rounded-lg p-5 border border-line">
+                  <div className={`w-10 h-10 ${previewColors[i]} rounded-md flex items-center justify-center mb-3 mx-auto`}>
+                    <Icon className="w-5 h-5 text-ink" />
                   </div>
-                  <div className="text-white text-sm font-semibold">{card.label}</div>
-                  <div className="text-gray-600 text-xs mt-1">{t('availableSoon')}</div>
+                  <div className="text-ink text-sm font-semibold">{card.label}</div>
+                  <div className="text-ink-faint text-xs mt-1">{t('availableSoon')}</div>
                 </div>
               )
             })}
@@ -68,7 +68,7 @@ export default function ExtensionsPage() {
           {/* Back to Dashboard */}
           <Link
             href="/dashboard"
-            className="card-lift inline-flex items-center gap-2 px-8 py-4 glass-strong border border-white/15 text-gray-300 font-semibold rounded-2xl hover:border-purple-500/40 hover:text-white transition duration-200 ease-out group"
+            className="card-lift inline-flex items-center gap-2 px-8 py-4 bg-surface border border-line border border-line-strong text-ink font-semibold rounded-lg hover:border-line-strong hover:text-ink transition duration-200 ease-out group"
           >
             <ArrowRight className="w-5 h-5 rotate-180" />
             {t('backToDashboard')}

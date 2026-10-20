@@ -88,21 +88,21 @@ function VerifyEmailContent() {
   }, [searchParams])
 
   return (
-    <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10 text-center">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 bg-gradient-to-br from-purple-500 to-pink-500">
-        {status === 'verifying' && <Loader2 className="w-8 h-8 text-white animate-spin" />}
-        {status === 'success' && <CheckCircle className="w-8 h-8 text-white" />}
-        {status === 'error' && <XCircle className="w-8 h-8 text-white" />}
+    <div className="bg-surface border border-line rounded-lg p-8 border border-line text-center">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg mb-4 bg-ghost-fill border border-line ">
+        {status === 'verifying' && <Loader2 className="w-8 h-8 text-ink animate-spin" />}
+        {status === 'success' && <CheckCircle className="w-8 h-8 text-ink" />}
+        {status === 'error' && <XCircle className="w-8 h-8 text-ink" />}
       </div>
-      <h1 className="text-2xl font-bold text-white mb-2">
+      <h1 className="text-2xl font-semibold text-ink mb-2">
         {status === 'verifying' ? t('verifyingTitle') : status === 'success' ? t('successTitle') : t('errorTitle')}
       </h1>
-      <p className="text-gray-400 mb-6">{status === 'verifying' ? t('verifyingText') : message}</p>
+      <p className="text-ink-muted mb-6">{status === 'verifying' ? t('verifyingText') : message}</p>
 
       {status !== 'verifying' && (
         <Link
           href={DESTINATION_HREF[destination]}
-          className="inline-block w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition duration-200 ease-out"
+          className="inline-block w-full py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold   transition duration-200 ease-out"
         >
           {t(DESTINATION_LABEL[destination] as any)}
         </Link>
@@ -120,8 +120,8 @@ export default function VerifyEmailPage() {
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <Suspense fallback={
-            <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10 flex items-center justify-center min-h-[300px]">
-              <div className="text-gray-400">{t('verifyingText')}</div>
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line flex items-center justify-center min-h-[300px]">
+              <div className="text-ink-muted">{t('verifyingText')}</div>
             </div>
           }>
             <VerifyEmailContent />

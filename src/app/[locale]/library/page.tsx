@@ -155,7 +155,6 @@ export default async function LibraryPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen flex flex-col">
-        <div className="fixed inset-0 grid-bg opacity-50 pointer-events-none" />
         <Header />
         <main className="flex-1 relative">
           <LibraryPageClient initialScripts={initialScripts} />

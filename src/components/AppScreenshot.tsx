@@ -51,7 +51,7 @@ export function AppScreenshot({
     <figure className={`my-0 ${className}`}>
       {/* Der Rahmen ist bewusst zurückhaltend: der Screenshot bringt seine
           eigene Fensterdekoration schon mit. */}
-      <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] shadow-[0_16px_48px_-24px_rgba(0,0,0,0.9)]">
+      <div className="rounded-lg overflow-hidden border border-line bg-surface shadow-window">
         <img
           src={`${base}.webp`}
           // w-Deskriptoren statt 1x/2x: `2x` schaut nur auf die Pixeldichte und
@@ -73,7 +73,7 @@ export function AppScreenshot({
         />
       </div>
       {caption && (
-        <figcaption className="mt-3 text-[13px] leading-relaxed text-gray-500">
+        <figcaption className="mt-3 text-[13px] leading-relaxed text-ink-faint">
           {caption}
         </figcaption>
       )}

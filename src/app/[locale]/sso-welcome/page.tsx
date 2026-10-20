@@ -3,319 +3,154 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from '@/i18n/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import { CheckCircle2, ArrowRight, Brain, Zap, BarChart3, Layers } from 'lucide-react'
+import { Header } from '@/components/Header'
+import { Check, ArrowRight, Brain, Zap, BarChart3, Layers } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 type Phase = 'idle' | 'logos' | 'connecting' | 'connected' | 'features' | 'cta'
 
-const easeOut = 'cubic-bezier(0.16, 1, 0.3, 1)'
-
 const FEATURE_META = [
-  { key: 'localTraining' as const, icon: Brain,    color: '#a78bfa', bg: 'rgba(167,139,250,0.08)', border: 'rgba(167,139,250,0.2)' },
-  { key: 'loraFineTuning' as const, icon: Zap,      color: '#f472b6', bg: 'rgba(244,114,182,0.08)', border: 'rgba(244,114,182,0.2)' },
-  { key: 'liveMonitoring' as const, icon: BarChart3,color: '#22d3ee', bg: 'rgba(34,211,238,0.08)',  border: 'rgba(34,211,238,0.2)'  },
-  { key: 'frameSphereConnected' as const, icon: Layers,   color: '#34d399', bg: 'rgba(52,211,153,0.08)',  border: 'rgba(52,211,153,0.2)'  },
+  { key: 'localTraining' as const, icon: Brain },
+  { key: 'loraFineTuning' as const, icon: Zap },
+  { key: 'liveMonitoring' as const, icon: BarChart3 },
+  { key: 'frameSphereConnected' as const, icon: Layers },
 ]
 
-function FrameTrainLogo({ visible }: { visible: boolean }) {
-  const t = useTranslations('SsoWelcome.logos')
-  return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
-      opacity: visible ? 1 : 0,
-      transform: visible ? 'translateX(0) scale(1)' : 'translateX(-60px) scale(0.8)',
-      transition: `opacity 0.7s ${easeOut}, transform 0.7s ${easeOut}`,
-    }}>
-      <div style={{
-        width: 72, height: 72, borderRadius: 20,
-        background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        boxShadow: '0 0 40px rgba(168,85,247,0.5), 0 8px 32px rgba(0,0,0,0.4)',
-        position: 'relative',
-      }}>
-        <Brain size={36} color="white" />
-        <div style={{ position: 'absolute', inset: -1, borderRadius: 21, background: 'linear-gradient(135deg, rgba(255,255,255,0.2), transparent)', pointerEvents: 'none' }} />
-      </div>
-      <div style={{ textAlign: 'center' }}>
-        <div style={{ color: '#f1f5f9', fontWeight: 700, fontSize: 15 }}>FrameTrain</div>
-        <div style={{ color: '#475569', fontSize: 12, marginTop: 2 }}>{t('frameTrainSubtitle')}</div>
-      </div>
-    </div>
-  )
+/** Blendet einen Block ein, sobald seine Phase erreicht ist (240ms, ohne Bewegung bei reduced motion). */
+function reveal(show: boolean) {
+  return `transition-[opacity,transform] duration-[240ms] ease-out motion-reduce:transition-none ${
+    show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+  }`
 }
 
-function FrameSphereLogo({ visible }: { visible: boolean }) {
-  const t = useTranslations('SsoWelcome.logos')
-  return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
-      opacity: visible ? 1 : 0,
-      transform: visible ? 'translateX(0) scale(1)' : 'translateX(60px) scale(0.8)',
-      transition: `opacity 0.7s ${easeOut} 0.15s, transform 0.7s ${easeOut} 0.15s`,
-    }}>
-      <div style={{
-        width: 72, height: 72, borderRadius: 20,
-        background: 'linear-gradient(135deg, #6d28d9, #c026d3)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        boxShadow: '0 0 40px rgba(192,38,211,0.5), 0 8px 32px rgba(0,0,0,0.4)',
-        position: 'relative',
-      }}>
-        <span style={{ color: 'white', fontWeight: 900, fontSize: 26, letterSpacing: '-1px' }}>FS</span>
-        <div style={{ position: 'absolute', inset: -1, borderRadius: 21, background: 'linear-gradient(135deg, rgba(255,255,255,0.2), transparent)', pointerEvents: 'none' }} />
-      </div>
-      <div style={{ textAlign: 'center' }}>
-        <div style={{ color: '#f1f5f9', fontWeight: 700, fontSize: 15 }}>FrameSphere</div>
-        <div style={{ color: '#475569', fontSize: 12, marginTop: 2 }}>{t('frameSphereSubtitle')}</div>
-      </div>
-    </div>
-  )
-}
-
-function ConnectionLine({ phase }: { phase: Phase }) {
-  const drawing = phase === 'connecting' || phase === 'connected' || phase === 'features' || phase === 'cta'
-  const done    = phase === 'connected'  || phase === 'features' || phase === 'cta'
-
-  // ← FIX: single transform that handles both centering AND scale animation
-  const checkTransform = done
-    ? 'translate(-50%, -50%) scale(1)'
-    : 'translate(-50%, -50%) scale(0)'
-
-  return (
-    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: 120 }}>
-      {/* Track */}
-      <div style={{ position: 'relative', width: '100%', height: 2, background: 'rgba(255,255,255,0.05)', borderRadius: 2, overflow: 'hidden' }}>
-        {/* Fill */}
-        <div style={{
-          position: 'absolute', inset: 0, borderRadius: 2,
-          background: 'linear-gradient(90deg, #7c3aed, #c026d3)',
-          transformOrigin: 'left center',
-          transform: drawing ? 'scaleX(1)' : 'scaleX(0)',
-          transition: drawing ? `transform 0.6s ${easeOut}` : 'none',
-          boxShadow: drawing ? '0 0 10px rgba(168,85,247,0.8)' : 'none',
-        }} />
-        {/* Traveling particle */}
-        {drawing && !done && (
-          <div style={{
-            position: 'absolute', top: '50%',
-            width: 8, height: 8, borderRadius: '50%',
-            background: 'white', boxShadow: '0 0 12px rgba(255,255,255,0.9)',
-            transform: 'translateY(-50%)',
-            animation: 'travelDot 0.6s ease-out forwards',
-          }} />
-        )}
-      </div>
-
-      {/* Checkmark – single transform key */}
-      <div style={{
-        position: 'absolute', left: '50%', top: '50%',
-        width: 28, height: 28, borderRadius: '50%',
-        background: done ? 'linear-gradient(135deg, #059669, #34d399)' : 'transparent',
-        border: done ? 'none' : '2px solid rgba(255,255,255,0.1)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        opacity: done ? 1 : 0,
-        transform: checkTransform,                    // ← single key, no duplicate
-        transition: `opacity 0.4s ${easeOut}, transform 0.5s ${easeOut}`,
-        boxShadow: done ? '0 0 20px rgba(52,211,153,0.6)' : 'none',
-      }}>
-        <CheckCircle2 size={16} color="white" strokeWidth={2.5} />
-      </div>
-    </div>
-  )
-}
-
-function FeatureCard({ icon: Icon, title, desc, color, bg, border, delay, visible }: {
-  icon: any; title: string; desc: string; color: string; bg: string; border: string; delay: number; visible: boolean
-}) {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        padding: '18px 20px', borderRadius: 16,
-        background: hovered ? `linear-gradient(135deg, ${bg}, rgba(255,255,255,0.03))` : bg,
-        border: `1px solid ${hovered ? color + '44' : border}`,
-        backdropFilter: 'blur(12px)', cursor: 'default',
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.95)',
-        transition: `opacity 0.5s ${easeOut} ${delay}ms, transform 0.5s ${easeOut} ${delay}ms, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease`,
-        boxShadow: hovered ? `0 8px 32px ${color}22` : 'none',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-        <div style={{
-          width: 38, height: 38, borderRadius: 10,
-          background: `${color}18`, border: `1px solid ${color}30`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-          transform: hovered ? 'scale(1.1) rotate(-4deg)' : 'scale(1)',
-          transition: 'transform 0.25s ease',
-        }}>
-          <Icon size={18} color={color} />
-        </div>
-        <div>
-          <div style={{ color: '#f1f5f9', fontWeight: 600, fontSize: 14, marginBottom: 4 }}>{title}</div>
-          <div style={{ color: '#64748b', fontSize: 13, lineHeight: 1.5 }}>{desc}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
+/**
+ * Begrüßung nach dem FrameSphere-SSO: zwei Marken verbinden sich – eine
+ * Linie zieht sich vom FrameTrain-Icon zur FrameSphere-Kachel, am Ende
+ * erscheint ein Haken. Danach Nutzen und die eine nächste Aktion.
+ */
 export default function SSOWelcomePage() {
-  const { user, isAuthenticated, loading: authLoading } = useAuth()
+  const { isAuthenticated, loading: authLoading } = useAuth()
   const router = useRouter()
   const t = useTranslations('SsoWelcome')
   const tFeatures = useTranslations('SsoWelcome.features')
   const [phase, setPhase] = useState<Phase>('idle')
   const [hasPaid, setHasPaid] = useState<boolean | null>(null)
-  const [btnHovered, setBtnHovered] = useState(false)
 
   useEffect(() => {
     if (authLoading) return
-    if (!isAuthenticated) { router.push('/login'); return }
+    if (!isAuthenticated) {
+      router.push('/login')
+      return
+    }
     fetch('/api/auth/me', { credentials: 'include' })
-      .then(r => r.json())
-      .then(data => setHasPaid(data.user?.hasPaid ?? false))
+      .then((r) => r.json())
+      .then((data) => setHasPaid(data.user?.hasPaid ?? false))
       .catch(() => setHasPaid(false))
-  }, [authLoading, isAuthenticated])
+  }, [authLoading, isAuthenticated, router])
 
   useEffect(() => {
     if (hasPaid === null) return
-    const t: NodeJS.Timeout[] = []
-    t.push(setTimeout(() => setPhase('logos'),      100))
-    t.push(setTimeout(() => setPhase('connecting'), 900))
-    t.push(setTimeout(() => setPhase('connected'),  1600))
-    t.push(setTimeout(() => setPhase('features'),   2200))
-    t.push(setTimeout(() => setPhase('cta'),        2900))
-    return () => t.forEach(clearTimeout)
+    const timers = [
+      setTimeout(() => setPhase('logos'), 100),
+      setTimeout(() => setPhase('connecting'), 700),
+      setTimeout(() => setPhase('connected'), 1400),
+      setTimeout(() => setPhase('features'), 1900),
+      setTimeout(() => setPhase('cta'), 2400),
+    ]
+    return () => timers.forEach(clearTimeout)
   }, [hasPaid])
 
-  const showLogos    = phase !== 'idle'
-  const showFeatures = phase === 'features' || phase === 'cta'
-  const showCta      = phase === 'cta'
-  const showLabel    = phase === 'connected' || phase === 'features' || phase === 'cta'
-  const showHeadline = phase === 'features' || phase === 'cta'
+  const at = (p: Phase) => {
+    const order: Phase[] = ['idle', 'logos', 'connecting', 'connected', 'features', 'cta']
+    return order.indexOf(phase) >= order.indexOf(p)
+  }
 
   if (authLoading || hasPaid === null) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#030712' }}>
-        <div style={{ width: 40, height: 40, border: '2px solid rgba(168,85,247,0.2)', borderTopColor: '#a855f7', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+      <div className="min-h-screen flex items-center justify-center bg-bg">
+        <span className="w-8 h-8 rounded-pill border-2 border-line border-t-ink animate-spin" aria-hidden="true" />
       </div>
     )
   }
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
-        @keyframes spin       { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
-        @keyframes travelDot  { from { left: 0%; }                  to  { left: 100%; } }
-        @keyframes orbPulse   { 0%,100% { opacity:.4; transform:scale(1); } 50% { opacity:.7; transform:scale(1.08); } }
-        @keyframes shimmerBtn { 0% { background-position:-200% center; } 100% { background-position:200% center; } }
-        * { box-sizing:border-box; margin:0; padding:0; }
-      `}</style>
-
-      {/* Background */}
-      <div style={{ position: 'fixed', inset: 0, background: '#030712', overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
-        <div style={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', top: '-150px', left: '50%', transform: 'translateX(-50%)', background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)', animation: 'orbPulse 8s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', bottom: '-80px', left: '20%', background: 'radial-gradient(circle, rgba(192,38,211,0.10) 0%, transparent 70%)', animation: 'orbPulse 10s ease-in-out infinite 2s' }} />
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-      </div>
-
-      <main style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 16px', fontFamily: "'DM Sans', sans-serif" }}>
-        <div style={{ width: '100%', maxWidth: 600, display: 'flex', flexDirection: 'column', gap: 48 }}>
-
-          {/* ── Connection Animation Block ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
-            {/* Logos + line */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 24, justifyContent: 'center' }}>
-              <FrameTrainLogo visible={showLogos} />
-              <ConnectionLine phase={phase} />
-              <FrameSphereLogo visible={showLogos} />
+    <div className="min-h-screen flex flex-col bg-bg text-ink">
+      <Header />
+      <main className="flex-1 ft-container py-12 md:py-20">
+        <div className="max-w-[600px] mx-auto flex flex-col items-center text-center">
+          {/* Verbindung */}
+          <div className={`flex items-center gap-5 ${reveal(at('logos'))}`}>
+            <div className="flex flex-col items-center gap-2">
+              {/* eslint-disable-next-line @next/next/no-img-element -- SVG-Logo */}
+              <img src="/brand/frametrain-icon-indigo.svg" alt="" width={64} height={64} className="w-16 h-16" />
+              <span className="text-[14px] font-semibold">FrameTrain</span>
+              <span className="ft-data text-ink-faint">{t('frameTrainSubtitle')}</span>
             </div>
 
-            {/* "Erfolgreich verbunden" badge */}
-            <div style={{
-              opacity: showLabel ? 1 : 0,
-              transform: showLabel ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.9)',
-              transition: `opacity 0.5s ${easeOut}, transform 0.5s ${easeOut}`,
-              display: 'flex', alignItems: 'center', gap: 8,
-              padding: '8px 20px', borderRadius: 100,
-              background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.3)',
-            }}>
-              <CheckCircle2 size={15} color="#34d399" />
-              <span style={{ color: '#34d399', fontSize: 13, fontWeight: 600 }}>{t('connectedBadge')}</span>
-            </div>
-
-            {/* Headline */}
-            <div style={{
-              textAlign: 'center',
-              opacity: showHeadline ? 1 : 0,
-              transform: showHeadline ? 'translateY(0)' : 'translateY(16px)',
-              transition: `opacity 0.5s ${easeOut} 0.1s, transform 0.5s ${easeOut} 0.1s`,
-            }}>
-              <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(26px, 5vw, 38px)', fontWeight: 900, color: '#f1f5f9', lineHeight: 1.2, letterSpacing: '-1px', marginBottom: 12 }}>
-                {t('headingLine1')}<br />
-                <span style={{ background: 'linear-gradient(90deg, #c4b5fd, #f9a8d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                  {t('headingLine2')}
-                </span>
-              </h1>
-              <p style={{ color: '#64748b', fontSize: 15, lineHeight: 1.6, maxWidth: 440, margin: '0 auto' }}>
-                {t('subtitle')}
-              </p>
-            </div>
-          </div>
-
-          {/* ── Feature Cards ── */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 12 }}>
-            {FEATURE_META.map((f, i) => (
-              <FeatureCard
-                key={f.key}
-                icon={f.icon}
-                title={tFeatures(`${f.key}.title`)}
-                desc={tFeatures(`${f.key}.desc`)}
-                color={f.color}
-                bg={f.bg}
-                border={f.border}
-                delay={i * 80}
-                visible={showFeatures}
+            <div className="relative w-28 h-px bg-line -mt-14" aria-hidden="true">
+              <span
+                className={`absolute inset-y-0 left-0 bg-indigo-text transition-[width] duration-700 ease-out motion-reduce:transition-none ${
+                  at('connecting') ? 'w-full' : 'w-0'
+                }`}
               />
-            ))}
+              <span
+                className={`absolute left-1/2 -translate-x-1/2 -top-[13px] w-[26px] h-[26px] rounded-pill flex items-center justify-center transition-colors duration-150 ${
+                  at('connected') ? 'bg-success text-bg' : 'bg-bg border border-line'
+                }`}
+              >
+                {at('connected') && <Check className="w-3.5 h-3.5" strokeWidth={2} />}
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center gap-2">
+              <span className="w-16 h-16 rounded-lg bg-surface-raised border border-line flex items-center justify-center font-semibold text-[22px] tracking-[-0.03em]">
+                FS
+              </span>
+              <span className="text-[14px] font-semibold">FrameSphere</span>
+              <span className="ft-data text-ink-faint">{t('frameSphereSubtitle')}</span>
+            </div>
           </div>
 
-          {/* ── CTA ── */}
-          <div style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
-            opacity: showCta ? 1 : 0,
-            transform: showCta ? 'translateY(0)' : 'translateY(20px)',
-            transition: `opacity 0.5s ${easeOut}, transform 0.5s ${easeOut}`,
-          }}>
+          <p className={`mt-8 mb-0 ft-label !text-success flex items-center gap-2 ${reveal(at('connected'))}`}>
+            <span className="ft-dot !bg-success" aria-hidden="true" />
+            {t('connectedBadge')}
+          </p>
+
+          <div className={reveal(at('features'))}>
+            <h1 className="ft-display-l mt-6 mb-0">
+              {t('headingLine1')} <span className="text-ink-muted">{t('headingLine2')}</span>
+            </h1>
+            <p className="ft-lead mt-4 mb-0 max-w-[460px] mx-auto">{t('subtitle')}</p>
+          </div>
+
+          <div className={`mt-10 w-full grid gap-px bg-line border border-line rounded-lg overflow-hidden sm:grid-cols-2 text-left ${reveal(at('features'))}`}>
+            {FEATURE_META.map((f) => {
+              const Icon = f.icon
+              return (
+                <div key={f.key} className="bg-bg p-6 flex gap-3.5">
+                  <Icon className="w-5 h-5 mt-0.5 flex-none text-ink-muted" strokeWidth={1.5} aria-hidden="true" />
+                  <div>
+                    <p className="m-0 text-[15px] font-semibold text-ink">{tFeatures(`${f.key}.title`)}</p>
+                    <p className="m-0 mt-1 text-[14px] leading-[22px] text-ink-muted">{tFeatures(`${f.key}.desc`)}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className={`mt-10 flex flex-col items-center gap-3 ${reveal(at('cta'))}`}>
             <button
+              type="button"
               onClick={() => router.push(hasPaid ? '/dashboard' : '/payment')}
-              onMouseEnter={() => setBtnHovered(true)}
-              onMouseLeave={() => setBtnHovered(false)}
-              style={{
-                padding: '16px 48px', borderRadius: 14, border: 'none', cursor: 'pointer',
-                fontSize: 16, fontWeight: 700, fontFamily: "'DM Sans', sans-serif", color: 'white',
-                background: 'linear-gradient(135deg, #7c3aed, #a855f7, #ec4899, #a855f7, #7c3aed)',
-                backgroundSize: '300% 100%',
-                animation: 'shimmerBtn 2.5s linear infinite',
-                transform: btnHovered ? 'scale(1.04) translateY(-2px)' : 'scale(1) translateY(0)',
-                transition: 'transform 0.2s ease',
-                boxShadow: btnHovered ? '0 20px 50px rgba(168,85,247,0.5)' : '0 8px 30px rgba(168,85,247,0.3)',
-                display: 'flex', alignItems: 'center', gap: 10, letterSpacing: '-0.3px',
-              }}
+              className="ft-btn ft-btn--primary"
             >
               {hasPaid ? t('ctaDashboard') : t('ctaUnlock')}
-              <ArrowRight size={18} style={{ transform: btnHovered ? 'translateX(3px)' : 'translateX(0)', transition: 'transform 0.2s ease' }} />
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
             </button>
-            {!hasPaid && (
-              <p style={{ color: '#374151', fontSize: 13 }}>{t('ctaHint')}</p>
-            )}
+            {!hasPaid && <p className="m-0 ft-data text-ink-faint">{t('ctaHint')}</p>}
           </div>
-
         </div>
       </main>
-    </>
+    </div>
   )
 }
