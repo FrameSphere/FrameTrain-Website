@@ -49,7 +49,12 @@
         "madeWithPre": "Made with",
         "madeWithPost": "for ML Engineers",
         "appleSilicon": "Apple Silicon",
-        "compare": "Compare"
+        "compare": "Compare",
+        "taglineNeuron": "The desktop app for training your own AI models – no code, right on your computer.",
+        "learnHeading": "Learn",
+        "coach": "AI Training Coach",
+        "madeIn": "Built solo in Mainz, Germany",
+        "status": "Platform status"
     },
     "Imprint": {
         "metaTitle": "Imprint – FrameTrain",
@@ -803,7 +808,19 @@
             "errors": {
                 "passwordMismatch": "Passwords do not match",
                 "registrationFailed": "Registration failed"
-            }
+            },
+            "trialEyebrow": "14 days free",
+            "trialHeading": "Try FrameTrain for free.",
+            "trialSubtitle": "No payment details. Your trial starts once you confirm your email – and ends on its own after 14 days.",
+            "trialPoints": [
+                "Every feature, for 14 days",
+                "No payment details, no charge",
+                "Download right after confirming"
+            ],
+            "promoLabel": "Voucher code (optional)",
+            "promoPlaceholder": "e.g. REDDIT-FT-01",
+            "promoNote": "We'll remember the code. Redeem it from your dashboard after confirming – discounts apply when you subscribe.",
+            "promoDetected": "Code {code} detected"
         },
         "verifyEmail": {
             "banner": {
@@ -8019,6 +8036,413 @@
             "text": "The fairest comparison is your own. Download FrameTrain and run a local fine-tune on your hardware.",
             "ctaDownload": "Download FrameTrain",
             "ctaDocs": "See the guides"
+        }
+    },
+    "Landing": {
+        "hero": {
+            "eyebrow": "FrameTrain {version} · macOS, Windows & Linux",
+            "titleA": "Train your own AI model.",
+            "titleB": "No code, right on your computer.",
+            "lead": "FrameTrain is the desktop app where you collect data, label it, train a model and test it – in one interface. Your data and models never leave your machine.",
+            "ctaTrial": "Try it free",
+            "ctaDemo": "Watch the demo",
+            "ctaDashboard": "Go to dashboard",
+            "note": "14 days · No payment details · Ends on its own",
+            "benefits": [
+                {
+                    "title": "No code",
+                    "text": "Pick a model, add your data, start training. All from the interface."
+                },
+                {
+                    "title": "Your data stays with you",
+                    "text": "Datasets and training run locally. Nothing is uploaded."
+                },
+                {
+                    "title": "Everything in one app",
+                    "text": "Dataset Builder → Training → Laboratory. No switching tools."
+                }
+            ]
+        },
+        "neuron": {
+            "aria": "Your data, a base model and your GPU flow together into your own model.",
+            "inputs": [
+                {
+                    "label": "Input 01",
+                    "title": "Your data"
+                },
+                {
+                    "label": "Input 02",
+                    "title": "Base model"
+                },
+                {
+                    "label": "Input 03",
+                    "title": "Your GPU"
+                }
+            ],
+            "outputLabel": "Output",
+            "outputTitle": "Your model",
+            "outputFile": "my-classifier · v3 · safetensors",
+            "export": "Export · local API"
+        },
+        "loop": {
+            "eyebrow": "The loop",
+            "titleA": "From raw material to model.",
+            "titleB": "And back again.",
+            "lead": "Most tools stop at training. FrameTrain sends the mistakes from testing back into your dataset – so every version is better than the last.",
+            "pause": "Pause the tour",
+            "play": "Play the tour",
+            "loopBack": "Mistakes from the Laboratory flow back into the Dataset Builder.",
+            "steps": [
+                {
+                    "key": "collect",
+                    "label": "Collect",
+                    "title": "Collect data",
+                    "text": "Images, texts, recordings and videos – from folders, the microphone, web pages or Hugging Face.",
+                    "shot": "studio",
+                    "alt": "FrameTrain Dataset Studio: overview of text, image, audio and video projects with progress bars"
+                },
+                {
+                    "key": "label",
+                    "label": "Label",
+                    "title": "Label with suggestions",
+                    "text": "Draw boxes, assign classes, confirm with the keyboard. A model suggests, you decide.",
+                    "shot": "studio-boxes",
+                    "alt": "Dataset Studio: photo of a ski slope with boxes for lift, tree and offroad, classes and distribution hints on the right"
+                },
+                {
+                    "key": "train",
+                    "label": "Train",
+                    "title": "Train without code",
+                    "text": "Pick a model and dataset, apply a template, start. LoRA and QLoRA sit one level deeper when you need them.",
+                    "shot": "training",
+                    "alt": "Training view: SmolLM2 model, dataset, epochs, batch size and learning rate"
+                },
+                {
+                    "key": "test",
+                    "label": "Test",
+                    "title": "Test in the Laboratory",
+                    "text": "Run real examples and mark them right or wrong. You see exactly where your model still misses.",
+                    "shot": "lab-pose",
+                    "alt": "Laboratory: pose detection on a photo at 92% confidence with Correct and Wrong buttons"
+                },
+                {
+                    "key": "improve",
+                    "label": "Improve",
+                    "title": "Mistakes back into the builder",
+                    "text": "Misdetected examples become corrections in your dataset with one click. Then you train the next version.",
+                    "shot": "lab-results",
+                    "alt": "Laboratory results with rated samples, most common error classes and the Corrections as dataset button"
+                }
+            ]
+        },
+        "io": {
+            "eyebrow": "How it works",
+            "titleA": "Three inputs.",
+            "titleB": "One result you own.",
+            "cells": [
+                {
+                    "label": "Input 01",
+                    "title": "Your data",
+                    "text": "From folders, web pages, the microphone or Hugging Face – cleanly labelled in the Dataset Builder."
+                },
+                {
+                    "label": "Input 02",
+                    "title": "A base model",
+                    "text": "An open model from Hugging Face or a local folder: YOLO, DistilBERT, SmolLM2 and many more."
+                },
+                {
+                    "label": "Input 03",
+                    "title": "Your GPU",
+                    "text": "An NVIDIA graphics card or Apple Silicon. No cloud account, no hourly prices."
+                },
+                {
+                    "label": "Output",
+                    "title": "Your model",
+                    "text": "Versioned, testable, exportable – and ready to use through the local API."
+                }
+            ]
+        },
+        "useCases": {
+            "eyebrow": "What you can build",
+            "titleA": "Three first projects.",
+            "titleB": "No ML degree required.",
+            "lead": "Pick what you want to solve. FrameTrain takes you from the first image to a finished model.",
+            "learnMore": "Learn more",
+            "items": [
+                {
+                    "key": "vision",
+                    "tag": "Vision",
+                    "title": "Object detection for a camera or Raspberry Pi",
+                    "text": "Teach a YOLO model to spot your own objects – tools, animals, parts. Label photos in the Dataset Builder, test them in the Laboratory and through the local API.",
+                    "stack": [
+                        "YOLO11",
+                        "Images + boxes",
+                        "Local API"
+                    ],
+                    "shot": "hosting",
+                    "alt": "Hosting view: a YOLO11 model detects three people in a photo",
+                    "href": "/docs#dataset-builder"
+                },
+                {
+                    "key": "text",
+                    "tag": "Text",
+                    "title": "Your own text classifier",
+                    "text": "Sort support tickets, emails or reviews into your own categories automatically. Collect examples, assign classes, train DistilBERT.",
+                    "stack": [
+                        "DistilBERT",
+                        "Text + classes",
+                        "Local"
+                    ],
+                    "shot": "analysis",
+                    "alt": "Training analysis of a text classifier with train and validation loss curves",
+                    "href": "/guides/local-vs-cloud"
+                },
+                {
+                    "key": "chat",
+                    "tag": "Language model",
+                    "title": "A chatbot that knows your documents",
+                    "text": "Adapt a small language model to your manuals, FAQs or notes with LoRA. Confidential material stays on your machine.",
+                    "stack": [
+                        "SmolLM2",
+                        "LoRA",
+                        "Text → answer"
+                    ],
+                    "shot": "training-lora",
+                    "alt": "Training settings with the LoRA section active: rank 16, alpha 32, target modules",
+                    "href": "/guides/lora-finetuning"
+                }
+            ]
+        },
+        "features": {
+            "eyebrow": "Everything in one app",
+            "titleA": "One tool",
+            "titleB": "instead of ten scripts.",
+            "lead": "Every step has its own view – and they all know each other. The dataset knows which model needs it; the Laboratory knows which training a model came from.",
+            "cta": "See every screen",
+            "items": [
+                {
+                    "title": "Analysis & AI coach",
+                    "text": "Loss curves, an overfitting indicator and a coach that explains your curves and suggests new parameters – with your own AI provider if you like.",
+                    "shot": "coach",
+                    "alt": "Training analysis with the AI coach chat open next to loss and duration values"
+                },
+                {
+                    "title": "Versions",
+                    "text": "Every training run creates a new version with its parameters and metrics. Going back is one click.",
+                    "shot": "versions",
+                    "alt": "Versions overview with models such as yolo-pose, smolvlm and ner-distilbert"
+                },
+                {
+                    "title": "Home with AI briefing",
+                    "text": "What's running, what failed, what was never tested – and the most useful next step.",
+                    "shot": "briefing",
+                    "alt": "FrameTrain home screen with loss trend, best results and an AI briefing"
+                },
+                {
+                    "title": "Synapse Builder",
+                    "badge": "Beta",
+                    "text": "Build your own network architectures as a node graph and train them directly.",
+                    "shot": "synapse",
+                    "alt": "Synapse Builder with a large node graph and the node library on the left"
+                }
+            ]
+        },
+        "specs": {
+            "label": "At a glance",
+            "items": [
+                {
+                    "label": "Platforms",
+                    "value": "3",
+                    "note": "macOS (Apple Silicon), Windows, Linux"
+                },
+                {
+                    "label": "Project types",
+                    "value": "7",
+                    "note": "in the Dataset Builder"
+                },
+                {
+                    "label": "Memory",
+                    "value": "8 GB",
+                    "note": "16 GB recommended"
+                },
+                {
+                    "label": "Free trial",
+                    "value": "14 days",
+                    "note": "no payment details"
+                }
+            ]
+        },
+        "trust": {
+            "eyebrow": "Who's behind it",
+            "titleA": "A solo project from Mainz.",
+            "titleB": "Built in public.",
+            "founder": {
+                "name": "Karol Paschek",
+                "role": "Builds FrameTrain on his own · Mainz, Germany",
+                "text": "I wanted to adapt a language model to my own sensitive data – and hit a wall of Python scripts, dependencies and config files. FrameTrain is the tool I needed back then: one app that wraps the whole stack and keeps your data on your machine.",
+                "cta": "More about FrameTrain"
+            },
+            "platforms": {
+                "heading": "Platform status",
+                "items": [
+                    {
+                        "name": "macOS",
+                        "detail": "Apple Silicon (M1–M4)",
+                        "status": "Stable",
+                        "level": "ok"
+                    },
+                    {
+                        "name": "Windows",
+                        "detail": "Windows 10 and 11",
+                        "status": "Mostly tested",
+                        "level": "ok"
+                    },
+                    {
+                        "name": "Linux",
+                        "detail": "AppImage, Ubuntu 20.04+",
+                        "status": "Experimental",
+                        "level": "exp"
+                    }
+                ],
+                "intel": "Intel Macs are not supported."
+            },
+            "privacy": {
+                "heading": "Privacy, stated precisely",
+                "items": [
+                    {
+                        "title": "Training and data stay local",
+                        "text": "Datasets, models and training runs never leave your machine."
+                    },
+                    {
+                        "title": "No usage telemetry",
+                        "text": "The app sends no usage data. Anonymous crash reports only if you agree."
+                    },
+                    {
+                        "title": "Account and payment are online",
+                        "text": "Login, licence and payment run through frame-train.com and Stripe – GDPR compliant."
+                    }
+                ]
+            },
+            "build": {
+                "heading": "Built in public",
+                "latest": "Current version",
+                "released": "released {date}",
+                "changelog": "Changelog",
+                "github": "Releases on GitHub"
+            },
+            "support": {
+                "heading": "Support",
+                "text": "Questions, bugs, wishes – you write straight to the developer.",
+                "email": "Send an email",
+                "reddit": "r/FrameTrain"
+            }
+        },
+        "demo": {
+            "eyebrow": "Demo",
+            "titleA": "Prefer to watch?",
+            "titleB": "Two short videos.",
+            "lead": "Install first, then train your first model – step by step. The video only loads once you press play."
+        },
+        "coach": {
+            "eyebrow": "Learn for free",
+            "titleA": "The AI Training Coach.",
+            "titleB": "From your first loss to LoRA.",
+            "lead": "Overfitting, loss spikes, the right LoRA rank? The free guide explains training in plain words – with examples from FrameTrain. Every chapter ends where you can try it in the app.",
+            "cta": "Open the coach",
+            "guides": "More guides"
+        },
+        "pricing": {
+            "eyebrow": "Price",
+            "titleA": "One plan. Everything included.",
+            "titleB": "Try first, decide later.",
+            "lead": "14 days free, no payment details. Afterwards you decide whether to keep going – otherwise the trial simply ends.",
+            "monthly": "Monthly",
+            "yearly": "Yearly",
+            "save": "Save 33%",
+            "recommended": "Recommended",
+            "planName": "FrameTrain Early Access",
+            "perMonth": "/ month",
+            "yearlyPrice": "€3.33",
+            "yearlyBilling": "€39.99 per year",
+            "monthlyPrice": "€4.99",
+            "monthlyBilling": "billed monthly",
+            "features": [
+                "The whole app: Dataset Builder, Training, Analysis, Laboratory, Hosting",
+                "Unlimited models and training runs",
+                "Every update while your subscription runs",
+                "Local API for your models",
+                "Support straight from the developer"
+            ],
+            "cta": "Try it free",
+            "ctaNote": "Cancel anytime · Trial ends on its own",
+            "subscribeDirect": "Subscribe directly",
+            "foundingLabel": "Founding members",
+            "foundingCount": "{count} of 100 spots taken",
+            "foundingNote": "Founding members keep this price for good. After that, FrameTrain costs €9.99 a month.",
+            "promoHint": "Have a voucher code?",
+            "promoCta": "Redeem code"
+        },
+        "faqExtra": [
+            {
+                "question": "How does the free trial work?",
+                "answer": "You create an account and can use FrameTrain with every feature for 14 days – no payment details needed. After 14 days the trial ends on its own and nothing is charged. If you want to keep going, you subscribe from your dashboard."
+            }
+        ],
+        "faqTitle": "Frequently asked questions",
+        "faqMore": "See all questions",
+        "about": {
+            "titleA": "What is FrameTrain?",
+            "whyTitle": "Why local instead of cloud?"
+        },
+        "finalCta": {
+            "title": "Train your first model tonight.",
+            "lead": "14 days free, no payment details. If it isn't for you, the trial simply ends.",
+            "primary": "Try it free",
+            "secondary": "Watch the demo"
+        },
+        "mobilePill": {
+            "cta": "Try it free",
+            "price": "from €3.33/month"
+        }
+    },
+    "Island": {
+        "home": "Go to home page",
+        "links": {
+            "loop": "How it works",
+            "pricing": "Price",
+            "coach": "Coach",
+            "download": "Download",
+            "dashboard": "Dashboard",
+            "library": "Library",
+            "docs": "Docs",
+            "guides": "Guides"
+        },
+        "login": "Log in",
+        "logout": "Log out",
+        "trial": "Try it free",
+        "menu": "Open menu",
+        "closeMenu": "Close menu",
+        "language": "Language",
+        "status": {
+            "aria": "Demo training, show details",
+            "ariaClose": "Close details",
+            "demo": "Demo",
+            "model": "Model",
+            "epoch": "Epoch",
+            "eta": "Remaining",
+            "loss": "Train loss",
+            "done": "Done",
+            "version": "v{version}",
+            "whatsNew": "What's new?"
+        },
+        "more": {
+            "screenshots": "Screenshots",
+            "extensions": "Extensions",
+            "library": "Open Library",
+            "guides": "Guides",
+            "docs": "Documentation",
+            "about": "About FrameTrain",
+            "faq": "FAQ"
         }
     }
 }

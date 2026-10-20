@@ -49,7 +49,12 @@
         "madeWithPre": "Erstellt mit",
         "madeWithPost": "für ML Engineers",
         "appleSilicon": "Apple Silicon",
-        "compare": "Vergleich"
+        "compare": "Vergleich",
+        "taglineNeuron": "Die Desktop-App, mit der du eigene KI-Modelle trainierst – ohne Code, lokal auf deinem Rechner.",
+        "learnHeading": "Lernen",
+        "coach": "KI Training Coach",
+        "madeIn": "Allein entwickelt in Mainz",
+        "status": "Plattform-Status"
     },
     "Imprint": {
         "metaTitle": "Impressum – FrameTrain",
@@ -799,7 +804,19 @@
             "errors": {
                 "passwordMismatch": "Passwörter stimmen nicht überein",
                 "registrationFailed": "Registrierung fehlgeschlagen"
-            }
+            },
+            "trialEyebrow": "14 Tage kostenlos",
+            "trialHeading": "Teste FrameTrain kostenlos.",
+            "trialSubtitle": "Keine Zahlungsdaten. Nach der Bestätigung deiner E-Mail startet dein Test – nach 14 Tagen endet er automatisch.",
+            "trialPoints": [
+                "Alle Funktionen, 14 Tage lang",
+                "Keine Zahlungsdaten, keine Abbuchung",
+                "Download direkt nach der Bestätigung"
+            ],
+            "promoLabel": "Gutscheincode (optional)",
+            "promoPlaceholder": "z. B. REDDIT-FT-01",
+            "promoNote": "Wir merken uns den Code. Du löst ihn nach der Bestätigung im Dashboard ein – Rabatte gelten beim Abo-Abschluss.",
+            "promoDetected": "Code {code} erkannt"
         },
         "verifyEmail": {
             "banner": {
@@ -8035,6 +8052,413 @@
             "text": "Der fairste Vergleich ist dein eigener. Lade FrameTrain und starte ein lokales Fine-Tuning auf deiner Hardware.",
             "ctaDownload": "FrameTrain herunterladen",
             "ctaDocs": "Zu den Guides"
+        }
+    },
+    "Landing": {
+        "hero": {
+            "eyebrow": "FrameTrain {version} · macOS, Windows & Linux",
+            "titleA": "Trainiere dein eigenes KI‑Modell.",
+            "titleB": "Ohne Code, lokal auf deinem Rechner.",
+            "lead": "FrameTrain ist die Desktop-App, mit der du Daten sammelst, labelst, ein Modell trainierst und testest – in einer Oberfläche. Deine Daten und Modelle verlassen dabei nie deinen Rechner.",
+            "ctaTrial": "Kostenlos testen",
+            "ctaDemo": "Demo ansehen",
+            "ctaDashboard": "Zum Dashboard",
+            "note": "14 Tage · Keine Zahlungsdaten · Endet automatisch",
+            "benefits": [
+                {
+                    "title": "Ohne Code",
+                    "text": "Modell wählen, Daten rein, Training starten. Alles über die Oberfläche."
+                },
+                {
+                    "title": "Deine Daten bleiben bei dir",
+                    "text": "Datensätze und Training laufen lokal. Nichts wird hochgeladen."
+                },
+                {
+                    "title": "Alles in einer App",
+                    "text": "Dataset Builder → Training → Labor. Kein Wechsel zwischen Tools."
+                }
+            ]
+        },
+        "neuron": {
+            "aria": "Deine Daten, ein Basismodell und deine GPU fließen zusammen in dein eigenes Modell.",
+            "inputs": [
+                {
+                    "label": "Input 01",
+                    "title": "Deine Daten"
+                },
+                {
+                    "label": "Input 02",
+                    "title": "Basismodell"
+                },
+                {
+                    "label": "Input 03",
+                    "title": "Deine GPU"
+                }
+            ],
+            "outputLabel": "Output",
+            "outputTitle": "Dein Modell",
+            "outputFile": "mein-klassifizierer · v3 · safetensors",
+            "export": "Export · lokale API"
+        },
+        "loop": {
+            "eyebrow": "Der Kreislauf",
+            "titleA": "Vom Rohmaterial zum Modell.",
+            "titleB": "Und wieder zurück.",
+            "lead": "Die meisten Tools hören beim Training auf. FrameTrain schickt die Fehler aus dem Test zurück in deinen Datensatz – so wird jede Version besser als die letzte.",
+            "pause": "Rundgang anhalten",
+            "play": "Rundgang abspielen",
+            "loopBack": "Fehler aus dem Labor fließen zurück in den Dataset Builder.",
+            "steps": [
+                {
+                    "key": "collect",
+                    "label": "Sammeln",
+                    "title": "Daten sammeln",
+                    "text": "Bilder, Texte, Aufnahmen und Videos – aus Ordnern, vom Mikrofon, von Webseiten oder von Hugging Face.",
+                    "shot": "studio",
+                    "alt": "FrameTrain Dataset Studio: Übersicht über Projekte für Texte, Bilder, Audio und Video mit Fortschrittsbalken"
+                },
+                {
+                    "key": "label",
+                    "label": "Labeln",
+                    "title": "Labeln mit Vorschlägen",
+                    "text": "Boxen ziehen, Klassen vergeben, per Tastatur bestätigen. Ein Modell schlägt vor, du entscheidest.",
+                    "shot": "studio-boxes",
+                    "alt": "Dataset Studio: Foto einer Skipiste mit Boxen für Lift, Baum und Offroad, rechts Klassen und Verteilungshinweise"
+                },
+                {
+                    "key": "train",
+                    "label": "Trainieren",
+                    "title": "Trainieren ohne Code",
+                    "text": "Modell und Datensatz wählen, Vorlage übernehmen, starten. LoRA und QLoRA liegen eine Ebene tiefer, wenn du sie brauchst.",
+                    "shot": "training",
+                    "alt": "Trainingsansicht: Modell SmolLM2, Datensatz, Epochs, Batch Size und Learning Rate"
+                },
+                {
+                    "key": "test",
+                    "label": "Testen",
+                    "title": "Im Labor testen",
+                    "text": "Echte Beispiele durchlaufen lassen und als richtig oder falsch bewerten. So siehst du, wo dein Modell noch danebenliegt.",
+                    "shot": "lab-pose",
+                    "alt": "Laboratory: Posen-Erkennung auf einem Foto mit 92 % Konfidenz und den Buttons Richtig und Falsch"
+                },
+                {
+                    "key": "improve",
+                    "label": "Verbessern",
+                    "title": "Fehler zurück in den Builder",
+                    "text": "Falsch erkannte Beispiele landen mit einem Klick als Korrekturen im Datensatz. Dann trainierst du die nächste Version.",
+                    "shot": "lab-results",
+                    "alt": "Laboratory-Auswertung mit bewerteten Beispielen, häufigsten Fehlerklassen und dem Button Korrekturen als Datensatz"
+                }
+            ]
+        },
+        "io": {
+            "eyebrow": "So funktioniert's",
+            "titleA": "Drei Eingänge.",
+            "titleB": "Ein Ergebnis, das dir gehört.",
+            "cells": [
+                {
+                    "label": "Input 01",
+                    "title": "Deine Daten",
+                    "text": "Aus Ordnern, Webseiten, vom Mikrofon oder von Hugging Face – im Dataset Builder sauber gelabelt."
+                },
+                {
+                    "label": "Input 02",
+                    "title": "Ein Basismodell",
+                    "text": "Ein offenes Modell von Hugging Face oder aus einem lokalen Ordner: YOLO, DistilBERT, SmolLM2 und viele mehr."
+                },
+                {
+                    "label": "Input 03",
+                    "title": "Deine GPU",
+                    "text": "Eine NVIDIA-Grafikkarte oder Apple Silicon. Kein Cloud-Konto, keine Stundenpreise."
+                },
+                {
+                    "label": "Output",
+                    "title": "Dein Modell",
+                    "text": "Versioniert, testbar, exportierbar – und direkt über die lokale API nutzbar."
+                }
+            ]
+        },
+        "useCases": {
+            "eyebrow": "Was du bauen kannst",
+            "titleA": "Drei erste Projekte.",
+            "titleB": "Ohne ML-Studium.",
+            "lead": "Such dir aus, was du lösen willst. FrameTrain führt dich vom ersten Bild bis zum fertigen Modell.",
+            "learnMore": "Mehr dazu",
+            "items": [
+                {
+                    "key": "vision",
+                    "tag": "Bilderkennung",
+                    "title": "Objekterkennung für Kamera oder Raspberry Pi",
+                    "text": "Bring einem YOLO-Modell bei, deine eigenen Objekte zu erkennen – Werkzeuge, Tiere, Bauteile. Fotos labelst du im Dataset Builder, testen kannst du im Labor und über die lokale API.",
+                    "stack": [
+                        "YOLO11",
+                        "Bilder + Boxen",
+                        "Lokale API"
+                    ],
+                    "shot": "hosting",
+                    "alt": "Hosting-Ansicht: ein YOLO11-Modell erkennt drei Personen auf einem Foto",
+                    "href": "/docs#dataset-builder"
+                },
+                {
+                    "key": "text",
+                    "tag": "Text",
+                    "title": "Dein eigener Textklassifizierer",
+                    "text": "Sortiere Support-Tickets, E-Mails oder Bewertungen automatisch in deine eigenen Kategorien. Beispiele sammeln, Klassen vergeben, DistilBERT trainieren.",
+                    "stack": [
+                        "DistilBERT",
+                        "Text + Klassen",
+                        "Lokal"
+                    ],
+                    "shot": "analysis",
+                    "alt": "Trainingsanalyse eines Textklassifizierers mit Loss-Kurve für Train und Validation",
+                    "href": "/guides/local-vs-cloud"
+                },
+                {
+                    "key": "chat",
+                    "tag": "Sprachmodell",
+                    "title": "Ein Chatbot, der deine Dokumente kennt",
+                    "text": "Passe ein kleines Sprachmodell mit LoRA an deine Handbücher, FAQs oder Notizen an. Vertrauliches bleibt dabei auf deinem Rechner.",
+                    "stack": [
+                        "SmolLM2",
+                        "LoRA",
+                        "Text → Antwort"
+                    ],
+                    "shot": "training-lora",
+                    "alt": "Trainingseinstellungen mit aktivem LoRA-Abschnitt: Rank 16, Alpha 32, Target Modules",
+                    "href": "/guides/lora-finetuning"
+                }
+            ]
+        },
+        "features": {
+            "eyebrow": "Alles in einer App",
+            "titleA": "Ein Werkzeug",
+            "titleB": "statt zehn Skripten.",
+            "lead": "Jeder Schritt hat eine eigene Ansicht – und alle kennen einander. Der Datensatz weiß, welches Modell ihn braucht; das Labor weiß, aus welchem Training ein Modell stammt.",
+            "cta": "Alle Ansichten ansehen",
+            "items": [
+                {
+                    "title": "Analyse & KI-Coach",
+                    "text": "Loss-Kurven, Overfitting-Anzeige und ein Coach, der deine Kurven erklärt und neue Parameter vorschlägt – mit deinem eigenen KI-Anbieter, wenn du willst.",
+                    "shot": "coach",
+                    "alt": "Trainingsanalyse mit geöffnetem KI-Coach-Chat neben Loss- und Laufzeitwerten"
+                },
+                {
+                    "title": "Versionen",
+                    "text": "Jedes Training legt eine neue Version mit Parametern und Metriken an. Zurück zu einer älteren ist ein Klick.",
+                    "shot": "versions",
+                    "alt": "Versionsübersicht mit Modellen wie yolo-pose, smolvlm und ner-distilbert"
+                },
+                {
+                    "title": "Startseite mit KI-Briefing",
+                    "text": "Was läuft, was ist fehlgeschlagen, was wurde nie getestet – und was der sinnvollste nächste Schritt ist.",
+                    "shot": "briefing",
+                    "alt": "FrameTrain-Startseite mit Loss-Trend, besten Ergebnissen und KI-Briefing"
+                },
+                {
+                    "title": "Synapse Builder",
+                    "badge": "Beta",
+                    "text": "Eigene Netzarchitekturen als Knoten-Graph bauen und direkt trainieren.",
+                    "shot": "synapse",
+                    "alt": "Synapse Builder mit einem großen Knoten-Graphen und der Knotenbibliothek links"
+                }
+            ]
+        },
+        "specs": {
+            "label": "Auf einen Blick",
+            "items": [
+                {
+                    "label": "Plattformen",
+                    "value": "3",
+                    "note": "macOS (Apple Silicon), Windows, Linux"
+                },
+                {
+                    "label": "Projekttypen",
+                    "value": "7",
+                    "note": "im Dataset Builder"
+                },
+                {
+                    "label": "Arbeitsspeicher",
+                    "value": "8 GB",
+                    "note": "16 GB empfohlen"
+                },
+                {
+                    "label": "Testphase",
+                    "value": "14 Tage",
+                    "note": "ohne Zahlungsdaten"
+                }
+            ]
+        },
+        "trust": {
+            "eyebrow": "Wer dahintersteht",
+            "titleA": "Ein Solo-Projekt aus Mainz.",
+            "titleB": "Gebaut in der Öffentlichkeit.",
+            "founder": {
+                "name": "Karol Paschek",
+                "role": "Entwickelt FrameTrain allein · Mainz",
+                "text": "Ich wollte ein Sprachmodell auf eigene, sensible Daten anpassen – und stand vor einer Wand aus Python-Skripten, Abhängigkeiten und Konfigurationsdateien. FrameTrain ist das Werkzeug, das ich damals gebraucht hätte: eine App, die den ganzen Stack kapselt und deine Daten auf deinem Rechner lässt.",
+                "cta": "Mehr über FrameTrain"
+            },
+            "platforms": {
+                "heading": "Plattform-Status",
+                "items": [
+                    {
+                        "name": "macOS",
+                        "detail": "Apple Silicon (M1–M4)",
+                        "status": "Stabil",
+                        "level": "ok"
+                    },
+                    {
+                        "name": "Windows",
+                        "detail": "Windows 10 und 11",
+                        "status": "Größtenteils getestet",
+                        "level": "ok"
+                    },
+                    {
+                        "name": "Linux",
+                        "detail": "AppImage, Ubuntu 20.04+",
+                        "status": "Experimentell",
+                        "level": "exp"
+                    }
+                ],
+                "intel": "Intel-Macs werden nicht unterstützt."
+            },
+            "privacy": {
+                "heading": "Datenschutz, genau formuliert",
+                "items": [
+                    {
+                        "title": "Training und Daten bleiben lokal",
+                        "text": "Datensätze, Modelle und Trainingsläufe verlassen deinen Rechner nicht."
+                    },
+                    {
+                        "title": "Keine Nutzungs-Telemetrie",
+                        "text": "Die App schickt keine Nutzungsdaten. Anonyme Fehlerberichte nur, wenn du zustimmst."
+                    },
+                    {
+                        "title": "Konto und Zahlung online",
+                        "text": "Login, Lizenz und Zahlung laufen über frame-train.com und Stripe – DSGVO-konform."
+                    }
+                ]
+            },
+            "build": {
+                "heading": "Build in Public",
+                "latest": "Aktuelle Version",
+                "released": "veröffentlicht am {date}",
+                "changelog": "Changelog",
+                "github": "Releases auf GitHub"
+            },
+            "support": {
+                "heading": "Support",
+                "text": "Fragen, Fehler, Wünsche – du schreibst direkt dem Entwickler.",
+                "email": "E-Mail schreiben",
+                "reddit": "r/FrameTrain"
+            }
+        },
+        "demo": {
+            "eyebrow": "Demo",
+            "titleA": "Lieber zuschauen?",
+            "titleB": "Zwei kurze Videos.",
+            "lead": "Erst installieren, dann das erste Modell trainieren – Schritt für Schritt. Das Video lädt erst, wenn du auf Play klickst."
+        },
+        "coach": {
+            "eyebrow": "Kostenlos lernen",
+            "titleA": "Der KI Training Coach.",
+            "titleB": "Vom ersten Loss bis LoRA.",
+            "lead": "Overfitting, Loss-Spitzen, der richtige LoRA-Rang? Der kostenlose Guide erklärt Training verständlich – mit Beispielen aus FrameTrain. Jedes Kapitel endet dort, wo du es in der App direkt ausprobieren kannst.",
+            "cta": "Coach öffnen",
+            "guides": "Weitere Guides"
+        },
+        "pricing": {
+            "eyebrow": "Preis",
+            "titleA": "Ein Plan. Alles drin.",
+            "titleB": "Erst testen, dann entscheiden.",
+            "lead": "14 Tage kostenlos und ohne Zahlungsdaten. Danach entscheidest du, ob du weitermachst – sonst endet der Test einfach.",
+            "monthly": "Monatlich",
+            "yearly": "Jährlich",
+            "save": "33 % sparen",
+            "recommended": "Empfohlen",
+            "planName": "FrameTrain Early Access",
+            "perMonth": "/ Monat",
+            "yearlyPrice": "3,33 €",
+            "yearlyBilling": "39,99 € pro Jahr",
+            "monthlyPrice": "4,99 €",
+            "monthlyBilling": "monatlich abgerechnet",
+            "features": [
+                "Die ganze App: Dataset Builder, Training, Analyse, Labor, Hosting",
+                "Unbegrenzt viele Modelle und Trainingsläufe",
+                "Alle Updates, solange dein Abo läuft",
+                "Lokale API für deine Modelle",
+                "Support direkt vom Entwickler"
+            ],
+            "cta": "Kostenlos testen",
+            "ctaNote": "Jederzeit kündbar · Test endet automatisch",
+            "subscribeDirect": "Direkt abonnieren",
+            "foundingLabel": "Founding Members",
+            "foundingCount": "{count} von 100 Plätzen vergeben",
+            "foundingNote": "Founding Members behalten diesen Preis dauerhaft. Danach kostet FrameTrain 9,99 € im Monat.",
+            "promoHint": "Gutscheincode?",
+            "promoCta": "Code einlösen"
+        },
+        "faqExtra": [
+            {
+                "question": "Wie funktioniert der kostenlose Test?",
+                "answer": "Du legst ein Konto an und kannst FrameTrain 14 Tage lang mit allen Funktionen nutzen – ohne Zahlungsdaten. Nach 14 Tagen endet der Test automatisch, es wird nichts abgebucht. Wenn du weitermachen willst, schließt du im Dashboard ein Abo ab."
+            }
+        ],
+        "faqTitle": "Häufige Fragen",
+        "faqMore": "Alle Fragen ansehen",
+        "about": {
+            "titleA": "Was ist FrameTrain?",
+            "whyTitle": "Warum lokal statt Cloud?"
+        },
+        "finalCta": {
+            "title": "Trainiere heute Abend dein erstes Modell.",
+            "lead": "14 Tage kostenlos, ohne Zahlungsdaten. Wenn es dir nichts bringt, endet der Test einfach.",
+            "primary": "Kostenlos testen",
+            "secondary": "Demo ansehen"
+        },
+        "mobilePill": {
+            "cta": "Kostenlos testen",
+            "price": "ab 3,33 €/Monat"
+        }
+    },
+    "Island": {
+        "home": "Zur Startseite",
+        "links": {
+            "loop": "So geht's",
+            "pricing": "Preis",
+            "coach": "Coach",
+            "download": "Download",
+            "dashboard": "Dashboard",
+            "library": "Library",
+            "docs": "Docs",
+            "guides": "Guides"
+        },
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "trial": "Kostenlos testen",
+        "menu": "Menü öffnen",
+        "closeMenu": "Menü schließen",
+        "language": "Sprache",
+        "status": {
+            "aria": "Demo-Training, Details anzeigen",
+            "ariaClose": "Details schließen",
+            "demo": "Demo",
+            "model": "Modell",
+            "epoch": "Epoche",
+            "eta": "Restzeit",
+            "loss": "Train-Loss",
+            "done": "Fertig",
+            "version": "v{version}",
+            "whatsNew": "Was ist neu?"
+        },
+        "more": {
+            "screenshots": "Screenshots",
+            "extensions": "Extensions",
+            "library": "Open Library",
+            "guides": "Guides",
+            "docs": "Dokumentation",
+            "about": "Über FrameTrain",
+            "faq": "FAQ"
         }
     }
 }

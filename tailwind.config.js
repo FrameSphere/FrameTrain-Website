@@ -1,4 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+
+// Design-System „Neuron" (V2): jede Farbe kommt aus einer CSS-Variable in
+// globals.css – so schalten Night/Day über data-theme um, ohne dass im
+// Markup ein einziger Hex-Wert steht.
+const token = (name) => `var(--${name})`
+
+const neuronColors = [
+  'bg', 'surface', 'surface-raised', 'line', 'line-strong',
+  'ink', 'ink-muted', 'ink-faint',
+  'indigo', 'indigo-button', 'indigo-hover', 'on-indigo', 'on-indigo-muted', 'indigo-text', 'indigo-soft',
+  'output', 'on-output', 'output-text', 'output-soft',
+  'ghost-fill', 'ghost-edge', 'glass-fill', 'glass-edge',
+  'success', 'warning', 'danger', 'chart-grid',
+].reduce((acc, name) => ({ ...acc, [name]: token(name) }), {})
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,6 +23,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ...neuronColors,
+        // ── Alt-Farben: nur noch für Seiten, die nicht auf Neuron umgestellt sind
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
@@ -26,13 +43,32 @@ module.exports = {
         },
         secondary: 'hsl(var(--secondary))',
         accent: 'hsl(var(--accent))',
-        success: 'hsl(var(--success))',
         muted: {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
         border: 'hsl(var(--border))',
         ring: 'hsl(var(--ring))',
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        mono: ['var(--font-mono)'],
+      },
+      borderRadius: {
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        island: 'var(--radius-island)',
+        pill: 'var(--radius-pill)',
+      },
+      boxShadow: {
+        island: 'var(--shadow-island)',
+        window: 'var(--shadow-window)',
+        'button-edge': 'var(--shadow-button-edge)',
+      },
+      maxWidth: {
+        content: '1120px',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

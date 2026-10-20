@@ -12,20 +12,93 @@
     scroll-behavior: smooth;
   }
 
+  /* ── Design-System „Neuron" (V2) ──────────────────────────────
+     Quelle: Design-System-Artifact „FrameTrain Neuron". Nur diese
+     Werte verwenden, nie Hex im Markup. Night ist Standard, Day
+     gilt für data-theme="light". */
+  :root,
+  [data-theme='dark'] {
+    --bg: #0a0a12;
+    --surface: #11111b;
+    --surface-raised: #191926;
+    --line: #24243a;
+    --line-strong: #6a6a86;
+    --ink: #f4f4f8;
+    --ink-muted: #a6a6bc;
+    --ink-faint: #8a8aa3;
+    --indigo: #3b3ed6;
+    --indigo-button: #4f53f0;
+    --indigo-hover: #5d61ff;
+    --on-indigo: #ffffff;
+    --on-indigo-muted: #e2e3ff;
+    --indigo-text: #9ea1ff;
+    --indigo-soft: #1c1d45;
+    --output: #ff7a3d;
+    --on-output: #0a0a12;
+    --output-text: #ff7a3d;
+    --output-soft: rgba(255, 122, 61, 0.12);
+    --glass-fill: rgba(22, 22, 34, 0.62);
+    --glass-edge: rgba(255, 255, 255, 0.12);
+    --glass-highlight: rgba(255, 255, 255, 0.16);
+    --ghost-fill: rgba(255, 255, 255, 0.06);
+    --ghost-edge: rgba(255, 255, 255, 0.14);
+    --success: #4fc3a1;
+    --warning: #e9b949;
+    --danger: #ff6259;
+    --chart-1: var(--output);
+    --chart-2: var(--indigo-text);
+    --chart-grid: rgba(255, 255, 255, 0.06);
+    --shadow-island: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 18px 40px -12px rgba(0, 0, 0, 0.7);
+    --shadow-window: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
+    --shadow-button-edge: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  [data-theme='light'] {
+    --bg: #f7f7fa;
+    --surface: #ffffff;
+    --surface-raised: #eeeef4;
+    --line: #e3e5ec;
+    --line-strong: #7e7e94;
+    --ink: #0e0e1a;
+    --ink-muted: #55556a;
+    --ink-faint: #6b6b80;
+    --indigo-button: #3b3ed6;
+    --indigo-hover: #2f33c0;
+    --indigo-text: #3b3ed6;
+    --indigo-soft: #e6e7fd;
+    --output-text: #b8461a;
+    --output-soft: #ffe9de;
+    --glass-fill: rgba(255, 255, 255, 0.68);
+    --glass-edge: rgba(14, 14, 26, 0.1);
+    --glass-highlight: rgba(255, 255, 255, 0.9);
+    --ghost-fill: rgba(14, 14, 26, 0.04);
+    --ghost-edge: rgba(14, 14, 26, 0.16);
+    --success: #17704f;
+    --warning: #8a6400;
+    --danger: #c0322a;
+    --chart-grid: rgba(14, 14, 26, 0.08);
+    --shadow-island: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 18px 40px -16px rgba(14, 14, 26, 0.18);
+    --shadow-window: 0 40px 80px -36px rgba(14, 14, 26, 0.22);
+  }
+
   :root {
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-xl: 32px;
+    --radius-island: 26px;
+    --radius-pill: 999px;
+
+    /* Alt-Variablen (HSL-Tripel) für Seiten, die noch nicht auf Neuron
+       umgestellt sind. --success ist oben neu belegt. */
     --background: 0 0% 3%;
     --foreground: 0 0% 98%;
-
     --primary: 280 100% 70%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 200 100% 60%;
     --accent: 340 100% 65%;
-    --success: 150 80% 55%;
-
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 70%;
-
     --border: 0 0% 20%;
     --ring: 280 100% 70%;
 
@@ -41,15 +114,17 @@
   }
 
   * {
-    @apply border-border;
+    border-color: var(--line);
   }
 
+  /* Neuron: kühles Nachtblau, keine Verläufe, kein Raster, kein Glow. */
   body {
-    @apply bg-background text-foreground antialiased;
-    background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%),
-                radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.08) 0%, rgba(0, 0, 0, 0) 50%),
-                #000000;
-    background-attachment: fixed;
+    @apply antialiased;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 28px;
     /* Echte Kapitälchen-Ziffern & Ligaturen statt Browser-Default */
     font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
   }
@@ -85,7 +160,7 @@
   /* Sichtbarer, konsistenter Tastatur-Fokus. Vorher war Fokus je nach
      Element mal ein Tailwind-Ring, mal gar nichts. */
   :focus-visible {
-    outline: 2px solid hsl(var(--ring) / 0.75);
+    outline: 2px solid var(--ink);
     outline-offset: 2px;
   }
 
@@ -108,6 +183,247 @@
       background-attachment: scroll;
     }
   }
+}
+
+/* ── Neuron-Bausteine ───────────────────────────────────────────────
+   Nach components/bundle.css aus dem Design-System. Alles, was mehr als
+   eine Handvoll Utility-Klassen bräuchte oder an mehreren Stellen gleich
+   aussehen muss, lebt hier. */
+@layer components {
+  .ft-container {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .ft-container { padding-inline: 32px; }
+  }
+
+  /* Sektionen liegen meist zwischen 1px-Linien: je Seite 104px ergibt
+     zwischen zwei Inhalten großzügige ~210px, ohne zu zerfallen. */
+  .ft-section { padding-block: 72px; }
+  @media (min-width: 768px) {
+    .ft-section { padding-block: 104px; }
+  }
+
+  /* Typografie */
+  .ft-display-xl {
+    font-weight: 600;
+    font-size: clamp(42px, 7.4vw, 80px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .ft-display-l {
+    font-weight: 600;
+    font-size: clamp(32px, 4.6vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .ft-heading {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .ft-lead {
+    font-size: 18px;
+    line-height: 30px;
+    color: var(--ink-muted);
+  }
+  @media (min-width: 768px) {
+    .ft-lead { font-size: 20px; line-height: 32px; }
+  }
+  .ft-small { font-size: 15px; line-height: 24px; color: var(--ink-muted); }
+  .ft-label {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .ft-data { font-family: var(--font-mono); font-size: 12px; line-height: 18px; }
+  .ft-stat {
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Button – immer Pill. Genau eine Primäraktion pro Ansicht. */
+  .ft-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 28px;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    font: 600 16px/20px var(--font-sans);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out, transform 160ms var(--ease-out);
+  }
+  .ft-btn:active { transform: scale(0.98); }
+  .ft-btn--sm { height: 34px; padding: 0 16px; font-size: 14px; }
+  .ft-btn--primary { background: var(--indigo-button); color: var(--on-indigo); box-shadow: var(--shadow-button-edge); }
+  .ft-btn--primary:hover { background: var(--indigo-hover); }
+  .ft-btn--ghost { background: var(--ghost-fill); border-color: var(--ghost-edge); color: var(--ink); }
+  .ft-btn--ghost:hover { background: var(--surface-raised); }
+  .ft-btn--on-indigo { background: #ffffff; color: #1d1f7a; }
+  .ft-btn--on-indigo:hover { background: var(--on-indigo-muted); }
+  .ft-btn--on-indigo-outline { background: transparent; border-color: rgba(255, 255, 255, 0.4); color: var(--on-indigo); }
+  .ft-btn--on-indigo-outline:hover { border-color: rgba(255, 255, 255, 0.75); }
+  .ft-btn[disabled] {
+    background: var(--surface-raised);
+    color: var(--ink-faint);
+    border-color: var(--line);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .ft-link {
+    color: var(--indigo-text);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 150ms ease-out;
+  }
+  .ft-link:hover { text-decoration-color: currentColor; }
+
+  /* Liquid Glass – NUR Island und mobiles Menü */
+  .ft-glass {
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--shadow-island);
+  }
+
+  /* StatusChip */
+  .ft-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: var(--radius-pill);
+    border: 0;
+    background: var(--output-soft);
+    color: var(--ink);
+    font: 400 12px/18px var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .ft-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-pill);
+    background: var(--output);
+    flex: none;
+    display: block;
+  }
+  .ft-dot--live { animation: ft-breathe 2.4s ease-in-out infinite; }
+  .ft-progress {
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--ghost-edge);
+    overflow: hidden;
+    display: block;
+  }
+  .ft-progress > span {
+    display: block;
+    height: 100%;
+    background: var(--output);
+    border-radius: inherit;
+  }
+
+  /* Card / Fenster */
+  .ft-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+  }
+  .ft-window {
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-window);
+    overflow: hidden;
+  }
+
+  /* IOGrid – 1px-Linien statt Kacheln */
+  .ft-io {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .ft-io__cell { background: var(--bg); padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .ft-io__cell--output { background: var(--surface); }
+  .ft-io__node { width: 10px; height: 10px; border-radius: var(--radius-pill); background: var(--ink); display: block; flex: none; }
+  .ft-io__cell--output .ft-io__node { width: 14px; height: 14px; background: var(--output); }
+
+  /* Code */
+  .ft-code { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+  .ft-code__head {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-raised);
+    font: 400 12px/18px var(--font-mono);
+    color: var(--ink-faint);
+  }
+  .ft-code pre { margin: 0; padding: 16px; font: 400 14px/22px var(--font-mono); color: var(--ink); overflow-x: auto; }
+  .ft-code .k { color: var(--indigo-text); }
+  .ft-code .s { color: var(--output-text); }
+  .ft-code .c { color: var(--ink-faint); }
+
+  /* Field */
+  .ft-input {
+    height: 44px;
+    width: 100%;
+    padding: 0 14px;
+    background: var(--surface-raised);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font: 400 16px/20px var(--font-sans);
+  }
+  .ft-input::placeholder { color: var(--ink-faint); }
+
+  @keyframes ft-fill {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes ft-breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+}
+
+html[data-ft-menu-open] .ft-mobile-pill { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-dot--live { animation: none; }
+  .ft-btn:active { transform: none; }
 }
 
 /* Glassmorphism utilities */
@@ -255,8 +571,8 @@
 
   /* Selection color */
   ::selection {
-    background: rgba(168, 85, 247, 0.28);
-    color: white;
+    background: var(--indigo);
+    color: var(--on-indigo);
   }
 
   /* Grid background */

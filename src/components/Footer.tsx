@@ -1,50 +1,60 @@
-import { Heart } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { CookieSettingsButton } from '@/components/CookieSettingsButton'
 
 /**
- * Fußzeilen-Link.
+ * Fußzeile im Design-System „Neuron": ruhig, 1px-Linie oben, Mono-Labels
+ * als Spaltenköpfe. Keine Verläufe, keine Kacheln.
  *
- * Die 44px-Tap-Targets aus der Mobile-Überarbeitung bleiben – auf dem Handy
- * sind sie nötig. Ab sm greift ein kompakteres Raster: mit Maus braucht ein
- * Textlink keine 44px Höhe, und die Fußzeile war dadurch über 600px hoch,
- * mit so viel Luft zwischen den Einträgen, dass die Spalten nicht mehr als
- * Gruppen lesbar waren.
+ * 44px-Tap-Targets auf dem Handy, ab sm ein kompakteres Raster.
  */
 const footerLink =
-  'inline-flex items-center min-h-[44px] sm:min-h-0 sm:py-[5px] text-gray-400 hover:text-white transition-colors duration-[180ms] ease-out'
+  'inline-flex items-center min-h-[44px] sm:min-h-0 sm:py-[5px] text-[15px] text-ink-muted hover:text-ink transition-colors duration-150 ease-out'
 
 export function Footer() {
   const t = useTranslations('Footer')
 
+  const product = [
+    { href: '/download', label: t('download') },
+    { href: '/install', label: t('install') },
+    { href: '/screenshots', label: t('screenshots') },
+    { href: '/#pricing', label: t('pricing') },
+    { href: '/changelog', label: t('changelog') },
+    { href: '/apple-silicon', label: t('appleSilicon') },
+    { href: '/compare', label: t('compare') },
+  ]
+  const learn = [
+    { href: '/docs/ai-training-guide', label: t('coach') },
+    { href: '/guides', label: t('guides') },
+    { href: '/docs', label: t('docs') },
+    { href: '/faq', label: t('faq') },
+    { href: '/library', label: t('library') },
+    { href: '/about', label: t('about') },
+  ]
+  const legal = [
+    { href: '/privacy', label: t('privacy') },
+    { href: '/terms', label: t('terms') },
+    { href: '/imprint', label: t('imprint') },
+    { href: '/cookies', label: t('cookies') },
+  ]
+
   return (
-    <footer className="relative mt-20 md:mt-32 border-t border-white/5">
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent pointer-events-none" />
-
-      <div className="relative max-w-6xl mx-auto px-4 py-12 md:py-16">
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
-          {/* Brand */}
-          <div className="md:col-span-2">
-            <h3 className="text-gradient-brand text-xl font-semibold mb-3">
-              FrameTrain
-            </h3>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
-              {t('tagline')}
-            </p>
-
-            {/* Social badges
-                Vorher hatten die drei Kacheln drei verschiedene Hover-Farben
-                (lila/blau/pink) – bei nebeneinanderliegenden, gleichrangigen
-                Elementen liest sich das als Bedeutungsunterschied, den es
-                nicht gibt. Jetzt eine gemeinsame Hover-Sprache. */}
-            <div className="flex gap-2 mt-6">
+    <footer className="border-t border-line mt-16">
+      <div className="ft-container pt-16 pb-10">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-2.5 text-ink">
+              {/* eslint-disable-next-line @next/next/no-img-element -- SVG-Logo */}
+              <img src="/brand/frametrain-icon-indigo.svg" alt="" width={30} height={30} className="w-[30px] h-[30px]" />
+              <span className="font-semibold text-[16px] tracking-[-0.01em]">FrameTrain</span>
+            </Link>
+            <p className="mt-4 ft-small max-w-[300px]">{t('taglineNeuron')}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
               <a
                 href="https://github.com/FrameSphere/FrameTrain-App"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/[0.09] transition-colors duration-[180ms] ease-out"
+                className="ft-btn ft-btn--ghost ft-btn--sm"
               >
                 GitHub
               </a>
@@ -52,128 +62,41 @@ export function Footer() {
                 href="https://www.reddit.com/r/FrameTrain/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/[0.09] transition-colors duration-[180ms] ease-out"
+                className="ft-btn ft-btn--ghost ft-btn--sm"
               >
-                Reddit
+                r/FrameTrain
               </a>
-              {/* Discord ist (noch) nicht verlinkt. Vorher sah die Kachel
-                  identisch aus wie die beiden echten Links inklusive
-                  cursor-pointer und Hover – sie hat einen Klick versprochen,
-                  den es nicht gibt. Jetzt klar als inaktiv erkennbar. */}
-              <div className="glass px-4 min-h-[44px] flex items-center rounded-lg text-sm text-gray-600 select-none">
-                {t('discord')}
-              </div>
             </div>
           </div>
 
-          {/* Product */}
-          <div>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 mb-3">{t('productHeading')}</h4>
-            <ul className="text-sm text-gray-400">
-              <li>
-                <Link href="/download" className={footerLink}>
-                  {t('download')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/install" className={footerLink}>
-                  {t('install')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/#features" className={footerLink}>
-                  {t('features')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/screenshots" className={footerLink}>
-                  {t('screenshots')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/apple-silicon" className={footerLink}>
-                  {t('appleSilicon')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/compare" className={footerLink}>
-                  {t('compare')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pricing" className={footerLink}>
-                  {t('pricing')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/docs" className={footerLink}>
-                  {t('docs')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/changelog" className={footerLink}>
-                  {t('changelog')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className={footerLink}>
-                  {t('faq')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/guides" className={footerLink}>
-                  {t('guides')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/library" className={footerLink}>
-                  {t('library')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className={footerLink}>
-                  {t('about')}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 mb-3">{t('legalHeading')}</h4>
-            <ul className="text-sm text-gray-400">
-              <li>
-                <Link href="/privacy" className={footerLink}>
-                  {t('privacy')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className={footerLink}>
-                  {t('terms')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/imprint" className={footerLink}>
-                  {t('imprint')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/cookies" className={footerLink}>
-                  {t('cookies')}
-                </Link>
-              </li>
-              {/* Widerruf der Analyse-Einwilligung – erscheint nur, wenn
-                  überhaupt ein Tag konfiguriert ist. */}
-              <li>
-                <CookieSettingsButton className={`${footerLink} text-left`} />
-              </li>
-            </ul>
-          </div>
+          {[
+            { heading: t('productHeading'), items: product },
+            { heading: t('learnHeading'), items: learn },
+            { heading: t('legalHeading'), items: legal },
+          ].map((col, i) => (
+            <div key={col.heading}>
+              <h2 className="ft-label mb-3">{col.heading}</h2>
+              <ul>
+                {col.items.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className={footerLink}>
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+                {i === 2 && (
+                  <li>
+                    {/* Widerruf der Analyse-Einwilligung – erscheint nur, wenn ein Tag konfiguriert ist */}
+                    <CookieSettingsButton className={`${footerLink} text-left`} />
+                  </li>
+                )}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-gray-500">
+        <div className="mt-14 pt-6 border-t border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3 ft-data text-ink-faint">
+          <span>
             {t.rich('copyright', {
               year: new Date().getFullYear(),
               link: (chunks) => (
@@ -181,21 +104,14 @@ export function Footer() {
                   href="https://frame-sphere.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 no-underline hover:text-gray-300 transition-colors"
+                  className="hover:text-ink transition-colors duration-150"
                 >
                   {chunks}
                 </a>
               ),
             })}
-          </div>
-
-          <div className="flex items-center gap-2 text-xs text-gray-600">
-            <span>{t('madeWithPre')}</span>
-            {/* animate-pulse entfernt: ein pulsierendes Herz ganz unten auf
-                jeder einzelnen Seite ist Dauerbewegung ohne jede Funktion. */}
-            <Heart className="w-3.5 h-3.5 text-pink-500/80 fill-pink-500/80" />
-            <span>{t('madeWithPost')}</span>
-          </div>
+          </span>
+          <span>{t('madeIn')}</span>
         </div>
       </div>
     </footer>
