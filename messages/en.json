@@ -10,6 +10,7 @@
         "dashboard": "Dashboard",
         "library": "Library",
         "extensions": "Extensions",
+        "download": "Download",
         "docs": "Docs",
         "whatsNew": "What's new?",
         "logout": "Log out",
@@ -32,6 +33,7 @@
         "features": "Features",
         "pricing": "Pricing",
         "download": "Download",
+        "install": "Installation guide",
         "docs": "Documentation",
         "changelog": "Changelog",
         "faq": "FAQ",
@@ -7014,7 +7016,8 @@
             "ctaCoach": "AI Training Coach",
             "shotAlt": "FrameTrain desktop app: training configuration with model, dataset, epochs, batch size, learning rate and an expandable LoRA/QLoRA section",
             "shotCaption": "Training configuration in FrameTrain: model, version and dataset on top, hyperparameters below, LoRA/QLoRA one level down.",
-            "shotCta": "See every screen"
+            "shotCta": "See every screen",
+            "installCta": "Installation guide"
         },
         "stats": [
             {

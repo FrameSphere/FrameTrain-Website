@@ -232,10 +232,10 @@ export function Header() {
                           Footer: als siebter Punkt läuft die Desktop-Pille bei
                           exakt 1280px (dem xl-Breakpoint) um 19px über. */}
                       <Link
-                        href="/extensions"
+                        href="/download"
                         className={navLink}
                       >
-                        {t('extensions')}
+                        {t('download')}
                       </Link>
                       <Link
                         href="/library"
@@ -329,6 +329,7 @@ export function Header() {
                   ) : (
                     <>
                       <Link href="/#features" className={drawerLink}>{t('features')}</Link>
+                      <Link href="/download" className={drawerLink}>{t('download')}</Link>
                       <Link href="/screenshots" className={drawerLink}>{t('screenshots')}</Link>
                       <Link href="/extensions" className={drawerLink}>{t('extensions')}</Link>
                       <Link href="/library" className={drawerLink}>{t('library')}</Link>

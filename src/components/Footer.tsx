@@ -76,6 +76,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/install" className={footerLink}>
+                  {t('install')}
+                </Link>
+              </li>
+              <li>
                 <Link href="/#features" className={footerLink}>
                   {t('features')}
                 </Link>

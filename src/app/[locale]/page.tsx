@@ -248,6 +248,13 @@ export default function HomePage() {
                   {t('hero.shotCta')}
                   <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
                 </Link>
+                <Link
+                  href="/install"
+                  className="press inline-flex items-center gap-2 ml-3 px-5 py-2.5 glass border border-white/[0.1] rounded-xl text-[15px] font-medium text-gray-300 hover:text-white hover:border-white/25 transition-colors duration-200 group"
+                >
+                  {t('hero.installCta')}
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+                </Link>
               </div>
             </div>
           </div>
