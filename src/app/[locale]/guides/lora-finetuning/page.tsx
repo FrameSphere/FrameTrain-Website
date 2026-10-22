@@ -74,30 +74,30 @@ export default async function LoraGuidePage({ params }: Props) {
 
       <main className="flex-1">
         {/* Breadcrumb */}
-        <div className="px-4 py-4 border-b border-white/5">
-          <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm text-gray-500">
-            <Link href="/" className="hover:text-purple-400 transition">Home</Link>
+        <div className="px-4 py-4 border-b border-line">
+          <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm text-ink-faint">
+            <Link href="/" className="hover:text-indigo-text transition">Home</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/guides" className="hover:text-purple-400 transition">Guides</Link>
+            <Link href="/guides" className="hover:text-indigo-text transition">Guides</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gray-300">{t('breadcrumb')}</span>
+            <span className="text-ink">{t('breadcrumb')}</span>
           </div>
         </div>
 
         {/* Hero */}
-        <section className="py-16 px-4 border-b border-white/10">
+        <section className="py-16 px-4 border-b border-line">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">{badges[0]}</span>
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">{badges[1]}</span>
+              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-soft text-indigo-text border border-line">{badges[0]}</span>
+              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-soft text-indigo-text border border-line">{badges[1]}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-semibold text-ink mb-6 leading-tight">
               {t('heroTitleLine1')}<br />
-              <span className="text-gradient-brand">
+              <span className="text-ink">
                 {t('heroTitleLine2')}
               </span>
             </h1>
-            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl">
+            <p className="text-xl text-ink-muted leading-relaxed max-w-3xl">
               {t('heroSubtitle')}
             </p>
           </div>
@@ -108,82 +108,82 @@ export default async function LoraGuidePage({ params }: Props) {
           <div className="max-w-4xl mx-auto space-y-12">
 
             {/* Was ist LoRA */}
-            <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <Brain className="w-8 h-8 text-purple-400" />
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line">
+              <h2 className="text-xl sm:text-2xl font-semibold text-ink mb-6 flex items-center gap-3">
+                <Brain className="w-8 h-8 text-indigo-text" />
                 {t('whatIsLora.heading')}
               </h2>
-              <div className="text-gray-300 space-y-4 leading-relaxed">
-                <p>{t.rich('whatIsLora.p1', { b: (chunks) => <strong className="text-white">{chunks}</strong> })}</p>
-                <p>{t.rich('whatIsLora.p2', { b: (chunks) => <strong className="text-white">{chunks}</strong> })}</p>
-                <p>{t.rich('whatIsLora.p3', { b: (chunks) => <strong className="text-white">{chunks}</strong> })}</p>
+              <div className="text-ink space-y-4 leading-relaxed">
+                <p>{t.rich('whatIsLora.p1', { b: (chunks) => <strong className="text-ink">{chunks}</strong> })}</p>
+                <p>{t.rich('whatIsLora.p2', { b: (chunks) => <strong className="text-ink">{chunks}</strong> })}</p>
+                <p>{t.rich('whatIsLora.p3', { b: (chunks) => <strong className="text-ink">{chunks}</strong> })}</p>
               </div>
             </div>
 
             {/* LoRA vs Full Fine-Tuning */}
-            <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-3xl font-bold text-white mb-6">
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line">
+              <h2 className="text-3xl font-semibold text-ink mb-6">
                 {t('vsFull.heading')}
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="glass rounded-xl p-6 border border-purple-500/20">
-                  <h3 className="text-xl font-bold text-purple-400 mb-4">{t('vsFull.loraTitle')}</h3>
+                <div className="bg-surface border border-line rounded-md p-6 border border-line">
+                  <h3 className="text-xl font-semibold text-indigo-text mb-4">{t('vsFull.loraTitle')}</h3>
                   <ul className="space-y-3">
                     {loraItems.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
-                        <Check className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-2 text-ink text-sm">
+                        <Check className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="glass rounded-xl p-6 border border-blue-500/20">
-                  <h3 className="text-xl font-bold text-blue-400 mb-4">{t('vsFull.fullTitle')}</h3>
+                <div className="bg-surface border border-line rounded-md p-6 border border-line">
+                  <h3 className="text-xl font-semibold text-indigo-text mb-4">{t('vsFull.fullTitle')}</h3>
                   <ul className="space-y-3">
                     {fullItems.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
-                        <Check className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-2 text-ink text-sm">
+                        <Check className="w-4 h-4 text-indigo-text flex-shrink-0 mt-0.5" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-              <div className="mt-6 glass rounded-xl p-4 border border-white/10">
-                <p className="text-gray-400 text-sm">
-                  {t.rich('vsFull.ruleOfThumb', { b: (chunks) => <strong className="text-white">{chunks}</strong> })}
+              <div className="mt-6 bg-surface border border-line rounded-md p-4 border border-line">
+                <p className="text-ink-muted text-sm">
+                  {t.rich('vsFull.ruleOfThumb', { b: (chunks) => <strong className="text-ink">{chunks}</strong> })}
                 </p>
               </div>
             </div>
 
             {/* QLoRA */}
-            <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <Cpu className="w-8 h-8 text-blue-400" />
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line">
+              <h2 className="text-xl sm:text-2xl font-semibold text-ink mb-6 flex items-center gap-3">
+                <Cpu className="w-8 h-8 text-indigo-text" />
                 {t('qlora.heading')}
               </h2>
-              <div className="text-gray-300 space-y-4 leading-relaxed">
-                <p>{t.rich('qlora.p1', { b: (chunks) => <strong className="text-white">{chunks}</strong> })}</p>
-                <p>{t.rich('qlora.p2', { b: (chunks) => <strong className="text-white">{chunks}</strong> })}</p>
+              <div className="text-ink space-y-4 leading-relaxed">
+                <p>{t.rich('qlora.p1', { b: (chunks) => <strong className="text-ink">{chunks}</strong> })}</p>
+                <p>{t.rich('qlora.p2', { b: (chunks) => <strong className="text-ink">{chunks}</strong> })}</p>
               </div>
 
               {/* VRAM Table */}
               <div className="mt-6 overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/10">
+                    <tr className="border-b border-line">
                       {tableHeaders.map((h) => (
-                        <th key={h} className="text-left py-3 px-4 text-gray-400 font-semibold">{h}</th>
+                        <th key={h} className="text-left py-3 px-4 text-ink-muted font-semibold">{h}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-line">
                     {tableRows.map((row, i) => (
-                      <tr key={i} className="hover:bg-white/2 transition-colors">
-                        <td className="py-3 px-4 text-white font-medium">{row[0]}</td>
-                        <td className="py-3 px-4 text-red-400">{row[1]}</td>
-                        <td className="py-3 px-4 text-yellow-400">{row[2]}</td>
-                        <td className="py-3 px-4 text-green-400">{row[3]}</td>
+                      <tr key={i} className="hover:bg-ghost-fill transition-colors">
+                        <td className="py-3 px-4 text-ink font-medium">{row[0]}</td>
+                        <td className="py-3 px-4 text-danger">{row[1]}</td>
+                        <td className="py-3 px-4 text-warning">{row[2]}</td>
+                        <td className="py-3 px-4 text-success">{row[3]}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -192,19 +192,19 @@ export default async function LoraGuidePage({ params }: Props) {
             </div>
 
             {/* LoRA Hyperparameter */}
-            <div className="glass-strong rounded-2xl p-8 border border-white/10">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <Code2 className="w-8 h-8 text-green-400" />
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line">
+              <h2 className="text-xl sm:text-2xl font-semibold text-ink mb-6 flex items-center gap-3">
+                <Code2 className="w-8 h-8 text-success" />
                 {t('hyperparams.heading')}
               </h2>
               <div className="space-y-4">
                 {hyperparams.map(({ param, typical, desc }) => (
-                  <div key={param} className="glass rounded-xl p-5 border border-white/10">
+                  <div key={param} className="bg-surface border border-line rounded-md p-5 border border-line">
                     <div className="flex items-center gap-3 mb-2">
-                      <code className="text-purple-400 font-mono font-bold text-sm bg-purple-500/10 px-2 py-1 rounded">{param}</code>
-                      <span className="text-xs text-gray-500">{t('hyperparams.typicalLabel')}: {typical}</span>
+                      <code className="text-indigo-text font-mono font-semibold text-sm bg-indigo-soft px-2 py-1 rounded">{param}</code>
+                      <span className="text-xs text-ink-faint">{t('hyperparams.typicalLabel')}: {typical}</span>
                     </div>
-                    <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+                    <p className="text-ink-muted text-sm leading-relaxed">{desc}</p>
                   </div>
                 ))}
               </div>
@@ -213,14 +213,14 @@ export default async function LoraGuidePage({ params }: Props) {
                   erklärt sie, der Screenshot zeigt den Ort. */}
               <AppScreenshot
                 locale={locale}
-                slug="training"
+                slug="training-lora"
                 alt={t('hyperparams.screenshotAlt')}
                 caption={t('hyperparams.screenshotCaption')}
                 className="mt-8"
               />
               <Link
                 href="/screenshots"
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-purple-400/90 hover:text-purple-300 transition-colors group"
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-indigo-text hover:text-indigo-text transition-colors group"
               >
                 {tShots('tourLinkLabel')}
                 <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
@@ -228,28 +228,28 @@ export default async function LoraGuidePage({ params }: Props) {
             </div>
 
             {/* CTA */}
-            <div className="glass-strong rounded-2xl p-8 border border-purple-500/20 text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-6">
-                <Zap className="w-8 h-8 text-white" />
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-ghost-fill border border-line rounded-lg mb-6">
+                <Zap className="w-8 h-8 text-ink" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-semibold text-ink mb-4">
                 {t('cta.heading')}
               </h3>
-              <p className="text-gray-400 mb-6 max-w-lg mx-auto">
+              <p className="text-ink-muted mb-6 max-w-lg mx-auto">
                 {t('cta.text')}
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
                 <Link
                   href="/register"
-                  className="relative group inline-block px-8 py-3 rounded-xl overflow-hidden"
+                  className="relative group inline-block px-8 py-3 rounded-md overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600" />
-                  <div className="relative flex items-center gap-2 text-white font-semibold">
+                  <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
+                  <div className="relative flex items-center gap-2 text-ink font-semibold">
                     <span>{t('cta.ctaStart')}</span>
                     <ArrowRight className="w-4 h-4" />
                   </div>
                 </Link>
-                <Link href="/docs" className="glass-strong px-8 py-3 rounded-xl text-gray-300 hover:text-white transition font-semibold">
+                <Link href="/docs" className="bg-surface border border-line px-8 py-3 rounded-md text-ink hover:text-ink transition font-semibold">
                   {t('cta.ctaDocs')}
                 </Link>
               </div>

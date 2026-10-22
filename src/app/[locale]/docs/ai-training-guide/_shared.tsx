@@ -24,42 +24,42 @@ export type ChapterId =
 // Static config: IDs, hrefs, emojis, colors — nicht übersetzbar
 export const CHAPTER_META: { id: ChapterId; key: string; emoji: string; href: string; color: string; itemIds: string[] }[] = [
   {
-    id: 'ml-grundlagen', key: 'mlGrundlagen', emoji: '🧠',
+    id: 'ml-grundlagen', key: 'mlGrundlagen', emoji: '',
     href: '/docs/ai-training-guide/ml-grundlagen', color: 'violet',
     itemIds: ['was-ist-ml', 'neuronale-netze', 'transformer', 'wie-ki-lernt'],
   },
   {
-    id: 'training-verstehen', key: 'trainingVerstehen', emoji: '📊',
+    id: 'training-verstehen', key: 'trainingVerstehen', emoji: '',
     href: '/docs/ai-training-guide/training-verstehen', color: 'blue',
     itemIds: ['training-loop', 'loss-funktionen', 'metriken', 'train-val-test'],
   },
   {
-    id: 'trainingsverlauf', key: 'trainingsverlauf', emoji: '📈',
+    id: 'trainingsverlauf', key: 'trainingsverlauf', emoji: '',
     href: '/docs/ai-training-guide/trainingsverlauf', color: 'cyan',
     itemIds: ['loss-kurven', 'gutes-training', 'overfitting', 'underfitting', 'instabiles-training'],
   },
   {
-    id: 'diagnose', key: 'diagnose', emoji: '🩺',
+    id: 'diagnose', key: 'diagnose', emoji: '',
     href: '/docs/ai-training-guide/diagnose', color: 'red',
     itemIds: ['overfitting-fix', 'underfitting-fix', 'lr-probleme', 'loss-spike'],
   },
   {
-    id: 'hyperparameter', key: 'hyperparameter', emoji: '⚙️',
+    id: 'hyperparameter', key: 'hyperparameter', emoji: '',
     href: '/docs/ai-training-guide/hyperparameter', color: 'orange',
     itemIds: ['learning-rate-deep', 'lr-scheduler', 'batch-size-deep', 'optimizer-vergleich', 'regularisierung'],
   },
   {
-    id: 'fine-tuning', key: 'fineTuning', emoji: '🔧',
+    id: 'fine-tuning', key: 'fineTuning', emoji: '',
     href: '/docs/ai-training-guide/fine-tuning', color: 'pink',
     itemIds: ['full-finetuning', 'lora-deep', 'qlora', 'peft-methoden', 'wann-was'],
   },
   {
-    id: 'dataset-mastery', key: 'datasetMastery', emoji: '📦',
+    id: 'dataset-mastery', key: 'datasetMastery', emoji: '',
     href: '/docs/ai-training-guide/dataset-mastery', color: 'green',
     itemIds: ['daten-qualitaet', 'preprocessing', 'augmentation', 'balancing'],
   },
   {
-    id: 'fortgeschrittene', key: 'fortgeschrittene', emoji: '🚀',
+    id: 'fortgeschrittene', key: 'fortgeschrittene', emoji: '',
     href: '/docs/ai-training-guide/fortgeschrittene', color: 'fuchsia',
     itemIds: ['mixed-precision', 'gradient-checkpointing', 'early-stopping', 'ensembles'],
   },
@@ -97,20 +97,20 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
     <div className="flex flex-col lg:flex-row gap-8">
       {/* ── Sidebar ── */}
       <aside className="lg:w-64 flex-shrink-0">
-        <div className="glass-strong rounded-2xl p-5 border border-white/10 sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
-          <Link href="/docs/ai-training-guide" className="flex items-center gap-2 text-gray-500 hover:text-white text-xs mb-4 transition-colors">
+        <div className="bg-surface border border-line rounded-lg p-5 border border-line sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
+          <Link href="/docs/ai-training-guide" className="flex items-center gap-2 text-ink-faint hover:text-ink text-xs mb-4 transition-colors">
             <ArrowLeft className="w-3 h-3" /> {t('sidebar.allChapters')}
           </Link>
 
-          <div className="space-y-1 mb-5 pb-5 border-b border-white/10">
+          <div className="space-y-1 mb-5 pb-5 border-b border-line">
             {CHAPTER_META.map((ch) => (
               <Link
                 key={ch.id}
                 href={ch.href}
-                className={`flex items-center gap-2 w-full text-left px-2 py-1.5 rounded-lg text-xs transition duration-200 ease-out ${
+                className={`flex items-center gap-2 w-full text-left px-2 py-1.5 rounded-sm text-xs transition duration-200 ease-out ${
                   ch.id === currentChapterId
-                    ? 'bg-violet-500/20 text-violet-300 font-semibold border border-violet-400/30'
-                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
+                    ? 'bg-indigo-soft text-indigo-text font-semibold border border-line'
+                    : 'text-ink-faint hover:text-ink hover:bg-ghost-fill'
                 }`}
               >
                 <span className="text-sm">{ch.emoji}</span>
@@ -119,7 +119,7 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
             ))}
           </div>
 
-          <p className="text-gray-600 text-[10px] uppercase tracking-wider font-bold px-2 mb-2">
+          <p className="text-ink-faint text-[10px] uppercase tracking-wider font-semibold px-2 mb-2">
             {t('sidebar.inThisChapter')}
           </p>
           <div className="space-y-0.5">
@@ -127,10 +127,10 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
               <button
                 key={itemId}
                 onClick={() => setActiveSection(itemId)}
-                className={`w-full text-left px-2 py-2 rounded-lg text-xs transition duration-200 ease-out ${
+                className={`w-full text-left px-2 py-2 rounded-sm text-xs transition duration-200 ease-out ${
                   activeSection === itemId
-                    ? 'bg-violet-500/15 text-violet-300 font-medium'
-                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
+                    ? 'bg-indigo-soft text-indigo-text font-medium'
+                    : 'text-ink-faint hover:text-ink hover:bg-ghost-fill'
                 }`}
               >
                 {t(`chapters.${current.key}.items.${ITEM_KEY_MAP[itemId]}`)}
@@ -142,7 +142,7 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
 
       {/* ── Main Content ── */}
       <div className="flex-1 min-w-0">
-        <div className="glass-strong rounded-2xl p-8 md:p-12 border border-white/10">
+        <div className="bg-surface border border-line rounded-lg p-8 md:p-12 border border-line">
           {Object.entries(sections).map(([id, node]) => (
             <div key={id} className={id === activeSection ? '' : 'hidden'}>
               {node}
@@ -153,22 +153,22 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
         {/* Prev / Next */}
         <div className="flex justify-between gap-4 mt-6">
           {prev ? (
-            <Link href={prev.href} className="card-lift flex items-center gap-3 glass border border-white/10 rounded-xl p-4 hover:border-violet-400/30 transition duration-200 ease-out group flex-1">
-              <ArrowLeft className="w-5 h-5 text-gray-500 group-hover:text-violet-400 transition-colors" />
+            <Link href={prev.href} className="card-lift flex items-center gap-3 bg-surface border border-line border border-line rounded-md p-4 hover:border-line transition duration-200 ease-out group flex-1">
+              <ArrowLeft className="w-5 h-5 text-ink-faint group-hover:text-indigo-text transition-colors" />
               <div>
-                <p className="text-gray-600 text-xs">{t('nav.previous')}</p>
-                <p className="text-white font-semibold text-sm">{prev.emoji} {t(`chapters.${prev.key}.title`)}</p>
+                <p className="text-ink-faint text-xs">{t('nav.previous')}</p>
+                <p className="text-ink font-semibold text-sm">{prev.emoji} {t(`chapters.${prev.key}.title`)}</p>
               </div>
             </Link>
           ) : <div />}
 
           {next ? (
-            <Link href={next.href} className="card-lift flex items-center gap-3 glass border border-white/10 rounded-xl p-4 hover:border-violet-400/30 transition duration-200 ease-out group flex-1 justify-end text-right">
+            <Link href={next.href} className="card-lift flex items-center gap-3 bg-surface border border-line border border-line rounded-md p-4 hover:border-line transition duration-200 ease-out group flex-1 justify-end text-right">
               <div>
-                <p className="text-gray-600 text-xs">{t('nav.next')}</p>
-                <p className="text-white font-semibold text-sm">{next.emoji} {t(`chapters.${next.key}.title`)}</p>
+                <p className="text-ink-faint text-xs">{t('nav.next')}</p>
+                <p className="text-ink font-semibold text-sm">{next.emoji} {t(`chapters.${next.key}.title`)}</p>
               </div>
-              <ArrowRight className="w-5 h-5 text-gray-500 group-hover:text-violet-400 transition-colors" />
+              <ArrowRight className="w-5 h-5 text-ink-faint group-hover:text-indigo-text transition-colors" />
             </Link>
           ) : <div />}
         </div>
@@ -181,18 +181,18 @@ export function SubPageLayout({ currentChapterId, activeSection, setActiveSectio
 
 export function InfoBox({ type, title, children }: { type: 'success' | 'warning' | 'info' | 'error'; title: string; children: React.ReactNode }) {
   const cfg = {
-    success: { border: 'border-green-400/25', bg: 'bg-green-400/5', icon: <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />, titleColor: 'text-green-400' },
-    warning: { border: 'border-yellow-400/25', bg: 'bg-yellow-400/5', icon: <AlertTriangle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />, titleColor: 'text-yellow-400' },
-    info:    { border: 'border-blue-400/25',   bg: 'bg-blue-400/5',   icon: <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />,           titleColor: 'text-blue-400' },
-    error:   { border: 'border-red-400/25',    bg: 'bg-red-400/5',    icon: <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />,   titleColor: 'text-red-400' },
+    success: { border: 'border-line', bg: 'bg-ghost-fill', icon: <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />, titleColor: 'text-success' },
+    warning: { border: 'border-line', bg: 'bg-ghost-fill', icon: <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />, titleColor: 'text-warning' },
+    info:    { border: 'border-line',   bg: 'bg-indigo-soft',   icon: <Info className="w-5 h-5 text-indigo-text flex-shrink-0 mt-0.5" />, titleColor: 'text-indigo-text' },
+    error:   { border: 'border-danger',    bg: 'bg-ghost-fill',    icon: <AlertTriangle className="w-5 h-5 text-danger flex-shrink-0 mt-0.5" />, titleColor: 'text-danger' },
   }[type]
   return (
-    <div className={`rounded-xl p-5 border ${cfg.border} ${cfg.bg}`}>
+    <div className={`rounded-md p-5 border ${cfg.border} ${cfg.bg}`}>
       <div className="flex gap-3">
         {cfg.icon}
         <div>
           <p className={`font-semibold mb-1 ${cfg.titleColor}`}>{title}</p>
-          <div className="text-gray-400 text-sm">{children}</div>
+          <div className="text-ink-muted text-sm">{children}</div>
         </div>
       </div>
     </div>
@@ -202,35 +202,35 @@ export function InfoBox({ type, title, children }: { type: 'success' | 'warning'
 export function SectionTitle({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle?: string }) {
   return (
     <div className="mb-8">
-      <h1 className="text-3xl md:text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
-        <span className="text-violet-400">{icon}</span>
+      <h1 className="text-3xl md:text-2xl sm:text-3xl font-semibold text-ink mb-2 flex items-center gap-3">
+        <span className="text-indigo-text">{icon}</span>
         {title}
       </h1>
-      {subtitle && <p className="text-gray-400 text-lg">{subtitle}</p>}
+      {subtitle && <p className="text-ink-muted text-lg">{subtitle}</p>}
     </div>
   )
 }
 
 export function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-2xl font-bold text-white mt-10 mb-5">{children}</h2>
+  return <h2 className="text-2xl font-semibold text-ink mt-10 mb-5">{children}</h2>
 }
 
 export function H3({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-lg font-bold text-white mt-6 mb-3">{children}</h3>
+  return <h3 className="text-lg font-semibold text-ink mt-6 mb-3">{children}</h3>
 }
 
 export function P({ children }: { children: React.ReactNode }) {
-  return <p className="text-gray-400 leading-relaxed mb-4">{children}</p>
+  return <p className="text-ink-muted leading-relaxed mb-4">{children}</p>
 }
 
 export function Highlight({ children }: { children: React.ReactNode }) {
-  return <span className="text-violet-300 font-semibold">{children}</span>
+  return <span className="text-indigo-text font-semibold">{children}</span>
 }
 
 export function CodeBlock({ children }: { children: string }) {
   return (
-    <div className="bg-gray-900/80 border border-white/10 rounded-xl p-5 mb-4 overflow-x-auto">
-      <pre className="text-green-400 font-mono text-sm whitespace-pre-wrap">{children}</pre>
+    <div className="bg-surface border border-line rounded-md p-5 mb-4 overflow-x-auto">
+      <pre className="text-success font-mono text-sm whitespace-pre-wrap">{children}</pre>
     </div>
   )
 }
@@ -241,12 +241,12 @@ export function Rich({ html, as: As = 'span' }: { html: string; as?: 'span' | 'd
 
 export function Tag({ children, color = 'purple' }: { children: React.ReactNode; color?: 'purple' | 'green' | 'red' | 'yellow' | 'blue' | 'cyan' }) {
   const colors: Record<string, string> = {
-    purple: 'bg-violet-500/20 text-violet-300 border-violet-400/30',
-    green:  'bg-green-500/20 text-green-300 border-green-400/30',
-    red:    'bg-red-500/20 text-red-300 border-red-400/30',
-    yellow: 'bg-yellow-500/20 text-yellow-300 border-yellow-400/30',
-    blue:   'bg-blue-500/20 text-blue-300 border-blue-400/30',
-    cyan:   'bg-cyan-500/20 text-cyan-300 border-cyan-400/30',
+    purple: 'bg-indigo-soft text-indigo-text border-line',
+    green:  'bg-ghost-fill text-success border-success',
+    red:    'bg-ghost-fill text-danger border-danger',
+    yellow: 'bg-ghost-fill text-warning border-warning',
+    blue:   'bg-indigo-soft text-indigo-text border-line',
+    cyan:   'bg-indigo-soft text-indigo-text border-line',
   }
   return <span className={`inline-flex px-2 py-0.5 text-xs font-semibold rounded border ${colors[color]}`}>{children}</span>
 }
@@ -257,36 +257,36 @@ export function Tag({ children, color = 'purple' }: { children: React.ReactNode;
 export function GoodTrainingChart() {
   const t = useTranslations('AICoach.charts.goodTraining')
   return (
-    <div className="glass border border-white/10 rounded-xl p-4 mb-4">
-      <p className="text-sm text-green-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4 mb-4">
+      <p className="text-sm text-success mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 220" className="w-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="trainGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.3"/>
-            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0"/>
+            <stop offset="0%" stopColor="var(--chart-1)" stopOpacity="0.3"/>
+            <stop offset="100%" stopColor="var(--chart-1)" stopOpacity="0"/>
           </linearGradient>
         </defs>
         {[40,80,120,160,200].map(y => (
-          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="var(--chart-grid)" strokeWidth="1"/>
         ))}
-        <line x1="50" y1="15" x2="50" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <line x1="50" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <text x="260" y="218" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
-        <text x="18" y="108" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
+        <line x1="50" y1="15" x2="50" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <line x1="50" y1="200" x2="480" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <text x="260" y="218" fill="var(--ink-faint)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
+        <text x="18" y="108" fill="var(--ink-faint)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
         {['1.0','0.6','0.3','0.1'].map((val, i) => (
-          <text key={i} x="45" y={40 + i*53} fill="rgba(255,255,255,0.3)" fontSize="9" textAnchor="end">{val}</text>
+          <text key={i} x="45" y={40 + i*53} fill="var(--ink-faint)" fontSize="9" textAnchor="end">{val}</text>
         ))}
         <path d="M50,35 C80,35 100,50 130,75 C165,100 200,125 240,145 C290,162 340,170 400,173 C430,174 460,175 480,175"
-          fill="none" stroke="#8b5cf6" strokeWidth="2.5" strokeLinecap="round"/>
+          fill="none" stroke="var(--chart-1)" strokeWidth="2.5" strokeLinecap="round"/>
         <path d="M50,35 C80,35 100,50 130,75 C165,100 200,125 240,145 C290,162 340,170 400,173 C430,174 460,175 480,175 L480,200 L50,200 Z"
-          fill="url(#trainGrad)"/>
+          fill="var(--ghost-fill)"/>
         <path d="M50,45 C80,48 110,65 145,88 C180,112 215,135 255,152 C300,167 345,174 400,178 C430,179 460,180 480,180"
-          fill="none" stroke="#06b6d4" strokeWidth="2.5" strokeDasharray="6,3" strokeLinecap="round"/>
-        <rect x="55" y="20" width="12" height="3" fill="#8b5cf6" rx="1"/>
-        <text x="72" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('trainLoss')}</text>
-        <rect x="160" y="20" width="12" height="3" fill="#06b6d4" rx="1"/>
-        <text x="177" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('valLoss')}</text>
-        <text x="370" y="165" fill="rgba(134,239,172,0.9)" fontSize="9">{t('smallGap')}</text>
+          fill="none" stroke="var(--chart-2)" strokeWidth="2.5" strokeDasharray="6,3" strokeLinecap="round"/>
+        <rect x="55" y="20" width="12" height="3" fill="var(--chart-1)" rx="1"/>
+        <text x="72" y="24" fill="var(--ink-muted)" fontSize="10">{t('trainLoss')}</text>
+        <rect x="160" y="20" width="12" height="3" fill="var(--chart-2)" rx="1"/>
+        <text x="177" y="24" fill="var(--ink-muted)" fontSize="10">{t('valLoss')}</text>
+        <text x="370" y="165" fill="var(--success)" fontSize="9">{t('smallGap')}</text>
       </svg>
     </div>
   )
@@ -295,27 +295,27 @@ export function GoodTrainingChart() {
 export function OverfittingChart() {
   const t = useTranslations('AICoach.charts.overfitting')
   return (
-    <div className="glass border border-red-400/20 rounded-xl p-4 mb-4">
-      <p className="text-sm text-red-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-danger rounded-md p-4 mb-4">
+      <p className="text-sm text-danger mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 220" className="w-full" xmlns="http://www.w3.org/2000/svg">
         {[40,80,120,160,200].map(y => (
-          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="var(--chart-grid)" strokeWidth="1"/>
         ))}
-        <line x1="50" y1="15" x2="50" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <line x1="50" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <text x="260" y="218" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
-        <text x="18" y="108" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
+        <line x1="50" y1="15" x2="50" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <line x1="50" y1="200" x2="480" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <text x="260" y="218" fill="var(--ink-faint)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
+        <text x="18" y="108" fill="var(--ink-faint)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
         <path d="M50,40 C90,45 130,65 175,90 C215,110 260,130 310,148 C360,162 410,170 480,175"
-          fill="none" stroke="#8b5cf6" strokeWidth="2.5" strokeLinecap="round"/>
+          fill="none" stroke="var(--chart-1)" strokeWidth="2.5" strokeLinecap="round"/>
         <path d="M50,50 C90,55 130,72 175,90 C210,103 240,108 265,110 C290,112 310,118 340,128 C370,140 410,155 480,175"
-          fill="none" stroke="#f87171" strokeWidth="2.5" strokeDasharray="6,3" strokeLinecap="round"/>
-        <line x1="265" y1="30" x2="265" y2="195" stroke="rgba(251,191,36,0.4)" strokeWidth="1.5" strokeDasharray="4,3"/>
-        <text x="240" y="28" fill="rgba(251,191,36,0.8)" fontSize="9">{t('startsHere1')}</text>
-        <text x="236" y="37" fill="rgba(251,191,36,0.8)" fontSize="9">{t('startsHere2')}</text>
-        <rect x="55" y="20" width="12" height="3" fill="#8b5cf6" rx="1"/>
-        <text x="72" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('trainLoss')}</text>
-        <rect x="160" y="20" width="12" height="3" fill="#f87171" rx="1"/>
-        <text x="177" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('valLoss')}</text>
+          fill="none" stroke="var(--danger)" strokeWidth="2.5" strokeDasharray="6,3" strokeLinecap="round"/>
+        <line x1="265" y1="30" x2="265" y2="195" stroke="var(--warning)" strokeWidth="1.5" strokeDasharray="4,3"/>
+        <text x="240" y="28" fill="var(--warning)" fontSize="9">{t('startsHere1')}</text>
+        <text x="236" y="37" fill="var(--warning)" fontSize="9">{t('startsHere2')}</text>
+        <rect x="55" y="20" width="12" height="3" fill="var(--chart-1)" rx="1"/>
+        <text x="72" y="24" fill="var(--ink-muted)" fontSize="10">{t('trainLoss')}</text>
+        <rect x="160" y="20" width="12" height="3" fill="var(--danger)" rx="1"/>
+        <text x="177" y="24" fill="var(--ink-muted)" fontSize="10">{t('valLoss')}</text>
       </svg>
     </div>
   )
@@ -324,25 +324,25 @@ export function OverfittingChart() {
 export function UnderfittingChart() {
   const t = useTranslations('AICoach.charts.underfitting')
   return (
-    <div className="glass border border-orange-400/20 rounded-xl p-4 mb-4">
-      <p className="text-sm text-orange-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4 mb-4">
+      <p className="text-sm text-warning mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 220" className="w-full" xmlns="http://www.w3.org/2000/svg">
         {[40,80,120,160,200].map(y => (
-          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="var(--chart-grid)" strokeWidth="1"/>
         ))}
-        <line x1="50" y1="15" x2="50" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <line x1="50" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <text x="260" y="218" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
-        <text x="18" y="108" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
+        <line x1="50" y1="15" x2="50" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <line x1="50" y1="200" x2="480" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <text x="260" y="218" fill="var(--ink-faint)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
+        <text x="18" y="108" fill="var(--ink-faint)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
         <path d="M50,45 C90,48 140,52 200,57 C260,63 330,67 400,70 C440,71 460,72 480,72"
-          fill="none" stroke="#8b5cf6" strokeWidth="2.5" strokeLinecap="round"/>
+          fill="none" stroke="var(--chart-1)" strokeWidth="2.5" strokeLinecap="round"/>
         <path d="M50,55 C90,59 140,63 200,68 C260,74 330,78 400,82 C440,83 460,84 480,84"
-          fill="none" stroke="#06b6d4" strokeWidth="2.5" strokeDasharray="6,3" strokeLinecap="round"/>
-        <text x="285" y="58" fill="rgba(251,146,60,0.9)" fontSize="9">{t('stagnate')}</text>
-        <rect x="55" y="20" width="12" height="3" fill="#8b5cf6" rx="1"/>
-        <text x="72" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('trainLoss')}</text>
-        <rect x="160" y="20" width="12" height="3" fill="#06b6d4" rx="1"/>
-        <text x="177" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('valLoss')}</text>
+          fill="none" stroke="var(--chart-2)" strokeWidth="2.5" strokeDasharray="6,3" strokeLinecap="round"/>
+        <text x="285" y="58" fill="var(--warning)" fontSize="9">{t('stagnate')}</text>
+        <rect x="55" y="20" width="12" height="3" fill="var(--chart-1)" rx="1"/>
+        <text x="72" y="24" fill="var(--ink-muted)" fontSize="10">{t('trainLoss')}</text>
+        <rect x="160" y="20" width="12" height="3" fill="var(--chart-2)" rx="1"/>
+        <text x="177" y="24" fill="var(--ink-muted)" fontSize="10">{t('valLoss')}</text>
       </svg>
     </div>
   )
@@ -351,21 +351,21 @@ export function UnderfittingChart() {
 export function HighLRChart() {
   const t = useTranslations('AICoach.charts.highLr')
   return (
-    <div className="glass border border-yellow-400/20 rounded-xl p-4 mb-4">
-      <p className="text-sm text-yellow-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4 mb-4">
+      <p className="text-sm text-warning mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 220" className="w-full" xmlns="http://www.w3.org/2000/svg">
         {[40,80,120,160,200].map(y => (
-          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="var(--chart-grid)" strokeWidth="1"/>
         ))}
-        <line x1="50" y1="15" x2="50" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <line x1="50" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <text x="260" y="218" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
-        <text x="18" y="108" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
+        <line x1="50" y1="15" x2="50" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <line x1="50" y1="200" x2="480" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <text x="260" y="218" fill="var(--ink-faint)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
+        <text x="18" y="108" fill="var(--ink-faint)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
         <path d="M50,60 L100,140 L150,50 L200,130 L250,60 L300,145 L350,55 L400,130 L450,75 L480,120"
-          fill="none" stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <text x="200" y="35" fill="rgba(251,191,36,0.9)" fontSize="10">{t('note')}</text>
-        <rect x="55" y="20" width="12" height="3" fill="#fbbf24" rx="1"/>
-        <text x="72" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('trainLoss')}</text>
+          fill="none" stroke="var(--warning)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <text x="200" y="35" fill="var(--warning)" fontSize="10">{t('note')}</text>
+        <rect x="55" y="20" width="12" height="3" fill="var(--warning)" rx="1"/>
+        <text x="72" y="24" fill="var(--ink-muted)" fontSize="10">{t('trainLoss')}</text>
       </svg>
     </div>
   )
@@ -374,21 +374,21 @@ export function HighLRChart() {
 export function LowLRChart() {
   const t = useTranslations('AICoach.charts.lowLr')
   return (
-    <div className="glass border border-blue-400/20 rounded-xl p-4 mb-4">
-      <p className="text-sm text-blue-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4 mb-4">
+      <p className="text-sm text-indigo-text mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 220" className="w-full" xmlns="http://www.w3.org/2000/svg">
         {[40,80,120,160,200].map(y => (
-          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="var(--chart-grid)" strokeWidth="1"/>
         ))}
-        <line x1="50" y1="15" x2="50" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <line x1="50" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <text x="260" y="218" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
-        <text x="18" y="108" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
+        <line x1="50" y1="15" x2="50" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <line x1="50" y1="200" x2="480" y2="200" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <text x="260" y="218" fill="var(--ink-faint)" fontSize="11" textAnchor="middle">{t('epochs')}</text>
+        <text x="18" y="108" fill="var(--ink-faint)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,108)">{t('loss')}</text>
         <path d="M50,45 C100,46 170,48 240,52 C310,56 380,60 480,65"
-          fill="none" stroke="#60a5fa" strokeWidth="2.5" strokeLinecap="round"/>
-        <text x="200" y="35" fill="rgba(96,165,250,0.9)" fontSize="10">{t('note')}</text>
-        <rect x="55" y="20" width="12" height="3" fill="#60a5fa" rx="1"/>
-        <text x="72" y="24" fill="rgba(255,255,255,0.7)" fontSize="10">{t('trainLoss')}</text>
+          fill="none" stroke="var(--indigo-text)" strokeWidth="2.5" strokeLinecap="round"/>
+        <text x="200" y="35" fill="var(--indigo-text)" fontSize="10">{t('note')}</text>
+        <rect x="55" y="20" width="12" height="3" fill="var(--indigo-text)" rx="1"/>
+        <text x="72" y="24" fill="var(--ink-muted)" fontSize="10">{t('trainLoss')}</text>
       </svg>
     </div>
   )
@@ -397,23 +397,23 @@ export function LowLRChart() {
 export function LRSchedulerChart() {
   const t = useTranslations('AICoach.charts.lrScheduler')
   return (
-    <div className="glass border border-violet-400/20 rounded-xl p-4 mb-4">
-      <p className="text-sm text-violet-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4 mb-4">
+      <p className="text-sm text-indigo-text mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 180" className="w-full" xmlns="http://www.w3.org/2000/svg">
         {[30,65,100,135,165].map(y => (
-          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+          <line key={y} x1="50" y1={y} x2="480" y2={y} stroke="var(--chart-grid)" strokeWidth="1"/>
         ))}
-        <line x1="50" y1="15" x2="50" y2="165" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <line x1="50" y1="165" x2="480" y2="165" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
-        <text x="260" y="178" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle">{t('steps')}</text>
-        <text x="18" y="90" fill="rgba(255,255,255,0.4)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,90)">{t('lrAxis')}</text>
+        <line x1="50" y1="15" x2="50" y2="165" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <line x1="50" y1="165" x2="480" y2="165" stroke="var(--line-strong)" strokeWidth="1.5"/>
+        <text x="260" y="178" fill="var(--ink-faint)" fontSize="11" textAnchor="middle">{t('steps')}</text>
+        <text x="18" y="90" fill="var(--ink-faint)" fontSize="11" textAnchor="middle" transform="rotate(-90,18,90)">{t('lrAxis')}</text>
         <path d="M50,160 L110,30 C180,30 200,32 240,50 C280,70 320,95 360,120 C400,143 440,155 480,160"
-          fill="none" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round"/>
-        <rect x="50" y="20" width="60" height="140" fill="rgba(167,139,250,0.08)" rx="2"/>
-        <text x="80" y="17" fill="rgba(167,139,250,0.7)" fontSize="9" textAnchor="middle">{t('warmup')}</text>
-        <text x="300" y="17" fill="rgba(167,139,250,0.7)" fontSize="9" textAnchor="middle">{t('cosine')}</text>
-        <rect x="55" y="7" width="12" height="3" fill="#a78bfa" rx="1"/>
-        <text x="72" y="11" fill="rgba(255,255,255,0.7)" fontSize="10">{t('lr')}</text>
+          fill="none" stroke="var(--indigo-text)" strokeWidth="2.5" strokeLinecap="round"/>
+        <rect x="50" y="20" width="60" height="140" fill="var(--indigo-soft)" rx="2"/>
+        <text x="80" y="17" fill="var(--indigo-text)" fontSize="9" textAnchor="middle">{t('warmup')}</text>
+        <text x="300" y="17" fill="var(--indigo-text)" fontSize="9" textAnchor="middle">{t('cosine')}</text>
+        <rect x="55" y="7" width="12" height="3" fill="var(--indigo-text)" rx="1"/>
+        <text x="72" y="11" fill="var(--ink-muted)" fontSize="10">{t('lr')}</text>
       </svg>
     </div>
   )
@@ -422,31 +422,31 @@ export function LRSchedulerChart() {
 export function LoRADiagram() {
   const t = useTranslations('AICoach.charts.lora')
   return (
-    <div className="glass border border-violet-400/20 rounded-xl p-4">
-      <p className="text-sm text-violet-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4">
+      <p className="text-sm text-indigo-text mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 200" className="w-full" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="80" width="60" height="40" fill="rgba(139,92,246,0.2)" stroke="#8b5cf6" strokeWidth="1.5" rx="6"/>
-        <text x="50" y="105" fill="#c4b5fd" fontSize="11" textAnchor="middle">{t('input')}</text>
-        <path d="M80,100 L150,100" stroke="rgba(255,255,255,0.3)" strokeWidth="2"/>
-        <rect x="150" y="65" width="100" height="70" fill="rgba(75,85,99,0.4)" stroke="rgba(107,114,128,0.5)" strokeWidth="1.5" rx="6"/>
-        <text x="200" y="97" fill="rgba(209,213,219,0.6)" fontSize="11" textAnchor="middle">{t('frozen')}</text>
-        <text x="200" y="112" fill="rgba(156,163,175,0.5)" fontSize="9" textAnchor="middle">{t('frozenSub')}</text>
-        <path d="M250,100 L310,100" stroke="rgba(255,255,255,0.3)" strokeWidth="2"/>
-        <path d="M80,100 L80,165 L150,165" stroke="rgba(167,139,250,0.5)" strokeWidth="1.5" strokeDasharray="4,3"/>
-        <rect x="150" y="148" width="55" height="35" fill="rgba(139,92,246,0.3)" stroke="#8b5cf6" strokeWidth="1.5" rx="6"/>
-        <text x="177" y="168" fill="#a78bfa" fontSize="10" textAnchor="middle">A (d×r)</text>
-        <path d="M205,165 L240,165" stroke="rgba(167,139,250,0.5)" strokeWidth="1.5" strokeDasharray="4,3"/>
-        <rect x="240" y="148" width="55" height="35" fill="rgba(139,92,246,0.3)" stroke="#8b5cf6" strokeWidth="1.5" rx="6"/>
-        <text x="267" y="168" fill="#a78bfa" fontSize="10" textAnchor="middle">B (r×d)</text>
-        <path d="M295,165 L340,165 L340,115" stroke="rgba(167,139,250,0.5)" strokeWidth="1.5" strokeDasharray="4,3"/>
-        <circle cx="330" cy="100" r="12" fill="rgba(74,222,128,0.2)" stroke="rgba(74,222,128,0.5)" strokeWidth="1.5"/>
-        <text x="330" y="105" fill="#4ade80" fontSize="14" textAnchor="middle">+</text>
-        <path d="M342,100 L400,100" stroke="rgba(255,255,255,0.3)" strokeWidth="2"/>
-        <rect x="400" y="80" width="80" height="40" fill="rgba(74,222,128,0.2)" stroke="rgba(74,222,128,0.5)" strokeWidth="1.5" rx="6"/>
-        <text x="440" y="101" fill="#86efac" fontSize="10" textAnchor="middle">{t('output')}</text>
-        <text x="440" y="114" fill="rgba(134,239,172,0.6)" fontSize="9" textAnchor="middle">W·x + BAx</text>
-        <text x="177" y="145" fill="rgba(167,139,250,0.8)" fontSize="8" textAnchor="middle">{t('trainable')}</text>
-        <text x="200" y="60" fill="rgba(156,163,175,0.6)" fontSize="8" textAnchor="middle">{t('frozenLabel')}</text>
+        <rect x="20" y="80" width="60" height="40" fill="var(--indigo-soft)" stroke="var(--chart-1)" strokeWidth="1.5" rx="6"/>
+        <text x="50" y="105" fill="var(--indigo-text)" fontSize="11" textAnchor="middle">{t('input')}</text>
+        <path d="M80,100 L150,100" stroke="var(--line-strong)" strokeWidth="2"/>
+        <rect x="150" y="65" width="100" height="70" fill="var(--surface-raised)" stroke="var(--line-strong)" strokeWidth="1.5" rx="6"/>
+        <text x="200" y="97" fill="var(--ink-muted)" fontSize="11" textAnchor="middle">{t('frozen')}</text>
+        <text x="200" y="112" fill="var(--ink-faint)" fontSize="9" textAnchor="middle">{t('frozenSub')}</text>
+        <path d="M250,100 L310,100" stroke="var(--line-strong)" strokeWidth="2"/>
+        <path d="M80,100 L80,165 L150,165" stroke="var(--indigo-text)" strokeWidth="1.5" strokeDasharray="4,3"/>
+        <rect x="150" y="148" width="55" height="35" fill="var(--indigo-soft)" stroke="var(--chart-1)" strokeWidth="1.5" rx="6"/>
+        <text x="177" y="168" fill="var(--indigo-text)" fontSize="10" textAnchor="middle">A (d×r)</text>
+        <path d="M205,165 L240,165" stroke="var(--indigo-text)" strokeWidth="1.5" strokeDasharray="4,3"/>
+        <rect x="240" y="148" width="55" height="35" fill="var(--indigo-soft)" stroke="var(--chart-1)" strokeWidth="1.5" rx="6"/>
+        <text x="267" y="168" fill="var(--indigo-text)" fontSize="10" textAnchor="middle">B (r×d)</text>
+        <path d="M295,165 L340,165 L340,115" stroke="var(--indigo-text)" strokeWidth="1.5" strokeDasharray="4,3"/>
+        <circle cx="330" cy="100" r="12" fill="var(--ghost-fill)" stroke="var(--success)" strokeWidth="1.5"/>
+        <text x="330" y="105" fill="var(--success)" fontSize="14" textAnchor="middle">+</text>
+        <path d="M342,100 L400,100" stroke="var(--line-strong)" strokeWidth="2"/>
+        <rect x="400" y="80" width="80" height="40" fill="var(--ghost-fill)" stroke="var(--success)" strokeWidth="1.5" rx="6"/>
+        <text x="440" y="101" fill="var(--success)" fontSize="10" textAnchor="middle">{t('output')}</text>
+        <text x="440" y="114" fill="var(--success)" fontSize="9" textAnchor="middle">W·x + BAx</text>
+        <text x="177" y="145" fill="var(--indigo-text)" fontSize="8" textAnchor="middle">{t('trainable')}</text>
+        <text x="200" y="60" fill="var(--ink-muted)" fontSize="8" textAnchor="middle">{t('frozenLabel')}</text>
       </svg>
     </div>
   )
@@ -455,37 +455,37 @@ export function LoRADiagram() {
 export function NNDiagram() {
   const t = useTranslations('AICoach.charts.nn')
   return (
-    <div className="glass border border-white/10 rounded-xl p-4">
-      <p className="text-sm text-gray-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4">
+      <p className="text-sm text-ink-muted mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 200" className="w-full" xmlns="http://www.w3.org/2000/svg">
         {[50,80,110,140,170].map((y,i) => (
-          <circle key={i} cx="80" cy={y} r="14" fill="rgba(139,92,246,0.2)" stroke="#8b5cf6" strokeWidth="1.5"/>
+          <circle key={i} cx="80" cy={y} r="14" fill="var(--indigo-soft)" stroke="var(--chart-1)" strokeWidth="1.5"/>
         ))}
         {[60,90,120,150].map((y,i) => (
-          <circle key={i} cx="210" cy={y} r="14" fill="rgba(167,139,250,0.2)" stroke="#a78bfa" strokeWidth="1.5"/>
+          <circle key={i} cx="210" cy={y} r="14" fill="var(--indigo-soft)" stroke="var(--indigo-text)" strokeWidth="1.5"/>
         ))}
         {[60,90,120,150].map((y,i) => (
-          <circle key={i} cx="340" cy={y} r="14" fill="rgba(196,181,253,0.2)" stroke="#c4b5fd" strokeWidth="1.5"/>
+          <circle key={i} cx="340" cy={y} r="14" fill="var(--indigo-soft)" stroke="var(--indigo-text)" strokeWidth="1.5"/>
         ))}
         {[80,110,140].map((y,i) => (
-          <circle key={i} cx="450" cy={y} r="14" fill="rgba(244,114,182,0.2)" stroke="#f472b6" strokeWidth="1.5"/>
+          <circle key={i} cx="450" cy={y} r="14" fill="var(--output)" stroke="var(--output)" strokeWidth="1.5"/>
         ))}
         {[50,110,170].map((y1) => [60,120].map((y2,j) => (
-          <line key={`${y1}${j}`} x1="94" y1={y1} x2="196" y2={y2} stroke="rgba(139,92,246,0.15)" strokeWidth="1"/>
+          <line key={`${y1}${j}`} x1="94" y1={y1} x2="196" y2={y2} stroke="var(--indigo-text)" strokeWidth="1"/>
         )))}
         {[60,120].map((y1) => [60,120].map((y2,j) => (
-          <line key={`h${y1}${j}`} x1="224" y1={y1} x2="326" y2={y2} stroke="rgba(167,139,250,0.15)" strokeWidth="1"/>
+          <line key={`h${y1}${j}`} x1="224" y1={y1} x2="326" y2={y2} stroke="var(--indigo-text)" strokeWidth="1"/>
         )))}
         {[60,120].map((y1) => [80,110,140].map((y2,j) => (
-          <line key={`o${y1}${j}`} x1="354" y1={y1} x2="436" y2={y2} stroke="rgba(196,181,253,0.15)" strokeWidth="1"/>
+          <line key={`o${y1}${j}`} x1="354" y1={y1} x2="436" y2={y2} stroke="var(--indigo-text)" strokeWidth="1"/>
         )))}
-        <text x="80" y="196" fill="rgba(139,92,246,0.7)" fontSize="10" textAnchor="middle">{t('input')}</text>
-        <text x="210" y="175" fill="rgba(167,139,250,0.7)" fontSize="10" textAnchor="middle">{t('hidden1')}</text>
-        <text x="340" y="175" fill="rgba(196,181,253,0.7)" fontSize="10" textAnchor="middle">{t('hidden2')}</text>
-        <text x="450" y="165" fill="rgba(244,114,182,0.7)" fontSize="10" textAnchor="middle">{t('output')}</text>
-        <text x="155" y="108" fill="rgba(255,255,255,0.2)" fontSize="18" textAnchor="middle">→</text>
-        <text x="285" y="108" fill="rgba(255,255,255,0.2)" fontSize="18" textAnchor="middle">→</text>
-        <text x="400" y="108" fill="rgba(255,255,255,0.2)" fontSize="18" textAnchor="middle">→</text>
+        <text x="80" y="196" fill="var(--indigo-text)" fontSize="10" textAnchor="middle">{t('input')}</text>
+        <text x="210" y="175" fill="var(--indigo-text)" fontSize="10" textAnchor="middle">{t('hidden1')}</text>
+        <text x="340" y="175" fill="var(--indigo-text)" fontSize="10" textAnchor="middle">{t('hidden2')}</text>
+        <text x="450" y="165" fill="var(--output)" fontSize="10" textAnchor="middle">{t('output')}</text>
+        <text x="155" y="108" fill="var(--ink-faint)" fontSize="18" textAnchor="middle">→</text>
+        <text x="285" y="108" fill="var(--ink-faint)" fontSize="18" textAnchor="middle">→</text>
+        <text x="400" y="108" fill="var(--ink-faint)" fontSize="18" textAnchor="middle">→</text>
       </svg>
     </div>
   )
@@ -494,27 +494,27 @@ export function NNDiagram() {
 export function GradientDescentDiagram() {
   const t = useTranslations('AICoach.charts.gradientDescent')
   return (
-    <div className="glass border border-white/10 rounded-xl p-4">
-      <p className="text-sm text-gray-400 mb-3 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-4">
+      <p className="text-sm text-ink-muted mb-3 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 200" className="w-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="lossLandscape" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(139,92,246,0.1)"/>
-            <stop offset="100%" stopColor="rgba(0,0,0,0)"/>
+            <stop offset="0%" stopColor="var(--indigo-text)"/>
+            <stop offset="100%" stopColor="transparent"/>
           </linearGradient>
         </defs>
         <path d="M30,40 C80,38 100,60 140,90 C170,112 185,175 250,185 C315,175 330,112 360,90 C400,60 420,38 470,40"
-          fill="url(#lossLandscape)" stroke="rgba(139,92,246,0.4)" strokeWidth="1.5"/>
-        <circle cx="100" cy="62" r="6" fill="#f472b6"/>
-        <circle cx="140" cy="90" r="6" fill="#f472b6"/>
-        <circle cx="180" cy="135" r="6" fill="#f472b6"/>
-        <circle cx="220" cy="168" r="6" fill="#f472b6"/>
-        <circle cx="250" cy="182" r="8" fill="#4ade80" stroke="rgba(74,222,128,0.4)" strokeWidth="3"/>
-        <path d="M103,65 L137,87" stroke="#f472b6" strokeWidth="1.5"/>
-        <path d="M143,93 L177,132" stroke="#f472b6" strokeWidth="1.5"/>
-        <path d="M183,138 L217,165" stroke="#f472b6" strokeWidth="1.5"/>
-        <text x="85" y="55" fill="rgba(244,114,182,0.9)" fontSize="9">{t('start')}</text>
-        <text x="240" y="197" fill="rgba(74,222,128,0.9)" fontSize="9" textAnchor="middle">{t('minimum')}</text>
+          fill="var(--indigo-soft)" stroke="var(--indigo-text)" strokeWidth="1.5"/>
+        <circle cx="100" cy="62" r="6" fill="var(--output)"/>
+        <circle cx="140" cy="90" r="6" fill="var(--output)"/>
+        <circle cx="180" cy="135" r="6" fill="var(--output)"/>
+        <circle cx="220" cy="168" r="6" fill="var(--output)"/>
+        <circle cx="250" cy="182" r="8" fill="var(--success)" stroke="var(--success)" strokeWidth="3"/>
+        <path d="M103,65 L137,87" stroke="var(--output)" strokeWidth="1.5"/>
+        <path d="M143,93 L177,132" stroke="var(--output)" strokeWidth="1.5"/>
+        <path d="M183,138 L217,165" stroke="var(--output)" strokeWidth="1.5"/>
+        <text x="85" y="55" fill="var(--output)" fontSize="9">{t('start')}</text>
+        <text x="240" y="197" fill="var(--success)" fontSize="9" textAnchor="middle">{t('minimum')}</text>
       </svg>
     </div>
   )
@@ -523,15 +523,15 @@ export function GradientDescentDiagram() {
 export function DataSplitDiagram() {
   const t = useTranslations('AICoach.charts.dataSplit')
   return (
-    <div className="glass border border-white/10 rounded-xl p-5 mb-4">
-      <p className="text-sm text-gray-400 mb-4 font-semibold text-center">{t('label')}</p>
+    <div className="bg-surface border border-line border border-line rounded-md p-5 mb-4">
+      <p className="text-sm text-ink-muted mb-4 font-semibold text-center">{t('label')}</p>
       <svg viewBox="0 0 500 60" className="w-full" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="15" width="350" height="35" fill="rgba(139,92,246,0.3)" rx="4"/>
-        <rect x="360" y="15" width="65" height="35" fill="rgba(6,182,212,0.3)" rx="4"/>
-        <rect x="425" y="15" width="65" height="35" fill="rgba(74,222,128,0.3)" rx="4"/>
-        <text x="185" y="38" fill="rgba(167,139,250,0.9)" fontSize="13" fontWeight="bold" textAnchor="middle">{t('training')}</text>
-        <text x="392" y="38" fill="rgba(103,232,249,0.9)" fontSize="11" fontWeight="bold" textAnchor="middle">{t('validation')}</text>
-        <text x="457" y="38" fill="rgba(74,222,128,0.9)" fontSize="11" fontWeight="bold" textAnchor="middle">{t('test')}</text>
+        <rect x="10" y="15" width="350" height="35" fill="var(--indigo-soft)" rx="4"/>
+        <rect x="360" y="15" width="65" height="35" fill="var(--indigo-soft)" rx="4"/>
+        <rect x="425" y="15" width="65" height="35" fill="var(--ghost-fill)" rx="4"/>
+        <text x="185" y="38" fill="var(--indigo-text)" fontSize="13" fontWeight="bold" textAnchor="middle">{t('training')}</text>
+        <text x="392" y="38" fill="var(--indigo-text)" fontSize="11" fontWeight="bold" textAnchor="middle">{t('validation')}</text>
+        <text x="457" y="38" fill="var(--success)" fontSize="11" fontWeight="bold" textAnchor="middle">{t('test')}</text>
       </svg>
     </div>
   )

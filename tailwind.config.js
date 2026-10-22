@@ -1,4 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+
+// Design-System „Neuron" (V2): jede Farbe kommt aus einer CSS-Variable in
+// globals.css – so schalten Night/Day über data-theme um, ohne dass im
+// Markup ein einziger Hex-Wert steht.
+const token = (name) => `var(--${name})`
+
+const neuronColors = [
+  'bg', 'surface', 'surface-raised', 'line', 'line-strong',
+  'ink', 'ink-muted', 'ink-faint',
+  'indigo', 'indigo-button', 'indigo-hover', 'on-indigo', 'on-indigo-muted', 'indigo-text', 'indigo-soft',
+  'output', 'on-output', 'output-text', 'output-soft',
+  'ghost-fill', 'ghost-edge', 'glass-fill', 'glass-edge',
+  'success', 'warning', 'danger', 'chart-grid',
+].reduce((acc, name) => ({ ...acc, [name]: token(name) }), {})
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,51 +23,31 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7e22ce',
-          800: '#6b21a8',
-          900: '#581c87',
-        },
-        secondary: 'hsl(var(--secondary))',
-        accent: 'hsl(var(--accent))',
-        success: 'hsl(var(--success))',
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        border: 'hsl(var(--border))',
-        ring: 'hsl(var(--ring))',
+        ...neuronColors,
       },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'gradient': 'gradient 8s ease infinite',
+      // ring-* ohne Farbe fiele sonst auf Tailwinds Blau zurück
+      ringColor: {
+        DEFAULT: 'var(--line-strong)',
       },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        gradient: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        },
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        mono: ['var(--font-mono)'],
       },
-      backgroundSize: {
-        '200': '200% 200%',
-        '300': '300% 300%',
+      borderRadius: {
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        island: 'var(--radius-island)',
+        pill: 'var(--radius-pill)',
+      },
+      boxShadow: {
+        island: 'var(--shadow-island)',
+        window: 'var(--shadow-window)',
+        'button-edge': 'var(--shadow-button-edge)',
+      },
+      maxWidth: {
+        content: '1120px',
       },
     },
   },

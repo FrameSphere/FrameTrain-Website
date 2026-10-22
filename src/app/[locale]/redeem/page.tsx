@@ -9,6 +9,8 @@ import {
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { trackStartTrial } from '@/lib/analytics'
+import { trackEvent } from '@/lib/events'
+import { normalizePromoCode, readStoredPromoCode, clearStoredPromoCode } from '@/components/PromoCapture'
 
 type Plan = 'monthly' | 'yearly'
 
@@ -66,6 +68,12 @@ export default function RedeemPage() {
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 80)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Kanal-Code vorausfüllen: ?code=… oder vorher irgendwo auf der Seite gemerkt
+  useEffect(() => {
+    const code = normalizePromoCode(new URLSearchParams(window.location.search).get('code')) || readStoredPromoCode()
+    if (code) setCodeInput((current) => current || code)
   }, [])
 
   // ── Schritt 1: Code prüfen ──
@@ -129,6 +137,8 @@ export default function RedeemPage() {
           freeMonths: promo.freeMonths,
           dedupeId: promo.code,
         })
+        trackEvent('code_redeemed', { code: promo.code, type: promo.type })
+        clearStoredPromoCode()
         // Weiter zur Success-Seite (mit Animation), von dort ins Dashboard
         window.location.href = '/payment/success?promo=redeemed'
         return
@@ -166,316 +176,181 @@ export default function RedeemPage() {
 
   if (authLoading) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#030712' }}>
-        <div style={{ color: '#6b7280' }}>…</div>
+      <div className="min-h-screen flex items-center justify-center bg-bg">
+        <span className="w-8 h-8 rounded-pill border-2 border-line border-t-ink animate-spin" aria-hidden="true" />
       </div>
     )
   }
   if (!isAuthenticated) return null
 
+  const subLabel = 'ft-label block mb-3'
+  const choiceCls = (active: boolean) =>
+    `w-full text-left rounded-md border px-4 py-3.5 transition-colors duration-150 ease-out ${
+      active ? 'border-line-strong bg-surface-raised' : 'border-line bg-bg hover:border-line-strong'
+    }`
+  const spinner = (
+    <span className="w-4 h-4 rounded-pill border-2 border-[rgba(255,255,255,0.3)] border-t-on-indigo animate-spin" aria-hidden="true" />
+  )
+
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
-        @keyframes redeemOrb {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-30px, 40px) scale(1.06); }
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        * { box-sizing: border-box; }
-      `}</style>
+    <div className="min-h-screen flex flex-col bg-bg text-ink">
+      <Header />
 
-      {/* Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden>
-        <div style={{
-          position: 'absolute', width: 600, height: 600, borderRadius: '50%',
-          top: '-150px', right: '-100px',
-          background: 'radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 70%)',
-          animation: 'redeemOrb 14s ease-in-out infinite',
-        }} />
-        <div style={{
-          position: 'absolute', width: 500, height: 500, borderRadius: '50%',
-          bottom: '-120px', left: '-80px',
-          background: 'radial-gradient(circle, rgba(139,92,246,0.14) 0%, transparent 70%)',
-          animation: 'redeemOrb 18s ease-in-out infinite reverse',
-        }} />
-      </div>
+      <main className="flex-1 ft-container py-12 md:py-20">
+        <div className="max-w-[480px] mx-auto">
+          <div className="text-center">
+            <p className="ft-label m-0 flex items-center justify-center gap-2">
+              <Ticket className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+              {t('topLabel')}
+            </p>
+            <h1 className="ft-display-l mt-4 mb-0">
+              {t('headingLine1')} <span className="text-ink-muted">{t('headingLine2')}</span>
+            </h1>
+            <p className="ft-lead mt-4 mb-0">{t('subtitle')}</p>
+          </div>
 
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#030712', fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
-        <Header />
+          <div className="mt-10 rounded-xl border border-line bg-surface p-6 sm:p-8">
+            {!promo ? (
+              <>
+                {/* ── Schritt 1: Code-Eingabe ── */}
+                <label htmlFor="redeem-code" className={subLabel}>
+                  {t('inputLabel')}
+                </label>
+                <input
+                  id="redeem-code"
+                  type="text"
+                  value={codeInput}
+                  onChange={(e) => {
+                    setCodeInput(e.target.value.toUpperCase())
+                    setError('')
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleValidate()
+                  }}
+                  placeholder={tPromo('placeholder')}
+                  maxLength={32}
+                  autoFocus
+                  spellCheck={false}
+                  autoComplete="off"
+                  className={`ft-input !h-14 text-center font-mono !text-[20px] tracking-[0.12em] uppercase ${error ? '!border-danger' : ''}`}
+                />
 
-        <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 16px 60px' }}>
-          <div style={{ width: '100%', maxWidth: 480 }}>
-
-            {/* Top label */}
-            <div style={{
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? 'translateY(0)' : 'translateY(-16px)',
-              transition: 'opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s',
-              display: 'flex', justifyContent: 'center', marginBottom: 24,
-            }}>
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: 8,
-                background: 'rgba(52,211,153,0.1)',
-                border: '1px solid rgba(52,211,153,0.25)',
-                borderRadius: 100, padding: '6px 16px',
-              }}>
-                <Ticket size={14} color="#34d399" />
-                <span style={{ fontSize: 13, fontWeight: 600, color: '#34d399', letterSpacing: '0.05em' }}>
-                  {t('topLabel')}
-                </span>
-              </div>
-            </div>
-
-            {/* Heading */}
-            <div style={{
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s',
-              textAlign: 'center', marginBottom: 36,
-            }}>
-              <h1 style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: 'clamp(30px, 6vw, 44px)', fontWeight: 900,
-                color: '#f1f5f9', lineHeight: 1.12, margin: '0 0 12px', letterSpacing: '-1px',
-              }}>
-                {t('headingLine1')}<br />
-                <span style={{
-                  background: 'linear-gradient(90deg, #6ee7b7, #c4b5fd, #f9a8d4)',
-                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                }}>
-                  {t('headingLine2')}
-                </span>
-              </h1>
-              <p style={{ color: '#64748b', fontSize: 15, margin: 0, lineHeight: 1.6 }}>
-                {t('subtitle')}
-              </p>
-            </div>
-
-            {/* Card */}
-            <div style={{
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? 'translateY(0) scale(1)' : 'translateY(28px) scale(0.97)',
-              transition: 'opacity 0.7s ease 0.3s, transform 0.7s cubic-bezier(0.34,1.2,0.64,1) 0.3s',
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-              border: '1px solid rgba(255,255,255,0.09)',
-              borderRadius: 24, padding: 'clamp(24px, 5vw, 36px)',
-              backdropFilter: 'blur(24px)',
-              boxShadow: '0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
-            }}>
-
-              {!promo ? (
-                <>
-                  {/* ── Schritt 1: Code-Eingabe ── */}
-                  <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: '#64748b', letterSpacing: '0.08em', marginBottom: 10 }}>
-                    {t('inputLabel')}
-                  </label>
-                  <input
-                    type="text"
-                    value={codeInput}
-                    onChange={e => { setCodeInput(e.target.value.toUpperCase()); setError('') }}
-                    onKeyDown={e => { if (e.key === 'Enter') handleValidate() }}
-                    placeholder={tPromo('placeholder')}
-                    maxLength={32}
-                    autoFocus
-                    spellCheck={false}
-                    autoComplete="off"
-                    style={{
-                      width: '100%',
-                      padding: '18px 18px',
-                      background: 'rgba(255,255,255,0.05)',
-                      border: `1px solid ${error ? 'rgba(239,68,68,0.45)' : 'rgba(255,255,255,0.14)'}`,
-                      borderRadius: 14,
-                      color: '#f1f5f9',
-                      fontSize: 20,
-                      fontWeight: 700,
-                      letterSpacing: '0.14em',
-                      textAlign: 'center',
-                      outline: 'none',
-                      fontFamily: "'DM Sans', sans-serif",
-                      textTransform: 'uppercase',
-                      marginBottom: 14,
-                    }}
-                  />
-
-                  {error && (
-                    <div style={{
-                      marginBottom: 14, padding: '11px 14px',
-                      background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)',
-                      borderRadius: 12, color: '#fca5a5', fontSize: 13.5,
-                    }}>
-                      {error}
-                    </div>
-                  )}
-
-                  <button
-                    onClick={handleValidate}
-                    disabled={checking || !codeInput.trim()}
-                    style={{
-                      width: '100%', padding: '16px 24px', borderRadius: 14, border: 'none',
-                      cursor: checking || !codeInput.trim() ? 'not-allowed' : 'pointer',
-                      opacity: checking || !codeInput.trim() ? 0.55 : 1,
-                      background: 'linear-gradient(135deg, #059669, #34d399)',
-                      color: 'white', fontSize: 16, fontWeight: 700,
-                      fontFamily: "'DM Sans', sans-serif",
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                      boxShadow: '0 10px 30px rgba(52,211,153,0.25)',
-                      transition: 'opacity 0.2s ease',
-                    }}
-                  >
-                    {checking ? (
-                      <>
-                        <div style={{
-                          width: 17, height: 17,
-                          border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white',
-                          borderRadius: '50%', animation: 'spin 0.7s linear infinite',
-                        }} />
-                        {tPromo('checking')}
-                      </>
-                    ) : (
-                      <>
-                        <Ticket size={17} />
-                        {t('validateCta')}
-                      </>
-                    )}
-                  </button>
-                </>
-              ) : (
-                <>
-                  {/* ── Schritt 2: Code gültig → Vorteil + Einlösen ── */}
-                  <div style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
-                    padding: '16px 18px', marginBottom: 20,
-                    background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.35)',
-                    borderRadius: 14,
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
-                      <div style={{
-                        width: 38, height: 38, borderRadius: 10, flexShrink: 0,
-                        background: 'rgba(52,211,153,0.15)', border: '1px solid rgba(52,211,153,0.3)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      }}>
-                        <CheckCircle2 size={19} color="#34d399" />
-                      </div>
-                      <div style={{ minWidth: 0 }}>
-                        <div style={{ color: '#34d399', fontSize: 16, fontWeight: 800 }}>{benefitText}</div>
-                        <div style={{ color: '#64748b', fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {tPromo('codeLabel', { code: promo.code })}
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => { setPromo(null); setCodeInput(''); setError('') }}
-                      aria-label={tPromo('remove')}
-                      style={{
-                        background: 'none', border: 'none', cursor: 'pointer',
-                        color: '#64748b', display: 'flex', padding: 4, flexShrink: 0,
-                      }}
-                    >
-                      <X size={17} />
-                    </button>
+                {error && (
+                  <div role="alert" className="mt-3 px-4 py-3 rounded-sm border border-danger text-danger text-[14px]">
+                    {error}
                   </div>
+                )}
 
-                  {/* Gratismonate: Wahl zwischen "ohne Abo" und "mit Abo" */}
-                  {promo.type === 'free_months' && (
-                    <div style={{ marginBottom: 20 }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', letterSpacing: '0.08em', marginBottom: 10 }}>
-                        {t('chooseMode')}
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                        {([
-                          { key: 'direct' as const, title: t('modeDirectTitle'), desc: t('modeDirectDesc', { months: promo.freeMonths ?? 0, date: freeUntilDate }) },
-                          { key: 'subscription' as const, title: t('modeSubTitle'), desc: t('modeSubDesc') },
-                        ]).map(m => (
-                          <button
-                            key={m.key}
-                            onClick={() => setMode(m.key)}
-                            style={{
-                              padding: '14px 16px', borderRadius: 12, cursor: 'pointer',
-                              textAlign: 'left',
-                              border: `1px solid ${mode === m.key ? 'rgba(167,139,250,0.55)' : 'rgba(255,255,255,0.1)'}`,
-                              background: mode === m.key ? 'rgba(139,92,246,0.15)' : 'rgba(255,255,255,0.03)',
-                              fontFamily: "'DM Sans', sans-serif",
-                              transition: 'all 0.15s ease',
-                              display: 'flex', alignItems: 'flex-start', gap: 12,
-                            }}
-                          >
-                            <div style={{
-                              width: 18, height: 18, borderRadius: '50%', flexShrink: 0, marginTop: 1,
-                              border: `2px solid ${mode === m.key ? '#a78bfa' : '#475569'}`,
-                              display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            }}>
-                              {mode === m.key && <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#a78bfa' }} />}
-                            </div>
-                            <div>
-                              <div style={{ fontSize: 14, fontWeight: 700, color: mode === m.key ? '#e2e8f0' : '#94a3b8' }}>
-                                {m.title}
-                              </div>
-                              <div style={{ fontSize: 12.5, marginTop: 3, lineHeight: 1.5, color: mode === m.key ? '#94a3b8' : '#475569' }}>
-                                {m.desc}
-                              </div>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                <button
+                  type="button"
+                  onClick={handleValidate}
+                  disabled={checking || !codeInput.trim()}
+                  className="ft-btn ft-btn--primary w-full mt-4"
+                >
+                  {checking ? (
+                    <>
+                      {spinner}
+                      {tPromo('checking')}
+                    </>
+                  ) : (
+                    <>
+                      <Ticket className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                      {t('validateCta')}
+                    </>
                   )}
-
-                  {/* Plan-Auswahl: bei Rabatt-Codes immer, bei Gratismonaten nur im Abo-Modus */}
-                  {(promo.type === 'percent' || (promo.type === 'free_months' && mode === 'subscription')) && (
-                    <div style={{ marginBottom: 20 }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', letterSpacing: '0.08em', marginBottom: 10 }}>
-                        {promo.type === 'free_months' ? t('choosePlanAfterTrial') : t('choosePlan')}
-                      </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                        {(['monthly', 'yearly'] as Plan[]).map(p => (
-                          <button
-                            key={p}
-                            onClick={() => setPlan(p)}
-                            style={{
-                              padding: '14px 12px', borderRadius: 12, cursor: 'pointer',
-                              border: `1px solid ${plan === p ? 'rgba(167,139,250,0.55)' : 'rgba(255,255,255,0.1)'}`,
-                              background: plan === p ? 'rgba(139,92,246,0.15)' : 'rgba(255,255,255,0.03)',
-                              color: plan === p ? '#e2e8f0' : '#64748b',
-                              fontFamily: "'DM Sans', sans-serif",
-                              transition: 'all 0.15s ease',
-                            }}
-                          >
-                            <div style={{ fontSize: 14, fontWeight: 700 }}>
-                              {p === 'monthly' ? t('planMonthly') : t('planYearly')}
-                            </div>
-                            {promo.type === 'percent' && promo.percentOff ? (
-                              // Rabatt sichtbar machen: alter Preis durchgestrichen, neuer Preis grün
-                              <div style={{ fontSize: 12, marginTop: 2 }}>
-                                <span style={{ textDecoration: 'line-through', color: '#475569' }}>
-                                  {formatEuro(PLAN_PRICES[p])}
-                                </span>
-                                <span style={{ color: '#34d399', fontWeight: 700, marginLeft: 6 }}>
-                                  {discounted(p, promo.percentOff)}
-                                </span>
-                              </div>
-                            ) : (
-                              <div style={{ fontSize: 12, marginTop: 2, color: plan === p ? '#a78bfa' : '#475569' }}>
-                                {formatEuro(PLAN_PRICES[p])}
-                              </div>
-                            )}
-                          </button>
-                        ))}
-                      </div>
+                </button>
+              </>
+            ) : (
+              <>
+                {/* ── Schritt 2: Code gültig → Vorteil + Einlösen ── */}
+                <div className="flex items-center justify-between gap-3 px-4 py-4 rounded-md border border-success">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <CheckCircle2 className="w-5 h-5 flex-none text-success" strokeWidth={1.5} aria-hidden="true" />
+                    <div className="min-w-0">
+                      <p className="m-0 text-[16px] font-semibold text-success">{benefitText}</p>
+                      <p className="m-0 ft-data text-ink-faint truncate">{tPromo('codeLabel', { code: promo.code })}</p>
                     </div>
-                  )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPromo(null)
+                      setCodeInput('')
+                      setError('')
+                    }}
+                    aria-label={tPromo('remove')}
+                    className="flex-none w-9 h-9 rounded-pill flex items-center justify-center text-ink-faint hover:text-ink hover:bg-ghost-fill transition-colors duration-150"
+                  >
+                    <X className="w-4 h-4" strokeWidth={1.5} />
+                  </button>
+                </div>
 
-                  {/* Klartext: was genau passiert */}
-                  <div style={{
-                    marginBottom: 18, padding: '12px 14px',
-                    background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: 12, color: '#94a3b8', fontSize: 13, lineHeight: 1.6,
-                  }}>
-                    {promo.type === 'lifetime' && t('noteLifetime')}
-                    {promo.type === 'percent' && promo.percentOff && (() => {
+                {/* Gratismonate: Wahl zwischen "ohne Abo" und "mit Abo" */}
+                {promo.type === 'free_months' && (
+                  <div className="mt-6">
+                    <span className={subLabel}>{t('chooseMode')}</span>
+                    <div className="flex flex-col gap-2.5">
+                      {[
+                        { key: 'direct' as const, title: t('modeDirectTitle'), desc: t('modeDirectDesc', { months: promo.freeMonths ?? 0, date: freeUntilDate }) },
+                        { key: 'subscription' as const, title: t('modeSubTitle'), desc: t('modeSubDesc') },
+                      ].map((m) => (
+                        <button
+                          key={m.key}
+                          type="button"
+                          role="radio"
+                          aria-checked={mode === m.key}
+                          onClick={() => setMode(m.key)}
+                          className={`${choiceCls(mode === m.key)} flex items-start gap-3`}
+                        >
+                          <span
+                            className={`mt-0.5 w-[18px] h-[18px] rounded-pill border-2 flex-none flex items-center justify-center ${
+                              mode === m.key ? 'border-ink' : 'border-line-strong'
+                            }`}
+                            aria-hidden="true"
+                          >
+                            {mode === m.key && <span className="w-2 h-2 rounded-pill bg-ink" />}
+                          </span>
+                          <span>
+                            <span className={`block text-[15px] font-semibold ${mode === m.key ? 'text-ink' : 'text-ink-muted'}`}>{m.title}</span>
+                            <span className="block mt-1 text-[13px] leading-5 text-ink-muted">{m.desc}</span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Plan-Auswahl: bei Rabatt-Codes immer, bei Gratismonaten nur im Abo-Modus */}
+                {(promo.type === 'percent' || (promo.type === 'free_months' && mode === 'subscription')) && (
+                  <div className="mt-6">
+                    <span className={subLabel}>{promo.type === 'free_months' ? t('choosePlanAfterTrial') : t('choosePlan')}</span>
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {(['monthly', 'yearly'] as Plan[]).map((p) => (
+                        <button key={p} type="button" role="radio" aria-checked={plan === p} onClick={() => setPlan(p)} className={choiceCls(plan === p)}>
+                          <span className={`block text-[15px] font-semibold ${plan === p ? 'text-ink' : 'text-ink-muted'}`}>
+                            {p === 'monthly' ? t('planMonthly') : t('planYearly')}
+                          </span>
+                          {promo.type === 'percent' && promo.percentOff ? (
+                            // Rabatt sichtbar machen: alter Preis durchgestrichen, neuer Preis daneben
+                            <span className="block mt-1 ft-data">
+                              <span className="line-through text-ink-faint">{formatEuro(PLAN_PRICES[p])}</span>
+                              <span className="ml-1.5 text-success">{discounted(p, promo.percentOff)}</span>
+                            </span>
+                          ) : (
+                            <span className="block mt-1 ft-data text-ink-faint">{formatEuro(PLAN_PRICES[p])}</span>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Klartext: was genau passiert */}
+                <p className="mt-6 mb-0 px-4 py-3 rounded-md bg-bg border border-line text-[14px] leading-[22px] text-ink-muted">
+                  {promo.type === 'lifetime' && t('noteLifetime')}
+                  {promo.type === 'percent' &&
+                    promo.percentOff &&
+                    (() => {
                       const vars = {
                         percent: promo.percentOff,
                         price: discounted(plan, promo.percentOff),
@@ -487,97 +362,62 @@ export default function RedeemPage() {
                       if (promo.percentDuration === 'repeating') {
                         // "X Monate"-Rabatt trifft beim Jahresabo nur die erste
                         // Jahresrechnung → ehrlich formulieren statt "für X Monate".
-                        return plan === 'yearly'
-                          ? t('notePercentRepeatingYearly', vars)
-                          : t('notePercentRepeating', vars)
+                        return plan === 'yearly' ? t('notePercentRepeatingYearly', vars) : t('notePercentRepeating', vars)
                       }
                       return t('notePercentOnce', vars)
                     })()}
-                    {promo.type === 'free_months' && mode === 'direct' &&
-                      t('noteDirect', { months: promo.freeMonths ?? 0, date: freeUntilDate })}
-                    {promo.type === 'free_months' && mode === 'subscription' &&
-                      t('noteTrial', { months: promo.freeMonths ?? 0, date: freeUntilDate, price: planPrice })}
+                  {promo.type === 'free_months' && mode === 'direct' && t('noteDirect', { months: promo.freeMonths ?? 0, date: freeUntilDate })}
+                  {promo.type === 'free_months' &&
+                    mode === 'subscription' &&
+                    t('noteTrial', { months: promo.freeMonths ?? 0, date: freeUntilDate, price: planPrice })}
+                </p>
+
+                {error && (
+                  <div role="alert" className="mt-4 px-4 py-3 rounded-sm border border-danger text-danger text-[14px]">
+                    {error}
                   </div>
+                )}
 
-                  {error && (
-                    <div style={{
-                      marginBottom: 16, padding: '11px 14px',
-                      background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)',
-                      borderRadius: 12, color: '#fca5a5', fontSize: 13.5,
-                    }}>
-                      {error}
-                    </div>
-                  )}
-
-                  <button
-                    onClick={handleRedeem}
-                    disabled={redeeming}
-                    style={{
-                      width: '100%', padding: '17px 24px', borderRadius: 14, border: 'none',
-                      cursor: redeeming ? 'not-allowed' : 'pointer',
-                      opacity: redeeming ? 0.6 : 1,
-                      background: promo.type === 'lifetime'
-                        ? 'linear-gradient(135deg, #7c3aed, #a855f7, #ec4899)'
-                        : 'linear-gradient(135deg, #7c3aed, #a855f7)',
-                      color: 'white', fontSize: 16.5, fontWeight: 700,
-                      fontFamily: "'DM Sans', sans-serif",
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                      boxShadow: '0 14px 40px rgba(168,85,247,0.35)',
-                      transition: 'opacity 0.2s ease',
-                    }}
-                  >
-                    {(() => {
-                      const isDirect = promo.type === 'lifetime' ||
-                        (promo.type === 'free_months' && mode === 'direct')
-                      if (redeeming) {
-                        return (
-                          <>
-                            <div style={{
-                              width: 17, height: 17,
-                              border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white',
-                              borderRadius: '50%', animation: 'spin 0.7s linear infinite',
-                            }} />
-                            {isDirect ? tPromo('redeeming') : t('redirectingStripe')}
-                          </>
-                        )
-                      }
+                <button type="button" onClick={handleRedeem} disabled={redeeming} className="ft-btn ft-btn--primary w-full mt-6">
+                  {(() => {
+                    const isDirect = promo.type === 'lifetime' || (promo.type === 'free_months' && mode === 'direct')
+                    if (redeeming) {
                       return (
                         <>
-                          {isDirect ? <Sparkles size={18} /> : <Lock size={18} />}
-                          {promo.type === 'lifetime'
-                            ? t('redeemLifetimeCta')
-                            : isDirect ? t('redeemDirectCta') : t('redeemCheckoutCta')}
-                          <ArrowRight size={18} />
+                          {spinner}
+                          {isDirect ? tPromo('redeeming') : t('redirectingStripe')}
                         </>
                       )
-                    })()}
-                  </button>
-                </>
-              )}
-
-              {/* Zurück zur Payment-Seite */}
-              <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <button
-                  onClick={() => router.push('/payment')}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: '#475569', fontSize: 13, fontWeight: 500,
-                    display: 'inline-flex', alignItems: 'center', gap: 6,
-                    fontFamily: "'DM Sans', sans-serif",
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#94a3b8')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#475569')}
-                >
-                  <ArrowLeft size={14} />
-                  {t('backToPayment')}
+                    }
+                    return (
+                      <>
+                        {isDirect ? (
+                          <Sparkles className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                        ) : (
+                          <Lock className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                        )}
+                        {promo.type === 'lifetime' ? t('redeemLifetimeCta') : isDirect ? t('redeemDirectCta') : t('redeemCheckoutCta')}
+                        <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                      </>
+                    )
+                  })()}
                 </button>
-              </div>
-            </div>
+              </>
+            )}
 
+            <div className="mt-6 text-center">
+              <button
+                type="button"
+                onClick={() => router.push('/payment')}
+                className="inline-flex items-center gap-1.5 text-[14px] text-ink-faint hover:text-ink transition-colors duration-150"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+                {t('backToPayment')}
+              </button>
+            </div>
           </div>
-        </main>
-      </div>
-    </>
+        </div>
+      </main>
+    </div>
   )
 }

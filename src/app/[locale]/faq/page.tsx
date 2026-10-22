@@ -34,14 +34,14 @@ const CATEGORY_META: { id: string; icon: React.ReactNode; color: string }[] = [
 ]
 
 const colorAccents: Record<string, { border: string; badge: string; dot: string }> = {
-  purple: { border: 'border-purple-500/20', badge: 'text-purple-400 bg-purple-500/10 border-purple-500/20', dot: 'bg-purple-500' },
-  green: { border: 'border-green-500/20', badge: 'text-green-400 bg-green-500/10 border-green-500/20', dot: 'bg-green-500' },
-  orange: { border: 'border-orange-500/20', badge: 'text-orange-400 bg-orange-500/10 border-orange-500/20', dot: 'bg-orange-500' },
-  pink: { border: 'border-pink-500/20', badge: 'text-pink-400 bg-pink-500/10 border-pink-500/20', dot: 'bg-pink-500' },
-  blue: { border: 'border-blue-500/20', badge: 'text-blue-400 bg-blue-500/10 border-blue-500/20', dot: 'bg-blue-500' },
-  cyan: { border: 'border-cyan-500/20', badge: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20', dot: 'bg-cyan-500' },
-  yellow: { border: 'border-yellow-500/20', badge: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20', dot: 'bg-yellow-500' },
-  teal: { border: 'border-teal-500/20', badge: 'text-teal-400 bg-teal-500/10 border-teal-500/20', dot: 'bg-teal-500' },
+  purple: { border: 'border-line', badge: 'text-indigo-text bg-indigo-soft border-line', dot: 'bg-indigo-button' },
+  green: { border: 'border-line', badge: 'text-success bg-ghost-fill border-line', dot: 'bg-success' },
+  orange: { border: 'border-line', badge: 'text-warning bg-ghost-fill border-line', dot: 'bg-warning' },
+  pink: { border: 'border-line', badge: 'text-indigo-text bg-indigo-soft border-line', dot: 'bg-indigo-button' },
+  blue: { border: 'border-line', badge: 'text-indigo-text bg-indigo-soft border-line', dot: 'bg-indigo-button' },
+  cyan: { border: 'border-line', badge: 'text-indigo-text bg-indigo-soft border-line', dot: 'bg-indigo-button' },
+  yellow: { border: 'border-line', badge: 'text-warning bg-ghost-fill border-line', dot: 'bg-warning' },
+  teal: { border: 'border-line', badge: 'text-success bg-ghost-fill border-line', dot: 'bg-success' },
 }
 
 // ── Spezial-Antworten mit JSX (Tabellen / Code-Block) statt reinem Text ──────
@@ -64,40 +64,40 @@ function useSpecialAnswers() {
       <div className="overflow-x-auto">
         <table className="w-full text-sm border-collapse">
           <thead>
-            <tr className="border-b border-white/10">
-              {vramHeaders.map((h) => <th key={h} className="text-left py-2 pr-4 text-gray-400 font-semibold">{h}</th>)}
+            <tr className="border-b border-line">
+              {vramHeaders.map((h) => <th key={h} className="text-left py-2 pr-4 text-ink-muted font-semibold">{h}</th>)}
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-line">
             {vramRows.map(([s, v], i) => (
               <tr key={i}>
-                <td className="py-2 pr-4 text-gray-300" dangerouslySetInnerHTML={{ __html: s }} />
-                <td className="py-2 text-green-400 font-semibold">{v}</td>
+                <td className="py-2 pr-4 text-ink" dangerouslySetInnerHTML={{ __html: s }} />
+                <td className="py-2 text-success font-semibold">{v}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p className="text-gray-400 text-sm">{t('footnote')}</p>
+      <p className="text-ink-muted text-sm">{t('footnote')}</p>
     </div>
   )
 
   const HYPERPARAMS_CODE = (
     <div className="space-y-3">
       <p>{tHp('intro')}</p>
-      <div className="bg-gray-900/60 rounded-xl p-4 font-mono text-sm space-y-1">
-        <div><span className="text-gray-500">{tHp('codeComments.training')}</span></div>
-        <div><span className="text-blue-400">learning_rate</span>: <span className="text-green-400">2e-4</span></div>
-        <div><span className="text-blue-400">num_epochs</span>: <span className="text-green-400">3</span></div>
-        <div><span className="text-blue-400">batch_size</span>: <span className="text-green-400">4</span> <span className="text-gray-500">{tHp('codeComments.batchSizeNote')}</span></div>
-        <div><span className="text-blue-400">max_seq_length</span>: <span className="text-green-400">2048</span></div>
-        <div className="mt-2"><span className="text-gray-500">{tHp('codeComments.lora')}</span></div>
-        <div><span className="text-blue-400">lora_r</span>: <span className="text-green-400">16</span></div>
-        <div><span className="text-blue-400">lora_alpha</span>: <span className="text-green-400">32</span></div>
-        <div><span className="text-blue-400">lora_dropout</span>: <span className="text-green-400">0.05</span></div>
-        <div><span className="text-blue-400">target_modules</span>: <span className="text-green-400">q_proj, v_proj, k_proj, o_proj</span></div>
+      <div className="bg-surface rounded-md p-4 font-mono text-sm space-y-1">
+        <div><span className="text-ink-faint">{tHp('codeComments.training')}</span></div>
+        <div><span className="text-indigo-text">learning_rate</span>: <span className="text-success">2e-4</span></div>
+        <div><span className="text-indigo-text">num_epochs</span>: <span className="text-success">3</span></div>
+        <div><span className="text-indigo-text">batch_size</span>: <span className="text-success">4</span> <span className="text-ink-faint">{tHp('codeComments.batchSizeNote')}</span></div>
+        <div><span className="text-indigo-text">max_seq_length</span>: <span className="text-success">2048</span></div>
+        <div className="mt-2"><span className="text-ink-faint">{tHp('codeComments.lora')}</span></div>
+        <div><span className="text-indigo-text">lora_r</span>: <span className="text-success">16</span></div>
+        <div><span className="text-indigo-text">lora_alpha</span>: <span className="text-success">32</span></div>
+        <div><span className="text-indigo-text">lora_dropout</span>: <span className="text-success">0.05</span></div>
+        <div><span className="text-indigo-text">target_modules</span>: <span className="text-success">q_proj, v_proj, k_proj, o_proj</span></div>
       </div>
-      <p className="text-gray-400 text-sm">{tHp('footnote')}</p>
+      <p className="text-ink-muted text-sm">{tHp('footnote')}</p>
     </div>
   )
 
@@ -107,15 +107,15 @@ function useSpecialAnswers() {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/10">
-              {durHeaders.map((h) => <th key={h} className="text-left py-2 pr-4 text-gray-400 font-semibold">{h}</th>)}
+            <tr className="border-b border-line">
+              {durHeaders.map((h) => <th key={h} className="text-left py-2 pr-4 text-ink-muted font-semibold">{h}</th>)}
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-line">
             {durRows.map(([s, time], i) => (
               <tr key={i}>
-                <td className="py-2 pr-4 text-gray-300">{s}</td>
-                <td className="py-2 text-yellow-400 font-semibold">{time}</td>
+                <td className="py-2 pr-4 text-ink">{s}</td>
+                <td className="py-2 text-warning font-semibold">{time}</td>
               </tr>
             ))}
           </tbody>
@@ -129,9 +129,9 @@ function useSpecialAnswers() {
       <p>{tLoss('intro')}</p>
       <ul className="space-y-2 mt-2">
         {lossItems.map(([prob, sol]) => (
-          <li key={prob} className="glass rounded-lg px-4 py-3 border border-white/10">
-            <div className="text-white font-semibold text-sm mb-1">{prob}</div>
-            <div className="text-gray-400 text-sm">{sol}</div>
+          <li key={prob} className="bg-surface border border-line rounded-sm px-4 py-3 border border-line">
+            <div className="text-ink font-semibold text-sm mb-1">{prob}</div>
+            <div className="text-ink-muted text-sm">{sol}</div>
           </li>
         ))}
       </ul>
@@ -145,7 +145,7 @@ function useSpecialAnswers() {
     <div className="space-y-3">
       <p>{tVid('installIntro')}</p>
       <VideoEmbed id={VIDEOS.install} title={tVid('installTitle')} className="max-w-lg" />
-      <p className="text-gray-400 text-sm">{tVid('installOutro')}</p>
+      <p className="text-ink-muted text-sm">{tVid('installOutro')}</p>
     </div>
   )
 
@@ -153,7 +153,7 @@ function useSpecialAnswers() {
     <div className="space-y-3">
       <p>{tVid('trainIntro')}</p>
       <VideoEmbed id={VIDEOS.train} title={tVid('trainTitle')} className="max-w-lg" />
-      <p className="text-gray-400 text-sm">{tVid('trainOutro')}</p>
+      <p className="text-ink-muted text-sm">{tVid('trainOutro')}</p>
     </div>
   )
 
@@ -171,21 +171,21 @@ function FAQAccordion({ faq, accent, special }: { faq: RawFaq; accent: typeof co
   const [open, setOpen] = useState(false)
   const content = special[faq.a] ?? faq.a
   return (
-    <div className={`glass-strong rounded-2xl overflow-hidden border ${open ? accent.border : 'border-white/10'} transition-colors duration-300`}>
+    <div className={`bg-surface border border-line rounded-lg overflow-hidden border ${open ? accent.border : 'border-line'} transition-colors duration-300`}>
       <button
-        className="press w-full text-left px-7 py-5 flex items-start justify-between gap-4 hover:bg-white/3 transition-colors group"
+        className="press w-full text-left px-7 py-5 flex items-start justify-between gap-4 hover:bg-ghost-fill transition-colors group"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
-        <span className="text-white font-semibold text-base leading-snug group-hover:text-purple-200 transition-colors pr-2">
+        <span className="text-ink font-semibold text-base leading-snug group-hover:text-indigo-text transition-colors pr-2">
           {faq.q}
         </span>
         <ChevronDown
-          className={`w-5 h-5 flex-shrink-0 mt-0.5 transition-transform duration-300 ${open ? 'rotate-180 text-purple-400' : 'text-gray-500'}`}
+          className={`w-5 h-5 flex-shrink-0 mt-0.5 transition-transform duration-300 ${open ? 'rotate-180 text-indigo-text' : 'text-ink-faint'}`}
         />
       </button>
       <div className={`overflow-hidden transition duration-200 ease-out ${open ? 'max-h-[600px]' : 'max-h-0'}`}>
-        <div className="px-7 pb-6 text-gray-300 leading-relaxed text-sm border-t border-white/5 pt-4">
+        <div className="px-7 pb-6 text-ink leading-relaxed text-sm border-t border-line pt-4">
           {typeof content === 'string' ? <p>{content}</p> : content}
         </div>
       </div>
@@ -236,21 +236,20 @@ export default function FAQPage() {
 
         {/* ─── HERO ─── */}
         <section className="relative py-24 px-4 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 to-blue-900/10 pointer-events-none" />
-          <div className="absolute top-20 left-1/3 w-80 h-80 bg-purple-600 rounded-full blur-[150px] opacity-10 pointer-events-none" />
+          <div className="absolute inset-0 pointer-events-none" />
           <div className="max-w-3xl mx-auto text-center relative">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl mb-8">
-              <HelpCircle className="w-10 h-10 text-white" />
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-ghost-fill border border-line rounded-xl mb-8">
+              <HelpCircle className="w-10 h-10 text-ink" />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-ink mb-6">
               {t('heading')}
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
+            <p className="text-xl text-ink-muted max-w-2xl mx-auto mb-3">
               {t('subtitle', { count: totalFAQs })}
             </p>
-            <p className="text-gray-600 text-sm">
+            <p className="text-ink-faint text-sm">
               {t('noAnswerFound')}{' '}
-              <a href="https://github.com/FrameSphere/FrameTrain-App" target="_blank" className="text-purple-400 hover:text-purple-300 transition">
+              <a href="https://github.com/FrameSphere/FrameTrain-App" target="_blank" className="text-indigo-text hover:text-indigo-text transition">
                 {t('openGithub')}
               </a>{' '}
               {t('orAskDiscord')}
@@ -262,18 +261,18 @@ export default function FAQPage() {
         <section className="px-4 pb-6">
           <div className="max-w-3xl mx-auto">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-faint pointer-events-none" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('searchPlaceholder')}
-                className="w-full glass-strong border border-white/10 rounded-2xl pl-12 pr-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500/50 transition-colors text-sm"
+                className="w-full bg-surface border border-line border border-line rounded-lg pl-12 pr-5 py-4 text-ink placeholder-ink-faint focus:outline-none focus:border-line-strong transition-colors text-sm"
               />
               {search && (
                 <button
                   onClick={() => setSearch('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-faint hover:text-ink transition"
                 >
                   ✕
                 </button>
@@ -287,19 +286,19 @@ export default function FAQPage() {
           <section className="px-4 py-4">
             <div className="max-w-3xl mx-auto">
               {searchResults.length === 0 ? (
-                <div className="glass-strong rounded-2xl p-8 border border-white/10 text-center">
-                  <p className="text-gray-400 mb-2">{t('noResultsFor')} <span className="text-white">„{search}"</span></p>
-                  <p className="text-gray-600 text-sm">{t('tryDifferentTerm')}</p>
+                <div className="bg-surface border border-line rounded-lg p-8 border border-line text-center">
+                  <p className="text-ink-muted mb-2">{t('noResultsFor')} <span className="text-ink">„{search}"</span></p>
+                  <p className="text-ink-faint text-sm">{t('tryDifferentTerm')}</p>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <p className="text-gray-500 text-sm px-1 mb-4">
+                  <p className="text-ink-faint text-sm px-1 mb-4">
                     {t('resultsFor', { count: searchResults.length })} „{search}"
                   </p>
                   {searchResults.map(({ category, faq }, i) => (
                     <div key={i}>
                       <div className="flex items-center gap-2 mb-1 px-1">
-                        <span className={`text-xs font-bold px-2 py-0.5 rounded border ${colorAccents[category.color].badge}`}>
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded border ${colorAccents[category.color].badge}`}>
                           {category.label}
                         </span>
                       </div>
@@ -319,8 +318,8 @@ export default function FAQPage() {
 
               {/* Sidebar */}
               <aside className="lg:w-56 flex-shrink-0">
-                <div className="glass-strong rounded-2xl p-4 border border-white/10 sticky top-24">
-                  <p className="text-xs text-gray-600 uppercase tracking-wider font-bold px-2 mb-3">{t('categoriesLabel')}</p>
+                <div className="bg-surface border border-line rounded-lg p-4 border border-line sticky top-24">
+                  <p className="text-xs text-ink-faint uppercase tracking-wider font-semibold px-2 mb-3">{t('categoriesLabel')}</p>
                   <nav className="space-y-1">
                     {categories.map((cat) => {
                       const a = colorAccents[cat.color]
@@ -329,23 +328,23 @@ export default function FAQPage() {
                         <button
                           key={cat.id}
                           onClick={() => setActiveCategory(cat.id)}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-left transition duration-200 ease-out text-sm ${
+                          className={`w-full flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-md text-left transition duration-200 ease-out text-sm ${
                             isActive
                               ? `${a.badge} font-semibold`
-                              : 'text-gray-400 hover:text-white hover:bg-white/5'
+                              : 'text-ink-muted hover:text-ink hover:bg-ghost-fill'
                           }`}
                         >
-                          <div className={`flex-shrink-0 ${isActive ? '' : 'text-gray-600'}`}>{cat.icon}</div>
+                          <div className={`flex-shrink-0 ${isActive ? '' : 'text-ink-faint'}`}>{cat.icon}</div>
                           <span className="flex-1">{cat.label}</span>
-                          <span className={`text-xs px-1.5 py-0.5 rounded font-mono ${isActive ? 'bg-white/20' : 'bg-white/5 text-gray-600'}`}>
+                          <span className={`text-xs px-1.5 py-0.5 rounded font-mono ${isActive ? 'bg-surface-raised' : 'bg-ghost-fill text-ink-faint'}`}>
                             {cat.faqs.length}
                           </span>
                         </button>
                       )
                     })}
                   </nav>
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <p className="text-xs text-gray-600 px-2">{t('totalQuestions', { count: totalFAQs })}</p>
+                  <div className="mt-4 pt-4 border-t border-line">
+                    <p className="text-xs text-ink-faint px-2">{t('totalQuestions', { count: totalFAQs })}</p>
                   </div>
                 </div>
               </aside>
@@ -356,13 +355,13 @@ export default function FAQPage() {
               <div className="flex-1 min-w-0">
                 {categories.map((cat, catIdx) => (
                   <div key={cat.id} className={cat.id === activeCategory ? '' : 'hidden'}>
-                    <div className="flex items-center gap-3 mb-6 pb-5 border-b border-white/10">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${colorAccents[cat.color].badge}`}>
+                    <div className="flex items-center gap-3 mb-6 pb-5 border-b border-line">
+                      <div className={`w-10 h-10 rounded-md flex items-center justify-center border ${colorAccents[cat.color].badge}`}>
                         {cat.icon}
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-white">{cat.label}</h2>
-                        <p className="text-gray-500 text-sm">{t('questionsCount', { count: cat.faqs.length })}</p>
+                        <h2 className="text-2xl font-semibold text-ink">{cat.label}</h2>
+                        <p className="text-ink-faint text-sm">{t('questionsCount', { count: cat.faqs.length })}</p>
                       </div>
                     </div>
 
@@ -379,7 +378,7 @@ export default function FAQPage() {
                             setActiveCategory(categories[catIdx + 1].id)
                             window.scrollTo({ top: 0, behavior: 'smooth' })
                           }}
-                          className="inline-flex items-center gap-2 min-h-[44px] px-2 -mr-2 text-sm text-gray-500 hover:text-purple-400 transition"
+                          className="inline-flex items-center gap-2 min-h-[44px] px-2 -mr-2 text-sm text-ink-faint hover:text-indigo-text transition"
                         >
                           <span>{t('nextCategory', { name: categories[catIdx + 1].label })}</span>
                           <ArrowRight className="w-4 h-4" />
@@ -394,12 +393,12 @@ export default function FAQPage() {
         )}
 
         {/* ─── STILL QUESTIONS ─── */}
-        <section className="py-16 px-4 border-t border-white/5">
+        <section className="py-16 px-4 border-t border-line">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="glass-strong rounded-3xl p-10 border border-white/10">
-              <Sparkles className="w-10 h-10 text-purple-400 mx-auto mb-5" />
-              <h3 className="text-2xl font-bold text-white mb-4">{t('stillQuestions.heading')}</h3>
-              <p className="text-gray-400 mb-7 max-w-lg mx-auto">
+            <div className="bg-surface border border-line rounded-xl p-10 border border-line">
+              <Sparkles className="w-10 h-10 text-indigo-text mx-auto mb-5" />
+              <h3 className="text-2xl font-semibold text-ink mb-4">{t('stillQuestions.heading')}</h3>
+              <p className="text-ink-muted mb-7 max-w-lg mx-auto">
                 {t('stillQuestions.text')}
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
@@ -407,14 +406,14 @@ export default function FAQPage() {
                   href="https://github.com/FrameSphere/FrameTrain-App"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-strong px-6 py-3 rounded-xl text-gray-300 hover:text-white transition font-semibold border border-white/10 flex items-center gap-2"
+                  className="bg-surface border border-line px-6 py-3 rounded-md text-ink hover:text-ink transition font-semibold border border-line flex items-center gap-2"
                 >
                   <Code2 className="w-4 h-4" />
                   {t('stillQuestions.githubIssues')}
                 </a>
-                <Link href="/register" className="relative group inline-block px-6 py-3 rounded-xl overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600" />
-                  <div className="relative flex items-center gap-2 text-white font-semibold">
+                <Link href="/register" className="relative group inline-block px-6 py-3 rounded-md overflow-hidden">
+                  <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
+                  <div className="relative flex items-center gap-2 text-ink font-semibold">
                     <Sparkles className="w-4 h-4" />
                     <span>{t('stillQuestions.ctaStart')}</span>
                   </div>

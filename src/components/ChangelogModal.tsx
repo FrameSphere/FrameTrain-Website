@@ -70,18 +70,18 @@ export function useChangelogBadge() {
 
 // ── Stil-Helfer (nur Farbe/Icon, Labels kommen aus next-intl) ────
 const STATUS_TYPE_STYLE: Record<string, { color: string; icon: React.ReactNode }> = {
-  status:    { color: 'text-blue-400 bg-blue-500/10 border-blue-500/25',    icon: <GitCommit className="w-3.5 h-3.5" /> },
-  milestone: { color: 'text-purple-400 bg-purple-500/10 border-purple-500/25', icon: <Milestone className="w-3.5 h-3.5" /> },
-  hotfix:    { color: 'text-orange-400 bg-orange-500/10 border-orange-500/25', icon: <Flame className="w-3.5 h-3.5" /> },
-  dev:       { color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/25',    icon: <Code2 className="w-3.5 h-3.5" /> },
+  status:    { color: 'text-indigo-text bg-indigo-soft border-line',    icon: <GitCommit className="w-3.5 h-3.5" /> },
+  milestone: { color: 'text-indigo-text bg-indigo-soft border-line', icon: <Milestone className="w-3.5 h-3.5" /> },
+  hotfix:    { color: 'text-warning bg-ghost-fill border-line', icon: <Flame className="w-3.5 h-3.5" /> },
+  dev:       { color: 'text-indigo-text bg-indigo-soft border-line',    icon: <Code2 className="w-3.5 h-3.5" /> },
 }
 
 const RELEASE_TYPE_STYLE: Record<string, { color: string; icon: React.ReactNode }> = {
-  feature:     { color: 'text-purple-400 bg-purple-500/10 border-purple-500/25', icon: <Sparkles className="w-3.5 h-3.5" /> },
-  improvement: { color: 'text-blue-400 bg-blue-500/10 border-blue-500/25',    icon: <Zap className="w-3.5 h-3.5" /> },
-  fix:         { color: 'text-orange-400 bg-orange-500/10 border-orange-500/25', icon: <Bug className="w-3.5 h-3.5" /> },
-  security:    { color: 'text-green-400 bg-green-500/10 border-green-500/25', icon: <Shield className="w-3.5 h-3.5" /> },
-  breaking:    { color: 'text-red-400 bg-red-500/10 border-red-500/25',       icon: <span className="text-xs">💥</span> },
+  feature:     { color: 'text-indigo-text bg-indigo-soft border-line', icon: <Sparkles className="w-3.5 h-3.5" /> },
+  improvement: { color: 'text-indigo-text bg-indigo-soft border-line',    icon: <Zap className="w-3.5 h-3.5" /> },
+  fix:         { color: 'text-warning bg-ghost-fill border-line', icon: <Bug className="w-3.5 h-3.5" /> },
+  security:    { color: 'text-success bg-ghost-fill border-line', icon: <Shield className="w-3.5 h-3.5" /> },
+  breaking:    { color: 'text-danger bg-ghost-fill border-danger',       icon: <span className="text-xs"></span> },
 }
 
 function fmtDate(
@@ -105,20 +105,20 @@ function SimpleMarkdown({ text }: { text: string }) {
     <div className="space-y-1">
       {lines.map((line, i) => {
         if (line.startsWith('### ')) {
-          return <p key={i} className="text-white font-bold text-xs mt-2 mb-1">{line.slice(4)}</p>
+          return <p key={i} className="text-ink font-semibold text-xs mt-2 mb-1">{line.slice(4)}</p>
         }
         if (line.startsWith('## ')) {
-          return <p key={i} className="text-white font-bold text-sm mt-2 mb-1">{line.slice(3)}</p>
+          return <p key={i} className="text-ink font-semibold text-sm mt-2 mb-1">{line.slice(3)}</p>
         }
         if (line.startsWith('- ') || line.startsWith('• ')) {
           const content = line.slice(2)
           return (
             <div key={i} className="flex items-start gap-1.5">
-              <span className="text-purple-400 mt-0.5 flex-shrink-0">·</span>
-              <span className="text-gray-300 text-sm leading-relaxed">
+              <span className="text-indigo-text mt-0.5 flex-shrink-0">·</span>
+              <span className="text-ink text-sm leading-relaxed">
                 {content.split(/\*\*(.*?)\*\*/g).map((part, j) =>
                   j % 2 === 1
-                    ? <strong key={j} className="text-white">{part}</strong>
+                    ? <strong key={j} className="text-ink">{part}</strong>
                     : part
                 )}
               </span>
@@ -127,10 +127,10 @@ function SimpleMarkdown({ text }: { text: string }) {
         }
         if (line.trim() === '') return <div key={i} className="h-1" />
         return (
-          <p key={i} className="text-gray-400 text-sm leading-relaxed">
+          <p key={i} className="text-ink-muted text-sm leading-relaxed">
             {line.split(/\*\*(.*?)\*\*/g).map((part, j) =>
               j % 2 === 1
-                ? <strong key={j} className="text-white">{part}</strong>
+                ? <strong key={j} className="text-ink">{part}</strong>
                 : part
             )}
           </p>
@@ -208,27 +208,27 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4 pb-8 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4 pb-8 bg-[rgba(5,5,10,0.72)] "
       onClick={onClose}
     >
       <div
-        className="glass-strong border border-white/10 rounded-3xl w-full max-w-xl max-h-[80vh] flex flex-col shadow-2xl shadow-purple-500/10 overflow-hidden"
+        className="bg-surface border border-line border border-line rounded-xl w-full max-w-xl max-h-[80vh] flex flex-col overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 flex-shrink-0">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-line flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
-              <Rocket className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 bg-ghost-fill border border-line rounded-md flex items-center justify-center">
+              <Rocket className="w-5 h-5 text-ink" />
             </div>
             <div>
-              <h2 className="text-white font-bold text-lg leading-none">{t('title')}</h2>
-              <p className="text-gray-500 text-xs mt-0.5">{t('subtitle')}</p>
+              <h2 className="text-ink font-semibold text-lg leading-none">{t('title')}</h2>
+              <p className="text-ink-faint text-xs mt-0.5">{t('subtitle')}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="press p-2 hover:bg-white/10 rounded-xl transition-colors text-gray-400 hover:text-white"
+            className="press p-2 hover:bg-surface-raised rounded-md transition-colors text-ink-muted hover:text-ink"
           >
             <X className="w-5 h-5" />
           </button>
@@ -237,14 +237,14 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
         {/* Feed */}
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
           {loading && (
-            <div className="flex items-center justify-center py-12 gap-3 text-gray-500">
-              <div className="w-5 h-5 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+            <div className="flex items-center justify-center py-12 gap-3 text-ink-faint">
+              <div className="w-5 h-5 border-2 border-indigo-text border-t-transparent rounded-full animate-spin" />
               <span className="text-sm">{t('loadingText')}</span>
             </div>
           )}
 
           {!loading && feed.length === 0 && (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-ink-faint">
               <Bell className="w-10 h-10 mx-auto mb-3 opacity-30" />
               <p className="text-sm">{t('emptyText')}</p>
             </div>
@@ -260,32 +260,32 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
               return (
                 <div
                   key={`s-${item.data.id}`}
-                  className={`rounded-2xl border p-4 transition duration-200 ease-out ${
-                    isNew ? 'border-purple-500/30 bg-purple-500/5' : 'border-white/8 bg-white/[0.02]'
+                  className={`rounded-lg border p-4 transition duration-200 ease-out ${
+                    isNew ? 'border-line-strong bg-surface-raised' : 'border-line bg-ghost-fill'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div className="flex items-center gap-2 flex-wrap">
                       {isNew && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-button text-ink uppercase tracking-wide">
                           {t('newBadge')}
                         </span>
                       )}
-                      <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full border ${style.color}`}>
+                      <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full border ${style.color}`}>
                         {style.icon}
                         {label}
                       </span>
                       {item.data.appVersion && (
-                        <span className="text-[11px] text-gray-600 font-mono">
+                        <span className="text-[11px] text-ink-faint font-mono">
                           v{item.data.appVersion}
                         </span>
                       )}
                     </div>
-                    <span className="text-[11px] text-gray-600 flex-shrink-0">{fmtDate(item.data.createdAt, locale, dateLabels)}</span>
+                    <span className="text-[11px] text-ink-faint flex-shrink-0">{fmtDate(item.data.createdAt, locale, dateLabels)}</span>
                   </div>
-                  <p className="text-white font-semibold text-sm mb-2">{item.data.title}</p>
+                  <p className="text-ink font-semibold text-sm mb-2">{item.data.title}</p>
                   <SimpleMarkdown text={item.data.body} />
-                  <p className="text-gray-600 text-[11px] mt-3">— {item.data.author}</p>
+                  <p className="text-ink-faint text-[11px] mt-3">— {item.data.author}</p>
                 </div>
               )
             }
@@ -299,32 +299,32 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
             return (
               <div
                 key={`r-${item.data.id}`}
-                className={`rounded-2xl border p-4 transition duration-200 ease-out ${
-                  isNew ? 'border-purple-500/30 bg-purple-500/5' : 'border-white/8 bg-white/[0.02]'
+                className={`rounded-lg border p-4 transition duration-200 ease-out ${
+                  isNew ? 'border-line-strong bg-surface-raised' : 'border-line bg-ghost-fill'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3 mb-1.5">
                   <div className="flex items-center gap-2 flex-wrap">
                     {isNew && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-button text-ink uppercase tracking-wide">
                         {t('newBadge')}
                       </span>
                     )}
-                    <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full border ${style.color}`}>
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full border ${style.color}`}>
                       {style.icon}
                       {label}
                     </span>
                     {!isDateVersion && (
-                      <span className="text-[11px] text-gray-600 font-mono">v{item.data.version}</span>
+                      <span className="text-[11px] text-ink-faint font-mono">v{item.data.version}</span>
                     )}
                   </div>
-                  <span className="text-[11px] text-gray-600 flex-shrink-0">{fmtDate(item.data.created_at, locale, dateLabels)}</span>
+                  <span className="text-[11px] text-ink-faint flex-shrink-0">{fmtDate(item.data.created_at, locale, dateLabels)}</span>
                 </div>
-                <p className="text-white font-semibold text-sm">{relTitle}</p>
+                <p className="text-ink font-semibold text-sm">{relTitle}</p>
                 {relDesc && (
                   item.data.source === 'automation'
                     ? <div className="mt-1.5"><SimpleMarkdown text={relDesc} /></div>
-                    : <p className="text-gray-400 text-sm mt-1 leading-relaxed">{relDesc}</p>
+                    : <p className="text-ink-muted text-sm mt-1 leading-relaxed">{relDesc}</p>
                 )}
               </div>
             )
@@ -332,11 +332,11 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-white/10 flex-shrink-0">
+        <div className="px-6 py-4 border-t border-line flex-shrink-0">
           <Link
             href="/changelog"
             onClick={onClose}
-            className="card-lift flex items-center justify-center gap-2 w-full py-2.5 glass border border-white/10 rounded-xl text-gray-300 hover:text-white hover:border-purple-500/30 transition duration-200 ease-out text-sm font-semibold group"
+            className="card-lift flex items-center justify-center gap-2 w-full py-2.5 bg-surface border border-line border border-line rounded-md text-ink hover:text-ink hover:border-line transition duration-200 ease-out text-sm font-semibold group"
           >
             {t('viewFull')}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

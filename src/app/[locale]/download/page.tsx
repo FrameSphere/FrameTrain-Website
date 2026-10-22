@@ -105,35 +105,35 @@ export default function DownloadPage() {
 
           {/* ── Kopf ── */}
           <div className="text-center mb-10">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.1] mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-ink leading-[1.1] mb-4">
               {t('heading')}
             </h1>
-            <p className="text-lg text-gray-400">{t('subtitle')}</p>
+            <p className="text-lg text-ink-muted">{t('subtitle')}</p>
           </div>
 
           {/* ── Launch-kritischer Hinweis 1: Python ──
               Die Desktop-App bricht beim Pre-Flight-Check ab, wenn kein
-              Python 3.8+ installiert ist (vor allem unter Windows). Der Kasten
+              Python 3.10–3.13 installiert ist (vor allem unter Windows). Der Kasten
               steht bewusst ÜBER der Download-Karte: wer das erst nach dem Kauf
               erfährt, sitzt in der Sackgasse. Nicht nach unten schieben und
               nicht einklappen. */}
-          <div className="mb-6 rounded-2xl border border-amber-400/30 bg-amber-500/[0.07] p-5 sm:p-6">
+          <div className="mb-6 rounded-lg border border-warning bg-ghost-fill p-5 sm:p-6">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/25 flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-amber-400" />
+              <div className="flex-shrink-0 w-10 h-10 rounded-md bg-ghost-fill border border-line flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5 text-warning" />
               </div>
               <div className="min-w-0">
-                <h2 className="text-white font-semibold text-[15px] mb-1.5">
+                <h2 className="text-ink font-semibold text-[15px] mb-1.5">
                   {tReq('pythonLabel')} {tReq('python')}
                 </h2>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-ink-muted text-sm leading-relaxed">
                   {tReq('pythonNote')}
                 </p>
                 <a
                   href="https://www.python.org/downloads/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-1.5 mt-3 text-amber-300 hover:text-amber-200 font-medium text-sm transition-colors"
+                  className="group inline-flex items-center gap-1.5 mt-3 text-warning hover:text-warning font-medium text-sm transition-colors"
                 >
                   {tReq('pythonCta')}
                   <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
@@ -143,11 +143,11 @@ export default function DownloadPage() {
           </div>
 
           {/* ── Download-Karte ── */}
-          <div className="glass-strong rounded-2xl border border-white/10 p-6 sm:p-8 mb-8">
+          <div className="bg-surface border border-line rounded-lg border border-line p-6 sm:p-8 mb-8">
 
             {/* Plattformwahl */}
             <div className="mb-7">
-              <label className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 mb-3">
+              <label className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-faint mb-3">
                 {t('platformLabel')}
               </label>
               <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
@@ -159,13 +159,13 @@ export default function DownloadPage() {
                       key={p}
                       onClick={() => setPlatform(p)}
                       aria-pressed={active}
-                      className={`press flex flex-col items-center gap-2 px-3 py-4 rounded-xl border transition-colors duration-200 ease-out ${
+                      className={`press flex flex-col items-center gap-2 px-3 py-4 rounded-md border transition-colors duration-200 ease-out ${
                         active
-                          ? 'border-purple-400/50 bg-purple-500/[0.12] text-white'
-                          : 'border-white/10 bg-white/[0.03] text-gray-400 hover:border-white/25 hover:text-gray-200'
+                          ? 'border-line-strong bg-indigo-soft text-ink'
+                          : 'border-line bg-ghost-fill text-ink-muted hover:border-line-strong hover:text-ink'
                       }`}
                     >
-                      <Icon className={`w-6 h-6 ${active ? 'text-purple-300' : 'text-gray-500'}`} />
+                      <Icon className={`w-6 h-6 ${active ? 'text-indigo-text' : 'text-ink-faint'}`} />
                       <span className="text-sm font-medium">{platformNames[p]}</span>
                     </button>
                   );
@@ -176,9 +176,9 @@ export default function DownloadPage() {
                   Es gibt bewusst keinen Intel-Build. Ohne diesen Hinweis
                   bekämen Intel-Nutzer wortlos ein .dmg, das nicht startet. */}
               {platform === 'mac' && (
-                <div className="mt-3 flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                  <Apple className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-gray-400 text-sm leading-relaxed">{tReq('macNote')}</p>
+                <div className="mt-3 flex items-start gap-3 rounded-md border border-line bg-ghost-fill p-4">
+                  <Apple className="w-5 h-5 text-ink-muted flex-shrink-0 mt-0.5" />
+                  <p className="text-ink-muted text-sm leading-relaxed">{tReq('macNote')}</p>
                 </div>
               )}
             </div>
@@ -187,12 +187,12 @@ export default function DownloadPage() {
             <div className="mb-6">
               <label
                 htmlFor="api-key"
-                className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 mb-3"
+                className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-faint mb-3"
               >
                 {t('apiKeyLabel')}
               </label>
               <div className="relative">
-                <KeyRound className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                <KeyRound className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-faint" />
                 <input
                   id="api-key"
                   type="text"
@@ -201,13 +201,13 @@ export default function DownloadPage() {
                   placeholder={t('apiKeyPlaceholder')}
                   spellCheck={false}
                   autoComplete="off"
-                  className="w-full pl-10 pr-4 py-3 bg-white/[0.04] border border-white/10 rounded-xl text-white placeholder-gray-600 font-mono text-sm hover:border-white/20 focus:border-purple-500/60 focus:bg-white/[0.06] focus:outline-none transition-colors duration-[180ms] ease-out"
+                  className="w-full pl-10 pr-4 py-3 bg-ghost-fill border border-line rounded-md text-ink placeholder-ink-faint font-mono text-sm hover:border-line-strong focus:border-line-strong focus:bg-ghost-fill focus:outline-none transition-colors duration-[180ms] ease-out"
                 />
               </div>
-              <p className="mt-2.5 text-sm text-gray-500">
+              <p className="mt-2.5 text-sm text-ink-faint">
                 {t.rich('apiKeyHint', {
                   link: (chunks) => (
-                    <Link href="/payment" className="text-purple-400 hover:text-purple-300 transition-colors">
+                    <Link href="/payment" className="text-indigo-text hover:text-indigo-text transition-colors">
                       {chunks}
                     </Link>
                   ),
@@ -219,9 +219,9 @@ export default function DownloadPage() {
             <button
               onClick={handleDownload}
               disabled={isDownloading || !apiKey.trim()}
-              className="press group relative flex items-center justify-center gap-2 w-full py-3.5 rounded-xl overflow-hidden font-semibold text-[15px] text-white disabled:opacity-40 disabled:cursor-not-allowed disabled:active:transform-none"
+              className="press group relative flex items-center justify-center gap-2 w-full py-3.5 rounded-md overflow-hidden font-semibold text-[15px] text-ink disabled:opacity-40 disabled:cursor-not-allowed disabled:active:transform-none"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient" />
+              <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
               {isDownloading ? (
                 <>
                   <Loader2 className="relative w-5 h-5 animate-spin" />
@@ -239,12 +239,12 @@ export default function DownloadPage() {
 
             {/* Erfolg */}
             {successMessage && (
-              <div className="mt-4 flex items-start gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/25">
-                <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+              <div className="mt-4 flex items-start gap-3 p-4 rounded-md bg-ghost-fill border border-line">
+                <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-green-300 font-medium text-sm">{successMessage}</p>
+                  <p className="text-success font-medium text-sm">{successMessage}</p>
                   {downloadInfo && (
-                    <p className="text-green-400/70 text-sm mt-1">
+                    <p className="text-success text-sm mt-1">
                       {t('versionInfo', { version: downloadInfo.version, size: downloadInfo.size_mb })}
                     </p>
                   )}
@@ -254,9 +254,9 @@ export default function DownloadPage() {
 
             {/* Fehler */}
             {error && (
-              <div className="mt-4 flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/25">
-                <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <p className="text-red-300 text-sm">{error}</p>
+              <div className="mt-4 flex items-start gap-3 p-4 rounded-md bg-ghost-fill border border-danger">
+                <XCircle className="w-5 h-5 text-danger flex-shrink-0 mt-0.5" />
+                <p className="text-danger text-sm">{error}</p>
               </div>
             )}
           </div>
@@ -265,12 +265,12 @@ export default function DownloadPage() {
               der Download-Karte fängt es die Leute ab, die runterladen,
               hängenbleiben und sonst wieder gehen. Die Fassade lädt nichts von
               YouTube, bis bewusst auf Play geklickt wird. */}
-          <div className="glass rounded-2xl border border-white/10 p-6 sm:p-8 mb-8">
-            <h2 className="flex items-center gap-2.5 text-lg font-semibold text-white mb-1.5">
-              <PlayCircle className="w-5 h-5 text-purple-400" />
+          <div className="bg-surface border border-line rounded-lg border border-line p-6 sm:p-8 mb-8">
+            <h2 className="flex items-center gap-2.5 text-lg font-semibold text-ink mb-1.5">
+              <PlayCircle className="w-5 h-5 text-indigo-text" />
               {t('installVideoHeading')}
             </h2>
-            <p className="text-gray-400 text-sm mb-5">{t('installVideoSubtitle')}</p>
+            <p className="text-ink-muted text-sm mb-5">{t('installVideoSubtitle')}</p>
             <VideoEmbed id={VIDEOS.install} title={t('installVideoTitle')} />
           </div>
 
@@ -285,7 +285,7 @@ export default function DownloadPage() {
             />
             <Link
               href="/screenshots"
-              className="group inline-flex items-center gap-1.5 mt-4 text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
+              className="group inline-flex items-center gap-1.5 mt-4 text-indigo-text hover:text-indigo-text text-sm font-medium transition-colors"
             >
               {t('shotLink')}
               <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
@@ -293,24 +293,24 @@ export default function DownloadPage() {
           </div>
 
           {/* Installationsschritte */}
-          <div className="glass rounded-2xl border border-white/10 p-6 sm:p-8 mb-6">
-            <h2 className="flex items-center gap-2.5 text-lg font-semibold text-white mb-5">
-              <ListOrdered className="w-5 h-5 text-purple-400" />
+          <div className="bg-surface border border-line rounded-lg border border-line p-6 sm:p-8 mb-6">
+            <h2 className="flex items-center gap-2.5 text-lg font-semibold text-ink mb-5">
+              <ListOrdered className="w-5 h-5 text-indigo-text" />
               {t('installGuideHeading')}
             </h2>
             <ol className="space-y-3">
               {steps[platform].map((step, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/15 border border-purple-400/25 text-purple-300 flex items-center justify-center text-xs font-semibold">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-soft border border-line text-indigo-text flex items-center justify-center text-xs font-semibold">
                     {index + 1}
                   </span>
-                  <span className="text-gray-300 text-sm leading-relaxed pt-0.5">{step}</span>
+                  <span className="text-ink text-sm leading-relaxed pt-0.5">{step}</span>
                 </li>
               ))}
             </ol>
             <Link
               href="/install"
-              className="group inline-flex items-center gap-1.5 mt-6 text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
+              className="group inline-flex items-center gap-1.5 mt-6 text-indigo-text hover:text-indigo-text text-sm font-medium transition-colors"
             >
               {t('installGuideLink')}
               <ArrowRight className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
@@ -318,10 +318,10 @@ export default function DownloadPage() {
           </div>
 
           {/* Support */}
-          <p className="mt-8 text-center text-sm text-gray-500">
+          <p className="mt-8 text-center text-sm text-ink-faint">
             {t.rich('supportText', {
               link: (chunks) => (
-                <a href="mailto:framesphere@gmx.net" className="text-purple-400 hover:text-purple-300 transition-colors">
+                <a href="mailto:framesphere@gmx.net" className="text-indigo-text hover:text-indigo-text transition-colors">
                   {chunks}
                 </a>
               ),

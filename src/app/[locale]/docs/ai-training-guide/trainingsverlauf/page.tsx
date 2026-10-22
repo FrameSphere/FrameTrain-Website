@@ -25,9 +25,9 @@ function LossKurvenSection({ c, locale }: { c: any; locale: string }) {
       <H2>{c.anatomyHeading}</H2>
       <div className="grid md:grid-cols-2 gap-4 mb-6">
         {c.anatomyItems.map((item: any, i: number) => (
-          <div key={i} className={`glass border ${i < 2 ? 'border-white/10' : i === 2 ? 'border-violet-400/20' : 'border-cyan-400/20'} rounded-xl p-4`}>
-            <h3 className="text-white font-semibold mb-2 text-sm">{item.title}</h3>
-            <p className="text-gray-400 text-sm">{item.desc}</p>
+          <div key={i} className={`bg-surface border border-line border ${i < 2 ? 'border-line' : i === 2 ? 'border-line' : 'border-line'} rounded-md p-4`}>
+            <h3 className="text-ink font-semibold mb-2 text-sm">{item.title}</h3>
+            <p className="text-ink-muted text-sm">{item.desc}</p>
           </div>
         ))}
       </div>
@@ -46,34 +46,29 @@ function LossKurvenSection({ c, locale }: { c: any; locale: string }) {
       <P><Highlight>{c.highLrLabel}</Highlight> {c.highLrText}</P>
 
       <H2>{c.benchmarksHeading}</H2>
-      <div className="glass border border-white/10 rounded-xl p-5">
+      <div className="bg-surface border border-line border border-line rounded-md p-5">
         <div className="space-y-3">
           {c.benchmarksTable.map((row: any, i: number) => (
             <div key={i} className="flex gap-3 items-center text-sm flex-wrap">
-              <span className="text-gray-400 flex-1 min-w-0">{row.metric}</span>
+              <span className="text-ink-muted flex-1 min-w-0">{row.metric}</span>
               <Tag color="green">✓ {row.good}</Tag>
               <Tag color="yellow">~ {row.ok}</Tag>
               <Tag color="red">✗ {row.bad}</Tag>
             </div>
           ))}
         </div>
-        <p className="text-gray-600 text-xs mt-4">{c.benchmarksNote}</p>
+        <p className="text-ink-faint text-xs mt-4">{c.benchmarksNote}</p>
       </div>
 
       <H2>{c.frametrainHeading}</H2>
       <P><Rich html={c.frametrainText} /></P>
-      {/* Der Screenshot der Analyse-Charts liegt bislang nur in der deutschen
-          Oberfläche vor. Sobald die englische Fassung existiert, kann die
-          Locale-Bedingung ersatzlos raus. */}
-      {locale === 'de' && (
-        <AppScreenshot
-          locale="de"
-          slug="analysis-charts"
-          alt={c.screenshotAlt}
-          caption={c.screenshotCaption}
-          className="mt-6"
-        />
-      )}
+      <AppScreenshot
+        locale={locale}
+        slug="analysis-charts"
+        alt={c.screenshotAlt}
+        caption={c.screenshotCaption}
+        className="mt-6"
+      />
     </div>
   )
 }
@@ -92,11 +87,11 @@ function GutesTrainingSection({ c }: { c: any }) {
       <H2>{c.checklistHeading}</H2>
       <div className="space-y-3">
         {c.checklist.map((item: any, i: number) => (
-          <div key={i} className="glass border border-green-400/20 rounded-xl p-4 flex gap-3">
-            <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-4 flex gap-3">
+            <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-white font-semibold text-sm">{item.check}</p>
-              <p className="text-gray-500 text-xs mt-1">{item.detail}</p>
+              <p className="text-ink font-semibold text-sm">{item.check}</p>
+              <p className="text-ink-faint text-xs mt-1">{item.detail}</p>
             </div>
           </div>
         ))}
@@ -105,11 +100,11 @@ function GutesTrainingSection({ c }: { c: any }) {
       <H2>{c.phasesHeading}</H2>
       <div className="space-y-3">
         {c.phases.map((item: any, i: number) => {
-          const colors = ['border-violet-400/30', 'border-blue-400/30', 'border-cyan-400/30', 'border-red-400/30']
+          const colors = ['border-line', 'border-line', 'border-line', 'border-danger']
           return (
-            <div key={i} className={`glass border ${colors[i]} rounded-xl p-4`}>
-              <h3 className="text-white font-semibold mb-1 text-sm">{item.phase}</h3>
-              <p className="text-gray-400 text-sm">{item.desc}</p>
+            <div key={i} className={`bg-surface border border-line border ${colors[i]} rounded-md p-4`}>
+              <h3 className="text-ink font-semibold mb-1 text-sm">{item.phase}</h3>
+              <p className="text-ink-muted text-sm">{item.desc}</p>
             </div>
           )
         })}
@@ -118,9 +113,9 @@ function GutesTrainingSection({ c }: { c: any }) {
       <H2>{c.whenHeading}</H2>
       <div className="space-y-2">
         {c.whenTable.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-lg p-4">
-            <p className="text-gray-300 text-sm">{item.signal}</p>
-            <p className="text-violet-400 text-xs font-semibold mt-1">→ {item.action}</p>
+          <div key={i} className="bg-surface border border-line border border-line rounded-sm p-4">
+            <p className="text-ink text-sm">{item.signal}</p>
+            <p className="text-indigo-text text-xs font-semibold mt-1">→ {item.action}</p>
           </div>
         ))}
       </div>
@@ -139,8 +134,8 @@ function OverfittingSection({ c }: { c: any }) {
       <H2>{c.signsHeading}</H2>
       <div className="space-y-3">
         {c.signs.map((item: any, i: number) => (
-          <div key={i} className={`glass border rounded-xl p-4 flex justify-between items-center ${item.severityKey === 'critical' ? 'border-red-400/30' : 'border-orange-400/30'}`}>
-            <p className="text-gray-300 text-sm">{item.sign}</p>
+          <div key={i} className={`bg-surface border border-line border rounded-md p-4 flex justify-between items-center ${item.severityKey === 'critical' ? 'border-danger' : 'border-warning'}`}>
+            <p className="text-ink text-sm">{item.sign}</p>
             <Tag color={item.severityKey === 'critical' ? 'red' : 'yellow'}>{item.severityLabel}</Tag>
           </div>
         ))}
@@ -149,30 +144,30 @@ function OverfittingSection({ c }: { c: any }) {
       <H2>{c.causesHeading}</H2>
       <div className="grid md:grid-cols-2 gap-4">
         {c.causes.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-xl p-4">
-            <h3 className="text-red-300 font-semibold mb-1 text-sm">{item.cause}</h3>
-            <p className="text-gray-400 text-sm">{item.detail}</p>
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-4">
+            <h3 className="text-danger font-semibold mb-1 text-sm">{item.cause}</h3>
+            <p className="text-ink-muted text-sm">{item.detail}</p>
           </div>
         ))}
       </div>
 
       <H2>{c.tradeoffHeading}</H2>
       <P><Rich html={c.tradeoffIntro} /></P>
-      <div className="glass border border-white/10 rounded-xl p-5">
+      <div className="bg-surface border border-line border border-line rounded-md p-5">
         <div className="grid grid-cols-3 gap-4 text-center text-sm">
           {c.tradeoffCards.map((card: any, i: number) => {
             const styles = [
-              { border: 'border-orange-400/20', text: 'text-orange-400' },
-              { border: 'border-green-400/20', text: 'text-green-400' },
-              { border: 'border-red-400/20', text: 'text-red-400' },
+              { border: 'border-line', text: 'text-warning' },
+              { border: 'border-line', text: 'text-success' },
+              { border: 'border-danger', text: 'text-danger' },
             ]
             const style = styles[i]
             return (
-              <div key={i} className={`glass border ${style.border} rounded-xl p-4`}>
-                <p className={`${style.text} font-bold text-lg mb-2`}>{card.name}</p>
-                <p className="text-gray-400">{card.bias}</p>
-                <p className="text-gray-400">{card.variance}</p>
-                <p className="text-gray-500 text-xs mt-2">{card.note}</p>
+              <div key={i} className={`bg-surface border border-line border ${style.border} rounded-md p-4`}>
+                <p className={`${style.text} font-semibold text-lg mb-2`}>{card.name}</p>
+                <p className="text-ink-muted">{card.bias}</p>
+                <p className="text-ink-muted">{card.variance}</p>
+                <p className="text-ink-faint text-xs mt-2">{card.note}</p>
               </div>
             )
           })}
@@ -197,9 +192,9 @@ function UnderfittingSection({ c }: { c: any }) {
       <H2>{c.signsHeading}</H2>
       <div className="space-y-3">
         {c.signs.map((item: any, i: number) => (
-          <div key={i} className="glass border border-orange-400/20 rounded-xl p-4">
-            <p className="text-orange-300 font-semibold text-sm">{item.sign}</p>
-            <p className="text-gray-500 text-xs mt-1">{item.detail}</p>
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-4">
+            <p className="text-warning font-semibold text-sm">{item.sign}</p>
+            <p className="text-ink-faint text-xs mt-1">{item.detail}</p>
           </div>
         ))}
       </div>
@@ -207,13 +202,13 @@ function UnderfittingSection({ c }: { c: any }) {
       <H2>{c.causesHeading}</H2>
       <div className="space-y-3">
         {c.causes.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-xl p-4">
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-4">
             <div className="flex gap-2 items-start mb-2">
               <Tag color="yellow">{c.causeLabel}</Tag>
-              <h3 className="text-orange-300 font-semibold text-sm">{item.cause}</h3>
+              <h3 className="text-warning font-semibold text-sm">{item.cause}</h3>
             </div>
-            <p className="text-gray-600 text-xs mb-2">{c.checkLabel} {item.check}</p>
-            <p className="text-gray-400 text-sm">→ {c.fixLabel} {item.fix}</p>
+            <p className="text-ink-faint text-xs mb-2">{c.checkLabel} {item.check}</p>
+            <p className="text-ink-muted text-sm">→ {c.fixLabel} {item.fix}</p>
           </div>
         ))}
       </div>
@@ -236,15 +231,15 @@ function InstabilesTrainingSection({ c }: { c: any }) {
       <H2>{c.patternsHeading}</H2>
       <div className="space-y-4">
         {c.patterns.map((item: any, i: number) => {
-          const colors = ['border-yellow-400/20', 'border-orange-400/20', 'border-red-400/20', 'border-pink-400/20', 'border-blue-400/20']
+          const colors = ['border-line', 'border-line', 'border-danger', 'border-line', 'border-line']
           return (
-            <div key={i} className={`glass border rounded-xl p-5 ${colors[i]}`}>
+            <div key={i} className={`bg-surface border border-line border rounded-md p-5 ${colors[i]}`}>
               <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
-                <h3 className="text-white font-bold text-sm flex-1">{item.pattern}</h3>
+                <h3 className="text-ink font-semibold text-sm flex-1">{item.pattern}</h3>
                 <Tag color="yellow">{item.cause}</Tag>
               </div>
-              <p className="text-gray-400 text-sm mb-2">{item.desc}</p>
-              <p className="text-green-400 text-xs font-semibold">→ {item.fix}</p>
+              <p className="text-ink-muted text-sm mb-2">{item.desc}</p>
+              <p className="text-success text-xs font-semibold">→ {item.fix}</p>
             </div>
           )
         })}
@@ -275,16 +270,16 @@ export default function TrainingsverlaufPage() {
     'instabiles-training': <InstabilesTrainingSection c={content.instabilesTraining} />,
   }
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
+    <div className="min-h-screen flex flex-col bg-bg ">
       <Header />
       <main className="flex-1 py-10 px-4">
         <div className="max-w-7xl mx-auto mb-6">
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
+          <div className="flex items-center gap-2 text-sm text-ink-faint">
+            <Link href="/docs" className="hover:text-ink transition-colors">Docs</Link>
             <ChevronRight className="w-3 h-3" />
-            <Link href="/docs/ai-training-guide" className="hover:text-white transition-colors">{tDocs('coachSidebar.title')}</Link>
+            <Link href="/docs/ai-training-guide" className="hover:text-ink transition-colors">{tDocs('coachSidebar.title')}</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-300">{CHAPTER.emoji} {t(`chapters.${CHAPTER.key}.title`)}</span>
+            <span className="text-ink">{CHAPTER.emoji} {t(`chapters.${CHAPTER.key}.title`)}</span>
           </div>
         </div>
         <div className="max-w-7xl mx-auto">

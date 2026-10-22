@@ -1,82 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyJWT } from '@/lib/jwt';
+import { fetchLatestRelease, type GitHubRelease, type ReleaseAsset } from '@/lib/github-releases';
 
 // Force dynamic rendering for this route
 export const dynamic = 'force-dynamic';
 
-// GitHub Repository Info
-const GITHUB_OWNER = process.env.GITHUB_OWNER || 'FrameSphere';
-const GITHUB_REPO = process.env.GITHUB_REPO || 'FrameTrain-App';
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Optional: für private repos
-
-interface ReleaseAsset {
-  name: string;
-  browser_download_url: string;
-  size: number;
-}
-
-interface GitHubRelease {
-  tag_name: string;
-  assets: ReleaseAsset[];
-  prerelease: boolean;
-  draft: boolean;
-  published_at: string;
-}
-
-/**
- * Get the latest release from GitHub
- * CRITICAL FIX: Get ALL releases and sort by date to find the ACTUAL latest
- */
+// Releases kommen aus FrameTrain-Releases, mit Rückfall auf FrameTrain-App
+// (siehe lib/github-releases.ts)
 async function getLatestRelease(): Promise<GitHubRelease | null> {
-  try {
-    const headers: HeadersInit = {
-      'Accept': 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-    };
-
-    if (GITHUB_TOKEN) {
-      headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
-    }
-
-    // Get ALL releases, not just "latest" tag
-    const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases`,
-      { headers }
-    );
-
-    if (!response.ok) {
-      console.error('GitHub API error:', response.status, response.statusText);
-      return null;
-    }
-
-    const releases: GitHubRelease[] = await response.json();
-    
-    if (!releases || releases.length === 0) {
-      console.error('No releases found');
-      return null;
-    }
-
-    // Filter out pre-releases and drafts, then sort by date
-    const validReleases = releases
-      .filter(r => !r.prerelease && !r.draft)
-      .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
-    
-    if (validReleases.length === 0) {
-      console.error('No valid releases found');
-      return null;
-    }
-
-    const latestRelease = validReleases[0];
-    
-    console.log('[Download] Latest release:', latestRelease.tag_name, 'published:', latestRelease.published_at);
-    console.log('[Download] Assets:', latestRelease.assets.map(a => a.name));
-    
-    return latestRelease;
-  } catch (error) {
-    console.error('Failed to fetch release:', error);
+  const found = await fetchLatestRelease({ cache: 'no-store' });
+  if (!found) {
+    console.error('[Download] Kein veröffentlichtes Release gefunden');
     return null;
   }
+  console.log('[Download] Latest release:', found.release.tag_name, 'aus', found.repo);
+  return found.release;
 }
 
 // Der macOS-Build wird ausschließlich für Apple Silicon gebaut (der
@@ -239,7 +178,7 @@ export async function GET(request: NextRequest) {
         size: asset.size,
         size_mb: (asset.size / 1024 / 1024).toFixed(2),
         ...(PLATFORM_NOTES[platform] ? { platform_note: PLATFORM_NOTES[platform] } : {}),
-        requires: 'Python 3.8+',
+        requires: 'Python 3.10–3.13',
       });
     }
 

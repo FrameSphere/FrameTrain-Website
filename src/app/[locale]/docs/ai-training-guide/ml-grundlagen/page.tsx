@@ -33,14 +33,14 @@ function WasIstMLSection({ c }: { c: any }) {
       <H2>{c.paradigmsHeading}</H2>
       <div className="grid md:grid-cols-3 gap-4">
         {c.paradigms.map((item: any, i: number) => {
-          const colors = ['border-violet-400/30 bg-violet-500/5', 'border-blue-400/30 bg-blue-500/5', 'border-green-400/30 bg-green-500/5']
+          const colors = ['border-line bg-indigo-soft', 'border-line bg-indigo-soft', 'border-success bg-ghost-fill']
           return (
-            <div key={i} className={`glass border rounded-xl p-5 ${colors[i]}`}>
+            <div key={i} className={`bg-surface border border-line border rounded-md p-5 ${colors[i]}`}>
               <div className="text-3xl mb-3">{item.emoji}</div>
-              <h3 className="text-white font-bold mb-2">{item.title}</h3>
-              <p className="text-gray-400 text-sm mb-3">{item.desc}</p>
-              <p className="text-xs text-gray-500 mb-1">{c.exampleLabel} {item.example}</p>
-              <p className="text-xs text-gray-600">{c.useCaseLabel} {item.useCase}</p>
+              <h3 className="text-ink font-semibold mb-2">{item.title}</h3>
+              <p className="text-ink-muted text-sm mb-3">{item.desc}</p>
+              <p className="text-xs text-ink-faint mb-1">{c.exampleLabel} {item.example}</p>
+              <p className="text-xs text-ink-faint">{c.useCaseLabel} {item.useCase}</p>
             </div>
           )
         })}
@@ -49,9 +49,9 @@ function WasIstMLSection({ c }: { c: any }) {
       <H2>{c.vocabHeading}</H2>
       <div className="space-y-3">
         {c.vocab.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-lg p-4 flex gap-4 items-start">
+          <div key={i} className="bg-surface border border-line border border-line rounded-sm p-4 flex gap-4 items-start">
             <Tag>{item.term}</Tag>
-            <p className="text-gray-400 text-sm">{item.def}</p>
+            <p className="text-ink-muted text-sm">{item.def}</p>
           </div>
         ))}
       </div>
@@ -59,15 +59,15 @@ function WasIstMLSection({ c }: { c: any }) {
       <H2>{c.whyFtHeading}</H2>
       <P><Rich html={c.whyFtText} /></P>
       <div className="grid md:grid-cols-2 gap-4">
-        <div className="glass border border-gray-500/20 rounded-xl p-5">
-          <h3 className="text-gray-400 font-bold mb-3">{c.pretrainTitle}</h3>
-          <ul className="space-y-2 text-gray-500 text-sm">
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-ink-muted font-semibold mb-3">{c.pretrainTitle}</h3>
+          <ul className="space-y-2 text-ink-faint text-sm">
             {c.pretrainItems.map((it: string, i: number) => <li key={i}>{it}</li>)}
           </ul>
         </div>
-        <div className="glass border border-green-400/20 rounded-xl p-5">
-          <h3 className="text-green-400 font-bold mb-3">{c.ftTitle}</h3>
-          <ul className="space-y-2 text-gray-400 text-sm">
+        <div className="bg-surface border border-line border border-line rounded-md p-5">
+          <h3 className="text-success font-semibold mb-3">{c.ftTitle}</h3>
+          <ul className="space-y-2 text-ink-muted text-sm">
             {c.ftItems.map((it: string, i: number) => <li key={i}>{it}</li>)}
           </ul>
         </div>
@@ -75,21 +75,21 @@ function WasIstMLSection({ c }: { c: any }) {
 
       <H2>{c.transferHeading}</H2>
       <P><Rich html={c.transferText} /></P>
-      <div className="glass border border-white/10 rounded-xl p-5">
+      <div className="bg-surface border border-line border border-line rounded-md p-5">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-24 text-center">
-            <div className="text-2xl mb-1">🧠</div>
-            <p className="text-xs text-gray-400">{c.transferDiagram.baseModel}<br/>{c.transferDiagram.baseModelSub}</p>
+            <div className="text-2xl mb-1"></div>
+            <p className="text-xs text-ink-muted">{c.transferDiagram.baseModel}<br/>{c.transferDiagram.baseModelSub}</p>
           </div>
-          <div className="flex-1 h-px bg-gradient-to-r from-violet-400/50 to-transparent relative">
-            <div className="absolute -top-3 left-1/3 text-xs text-violet-400">{c.transferDiagram.finetuning}</div>
+          <div className="flex-1 h-px to-transparent relative">
+            <div className="absolute -top-3 left-1/3 text-xs text-indigo-text">{c.transferDiagram.finetuning}</div>
           </div>
           <div className="w-24 text-center">
-            <div className="text-2xl mb-1">🎯</div>
-            <p className="text-xs text-gray-400">{c.transferDiagram.specialized}<br/>{c.transferDiagram.specializedSub}</p>
+            <div className="text-2xl mb-1"></div>
+            <p className="text-xs text-ink-muted">{c.transferDiagram.specialized}<br/>{c.transferDiagram.specializedSub}</p>
           </div>
         </div>
-        <p className="text-gray-400 text-sm text-center">{c.transferDiagram.footnote}</p>
+        <p className="text-ink-muted text-sm text-center">{c.transferDiagram.footnote}</p>
       </div>
     </div>
   )
@@ -111,13 +111,13 @@ function NeuronaleNetzeSection({ c }: { c: any }) {
       <H2>{c.activationsHeading}</H2>
       <div className="space-y-3">
         {c.activations.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-xl p-5">
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-5">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="text-white font-bold">{item.name}</h3>
-              <code className="text-violet-300 text-xs font-mono">{item.formula}</code>
+              <h3 className="text-ink font-semibold">{item.name}</h3>
+              <code className="text-indigo-text text-xs font-mono">{item.formula}</code>
             </div>
-            <p className="text-gray-400 text-sm mb-2">{item.desc}</p>
-            <p className="text-gray-600 text-xs">{c.usedInLabel} {item.use}</p>
+            <p className="text-ink-muted text-sm mb-2">{item.desc}</p>
+            <p className="text-ink-faint text-xs">{c.usedInLabel} {item.use}</p>
           </div>
         ))}
       </div>
@@ -125,9 +125,9 @@ function NeuronaleNetzeSection({ c }: { c: any }) {
       <H2>{c.layersHeading}</H2>
       <div className="space-y-3">
         {c.layers.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-lg p-4">
-            <h3 className="text-white font-semibold mb-1 text-sm">{item.name}</h3>
-            <p className="text-gray-400 text-sm">{item.desc}</p>
+          <div key={i} className="bg-surface border border-line border border-line rounded-sm p-4">
+            <h3 className="text-ink font-semibold mb-1 text-sm">{item.name}</h3>
+            <p className="text-ink-muted text-sm">{item.desc}</p>
           </div>
         ))}
       </div>
@@ -157,14 +157,14 @@ function TransformerSection({ c }: { c: any }) {
       <P><Rich html={c.multiHeadText} /></P>
 
       <H2>{c.blockHeading}</H2>
-      <div className="glass border border-white/10 rounded-xl p-5">
+      <div className="bg-surface border border-line border border-line rounded-md p-5">
         <div className="space-y-2 text-sm">
           {c.blockRows.map((row: any, i: number) => {
-            const colors = ['text-violet-300', 'text-blue-300', 'text-gray-400', 'text-cyan-300', 'text-gray-400', 'text-green-300']
+            const colors = ['text-indigo-text', 'text-indigo-text', 'text-ink-muted', 'text-indigo-text', 'text-ink-muted', 'text-success']
             return (
-              <div key={i} className={`flex items-center gap-3 p-3 rounded-lg ${i % 2 === 0 ? 'bg-white/5' : ''}`}>
+              <div key={i} className={`flex items-center gap-3 p-3 rounded-sm ${i % 2 === 0 ? 'bg-ghost-fill' : ''}`}>
                 <span className={`${colors[i]} font-mono text-xs flex-1`}>{row.name}</span>
-                <span className="text-gray-600 text-xs">{row.desc}</span>
+                <span className="text-ink-faint text-xs">{row.desc}</span>
               </div>
             )
           })}
@@ -174,37 +174,37 @@ function TransformerSection({ c }: { c: any }) {
       <H2>{c.modelsHeading}</H2>
       <div className="grid md:grid-cols-2 gap-4">
         {c.models.map((m: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-xl p-4">
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-4">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="text-white font-bold">{m.name}</h3>
+              <h3 className="text-ink font-semibold">{m.name}</h3>
               <Tag color="purple">{m.type}</Tag>
             </div>
-            <p className="text-gray-400 text-sm mb-2">{m.use}</p>
-            <div className="flex gap-3 text-xs text-gray-500">
-              <span>📊 {m.params}</span>
-              <span>📏 {m.context} {c.contextLabel}</span>
+            <p className="text-ink-muted text-sm mb-2">{m.use}</p>
+            <div className="flex gap-3 text-xs text-ink-faint">
+              <span>{m.params}</span>
+              <span>{m.context} {c.contextLabel}</span>
             </div>
           </div>
         ))}
       </div>
 
       <H2>{c.vramHeading}</H2>
-      <div className="glass border border-white/10 rounded-xl p-5">
-        <p className="text-sm text-gray-400 mb-4">{c.vramIntro}</p>
+      <div className="bg-surface border border-line border border-line rounded-md p-5">
+        <p className="text-sm text-ink-muted mb-4">{c.vramIntro}</p>
         <div className="space-y-2">
           {c.vramRows.map((row: any, i: number) => (
-            <div key={i} className="grid grid-cols-4 gap-2 text-sm py-2 border-b border-white/5">
-              <span className="text-gray-300">{row.model}</span>
-              <span className="text-red-400">{row.ft}</span>
-              <span className="text-yellow-400">{row.lora}</span>
-              <span className="text-green-400">{row.qlora}</span>
+            <div key={i} className="grid grid-cols-4 gap-2 text-sm py-2 border-b border-line">
+              <span className="text-ink">{row.model}</span>
+              <span className="text-danger">{row.ft}</span>
+              <span className="text-warning">{row.lora}</span>
+              <span className="text-success">{row.qlora}</span>
             </div>
           ))}
-          <div className="grid grid-cols-4 gap-2 text-xs text-gray-600 pt-2">
+          <div className="grid grid-cols-4 gap-2 text-xs text-ink-faint pt-2">
             <span>{c.vramHeaders.model}</span>
-            <span className="text-red-600">{c.vramHeaders.ft}</span>
-            <span className="text-yellow-600">{c.vramHeaders.lora}</span>
-            <span className="text-green-600">{c.vramHeaders.qlora}</span>
+            <span className="text-danger">{c.vramHeaders.ft}</span>
+            <span className="text-warning">{c.vramHeaders.lora}</span>
+            <span className="text-success">{c.vramHeaders.qlora}</span>
           </div>
         </div>
       </div>
@@ -217,7 +217,7 @@ function TransformerSection({ c }: { c: any }) {
 }
 
 function WieKILerntSection({ c }: { c: any }) {
-  const stepColors = ['border-violet-400/30 bg-violet-500/5', 'border-blue-400/30 bg-blue-500/5', 'border-cyan-400/30 bg-cyan-500/5', 'border-green-400/30 bg-green-500/5', 'border-yellow-400/30 bg-yellow-500/5', 'border-pink-400/30 bg-pink-500/5']
+  const stepColors = ['border-line bg-indigo-soft', 'border-line bg-indigo-soft', 'border-line bg-indigo-soft', 'border-success bg-ghost-fill', 'border-warning bg-ghost-fill', 'border-line bg-indigo-soft']
   return (
     <div className="space-y-6">
       <SectionTitle icon={<Zap className="w-9 h-9" />} title={c.title} subtitle={c.subtitle} />
@@ -227,14 +227,14 @@ function WieKILerntSection({ c }: { c: any }) {
       <H2>{c.cycleHeading}</H2>
       <div className="space-y-3">
         {c.cycleSteps.map((item: any, i: number) => (
-          <div key={i} className={`glass border rounded-xl p-5 ${stepColors[i]}`}>
+          <div key={i} className={`bg-surface border border-line border rounded-md p-5 ${stepColors[i]}`}>
             <div className="flex gap-4 items-start">
-              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-ghost-fill border border-line rounded-md flex items-center justify-center text-ink font-semibold text-lg flex-shrink-0">
                 {item.step}
               </div>
               <div>
-                <h3 className="text-white font-bold mb-1">{item.title}</h3>
-                <p className="text-gray-400 text-sm">{item.desc}</p>
+                <h3 className="text-ink font-semibold mb-1">{item.title}</h3>
+                <p className="text-ink-muted text-sm">{item.desc}</p>
               </div>
             </div>
           </div>
@@ -250,9 +250,9 @@ function WieKILerntSection({ c }: { c: any }) {
       <H2>{c.sgdHeading}</H2>
       <div className="grid md:grid-cols-3 gap-4">
         {c.sgdTypes.map((item: any, i: number) => (
-          <div key={i} className="glass border border-white/10 rounded-xl p-4">
-            <h3 className="text-white font-bold text-sm mb-3">{item.name}</h3>
-            <div className="space-y-1 text-xs text-gray-400">
+          <div key={i} className="bg-surface border border-line border border-line rounded-md p-4">
+            <h3 className="text-ink font-semibold text-sm mb-3">{item.name}</h3>
+            <div className="space-y-1 text-xs text-ink-muted">
               <p>{c.sgdLabels.batch} {item.batch}</p>
               <p>{c.sgdLabels.speed} {item.speed}</p>
               <p>{c.sgdLabels.quality} {item.quality}</p>
@@ -272,15 +272,15 @@ function WieKILerntSection({ c }: { c: any }) {
       <H2>{c.gradientsHeading}</H2>
       <P><Rich html={c.gradientsText} /></P>
       <div className="grid md:grid-cols-2 gap-4">
-        <div className="glass border border-green-400/20 rounded-xl p-4">
-          <h3 className="text-green-400 font-semibold mb-2">{c.vanishingTitle}</h3>
-          <ul className="text-gray-400 text-sm space-y-1">
+        <div className="bg-surface border border-line border border-line rounded-md p-4">
+          <h3 className="text-success font-semibold mb-2">{c.vanishingTitle}</h3>
+          <ul className="text-ink-muted text-sm space-y-1">
             {c.vanishingItems.map((it: string, i: number) => <li key={i}>✓ {it}</li>)}
           </ul>
         </div>
-        <div className="glass border border-red-400/20 rounded-xl p-4">
-          <h3 className="text-red-400 font-semibold mb-2">{c.explodingTitle}</h3>
-          <ul className="text-gray-400 text-sm space-y-1">
+        <div className="bg-surface border border-line border border-danger rounded-md p-4">
+          <h3 className="text-danger font-semibold mb-2">{c.explodingTitle}</h3>
+          <ul className="text-ink-muted text-sm space-y-1">
             {c.explodingItems.map((it: string, i: number) => <li key={i}>✓ {it}</li>)}
           </ul>
         </div>
@@ -305,17 +305,17 @@ export default function MLGrundlagenPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
+    <div className="min-h-screen flex flex-col bg-bg ">
       <Header />
       <main className="flex-1 py-10 px-4">
         {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto mb-6">
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
+          <div className="flex items-center gap-2 text-sm text-ink-faint">
+            <Link href="/docs" className="hover:text-ink transition-colors">Docs</Link>
             <ChevronRight className="w-3 h-3" />
-            <Link href="/docs/ai-training-guide" className="hover:text-white transition-colors">{tDocs('coachSidebar.title')}</Link>
+            <Link href="/docs/ai-training-guide" className="hover:text-ink transition-colors">{tDocs('coachSidebar.title')}</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-300">{CHAPTER.emoji} {t(`chapters.${CHAPTER.key}.title`)}</span>
+            <span className="text-ink">{CHAPTER.emoji} {t(`chapters.${CHAPTER.key}.title`)}</span>
           </div>
         </div>
 

@@ -11,14 +11,14 @@ import { CoachHubJsonLd } from '@/lib/coach-seo'
 import { CHAPTER_META } from './_shared'
 
 const CHAPTER_COLORS = [
-  { color: 'from-violet-500/10 to-purple-500/5', border: 'border-violet-400/20', accent: 'text-violet-400' },
-  { color: 'from-blue-500/10 to-cyan-500/5',     border: 'border-blue-400/20',   accent: 'text-blue-400' },
-  { color: 'from-cyan-500/10 to-teal-500/5',     border: 'border-cyan-400/20',   accent: 'text-cyan-400' },
-  { color: 'from-red-500/10 to-pink-500/5',      border: 'border-red-400/20',    accent: 'text-red-400' },
-  { color: 'from-orange-500/10 to-amber-500/5',  border: 'border-orange-400/20', accent: 'text-orange-400' },
-  { color: 'from-pink-500/10 to-rose-500/5',     border: 'border-pink-400/20',   accent: 'text-pink-400' },
-  { color: 'from-green-500/10 to-emerald-500/5', border: 'border-green-400/20',  accent: 'text-green-400' },
-  { color: 'from-fuchsia-500/10 to-violet-500/5',border: 'border-fuchsia-400/20',accent: 'text-fuchsia-400' },
+  { color: ' ', border: 'border-line', accent: 'text-indigo-text' },
+  { color: ' ',     border: 'border-line',   accent: 'text-indigo-text' },
+  { color: ' ',     border: 'border-line',   accent: 'text-indigo-text' },
+  { color: ' ',      border: 'border-danger',    accent: 'text-danger' },
+  { color: ' ',  border: 'border-line', accent: 'text-warning' },
+  { color: ' ',     border: 'border-line',   accent: 'text-indigo-text' },
+  { color: ' ', border: 'border-line',  accent: 'text-success' },
+  { color: ' ',border: 'border-line',accent: 'text-indigo-text' },
 ]
 
 export default function AITrainingGuideHubPage() {
@@ -28,31 +28,31 @@ export default function AITrainingGuideHubPage() {
   const stats = t.raw('hub.stats') as string[]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950">
+    <div className="min-h-screen flex flex-col bg-bg ">
       <CoachHubJsonLd locale={locale} />
       <Header />
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative py-20 px-4 border-b border-white/10">
+        <section className="relative py-20 px-4 border-b border-line">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-3xl mb-6 shadow-lg shadow-violet-500/40">
-              <Brain className="w-10 h-10 text-white" />
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-ghost-fill border border-line rounded-xl mb-6  ">
+              <Brain className="w-10 h-10 text-ink" />
             </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-500/10 border border-violet-500/20 rounded-full mb-6 text-violet-300 text-sm font-medium">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-soft border border-line rounded-full mb-6 text-indigo-text text-sm font-medium">
               <Sparkles className="w-4 h-4" />
               {t('hub.badge')}
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-ink mb-6">
               {t('hub.headingLine1')}{' '}
-              <span className="text-gradient-brand">
+              <span className="text-ink">
                 {t('hub.headingLine2')}
               </span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-ink-muted max-w-3xl mx-auto mb-8">
               {t('hub.subtitle')}
             </p>
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-500 mb-10 flex-wrap">
+            <div className="flex items-center justify-center gap-4 text-sm text-ink-faint mb-10 flex-wrap">
               {stats.map((stat, i) => (
                 <Fragment key={stat}>
                   {i > 0 && <span>·</span>}
@@ -74,23 +74,23 @@ export default function AITrainingGuideHubPage() {
                 const num = String(idx + 1).padStart(2, '0')
                 return (
                   <Link key={ch.id} href={ch.href} className="group block">
-                    <div className={`glass border ${c.border} rounded-2xl p-7 bg-gradient-to-br ${c.color} transition duration-200 ease-out hover:shadow-lg h-full`}>
+                    <div className={`bg-surface border border-line border ${c.border} rounded-lg p-7 ${c.color} transition duration-200 ease-out  h-full`}>
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <span className="text-3xl">{ch.emoji}</span>
                           <div>
-                            <p className={`text-xs font-bold ${c.accent} mb-0.5 uppercase tracking-wider`}>
+                            <p className={`text-xs font-semibold ${c.accent} mb-0.5 uppercase tracking-wider`}>
                               {t('hub.chapterLabel')} {num}
                             </p>
-                            <h2 className="text-white font-bold text-xl">{t(`chapters.${ch.key}.title`)}</h2>
+                            <h2 className="text-ink font-semibold text-xl">{t(`chapters.${ch.key}.title`)}</h2>
                           </div>
                         </div>
                         <ArrowRight className={`w-5 h-5 ${c.accent} opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition duration-200 ease-out`} />
                       </div>
-                      <p className="text-gray-400 text-sm mb-4 leading-relaxed">{chData.desc}</p>
+                      <p className="text-ink-muted text-sm mb-4 leading-relaxed">{chData.desc}</p>
                       <div className="flex flex-wrap gap-2">
                         {chData.topics.map((topic) => (
-                          <span key={topic} className="text-xs px-2 py-1 bg-white/5 border border-white/10 rounded-md text-gray-500">
+                          <span key={topic} className="text-xs px-2 py-1 bg-ghost-fill border border-line rounded-sm text-ink-faint">
                             {topic}
                           </span>
                         ))}
@@ -105,7 +105,7 @@ export default function AITrainingGuideHubPage() {
             <div className="mt-12 text-center">
               <Link
                 href="/docs/ai-training-guide/ml-grundlagen"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-white font-bold hover:from-violet-500 hover:to-fuchsia-500 transition duration-200 ease-out shadow-lg shadow-violet-500/30"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-button hover:bg-indigo-hover rounded-md text-ink font-semibold   transition duration-200 ease-out  "
               >
                 <BookOpen className="w-5 h-5" />
                 {t('hub.startCta')}

@@ -45,19 +45,19 @@ export function PaymentForm({ email, onSuccess }: PaymentFormProps) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="bg-ink p-6 rounded-sm ">
       <h3 className="text-xl font-semibold mb-4">Zahlung</h3>
       
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">FrameTrain Early Access</span>
+          <span className="text-ink-faint">FrameTrain Early Access</span>
           <span className="font-semibold">4,99 € / Monat</span>
         </div>
-        <p className="text-sm text-gray-500">Abo · jederzeit kündbar · Preis steigt nach 100 Nutzern</p>
+        <p className="text-sm text-ink-faint">Abo · jederzeit kündbar · Preis steigt nach 100 Nutzern</p>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-600 text-sm">
+        <div className="mb-4 p-3 bg-ghost-fill border border-danger rounded text-danger text-sm">
           {error}
         </div>
       )}
@@ -65,12 +65,12 @@ export function PaymentForm({ email, onSuccess }: PaymentFormProps) {
       <button
         onClick={handlePayment}
         disabled={loading}
-        className="w-full py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className="w-full py-3 bg-indigo-button text-ink rounded-sm font-semibold hover:bg-indigo-button transition disabled:bg-surface-raised disabled:cursor-not-allowed"
       >
         {loading ? 'Wird verarbeitet...' : 'Jetzt bezahlen mit Stripe'}
       </button>
 
-      <p className="text-xs text-gray-500 text-center mt-4">
+      <p className="text-xs text-ink-faint text-center mt-4">
         Sichere Zahlung über Stripe. Deine Zahlungsdaten werden verschlüsselt übertragen.
       </p>
     </div>

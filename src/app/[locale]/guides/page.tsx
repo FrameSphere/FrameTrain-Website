@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { Brain, Laptop, Cpu, Shield, ArrowRight } from 'lucide-react'
+import { Brain, Laptop, Cpu, Shield, ArrowRight, Apple } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const icons = [<Brain key="0" className="w-8 h-8 text-purple-400" />, <Laptop key="1" className="w-8 h-8 text-green-400" />, <Cpu key="2" className="w-8 h-8 text-orange-400" />]
-const colors = ['purple', 'green', 'orange']
+const icons = [<Brain key="0" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Laptop key="1" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Cpu key="2" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />, <Apple key="3" className="w-7 h-7 text-ink-muted" strokeWidth={1.5} />]
+const colors = ['purple', 'green', 'orange', 'purple']
 const colorMap: Record<string, string> = {
-  purple: 'from-purple-500 to-pink-500',
-  green: 'from-green-500 to-cyan-500',
-  orange: 'from-orange-500 to-red-500',
+  purple: 'bg-ghost-fill',
+  green: 'bg-ghost-fill',
+  orange: 'bg-ghost-fill',
 }
 
 type GuideItem = { title: string; description: string; tags: string[]; href: string }
@@ -71,13 +71,13 @@ export default function GuidesPage() {
       <Header />
 
       <main className="flex-1">
-        <section className="py-16 sm:py-20 px-4 border-b border-white/10">
+        <section className="py-16 sm:py-20 px-4 border-b border-line">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-6">
-              <Shield className="w-6 h-6 text-white" />
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-ghost-fill border border-line rounded-lg mb-6">
+              <Shield className="w-6 h-6 text-ink" />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-[1.1]">{t('heading')}</h1>
-            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-ink mb-4 leading-[1.1]">{t('heading')}</h1>
+            <p className="text-base sm:text-lg text-ink-faint max-w-xl mx-auto leading-relaxed">
               {t('subtitle')}
             </p>
           </div>
@@ -87,20 +87,20 @@ export default function GuidesPage() {
           <div className="max-w-3xl mx-auto grid gap-4">
             {guides.map((guide, i) => (
               <Link key={guide.href} href={guide.href} className="group">
-                <div className="card-lift glass-strong rounded-2xl p-6 sm:p-7 border border-white/10">
+                <div className="card-lift bg-surface border border-line rounded-lg p-6 sm:p-7 border border-line">
                   <div className="flex items-start gap-5">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${colorMap[colors[i]]} rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform duration-200 ease-out group-hover:scale-[1.06] [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-white`}>
+                    <div className={`w-12 h-12 ${colorMap[colors[i]]} rounded-lg flex items-center justify-center flex-shrink-0 transition-transform duration-200 ease-out group-hover:scale-[1.06] [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-ink`}>
                       {icons[i]}
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-200 transition-colors duration-200">
+                      <h2 className="text-lg font-semibold text-ink mb-2 group-hover:text-indigo-text transition-colors duration-200">
                         {guide.title}
                       </h2>
-                      <p className="text-[15px] text-gray-400 leading-[1.65] mb-4">{guide.description}</p>
+                      <p className="text-[15px] text-ink-muted leading-[1.65] mb-4">{guide.description}</p>
                       <div className="flex items-center gap-4">
                         <div className="flex gap-1.5 flex-wrap">
                           {guide.tags.map((tag) => (
-                            <span key={tag} className="text-[11px] px-2 py-0.5 rounded bg-white/[0.04] text-gray-500 font-mono border border-white/10">
+                            <span key={tag} className="text-[11px] px-2 py-0.5 rounded bg-ghost-fill text-ink-faint font-mono border border-line">
                               {tag}
                             </span>
                           ))}
@@ -108,7 +108,7 @@ export default function GuidesPage() {
                         {/* group-hover:gap-2 animierte vorher gap – eine Layout-
                             Eigenschaft, die pro Frame ein Reflow auslöst. Der
                             Pfeil verschiebt sich jetzt per transform. */}
-                        <div className="ml-auto flex items-center gap-1.5 text-purple-400/80 text-[13px] font-medium group-hover:text-purple-300 transition-colors duration-200">
+                        <div className="ml-auto flex items-center gap-1.5 text-indigo-text text-[13px] font-medium group-hover:text-indigo-text transition-colors duration-200">
                           <span>{t('readLabel')}</span>
                           <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
                         </div>

@@ -22,7 +22,7 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
       {/* Google */}
       <a
         href="/api/auth/oauth/google"
-        className="press w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
+        className="press w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink hover:border-line-strong hover:text-ink hover:bg-ghost-fill transition-colors duration-[180ms] ease-out"
       >
         <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -36,9 +36,9 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
       {/* GitHub */}
       <a
         href="/api/auth/oauth/github"
-        className="press w-full flex items-center gap-3 px-4 py-3 glass border border-white/10 rounded-xl text-gray-300 hover:border-white/25 hover:text-white hover:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
+        className="press w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink hover:border-line-strong hover:text-ink hover:bg-ghost-fill transition-colors duration-[180ms] ease-out"
       >
-        <svg className="w-5 h-5 flex-shrink-0 text-white" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="w-5 h-5 flex-shrink-0 text-ink" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
         </svg>
         <span className="font-medium text-sm">{t('githubLogin')}</span>
@@ -47,15 +47,15 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
       {/* FrameSphere SSO */}
       <a
         href="/api/auth/framesphere"
-        className="press w-full flex items-center gap-3 px-4 py-3 glass border border-violet-400/30 rounded-xl text-gray-300 hover:border-violet-400/60 hover:text-white hover:bg-violet-500/[0.07] transition-colors duration-[180ms] ease-out group"
+        className="press w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink hover:border-line-strong hover:text-ink hover:bg-indigo-soft transition-colors duration-[180ms] ease-out group"
       >
-        <div className="w-5 h-5 flex-shrink-0 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25">
-          <span className="text-white font-bold text-[10px]">FS</span>
+        <div className="w-5 h-5 flex-shrink-0 rounded-sm bg-ghost-fill border border-line flex items-center justify-center  ">
+          <span className="text-ink font-semibold text-[10px]">FS</span>
         </div>
-        <span className="font-medium text-sm group-hover:text-violet-300 transition-colors">
+        <span className="font-medium text-sm group-hover:text-indigo-text transition-colors">
           {t('frameSphereLogin')}
         </span>
-        <span className="ml-auto text-[10px] font-semibold text-violet-400 border border-violet-500/40 px-1.5 py-0.5 rounded bg-violet-500/10">
+        <span className="ml-auto text-[10px] font-semibold text-indigo-text border border-line-strong px-1.5 py-0.5 rounded bg-indigo-soft">
           {t('ssoBadge')}
         </span>
       </a>
@@ -101,83 +101,83 @@ function LoginContent() {
   }
 
   return (
-    <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10">
+    <div className="bg-surface border border-line rounded-lg p-8 border border-line">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-4">
-          <LogIn className="w-8 h-8 text-white" />
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-ghost-fill border border-line rounded-lg mb-4">
+          <LogIn className="w-8 h-8 text-ink" />
         </div>
-        <h1 className="text-3xl font-bold text-white mb-2">{t('heading')}</h1>
-        <p className="text-gray-400">{t('subtitle')}</p>
+        <h1 className="text-3xl font-semibold text-ink mb-2">{t('heading')}</h1>
+        <p className="text-ink-muted">{t('subtitle')}</p>
       </div>
 
       {/* Zustimmung als Voraussetzung: schaltet sowohl die OAuth-Buttons als
           auch das E-Mail-Formular frei. */}
-      <div className="mb-6 p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+      <div className="mb-6 p-4 rounded-md border border-line bg-ghost-fill">
         <label className="flex items-start gap-3 cursor-pointer group">
           <input
             type="checkbox"
             checked={acceptedTerms}
             onChange={(e) => setAcceptedTerms(e.target.checked)}
-            className="mt-0.5 w-5 h-5 rounded border-white/20 bg-white/5 text-purple-500 focus:ring-purple-500 focus:ring-offset-0 flex-shrink-0"
+            className="mt-0.5 w-5 h-5 rounded border-line-strong bg-ghost-fill text-indigo-text focus:ring-indigo-text focus:ring-offset-0 flex-shrink-0"
           />
-          <span className="text-sm text-gray-400 leading-relaxed group-hover:text-gray-300 transition">
+          <span className="text-sm text-ink-muted leading-relaxed group-hover:text-ink transition">
             {t.rich('consentLabel', {
-              terms: (chunks) => <Link href="/terms" target="_blank" className="text-violet-400 hover:text-violet-300 underline">{chunks}</Link>,
-              privacy: (chunks) => <Link href="/privacy" target="_blank" className="text-violet-400 hover:text-violet-300 underline">{chunks}</Link>,
+              terms: (chunks) => <Link href="/terms" target="_blank" className="text-indigo-text hover:text-indigo-text underline">{chunks}</Link>,
+              privacy: (chunks) => <Link href="/privacy" target="_blank" className="text-indigo-text hover:text-indigo-text underline">{chunks}</Link>,
             })}
           </span>
         </label>
         {!acceptedTerms && (
-          <p className="mt-3 pl-8 text-xs text-amber-400/90">{t('consentHint')}</p>
+          <p className="mt-3 pl-8 text-xs text-warning">{t('consentHint')}</p>
         )}
       </div>
 
       <OAuthButtons disabled={!acceptedTerms} />
 
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex-1 h-px bg-white/10" />
-        <span className="text-gray-600 text-xs font-medium">{tOauth('divider')}</span>
-        <div className="flex-1 h-px bg-white/10" />
+        <div className="flex-1 h-px bg-surface-raised" />
+        <span className="text-ink-faint text-xs font-medium">{tOauth('divider')}</span>
+        <div className="flex-1 h-px bg-surface-raised" />
       </div>
 
       {error && (
-        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm">
+        <div className="mb-6 p-4 bg-ghost-fill border border-danger text-danger rounded-sm text-sm">
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+          <label htmlFor="email" className="block text-sm font-medium text-ink mb-2">
             {tFields('emailLabel')}
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-faint" />
             <input
               id="email"
               type="email"
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 hover:border-white/20 focus:border-purple-500/60 focus:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
+              className="w-full pl-11 pr-4 py-3 bg-ghost-fill border border-line rounded-md text-ink placeholder-ink-faint hover:border-line-strong focus:border-line-strong focus:bg-ghost-fill transition-colors duration-[180ms] ease-out"
               placeholder={tFields('emailPlaceholder')}
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+          <label htmlFor="password" className="block text-sm font-medium text-ink mb-2">
             {tFields('passwordLabel')}
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-faint" />
             <input
               id="password"
               type="password"
               required
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 hover:border-white/20 focus:border-purple-500/60 focus:bg-white/[0.07] transition-colors duration-[180ms] ease-out"
+              className="w-full pl-11 pr-4 py-3 bg-ghost-fill border border-line rounded-md text-ink placeholder-ink-faint hover:border-line-strong focus:border-line-strong focus:bg-ghost-fill transition-colors duration-[180ms] ease-out"
               placeholder={tFields('passwordPlaceholder')}
             />
           </div>
@@ -186,23 +186,23 @@ function LoginContent() {
         <button
           type="submit"
           disabled={loading || !acceptedTerms}
-          className="press w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-shadow duration-200 ease-out disabled:opacity-40 disabled:shadow-none disabled:cursor-not-allowed disabled:active:transform-none"
+          className="press w-full py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold    transition-shadow duration-200 ease-out disabled:opacity-40 disabled:shadow-none disabled:cursor-not-allowed disabled:active:transform-none"
         >
           {loading ? t('submitLoading') : t('submit')}
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-gray-400">
+      <p className="mt-6 text-center text-sm text-ink-muted">
         {t('noAccount')}{' '}
-        <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium transition">
+        <Link href="/register" className="text-indigo-text hover:text-indigo-text font-medium transition">
           {t('registerLink')}
         </Link>
       </p>
 
-      <p className="mt-3 text-center text-xs text-gray-600">
+      <p className="mt-3 text-center text-xs text-ink-faint">
         {t('frameSphereHint')}{' '}
         <a href="https://frame-sphere.vercel.app/register" target="_blank" rel="noopener noreferrer"
-          className="text-violet-500 hover:text-violet-400 transition">
+          className="text-indigo-text hover:text-indigo-text transition">
           {t('frameSphereCta')}
         </a>
       </p>
@@ -220,8 +220,8 @@ export default function LoginPage() {
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <Suspense fallback={
-            <div className="glass-strong rounded-2xl shadow-2xl p-8 border border-white/10 flex items-center justify-center min-h-[400px]">
-              <div className="text-gray-400">{t('loadingFallback')}</div>
+            <div className="bg-surface border border-line rounded-lg p-8 border border-line flex items-center justify-center min-h-[400px]">
+              <div className="text-ink-muted">{t('loadingFallback')}</div>
             </div>
           }>
             <LoginContent />

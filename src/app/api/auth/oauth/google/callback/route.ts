@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { grantTrialIfEligible } from '@/lib/trial'
 import { signToken } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -131,6 +132,8 @@ export async function GET(req: NextRequest) {
           termsAcceptedAt: new Date(),
         },
       })
+      // Neues, vom Anbieter bestätigtes Konto: 14 Tage Testphase ohne Zahlungsdaten
+      if (await grantTrialIfEligible(user.id)) user = { ...user, hasPaid: true }
     }
 
     // Sign JWT and set cookie

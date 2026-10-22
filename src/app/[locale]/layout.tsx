@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
@@ -9,9 +9,22 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import { Analytics } from '@/components/Analytics'
 import { VercelAnalytics } from '@/components/VercelAnalytics'
 import { CookieBanner } from '@/components/CookieBanner'
+import { PromoCapture } from '@/components/PromoCapture'
 import { siteUrl, pageAlternates, pageOpenGraph } from '@/lib/seo'
 
-const inter = Inter({ subsets: ['latin'] })
+// Neuron: eine Textfamilie (Hanken Grotesk) plus Mono für Daten und Labels.
+const sans = Hanken_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 const baseUrl = siteUrl
 
@@ -30,20 +43,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const copy =
     locale === 'en'
       ? {
-          title: 'FrameTrain – Local LLM Training with LoRA & PyTorch',
+          title: 'FrameTrain – Train your own AI models locally, no code',
           description:
-            'Desktop app for local ML training: fine-tune HuggingFace models with LoRA & PyTorch, GDPR-compliant, no cloud required. From €4.99/month – get started.',
-          ogTitle: 'FrameTrain – Train AI models locally | ML Training Desktop App',
+            'Desktop app for macOS, Windows & Linux: collect data, label, train and test AI models on your own GPU – with LoRA, no cloud. Try it free for 14 days.',
+          ogTitle: 'FrameTrain – Your data. Your GPU. Your model.',
           ogDescription:
-            'Fine-tune HuggingFace & LLM models locally on your GPU. No cloud lock-in, maximum data security, GDPR-compliant. From €4.99/month in Early Access. Download now!',
+            'Train your own AI model without code, right on your computer: Dataset Builder, training and testing in one app. 14 days free, no payment details.',
         }
       : {
-          title: 'FrameTrain – LLM-Modelle lokal trainieren mit LoRA',
+          title: 'FrameTrain – KI-Modelle lokal trainieren, ohne Code',
           description:
-            'Desktop-App für lokales ML-Training: HuggingFace-Modelle mit LoRA & PyTorch fine-tunen, DSGVO-konform ohne Cloud. Ab 4,99€/Monat – jetzt starten.',
-          ogTitle: 'FrameTrain – KI-Modelle lokal trainieren | ML Training Desktop App',
+            'Desktop-App für macOS, Windows & Linux: Daten sammeln, labeln, trainieren und testen – mit LoRA auf deiner eigenen GPU, ohne Cloud. 14 Tage kostenlos testen.',
+          ogTitle: 'FrameTrain – Deine Daten. Deine GPU. Dein Modell.',
           ogDescription:
-            'Fine-Tune HuggingFace & LLM Modelle lokal auf deiner GPU. Kein Cloud-Zwang, maximale Datensicherheit, DSGVO-konform. Ab 4,99€/Monat im Early Access. Jetzt downloaden!',
+            'Trainiere dein eigenes KI-Modell ohne Code, lokal auf deinem Rechner: Dataset Builder, Training und Test in einer App. 14 Tage kostenlos, ohne Zahlungsdaten.',
         }
 
   return {
@@ -61,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     icons: {
       icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
-      apple: '/apple-touch-icon.svg',
+      apple: '/apple-touch-icon.png',
       shortcut: '/favicon.svg',
     },
     openGraph: pageOpenGraph({
@@ -126,7 +139,7 @@ export default async function RootLayout({ children, params }: Props) {
         '@type': 'Organization',
         name: 'FrameTrain',
         url: baseUrl,
-        logo: `${baseUrl}/favicon.svg`,
+        logo: `${baseUrl}/brand/frametrain-icon-512.png`,
         sameAs: ['https://github.com/FrameSphere/FrameTrain-App'],
       },
       {
@@ -184,7 +197,7 @@ export default async function RootLayout({ children, params }: Props) {
   }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} data-theme="dark" className={`${sans.variable} ${mono.variable}`}>
       <head>
         {/* Google Consent Mode v2 – MUSS vor jedem Tag laufen.
             Default: alles verweigert. Erst die Zustimmung im Cookie-Banner
@@ -227,10 +240,11 @@ try {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
       </head>
-      <body className={inter.className}>
+      <body>
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>{children}</AuthProvider>
           <CookieBanner />
+          <PromoCapture />
         </NextIntlClientProvider>
         <Analytics />
         <VercelAnalytics />

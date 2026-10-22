@@ -56,7 +56,7 @@ export function pageOpenGraph({
     description,
     images: [
       {
-        url: '/og-image.png',
+        url: locale === 'en' ? '/og-image-en.png' : '/og-image.png',
         width: 1200,
         height: 630,
         alt: title,

@@ -10,7 +10,7 @@ type Props = {
   id: string
   /** Titel – als Beschriftung auf der Fassade und als iframe-title (a11y). */
   title: string
-  /** Optionales lokales Poster (Pfad unter /public). Ohne Poster: Marken-Gradient. */
+  /** Optionales lokales Poster (Pfad unter /public). Ohne Poster: ruhige Fläche (surface-raised). */
   poster?: string
   className?: string
 }
@@ -28,7 +28,7 @@ export function VideoEmbed({ id, title, poster, className = '' }: Props) {
   const [active, setActive] = useState(false)
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 ${className}`}>
+    <div className={`relative overflow-hidden rounded-lg border border-line bg-surface ${className}`}>
       <div className="relative aspect-video">
         {active ? (
           <iframe
@@ -43,7 +43,7 @@ export function VideoEmbed({ id, title, poster, className = '' }: Props) {
             type="button"
             onClick={() => setActive(true)}
             aria-label={t('play', { title })}
-            className="press group absolute inset-0 w-full h-full flex flex-col items-center justify-center"
+            className="group absolute inset-0 w-full h-full flex flex-col items-center justify-center"
           >
             {/* Poster: lokales Bild ODER Marken-Gradient – beides ohne Google-Request. */}
             {poster ? (
@@ -52,24 +52,24 @@ export function VideoEmbed({ id, title, poster, className = '' }: Props) {
                 src={poster}
                 alt=""
                 aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-200 group-hover:opacity-80"
+                className="absolute inset-0 w-full h-full object-cover object-top opacity-60 transition-opacity duration-150 group-hover:opacity-75"
               />
             ) : (
               <div
-                className="absolute inset-0 bg-gradient-to-br from-purple-600/25 via-fuchsia-600/15 to-blue-600/25"
+                className="absolute inset-0 bg-surface-raised"
                 aria-hidden="true"
               />
             )}
             <div
-              className="absolute inset-0 bg-black/30 transition-colors duration-200 group-hover:bg-black/20"
+              className="absolute inset-0 bg-[rgba(10,10,18,0.45)] transition-colors duration-150 group-hover:bg-[rgba(10,10,18,0.3)]"
               aria-hidden="true"
             />
 
             {/* Play-Button */}
-            <div className="relative z-10 flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg shadow-purple-500/30 transition-transform duration-200 ease-out group-hover:scale-105">
-              <Play className="w-7 h-7 text-white translate-x-0.5" fill="currentColor" />
+            <div className="relative z-10 flex items-center justify-center w-16 h-16 rounded-pill bg-indigo-button shadow-button-edge transition-colors duration-150 ease-out group-hover:bg-indigo-hover">
+              <Play className="w-6 h-6 text-on-indigo translate-x-0.5" strokeWidth={1.5} fill="currentColor" />
             </div>
-            <span className="relative z-10 mt-4 px-4 text-center text-white font-semibold text-[15px] drop-shadow">
+            <span className="relative z-10 mt-4 px-4 text-center text-ink font-semibold text-[16px]">
               {title}
             </span>
           </button>
@@ -78,8 +78,8 @@ export function VideoEmbed({ id, title, poster, className = '' }: Props) {
 
       {/* Datenschutz-Hinweis + YouTube-Fallback. Nur vor dem Klick sichtbar. */}
       {!active && (
-        <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-t border-white/10 bg-white/[0.02]">
-          <span className="inline-flex items-center gap-1.5 text-[12px] text-gray-500">
+        <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-t border-line bg-surface">
+          <span className="inline-flex items-center gap-1.5 ft-data text-ink-faint">
             <Lock className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
             {t('privacyNote')}
           </span>
@@ -87,7 +87,7 @@ export function VideoEmbed({ id, title, poster, className = '' }: Props) {
             href={youtubeWatchUrl(id)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[12px] text-gray-500 hover:text-gray-300 transition-colors flex-shrink-0"
+            className="inline-flex items-center gap-1.5 ft-data text-ink-faint hover:text-ink transition-colors duration-150 flex-shrink-0"
           >
             <Youtube className="w-3.5 h-3.5" aria-hidden="true" />
             {t('watchOnYoutube')}

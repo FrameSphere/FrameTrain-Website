@@ -14,7 +14,6 @@ import {
   Globe, AlertCircle, Pencil, Loader2, CreditCard, Zap,
 } from 'lucide-react'
 /* Temporäre UI Anfang, bald herausnehmen */
-import { DownloadLockCountdown, isAppReleased } from '@/components/ReleaseCountdown'
 /* Temporäre UI Ende */
 
 const MANAGER_API = process.env.NEXT_PUBLIC_MANAGER_API_URL || 'https://webcontrol-hq-api.karol-paschek.workers.dev'
@@ -51,10 +50,10 @@ interface StoredTicket {
 
 // ── Status helpers ─────────────────────────────────────────────────
 const STATUS_COLOR: Record<string, string> = {
-  open: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-  in_progress: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',
-  resolved: 'text-green-400 bg-green-500/10 border-green-500/20',
-  closed: 'text-gray-400 bg-gray-500/10 border-gray-500/20',
+  open: 'text-indigo-text bg-indigo-soft border-line',
+  in_progress: 'text-warning bg-ghost-fill border-line',
+  resolved: 'text-success bg-ghost-fill border-line',
+  closed: 'text-ink-muted bg-surface-raised border-line',
 }
 
 // ── Support hook – persists ticket list in localStorage ────────────
@@ -77,33 +76,33 @@ function useStoredTickets(userId: string | undefined) {
 
 function CommunityNameErrorModal({ name, onClose, t }: { name: string; onClose: () => void; t: ReturnType<typeof useTranslations> }) {
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="glass-strong rounded-2xl border border-red-500/20 max-w-sm w-full p-6 space-y-4">
+    <div className="fixed inset-0 bg-[rgba(5,5,10,0.72)] flex items-center justify-center z-50 p-4">
+      <div className="bg-surface border border-line rounded-lg border border-danger max-w-sm w-full p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
-            <AlertCircle className="w-6 h-6 text-red-400" />
+          <div className="w-12 h-12 rounded-full bg-ghost-fill border border-danger flex items-center justify-center">
+            <AlertCircle className="w-6 h-6 text-danger" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">{t('communityNameError.title')}</h3>
-            <p className="text-sm text-gray-400 mt-1">{t('communityNameError.subtitle')}</p>
+            <h3 className="text-lg font-semibold text-ink">{t('communityNameError.title')}</h3>
+            <p className="text-sm text-ink-muted mt-1">{t('communityNameError.subtitle')}</p>
           </div>
         </div>
 
-        <div className="bg-red-500/8 border border-red-500/20 rounded-lg p-3">
-          <p className="text-sm text-red-200">
-            {t.rich('communityNameError.text', { name, b: (chunks) => <strong className="text-red-300">{chunks}</strong> })}
+        <div className="bg-ghost-fill border border-danger rounded-sm p-3">
+          <p className="text-sm text-danger">
+            {t.rich('communityNameError.text', { name, b: (chunks) => <strong className="text-danger">{chunks}</strong> })}
           </p>
         </div>
 
-        <div className="bg-blue-500/8 border border-blue-500/20 rounded-lg p-3">
-          <p className="text-xs text-blue-200">
+        <div className="bg-indigo-soft border border-line rounded-sm p-3">
+          <p className="text-xs text-indigo-text">
             {t.rich('communityNameError.tip', { b: (chunks) => <strong>{chunks}</strong> })}
           </p>
         </div>
 
         <button
           onClick={onClose}
-          className="press w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition duration-200 ease-out hover:from-purple-500 hover:to-pink-500"
+          className="press w-full py-2.5 rounded-sm bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-medium transition duration-200 ease-out  "
         >
           {t('communityNameError.retryButton')}
         </button>
@@ -125,6 +124,7 @@ function DashboardPageInner() {
   const [subscriptionCancelAt, setSubscriptionCancelAt] = useState<string | null>(null)
   const [lifetimeAccess, setLifetimeAccess] = useState(false)
   const [promoAccessUntil, setPromoAccessUntil] = useState<string | null>(null)
+  const [isTrial, setIsTrial] = useState(false)
   const [hasSubscription, setHasSubscription] = useState(false)
   const [subscriptionTrialEnd, setSubscriptionTrialEnd] = useState<string | null>(null)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
@@ -245,6 +245,7 @@ function DashboardPageInner() {
       setSubscriptionCancelAt(data.subscriptionCancelAt ?? null)
       setLifetimeAccess(!!data.lifetimeAccess)
       setPromoAccessUntil(data.promoAccessUntil ?? null)
+      setIsTrial(!!data.isTrial)
       setHasSubscription(!!data.hasSubscription)
       setSubscriptionTrialEnd(data.subscriptionTrialEnd ?? null)
       setIsOAuthUser(!!data.isOAuthUser)
@@ -339,7 +340,7 @@ function DashboardPageInner() {
       const data = await res.json()
       if (data.url) window.location.href = data.url
     } catch (err: any) {
-      alert(`❌ ${err.message || t('subscription.errorPortal')}`)
+      alert(`${err.message || t('subscription.errorPortal')}`)
       setRedirectingToPortal(false)
     }
   }
@@ -448,8 +449,8 @@ function DashboardPageInner() {
   // ── Loading / auth guard ───────────────────────────────────────
   if (authLoading || dataLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="text-white text-xl">{t('loading')}</div>
+      <div className="min-h-screen flex items-center justify-center bg-bg ">
+        <div className="text-ink text-xl">{t('loading')}</div>
       </div>
     )
   }
@@ -466,8 +467,8 @@ function DashboardPageInner() {
 
           {/* Page header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">{t('title')}</h1>
-            <p className="text-gray-400">{t('welcome', { email: user?.email || '' })}</p>
+            <h1 className="text-4xl font-semibold text-ink mb-2">{t('title')}</h1>
+            <p className="text-ink-muted">{t('welcome', { email: user?.email || '' })}</p>
           </div>
 
           {/* ── E-Mail-Verifikations-Banner ────────────────────────── */}
@@ -475,20 +476,20 @@ function DashboardPageInner() {
 
           {/* ── Abo-Status-Banner (nur wenn abgelaufen) ───────────── */}
           {!hasPaid && (
-            <div className="mb-8 p-5 rounded-2xl border border-red-500/30 bg-red-500/10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="mb-8 p-5 rounded-lg border border-danger bg-ghost-fill flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                  <AlertCircle className="w-5 h-5 text-red-400" />
+                <div className="w-10 h-10 rounded-full bg-ghost-fill flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-5 h-5 text-danger" />
                 </div>
                 <div>
-                  <p className="text-white font-bold">{t('subscriptionInactive.title')}</p>
-                  <p className="text-red-300 text-sm mt-0.5">{t('subscriptionInactive.text')}</p>
+                  <p className="text-ink font-semibold">{t('subscriptionInactive.title')}</p>
+                  <p className="text-danger text-sm mt-0.5">{t('subscriptionInactive.text')}</p>
                 </div>
               </div>
               <button
                 onClick={handlePayment}
                 disabled={redirectingToPayment}
-                className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
+                className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50 text-sm"
               >
                 {redirectingToPayment
                   ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscriptionInactive.redirecting')}</>
@@ -505,16 +506,16 @@ function DashboardPageInner() {
             const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
             const formattedDate = cancelDate.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' })
             return (
-              <div className="mb-8 p-5 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="mb-8 p-5 rounded-lg border border-warning bg-ghost-fill flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="flex items-center gap-3 flex-1">
-                  <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                    <AlertCircle className="w-5 h-5 text-amber-400" />
+                  <div className="w-10 h-10 rounded-full bg-ghost-fill flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="w-5 h-5 text-warning" />
                   </div>
                   <div>
-                    <p className="text-white font-bold">
+                    <p className="text-ink font-semibold">
                       {t('subscriptionCanceling.title', { days: diffDays })}
                     </p>
-                    <p className="text-amber-300 text-sm mt-0.5">
+                    <p className="text-warning text-sm mt-0.5">
                       {t('subscriptionCanceling.text', { date: formattedDate })}
                     </p>
                   </div>
@@ -522,7 +523,7 @@ function DashboardPageInner() {
                 <button
                   onClick={handlePayment}
                   disabled={redirectingToPayment}
-                  className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
+                  className="press flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50 text-sm"
                 >
                   {redirectingToPayment
                     ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscriptionCanceling.redirecting')}</>
@@ -538,18 +539,21 @@ function DashboardPageInner() {
             const now = new Date()
             const diffDays = Math.max(0, Math.ceil((untilDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)))
             const formattedDate = untilDate.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' })
+            // Testphase ruhig anzeigen; Warnfarbe erst kurz vor dem Ende
+            const urgent = diffDays <= 3
+            const k = isTrial ? 'trialAccess' : 'promoAccess'
             return (
-              <div className="mb-8 p-5 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className={`mb-8 p-5 rounded-lg border bg-surface flex flex-col sm:flex-row items-start sm:items-center gap-4 ${urgent ? 'border-warning' : 'border-line'}`}>
                 <div className="flex items-center gap-3 flex-1">
-                  <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                    <AlertCircle className="w-5 h-5 text-amber-400" />
+                  <div className="w-10 h-10 rounded-full bg-ghost-fill flex items-center justify-center flex-shrink-0">
+                    {urgent ? <AlertCircle className="w-5 h-5 text-warning" /> : <span className="ft-dot ft-dot--live" aria-hidden="true" />}
                   </div>
                   <div>
-                    <p className="text-white font-bold">
-                      {t('promoAccess.title', { days: diffDays })}
+                    <p className="text-ink font-semibold">
+                      {t(`${k}.title`, { days: diffDays })}
                     </p>
-                    <p className="text-amber-300 text-sm mt-0.5">
-                      {t('promoAccess.text', { date: formattedDate })}
+                    <p className={`text-sm mt-0.5 ${urgent ? 'text-warning' : 'text-ink-muted'}`}>
+                      {t(`${k}.text`, { date: formattedDate })}
                     </p>
                   </div>
                 </div>
@@ -557,7 +561,7 @@ function DashboardPageInner() {
                   <button
                     onClick={handlePayment}
                     disabled={redirectingToPayment}
-                    className="press flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50 text-sm"
+                    className="press flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50 text-sm"
                   >
                     {redirectingToPayment
                       ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('promoAccess.redirecting')}</>
@@ -565,7 +569,7 @@ function DashboardPageInner() {
                   </button>
                   <button
                     onClick={() => router.push('/redeem')}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 border border-amber-500/40 text-amber-300 hover:bg-amber-500/10 font-bold rounded-xl transition duration-200 ease-out text-sm"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 border border-line text-ink hover:bg-ghost-fill font-semibold rounded-md transition duration-200 ease-out text-sm"
                   >
                     {t('promoAccess.redeemButton')}
                   </button>
@@ -581,30 +585,30 @@ function DashboardPageInner() {
             const diffDays = Math.max(0, Math.ceil((trialDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
             const formattedDate = trialDate.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' })
             return (
-              <div className="mb-8 p-5 rounded-2xl border border-violet-500/30 bg-violet-500/10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-5 h-5 text-violet-400" />
+              <div className="mb-8 p-5 rounded-lg border border-line bg-indigo-soft flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-indigo-soft flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-5 h-5 text-indigo-text" />
                 </div>
                 <div>
-                  <p className="text-white font-bold">{t('trial.title', { days: diffDays })}</p>
-                  <p className="text-violet-300 text-sm mt-0.5">{t('trial.text', { date: formattedDate })}</p>
+                  <p className="text-ink font-semibold">{t('trial.title', { days: diffDays })}</p>
+                  <p className="text-indigo-text text-sm mt-0.5">{t('trial.text', { date: formattedDate })}</p>
                 </div>
               </div>
             )
           })()}
 
           {/* ── API Keys ─────────────────────────────────────────── */}
-          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+          <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
-                <Key className="w-6 h-6 text-purple-400 mr-3" />
-                <h2 className="text-2xl font-bold text-white">{t('apiKeys.title')}</h2>
+                <Key className="w-6 h-6 text-indigo-text mr-3" />
+                <h2 className="text-2xl font-semibold text-ink">{t('apiKeys.title')}</h2>
               </div>
               {activeKey && (
                 <button
                   onClick={regenerateKey}
                   disabled={regenerating}
-                  className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-4 py-2 bg-indigo-button hover:bg-indigo-button text-ink rounded-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <RefreshCw className={`w-4 h-4 ${regenerating ? 'animate-spin' : ''}`} />
                   {regenerating ? t('apiKeys.regenerating') : t('apiKeys.regenerateButton')}
@@ -614,12 +618,12 @@ function DashboardPageInner() {
 
             {apiKeys.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-400 mb-4">{t('apiKeys.emptyText1')}</p>
-                <p className="text-gray-500 text-sm mb-6">{t('apiKeys.emptyText2')}</p>
+                <p className="text-ink-muted mb-4">{t('apiKeys.emptyText1')}</p>
+                <p className="text-ink-faint text-sm mb-6">{t('apiKeys.emptyText2')}</p>
                 <button
                   onClick={handlePayment}
                   disabled={redirectingToPayment}
-                  className="press px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg transition duration-200 ease-out disabled:opacity-50 flex items-center gap-2 mx-auto"
+                  className="press px-6 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold rounded-sm transition duration-200 ease-out disabled:opacity-50 flex items-center gap-2 mx-auto"
                 >
                   {redirectingToPayment ? <><RefreshCw className="w-5 h-5 animate-spin" /><span>{t('apiKeys.payRedirecting')}</span></> : <><Key className="w-5 h-5" /><span>{t('apiKeys.payButton')}</span></>}
                 </button>
@@ -627,32 +631,32 @@ function DashboardPageInner() {
             ) : (
               <div className="space-y-4">
                 {apiKeys.map((apiKey) => (
-                  <div key={apiKey.id} className={`glass rounded-lg p-4 border ${
-                    apiKey.isActive ? 'border-green-400/20' : 'border-red-500/20 bg-red-500/5'
+                  <div key={apiKey.id} className={`bg-surface border border-line rounded-sm p-4 border ${
+                    apiKey.isActive ? 'border-line' : 'border-danger bg-ghost-fill'
                   }`}>
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
                           <code className={`font-mono text-sm px-3 py-1 rounded border ${
                             apiKey.isActive
-                              ? 'text-purple-400 bg-black/30 border-white/10'
-                              : 'text-gray-500 bg-black/30 border-white/5 line-through'
+                              ? 'text-indigo-text bg-bg border-line'
+                              : 'text-ink-faint bg-bg border-line line-through'
                           }`}>{apiKey.key}</code>
                           {apiKey.isActive && (
-                            <button onClick={() => copyToClipboard(apiKey.key)} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-                              {copiedKey === apiKey.key ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
+                            <button onClick={() => copyToClipboard(apiKey.key)} className="p-2 hover:bg-surface-raised rounded-sm transition-colors">
+                              {copiedKey === apiKey.key ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4 text-ink-muted" />}
                             </button>
                           )}
                         </div>
-                        <div className="flex items-center space-x-4 text-sm text-gray-400">
+                        <div className="flex items-center space-x-4 text-sm text-ink-muted">
                           <span>{t('apiKeys.created', { date: new Date(apiKey.createdAt).toLocaleDateString(dateLocale) })}</span>
                           {apiKey.lastUsedAt && <span>{t('apiKeys.lastUsed', { date: new Date(apiKey.lastUsedAt).toLocaleDateString(dateLocale) })}</span>}
                           {apiKey.isActive && isOAuthUser && !hasDesktopPassword ? (
-                            <span className="flex items-center gap-1 text-amber-400">
+                            <span className="flex items-center gap-1 text-warning">
                               <Lock className="w-4 h-4" /><span>{t('apiKeys.passwordMissing')}</span>
                             </span>
                           ) : (
-                            <span className={`flex items-center gap-1 ${apiKey.isActive ? 'text-green-400' : 'text-red-400'}`}>
+                            <span className={`flex items-center gap-1 ${apiKey.isActive ? 'text-success' : 'text-danger'}`}>
                               {apiKey.isActive
                                 ? <><Check className="w-4 h-4" /><span>{t('apiKeys.active')}</span></>
                                 : <><X className="w-4 h-4" /><span>{t('apiKeys.deactivatedExpired')}</span></>}
@@ -668,37 +672,30 @@ function DashboardPageInner() {
           </div>
 
           {/* ── Download ─────────────────────────────────────────── */}
-          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+          <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line">
             <div className="flex items-center mb-6">
-              <Download className="w-6 h-6 text-purple-400 mr-3" />
-              <h2 className="text-2xl font-bold text-white">{t('download.title')}</h2>
+              <Download className="w-6 h-6 text-indigo-text mr-3" />
+              <h2 className="text-2xl font-semibold text-ink">{t('download.title')}</h2>
             </div>
-            {/* Temporäre UI Anfang, bald herausnehmen */}
-            <DownloadLockCountdown />
-            {/* Temporäre UI Ende */}
-            <div className={`grid md:grid-cols-3 gap-6${
-              /* Temporäre UI Anfang, bald herausnehmen */
-              !isAppReleased() ? ' opacity-40 pointer-events-none select-none' : ''
-              /* Temporäre UI Ende */
-            }`}>
+            <div className="grid md:grid-cols-3 gap-6">
               {[
-                { platform: 'windows' as const, label: 'Windows', ext: '.exe', gradient: 'from-blue-500 to-cyan-500' },
-                { platform: 'mac' as const, label: 'macOS', ext: '.dmg', gradient: 'from-purple-500 to-pink-500' },
-                { platform: 'linux' as const, label: 'Linux', ext: '.AppImage', gradient: 'from-green-500 to-emerald-500' },
+                { platform: 'windows' as const, label: 'Windows', ext: '.exe', gradient: 'bg-surface-raised border border-line' },
+                { platform: 'mac' as const, label: 'macOS', ext: '.dmg', gradient: 'bg-surface-raised border border-line' },
+                { platform: 'linux' as const, label: 'Linux', ext: '.AppImage', gradient: 'bg-surface-raised border border-line' },
               ].map(({ platform, label, ext, gradient }) => (
                 <button
                   key={platform}
                   onClick={() => downloadApp(platform)}
                   disabled={!activeKey}
-                  className="card-lift glass-strong hover:bg-white/10 border border-white/10 rounded-xl p-6 transition duration-200 ease-out group disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="card-lift bg-surface border border-line hover:bg-surface-raised border border-line rounded-md p-6 transition duration-200 ease-out group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="text-center">
-                    <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-br ${gradient} rounded-2xl flex items-center justify-center`}>
-                      <Download className="w-8 h-8 text-white" />
+                    <div className={`w-16 h-16 mx-auto mb-4 ${gradient} rounded-lg flex items-center justify-center`}>
+                      <Download className="w-8 h-8 text-ink" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white mb-2">{label}</h3>
-                    <p className="text-gray-400 text-sm mb-4">{t('download.version', { version: appVersion })}</p>
-                    <div className="flex items-center justify-center text-purple-400 group-hover:text-purple-300">
+                    <h3 className="text-xl font-semibold text-ink mb-2">{label}</h3>
+                    <p className="text-ink-muted text-sm mb-4">{t('download.version', { version: appVersion })}</p>
+                    <div className="flex items-center justify-center text-indigo-text group-hover:text-indigo-text">
                       <Download className="w-4 h-4 mr-2" />
                       <span className="font-semibold">{t('download.downloadButton', { ext })}</span>
                     </div>
@@ -706,28 +703,28 @@ function DashboardPageInner() {
                 </button>
               ))}
             </div>
-            <div className="mt-8 p-4 glass border border-blue-400/20 rounded-lg">
-              <p className="text-gray-300 text-sm flex items-start gap-2">
-                <Lightbulb className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div className="mt-8 p-4 bg-surface border border-line border border-line rounded-sm">
+              <p className="text-ink text-sm flex items-start gap-2">
+                <Lightbulb className="w-5 h-5 text-indigo-text flex-shrink-0 mt-0.5" />
                 <span>{t('download.securityWarningText')}
-                  <Link href="/install" className="text-purple-400 hover:text-purple-300 underline ml-1">{t('download.installGuideLink')}</Link>
+                  <Link href="/install" className="text-indigo-text hover:text-indigo-text underline ml-1">{t('download.installGuideLink')}</Link>
                 </span>
               </p>
             </div>
           </div>
 
           {/* ── Community Name ────────────────────────────────── */}
-          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+          <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line">
             <div className="flex items-center gap-3 mb-4">
-              <Globe className="w-5 h-5 text-purple-400" />
-              <h2 className="text-2xl font-bold text-white">{t('communityName.title')}</h2>
+              <Globe className="w-5 h-5 text-indigo-text" />
+              <h2 className="text-2xl font-semibold text-ink">{t('communityName.title')}</h2>
             </div>
-            <p className="text-gray-400 text-sm mb-4">{t('communityName.subtitle')}</p>
+            <p className="text-ink-muted text-sm mb-4">{t('communityName.subtitle')}</p>
 
             {communityNameInput && !editingCommunityName && (
-              <div className="flex items-center gap-2 px-4 py-3 mb-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                <p className="text-sm text-green-300">
+              <div className="flex items-center gap-2 px-4 py-3 mb-4 bg-ghost-fill border border-line rounded-sm">
+                <Check className="w-4 h-4 text-success flex-shrink-0" />
+                <p className="text-sm text-success">
                   {t.rich('communityName.saved', { name: communityNameInput, b: (chunks) => <strong>{chunks}</strong> })}
                 </p>
               </div>
@@ -735,9 +732,9 @@ function DashboardPageInner() {
 
             {!communityNameInput || editingCommunityName ? (
               <div className="space-y-3">
-                <div className="flex items-start gap-2 p-3 bg-blue-500/8 border border-blue-500/20 rounded-lg">
-                  <Lightbulb className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-blue-300">{!communityNameInput ? t('communityName.hintNew') : t('communityName.hintEdit')}</p>
+                <div className="flex items-start gap-2 p-3 bg-indigo-soft border border-line rounded-sm">
+                  <Lightbulb className="w-4 h-4 text-indigo-text flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-indigo-text">{!communityNameInput ? t('communityName.hintNew') : t('communityName.hintEdit')}</p>
                 </div>
                 <div className="flex gap-2">
                   <input
@@ -749,23 +746,23 @@ function DashboardPageInner() {
                     }}
                     placeholder={t('communityName.placeholder')}
                     maxLength={40}
-                    className="flex-1 px-4 py-2.5 glass border border-purple-500/30 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50"
+                    className="flex-1 px-4 py-2.5 bg-surface border border-line border border-line rounded-sm text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong"
                   />
                   <button
                     onClick={handleSaveCommunityName}
                     disabled={savingCommunityName || !communityNameInput.trim()}
-                    className="press px-5 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition duration-200 ease-out hover:from-purple-500 hover:to-pink-500 disabled:opacity-60"
+                    className="press px-5 py-2.5 rounded-sm bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-medium transition duration-200 ease-out   disabled:opacity-60"
                   >
                     {savingCommunityName ? <Loader2 className="w-4 h-4 animate-spin" /> : t('communityName.saveButton')}
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between px-4 py-3 glass border border-white/10 rounded-lg">
-                <span className="text-white text-sm">@{communityNameInput}</span>
+              <div className="flex items-center justify-between px-4 py-3 bg-surface border border-line border border-line rounded-sm">
+                <span className="text-ink text-sm">@{communityNameInput}</span>
                 <button
                   onClick={() => setEditingCommunityName(true)}
-                  className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                  className="p-2 rounded-sm hover:bg-surface-raised text-ink-muted hover:text-ink transition-colors"
                   title={t('communityName.changeNameTitle')}
                 >
                   <Pencil className="w-4 h-4" />
@@ -776,60 +773,60 @@ function DashboardPageInner() {
 
           {/* ── Desktop-App Passwort – nur für OAuth-User ────────────── */}
           {isOAuthUser && (
-            <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+            <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line">
               <div className="flex items-center mb-2">
-                <Lock className="w-6 h-6 text-purple-400 mr-3" />
-                <h2 className="text-2xl font-bold text-white">{t('desktopPassword.title')}</h2>
+                <Lock className="w-6 h-6 text-indigo-text mr-3" />
+                <h2 className="text-2xl font-semibold text-ink">{t('desktopPassword.title')}</h2>
               </div>
-              <p className="text-gray-400 text-sm mb-6">
+              <p className="text-ink-muted text-sm mb-6">
                 {t('desktopPassword.description')}
               </p>
               <div className="max-w-md space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('desktopPassword.newPasswordLabel')}</label>
+                  <label className="block text-sm font-medium text-ink mb-2">{t('desktopPassword.newPasswordLabel')}</label>
                   <div className="relative">
                     <input
                       type={showDesktopPassword ? 'text' : 'password'}
                       value={desktopPassword}
                       onChange={e => { setDesktopPassword(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
                       placeholder={t('desktopPassword.newPasswordPlaceholder')}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                      className="w-full bg-ghost-fill border border-line rounded-md px-4 py-3 pr-12 text-ink placeholder-ink-faint focus:outline-none focus:border-line-strong transition-colors"
                     />
                     <button
                       type="button"
                       onClick={() => setShowDesktopPassword(p => !p)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink transition-colors"
                     >
                       {showDesktopPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">{t('desktopPassword.confirmLabel')}</label>
+                  <label className="block text-sm font-medium text-ink mb-2">{t('desktopPassword.confirmLabel')}</label>
                   <input
                     type={showDesktopPassword ? 'text' : 'password'}
                     value={desktopPasswordConfirm}
                     onChange={e => { setDesktopPasswordConfirm(e.target.value); setDesktopPasswordSuccess(''); setDesktopPasswordError('') }}
                     placeholder={t('desktopPassword.confirmPlaceholder')}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                    className="w-full bg-ghost-fill border border-line rounded-md px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-line-strong transition-colors"
                   />
                 </div>
                 {desktopPasswordError && (
-                  <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                    <X className="w-4 h-4 text-red-400 flex-shrink-0" />
-                    <p className="text-sm text-red-300">{desktopPasswordError}</p>
+                  <div className="flex items-center gap-2 p-3 bg-ghost-fill border border-danger rounded-sm">
+                    <X className="w-4 h-4 text-danger flex-shrink-0" />
+                    <p className="text-sm text-danger">{desktopPasswordError}</p>
                   </div>
                 )}
                 {desktopPasswordSuccess && (
-                  <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                    <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                    <p className="text-sm text-green-300">{desktopPasswordSuccess}</p>
+                  <div className="flex items-center gap-2 p-3 bg-ghost-fill border border-line rounded-sm">
+                    <Check className="w-4 h-4 text-success flex-shrink-0" />
+                    <p className="text-sm text-success">{desktopPasswordSuccess}</p>
                   </div>
                 )}
                 <button
                   onClick={setDesktopPasswordHandler}
                   disabled={settingDesktopPassword || !desktopPassword || !desktopPasswordConfirm}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-6 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {settingDesktopPassword
                     ? <><RefreshCw className="w-4 h-4 animate-spin" /><span>{t('desktopPassword.saving')}</span></>
@@ -841,30 +838,30 @@ function DashboardPageInner() {
 
           {/* ── Abo verwalten ──────────────────────────────────────── */}
           {hasPaid && (
-            <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10">
+            <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line">
               <div className="flex items-center gap-3 mb-6">
-                <CreditCard className="w-6 h-6 text-purple-400" />
-                <h2 className="text-2xl font-bold text-white">{t('subscription.title')}</h2>
+                <CreditCard className="w-6 h-6 text-indigo-text" />
+                <h2 className="text-2xl font-semibold text-ink">{t('subscription.title')}</h2>
               </div>
 
               {/* Status: Lifetime > Gratiszeit (Promo) > Abo */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 {lifetimeAccess ? (
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border bg-violet-500/10 border-violet-500/30 text-violet-300">
-                    <span className="w-2 h-2 rounded-full bg-violet-400" />
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border bg-indigo-soft border-line text-indigo-text">
+                    <span className="w-2 h-2 rounded-full bg-indigo-soft" />
                     {t('subscription.statusLifetime')}
                   </div>
                 ) : !hasSubscription && promoAccessUntil ? (
                   <>
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border bg-amber-500/10 border-amber-500/30 text-amber-300">
-                      <span className="w-2 h-2 rounded-full bg-amber-400" />
-                      {t('subscription.statusPromo')}
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border bg-ghost-fill border-warning text-warning">
+                      <span className="w-2 h-2 rounded-full bg-warning" />
+                      {isTrial ? t('subscription.statusTrial') : t('subscription.statusPromo')}
                     </div>
                     {(() => {
                       const d = new Date(promoAccessUntil)
                       const days = Math.max(0, Math.ceil((d.getTime() - Date.now()) / 86400000))
                       return (
-                        <span className="text-sm text-amber-400 font-medium">
+                        <span className="text-sm text-warning font-medium">
                           {t('subscription.expiresOn', { date: d.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' }), days })}
                         </span>
                       )
@@ -874,11 +871,11 @@ function DashboardPageInner() {
                   <>
                     <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border ${
                       subscriptionCancelAt
-                        ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
-                        : 'bg-green-500/10 border-green-500/30 text-green-300'
+                        ? 'bg-ghost-fill border-warning text-warning'
+                        : 'bg-ghost-fill border-success text-success'
                     }`}>
                       <span className={`w-2 h-2 rounded-full ${
-                        subscriptionCancelAt ? 'bg-amber-400' : 'bg-green-400'
+                        subscriptionCancelAt ? 'bg-warning' : 'bg-success'
                       }`} />
                       {subscriptionCancelAt ? t('subscription.statusCanceling') : t('subscription.statusActive')}
                     </div>
@@ -886,7 +883,7 @@ function DashboardPageInner() {
                       const d = new Date(subscriptionCancelAt)
                       const days = Math.ceil((d.getTime() - Date.now()) / 86400000)
                       return (
-                        <span className="text-sm text-amber-400 font-medium">
+                        <span className="text-sm text-warning font-medium">
                           {t('subscription.expiresOn', { date: d.toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' }), days })}
                         </span>
                       )
@@ -897,14 +894,14 @@ function DashboardPageInner() {
 
               {/* Info-Kacheln */}
               <div className="grid sm:grid-cols-2 gap-3 mb-6">
-                <div className="glass rounded-xl p-4 border border-white/10">
-                  <p className="text-xs text-gray-500 mb-1">{t('subscription.includedTitle')}</p>
-                  <p className="text-sm text-gray-300">{t('subscription.includedText')}</p>
+                <div className="bg-surface border border-line rounded-md p-4 border border-line">
+                  <p className="text-xs text-ink-faint mb-1">{t('subscription.includedTitle')}</p>
+                  <p className="text-sm text-ink">{t('subscription.includedText')}</p>
                 </div>
                 {hasSubscription && (
-                  <div className="glass rounded-xl p-4 border border-white/10">
-                    <p className="text-xs text-gray-500 mb-1">{t('subscription.portalTitle')}</p>
-                    <p className="text-sm text-gray-300">{t('subscription.portalText')}</p>
+                  <div className="bg-surface border border-line rounded-md p-4 border border-line">
+                    <p className="text-xs text-ink-faint mb-1">{t('subscription.portalTitle')}</p>
+                    <p className="text-sm text-ink">{t('subscription.portalText')}</p>
                   </div>
                 )}
               </div>
@@ -915,20 +912,20 @@ function DashboardPageInner() {
                   <button
                     onClick={handlePortal}
                     disabled={redirectingToPortal}
-                    className="press flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/25 text-white font-semibold rounded-xl transition duration-200 ease-out disabled:opacity-50"
+                    className="press flex items-center gap-2 px-6 py-3 bg-ghost-fill hover:bg-surface-raised border border-line-strong hover:border-line-strong text-ink font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50"
                   >
                     {redirectingToPortal
                       ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscription.redirecting')}</>
                       : <><ExternalLink className="w-4 h-4" /> {t('subscription.manageButton')}</>
                     }
                   </button>
-                  <p className="text-xs text-gray-600 mt-3">{t('subscription.redirectNote')}</p>
+                  <p className="text-xs text-ink-faint mt-3">{t('subscription.redirectNote')}</p>
                 </>
               ) : !lifetimeAccess && promoAccessUntil ? (
                 <button
                   onClick={handlePayment}
                   disabled={redirectingToPayment}
-                  className="press flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl transition duration-200 ease-out disabled:opacity-50"
+                  className="press flex items-center gap-2 px-6 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50"
                 >
                   {redirectingToPayment
                     ? <><RefreshCw className="w-4 h-4 animate-spin" /> {t('subscription.redirecting')}</>
@@ -939,28 +936,28 @@ function DashboardPageInner() {
           )}
 
           {/* ── CLI ───────────────────────────────────────────────── */}
-          <div className="glass-strong rounded-2xl shadow-lg p-8 mb-8 border border-white/10 relative overflow-hidden">
+          <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line relative overflow-hidden">
             {/* Coming Soon Overlay */}
-            <div className="absolute inset-0 bg-gray-950/70 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3 rounded-2xl">
-              <span className="text-4xl">🚧</span>
-              <span className="text-white font-bold text-2xl">{t('cli.comingSoonBadge')}</span>
-              <span className="text-gray-400 text-sm text-center max-w-xs px-4">
+            <div className="absolute inset-0 bg-surface z-10 flex flex-col items-center justify-center gap-3 rounded-lg">
+              <span className="text-4xl"></span>
+              <span className="text-ink font-semibold text-2xl">{t('cli.comingSoonBadge')}</span>
+              <span className="text-ink-muted text-sm text-center max-w-xs px-4">
                 {t('cli.comingSoonText')}
               </span>
             </div>
             {/* Blurred background preview */}
-            <h2 className="text-2xl font-bold text-white mb-4 blur-sm select-none">{t('cli.title')}</h2>
-            <p className="text-gray-400 mb-4 blur-sm select-none">{t('cli.intro')}</p>
-            <div className="bg-gray-900 rounded-lg p-4 mb-4 blur-sm select-none">
-              <code className="text-green-400 font-mono text-sm">pip install frametrain-cli</code>
+            <h2 className="text-2xl font-semibold text-ink mb-4 blur-sm select-none">{t('cli.title')}</h2>
+            <p className="text-ink-muted mb-4 blur-sm select-none">{t('cli.intro')}</p>
+            <div className="bg-surface rounded-sm p-4 mb-4 blur-sm select-none">
+              <code className="text-success font-mono text-sm">pip install frametrain-cli</code>
             </div>
-            <div className="bg-gray-900 rounded-lg p-4 blur-sm select-none">
-              <code className="text-green-400 font-mono text-sm">frametrain verify-key ft_sk_xxxxxxxxxxxx</code>
+            <div className="bg-surface rounded-sm p-4 blur-sm select-none">
+              <code className="text-success font-mono text-sm">frametrain verify-key ft_sk_xxxxxxxxxxxx</code>
             </div>
           </div>
 
           {/* ── SUPPORT ──────────────────────────────────────────── */}
-          <div id="support-section" className="glass-strong rounded-2xl shadow-lg border border-white/10 overflow-hidden">
+          <div id="support-section" className="bg-surface border border-line rounded-lg border border-line overflow-hidden">
             {/* Header */}
             <button
               onClick={() => {
@@ -974,30 +971,30 @@ function DashboardPageInner() {
                   setSupportBadge(0)
                 }
               }}
-              className="w-full flex items-center justify-between px-8 py-6 hover:bg-white/5 transition-colors relative"
+              className="w-full flex items-center justify-between px-8 py-6 hover:bg-ghost-fill transition-colors relative"
             >
               {/* Unread admin reply badge */}
               {supportBadge > 0 && !supportOpen && (
-                <span className="absolute top-3 right-16 flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-[11px] font-bold shadow-sm shadow-red-500/40 animate-enter">
+                <span className="absolute top-3 right-16 flex items-center justify-center w-5 h-5 rounded-full bg-danger text-ink text-[11px] font-semibold animate-enter">
                   {supportBadge}
                 </span>
               )}
               <div className="flex items-center gap-3">
-                <MessageCircle className="w-6 h-6 text-purple-400" />
-                <h2 className="text-2xl font-bold text-white">{t('support.title')}</h2>
+                <MessageCircle className="w-6 h-6 text-indigo-text" />
+                <h2 className="text-2xl font-semibold text-ink">{t('support.title')}</h2>
                 {storedTickets.length > 0 && (
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-soft text-indigo-text border border-line">
                     {t('support.ticketCount', { count: storedTickets.length })}
                   </span>
                 )}
               </div>
-              <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${supportOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-5 h-5 text-ink-muted transition-transform duration-200 ${supportOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {supportOpen && (
-              <div className="border-t border-white/10">
+              <div className="border-t border-line">
                 {/* Sub-nav */}
-                <div className="flex border-b border-white/10">
+                <div className="flex border-b border-line">
                   {[
                     { id: 'list' as const, label: t('support.tabTickets') },
                     { id: 'new' as const, label: t('support.tabNew') },
@@ -1005,7 +1002,7 @@ function DashboardPageInner() {
                     <button
                       key={tab.id}
                       onClick={() => { setSupportView(tab.id); setActiveTicket(null) }}
-                      className={`px-6 py-3 text-sm font-semibold transition-colors ${supportView === tab.id || (supportView === 'thread' && tab.id === 'list') ? 'text-purple-400 border-b-2 border-purple-400' : 'text-gray-400 hover:text-white'}`}
+                      className={`px-6 py-3 text-sm font-semibold transition-colors ${supportView === tab.id || (supportView === 'thread' && tab.id === 'list') ? 'text-indigo-text border-b-2 border-line-strong' : 'text-ink-muted hover:text-ink'}`}
                     >
                       {tab.label}
                     </button>
@@ -1016,35 +1013,35 @@ function DashboardPageInner() {
                   {/* ── New ticket form ── */}
                   {supportView === 'new' && (
                     <div className="max-w-2xl">
-                      <h3 className="text-lg font-bold text-white mb-6">{t('support.newTitle')}</h3>
+                      <h3 className="text-lg font-semibold text-ink mb-6">{t('support.newTitle')}</h3>
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-300 mb-2">{t('support.subjectLabel')}</label>
+                          <label className="block text-sm font-medium text-ink mb-2">{t('support.subjectLabel')}</label>
                           <input
                             value={newSubject}
                             onChange={e => setNewSubject(e.target.value)}
                             placeholder={t('support.subjectPlaceholder')}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                            className="w-full bg-ghost-fill border border-line rounded-md px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-line-strong transition-colors"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-300 mb-2">{t('support.messageLabel')}</label>
+                          <label className="block text-sm font-medium text-ink mb-2">{t('support.messageLabel')}</label>
                           <textarea
                             value={newMessage}
                             onChange={e => setNewMessage(e.target.value)}
                             placeholder={t('support.messagePlaceholder')}
                             rows={5}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors resize-none"
+                            className="w-full bg-ghost-fill border border-line rounded-md px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-line-strong transition-colors resize-none"
                           />
                         </div>
                         <div className="flex items-center gap-3 pt-2">
-                          <p className="text-xs text-gray-500 flex-1">
-                            {t.rich('support.userIdNote', { id: user?.id || '', code: (chunks) => <code className="text-purple-400 bg-white/5 px-1 rounded">{chunks}</code> })}
+                          <p className="text-xs text-ink-faint flex-1">
+                            {t.rich('support.userIdNote', { id: user?.id || '', code: (chunks) => <code className="text-indigo-text bg-ghost-fill px-1 rounded">{chunks}</code> })}
                           </p>
                           <button
                             onClick={submitTicket}
                             disabled={submitting || !newSubject.trim() || !newMessage.trim()}
-                            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex items-center gap-2 px-6 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold rounded-md transition duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             {submitting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                             {submitting ? t('support.submitting') : t('support.submitButton')}
@@ -1059,12 +1056,12 @@ function DashboardPageInner() {
                     <div>
                       {storedTickets.length === 0 ? (
                         <div className="text-center py-12">
-                          <div className="text-5xl mb-4">📭</div>
-                          <p className="text-gray-400 mb-2">{t('support.emptyTitle')}</p>
-                          <p className="text-gray-500 text-sm mb-6">{t('support.emptyText')}</p>
+                          <div className="text-5xl mb-4"></div>
+                          <p className="text-ink-muted mb-2">{t('support.emptyTitle')}</p>
+                          <p className="text-ink-faint text-sm mb-6">{t('support.emptyText')}</p>
                           <button
                             onClick={() => setSupportView('new')}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors mx-auto text-sm font-semibold"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-indigo-button hover:bg-indigo-button text-ink rounded-sm transition-colors mx-auto text-sm font-semibold"
                           >
                             <Plus className="w-4 h-4" /> {t('support.emptyButton')}
                           </button>
@@ -1072,10 +1069,10 @@ function DashboardPageInner() {
                       ) : (
                         <div className="space-y-3">
                           <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-bold text-white">{t('support.yourTickets')}</h3>
+                            <h3 className="text-lg font-semibold text-ink">{t('support.yourTickets')}</h3>
                             <button
                               onClick={() => setSupportView('new')}
-                              className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 rounded-lg text-sm transition-colors border border-purple-500/20"
+                              className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-soft hover:bg-indigo-soft text-indigo-text rounded-sm text-sm transition-colors border border-line"
                             >
                               <Plus className="w-3.5 h-3.5" /> {t('support.newTicketButton')}
                             </button>
@@ -1084,13 +1081,13 @@ function DashboardPageInner() {
                             <button
                               key={t2.ticket_id}
                               onClick={() => openThread(t2)}
-                              className="card-lift w-full flex items-center justify-between glass rounded-xl px-5 py-4 border border-white/10 hover:border-purple-500/30 hover:bg-white/5 transition duration-200 ease-out text-left"
+                              className="card-lift w-full flex items-center justify-between bg-surface border border-line rounded-md px-5 py-4 border border-line hover:border-line hover:bg-ghost-fill transition duration-200 ease-out text-left"
                             >
                               <div>
-                                <p className="text-white font-semibold text-sm">{t2.subject}</p>
-                                <p className="text-gray-500 text-xs mt-0.5">{t('support.ticketNumber', { id: t2.ticket_id })}</p>
+                                <p className="text-ink font-semibold text-sm">{t2.subject}</p>
+                                <p className="text-ink-faint text-xs mt-0.5">{t('support.ticketNumber', { id: t2.ticket_id })}</p>
                               </div>
-                              <MessageCircle className="w-4 h-4 text-gray-500" />
+                              <MessageCircle className="w-4 h-4 text-ink-faint" />
                             </button>
                           ))}
                         </div>
@@ -1104,26 +1101,26 @@ function DashboardPageInner() {
                       {/* Back */}
                       <button
                         onClick={() => { setSupportView('list'); setActiveTicket(null) }}
-                        className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-5 transition-colors"
+                        className="flex items-center gap-1.5 text-ink-muted hover:text-ink text-sm mb-5 transition-colors"
                       >
                         {t('support.backToOverview')}
                       </button>
 
                       {threadLoading ? (
                         <div className="flex items-center justify-center py-12">
-                          <RefreshCw className="w-6 h-6 text-purple-400 animate-spin" />
+                          <RefreshCw className="w-6 h-6 text-indigo-text animate-spin" />
                         </div>
                       ) : (
                         <>
                           {/* Ticket meta */}
-                          <div className="glass rounded-xl px-5 py-4 border border-white/10 mb-5">
+                          <div className="bg-surface border border-line rounded-md px-5 py-4 border border-line mb-5">
                             <div className="flex items-start justify-between gap-4">
                               <div>
-                                <h3 className="text-white font-bold">{activeTicket.subject}</h3>
-                                <p className="text-gray-500 text-xs mt-0.5">{t('support.ticketNumber', { id: activeTicket.ticket_id })}</p>
+                                <h3 className="text-ink font-semibold">{activeTicket.subject}</h3>
+                                <p className="text-ink-faint text-xs mt-0.5">{t('support.ticketNumber', { id: activeTicket.ticket_id })}</p>
                               </div>
                               {ticketInfo && (
-                                <span className={`text-xs font-bold px-3 py-1 rounded-full border flex-shrink-0 ${STATUS_COLOR[ticketInfo.status] || STATUS_COLOR.open}`}>
+                                <span className={`text-xs font-semibold px-3 py-1 rounded-full border flex-shrink-0 ${STATUS_COLOR[ticketInfo.status] || STATUS_COLOR.open}`}>
                                   {t(`status.${ticketInfo.status}` as any) || ticketInfo.status}
                                 </span>
                               )}
@@ -1133,17 +1130,17 @@ function DashboardPageInner() {
                           {/* Messages */}
                           <div className="space-y-4 mb-5 max-h-96 overflow-y-auto pr-1">
                             {messages.length === 0 && (
-                              <p className="text-center text-gray-500 text-sm py-8">{t('support.noMessages')}</p>
+                              <p className="text-center text-ink-faint text-sm py-8">{t('support.noMessages')}</p>
                             )}
                             {messages.map(m => (
                               <div key={m.id} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                                <div className={`max-w-[78%] rounded-lg px-4 py-3 text-sm leading-relaxed ${
                                   m.sender === 'user'
-                                    ? 'bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-br-sm'
-                                    : 'glass border border-white/10 text-gray-200 rounded-bl-sm'
+                                    ? 'bg-indigo-button hover:bg-indigo-hover   text-ink rounded-br-sm'
+                                    : 'bg-surface border border-line border border-line text-ink rounded-bl-sm'
                                 }`}>
                                   <p style={{ whiteSpace: 'pre-wrap' }}>{m.message}</p>
-                                  <p className={`text-xs mt-1.5 ${m.sender === 'user' ? 'text-purple-200' : 'text-gray-500'}`}>
+                                  <p className={`text-xs mt-1.5 ${m.sender === 'user' ? 'text-indigo-text' : 'text-ink-faint'}`}>
                                     {m.sender === 'user' ? t('support.you') : t('support.supportLabel')} · {new Date(m.created_at).toLocaleString(dateLocale, { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
                                   </p>
                                 </div>
@@ -1161,18 +1158,18 @@ function DashboardPageInner() {
                                 onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) sendReply() }}
                                 placeholder={t('support.replyPlaceholder')}
                                 rows={3}
-                                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors resize-none text-sm"
+                                className="flex-1 bg-ghost-fill border border-line rounded-md px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-line-strong transition-colors resize-none text-sm"
                               />
                               <button
                                 onClick={sendReply}
                                 disabled={sendingReply || !replyText.trim()}
-                                className="press self-end flex items-center gap-1.5 px-5 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors disabled:opacity-50 font-semibold text-sm"
+                                className="press self-end flex items-center gap-1.5 px-5 py-3 bg-indigo-button hover:bg-indigo-button text-ink rounded-md transition-colors disabled:opacity-50 font-semibold text-sm"
                               >
                                 {sendingReply ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                               </button>
                             </div>
                           ) : (
-                            <div className="glass rounded-xl px-4 py-3 border border-white/10 text-center text-gray-500 text-sm">
+                            <div className="bg-surface border border-line rounded-md px-4 py-3 border border-line text-center text-ink-faint text-sm">
                               {t('support.statusClosedNote', { status: (t(`status.${ticketInfo.status}` as any) || '').toLowerCase() })}
                             </div>
                           )}

@@ -29,7 +29,7 @@ function installVideoBlock(locale: Locale) {
           <p style="margin: 0 0 12px; font-weight: 600; color: #111;">${heading}</p>
           <a href="${installVideoUrl}" style="text-decoration: none; color: inherit; display: block;">
             <img src="${installVideoThumb}" width="456" alt="${alt}" style="width: 100%; max-width: 456px; border-radius: 10px; display: block; border: 1px solid #eee;" />
-            <span style="display: inline-block; margin-top: 10px; color: #7c3aed; font-weight: 600;">${cta}</span>
+            <span style="display: inline-block; margin-top: 10px; color: #3b3ed6; font-weight: 600;">${cta}</span>
           </a>
         </div>`
 }
@@ -43,7 +43,7 @@ function verificationCopy(locale: Locale, verifyUrl: string) {
           <h2 style="margin-bottom: 8px;">Confirm your email address</h2>
           <p>Thanks for signing up for FrameTrain! Please confirm your email address to activate your account.</p>
           <p style="margin: 24px 0;">
-            <a href="${verifyUrl}" style="background: #7c3aed; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+            <a href="${verifyUrl}" style="background: #3b3ed6; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
               Confirm email
             </a>
           </p>
@@ -62,7 +62,7 @@ function verificationCopy(locale: Locale, verifyUrl: string) {
         <h2 style="margin-bottom: 8px;">Bestätige deine E-Mail-Adresse</h2>
         <p>Danke für deine Registrierung bei FrameTrain! Bitte bestätige deine E-Mail-Adresse, um deinen Account zu aktivieren.</p>
         <p style="margin: 24px 0;">
-          <a href="${verifyUrl}" style="background: #7c3aed; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+          <a href="${verifyUrl}" style="background: #3b3ed6; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
             E-Mail bestätigen
           </a>
         </p>

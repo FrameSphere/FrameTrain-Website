@@ -87,12 +87,12 @@ function timeAgo(iso: string | null | undefined, m: TimeAgoMessages) {
 
 function frameworkColor(fw: string) {
   const m: Record<string, string> = {
-    transformers: 'bg-yellow-500/15 text-yellow-300 border-yellow-500/25',
-    pytorch: 'bg-orange-500/15 text-orange-300 border-orange-500/25',
-    tensorflow: 'bg-blue-500/15 text-blue-300 border-blue-500/25',
-    jax: 'bg-green-500/15 text-green-300 border-green-500/25',
+    transformers: 'bg-ghost-fill text-warning border-line',
+    pytorch: 'bg-ghost-fill text-warning border-line',
+    tensorflow: 'bg-indigo-soft text-indigo-text border-line',
+    jax: 'bg-ghost-fill text-success border-line',
   }
-  return m[fw.toLowerCase()] ?? 'bg-white/10 text-gray-300 border-white/15'
+  return m[fw.toLowerCase()] ?? 'bg-surface-raised text-ink border-line-strong'
 }
 
 // ── ScriptCard ─────────────────────────────────────────────────────────────────
@@ -110,7 +110,7 @@ function ScriptCard({
 }) {
   return (
     <article
-      className="card-lift glass-strong rounded-2xl p-6 flex flex-col gap-4 hover:border-white/20 border border-white/8 transition duration-200 ease-out cursor-pointer group"
+      className="card-lift bg-surface border border-line rounded-lg p-6 flex flex-col gap-4 hover:border-line-strong border border-line transition duration-200 ease-out cursor-pointer group"
       onClick={() => onView(script)}
       itemScope
       itemType="https://schema.org/SoftwareSourceCode"
@@ -121,26 +121,26 @@ function ScriptCard({
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             {/* Train / Test badge */}
             {script.script_type === 'test' ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-ghost-fill text-warning border border-line">
                 <FlaskConical className="w-2.5 h-2.5" /> {t('badgeTest')}
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-violet-500/15 text-violet-300 border border-violet-500/25">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-soft text-indigo-text border border-line">
                 <Dumbbell className="w-2.5 h-2.5" /> {t('badgeTraining')}
               </span>
             )}
             {isRejected(script) ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-500/15 text-red-300 border border-red-500/25">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-ghost-fill text-danger border border-danger">
                 <ShieldAlert className="w-2.5 h-2.5" /> {t('badgeRejected')}
               </span>
             ) : script.verified && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-ghost-fill text-success border border-line">
                 <CheckCircle2 className="w-2.5 h-2.5" /> {t('badgeVerified')}
               </span>
             )}
           </div>
           <h3
-            className="font-bold text-white text-base leading-tight group-hover:text-purple-300 transition-colors"
+            className="font-semibold text-ink text-base leading-tight group-hover:text-indigo-text transition-colors"
             itemProp="name"
           >
             {script.name}
@@ -152,7 +152,7 @@ function ScriptCard({
 
       {/* Description */}
       <p
-        className="text-gray-400 text-sm leading-relaxed line-clamp-2"
+        className="text-ink-muted text-sm leading-relaxed line-clamp-2"
         itemProp="description"
       >
         {script.description}
@@ -160,13 +160,13 @@ function ScriptCard({
 
       {/* Meta row */}
       <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${frameworkColor(script.framework)}`}>
+        <span className={`px-2 py-0.5 rounded-sm border text-[11px] font-medium ${frameworkColor(script.framework)}`}>
           {script.framework}
         </span>
-        <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-400">
+        <span className="px-2 py-0.5 rounded-sm bg-ghost-fill border border-line text-ink-muted">
           {script.model_type}
         </span>
-        <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-400">
+        <span className="px-2 py-0.5 rounded-sm bg-ghost-fill border border-line text-ink-muted">
           {script.task_type}
         </span>
       </div>
@@ -177,14 +177,14 @@ function ScriptCard({
           {script.tags.slice(0, 5).map((tag) => (
             <span
               key={tag}
-              className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 font-mono border border-purple-500/15"
+              className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-soft text-indigo-text font-mono border border-line"
               itemProp="keywords"
             >
               #{tag}
             </span>
           ))}
           {script.tags.length > 5 && (
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-gray-500 font-mono">
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-ghost-fill text-ink-faint font-mono">
               +{script.tags.length - 5}
             </span>
           )}
@@ -192,8 +192,8 @@ function ScriptCard({
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-1 border-t border-white/5">
-        <div className="flex items-center gap-3 text-xs text-gray-500">
+      <div className="flex items-center justify-between pt-1 border-t border-line">
+        <div className="flex items-center gap-3 text-xs text-ink-faint">
           <span className="flex items-center gap-1">
             <User className="w-3 h-3" />
             <span itemProp="author">{script.author}</span>
@@ -203,13 +203,13 @@ function ScriptCard({
             {timeAgo(script.created_at, timeAgoMessages)}
           </span>
         </div>
-        <div className="flex items-center gap-3 text-xs text-gray-500">
+        <div className="flex items-center gap-3 text-xs text-ink-faint">
           <span className="flex items-center gap-1">
             <Download className="w-3 h-3" />
             {script.downloads.toLocaleString()}
           </span>
           <span className="flex items-center gap-1">
-            <Star className="w-3 h-3 text-yellow-400" />
+            <Star className="w-3 h-3 text-warning" />
             {script.stars}
           </span>
         </div>
@@ -264,37 +264,37 @@ function ScriptDetailModal({
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] flex flex-col glass-strong border border-white/15 rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+      <div className="absolute inset-0 bg-[rgba(5,5,10,0.72)] " onClick={onClose} />
+      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] flex flex-col bg-surface border border-line border border-line-strong rounded-lg overflow-hidden ">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4 p-6 border-b border-white/8">
+        <div className="flex items-start justify-between gap-4 p-6 border-b border-line">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2 flex-wrap">
               {script.script_type === 'test' ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-ghost-fill text-warning border border-line">
                   <FlaskConical className="w-3 h-3" /> {t('modalTestScript')}
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-violet-500/15 text-violet-300 border border-violet-500/25">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-indigo-soft text-indigo-text border border-line">
                   <Dumbbell className="w-3 h-3" /> {t('modalTrainingScript')}
                 </span>
               )}
               {isRejected(script) ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-red-500/15 text-red-300 border border-red-500/25">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-ghost-fill text-danger border border-danger">
                   <ShieldAlert className="w-3 h-3" /> {t('badgeRejected')}
                 </span>
               ) : script.verified && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-ghost-fill text-success border border-line">
                   <CheckCircle2 className="w-3 h-3" /> {t('modalVerifiedBy')}
                 </span>
               )}
             </div>
-            <h2 className="text-xl font-bold text-white">{script.name}</h2>
-            <p className="text-gray-400 text-sm mt-1">{script.description}</p>
+            <h2 className="text-xl font-semibold text-ink">{script.name}</h2>
+            <p className="text-ink-muted text-sm mt-1">{script.description}</p>
           </div>
           <button
             onClick={onClose}
-            className="press flex-shrink-0 p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition duration-200 ease-out"
+            className="press flex-shrink-0 p-2 rounded-md hover:bg-surface-raised text-ink-muted hover:text-ink transition duration-200 ease-out"
           >
             <X className="w-5 h-5" />
           </button>
@@ -302,44 +302,44 @@ function ScriptDetailModal({
 
         {/* Ablehnungs-Warnung (nur beim eigenen abgelehnten Skript sichtbar) */}
         {isRejected(script) && (
-          <div className="flex items-start gap-3 px-6 py-3 border-b border-red-500/20 bg-red-500/8">
-            <ShieldAlert className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 px-6 py-3 border-b border-danger bg-ghost-fill">
+            <ShieldAlert className="w-4 h-4 text-danger flex-shrink-0 mt-0.5" />
             <div className="text-xs leading-relaxed">
-              <p className="font-semibold text-red-300">{t('rejectedTitle')}</p>
+              <p className="font-semibold text-danger">{t('rejectedTitle')}</p>
               {script.rejectedReason && (
-                <p className="text-red-300/80 mt-0.5">{script.rejectedReason}</p>
+                <p className="text-danger mt-0.5">{script.rejectedReason}</p>
               )}
-              <p className="text-red-200/60 mt-1">{t('rejectedHint')}</p>
+              <p className="text-danger mt-1">{t('rejectedHint')}</p>
             </div>
           </div>
         )}
 
         {/* Meta */}
-        <div className="flex flex-wrap items-center gap-3 px-6 py-3 border-b border-white/8 bg-white/2">
-          <div className="flex items-center gap-1.5 text-xs text-gray-400">
+        <div className="flex flex-wrap items-center gap-3 px-6 py-3 border-b border-line bg-ghost-fill">
+          <div className="flex items-center gap-1.5 text-xs text-ink-muted">
             <User className="w-3.5 h-3.5" />
-            <span className="font-medium text-gray-300">{script.author}</span>
+            <span className="font-medium text-ink">{script.author}</span>
           </div>
-          <span className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${frameworkColor(script.framework)}`}>
+          <span className={`px-2 py-0.5 rounded-sm border text-[11px] font-medium ${frameworkColor(script.framework)}`}>
             {script.framework}
           </span>
-          <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-400 text-[11px]">
+          <span className="px-2 py-0.5 rounded-sm bg-ghost-fill border border-line text-ink-muted text-[11px]">
             {script.model_type}
           </span>
-          <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-400 text-[11px]">
+          <span className="px-2 py-0.5 rounded-sm bg-ghost-fill border border-line text-ink-muted text-[11px]">
             {script.task_type}
           </span>
-          <div className="ml-auto flex items-center gap-3 text-xs text-gray-500">
+          <div className="ml-auto flex items-center gap-3 text-xs text-ink-faint">
             <span className="flex items-center gap-1"><Download className="w-3.5 h-3.5" />{script.downloads.toLocaleString()}</span>
-            <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-yellow-400" />{script.stars}</span>
+            <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-warning" />{script.stars}</span>
           </div>
         </div>
 
         {/* Tags */}
         {script.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 px-6 py-3 border-b border-white/8">
+          <div className="flex flex-wrap gap-1.5 px-6 py-3 border-b border-line">
             {script.tags.map((tag) => (
-              <span key={tag} className="text-[10px] px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-mono border border-purple-500/15">
+              <span key={tag} className="text-[10px] px-2 py-0.5 rounded bg-indigo-soft text-indigo-text font-mono border border-line">
                 #{tag}
               </span>
             ))}
@@ -348,24 +348,24 @@ function ScriptDetailModal({
 
         {/* Code area */}
         <div className="flex-1 overflow-hidden flex flex-col min-h-0">
-          <div className="flex items-center justify-between px-6 py-2 bg-black/30 border-b border-white/8">
-            <span className="text-xs text-gray-500 font-mono">script.py</span>
+          <div className="flex items-center justify-between px-6 py-2 bg-bg border-b border-line">
+            <span className="text-xs text-ink-faint font-mono">script.py</span>
             <button
               onClick={handleCopy}
               disabled={loading || !fullScript}
-              className="press flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 hover:text-white text-xs font-medium transition duration-200 ease-out disabled:opacity-40"
+              className="press flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-ghost-fill hover:bg-surface-raised border border-line text-ink-muted hover:text-ink text-xs font-medium transition duration-200 ease-out disabled:opacity-40"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
               {copied ? t('copiedButton') : t('copyButton')}
             </button>
           </div>
           <div className="flex-1 overflow-y-auto">
             {loading ? (
               <div className="flex items-center justify-center h-40">
-                <Loader2 className="w-6 h-6 animate-spin text-purple-400" />
+                <Loader2 className="w-6 h-6 animate-spin text-indigo-text" />
               </div>
             ) : (
-              <pre className="text-xs text-gray-300 font-mono p-6 leading-relaxed whitespace-pre-wrap break-words">
+              <pre className="text-xs text-ink font-mono p-6 leading-relaxed whitespace-pre-wrap break-words">
                 {fullScript || `# ${t('noScriptContent')}`}
               </pre>
             )}
@@ -373,18 +373,18 @@ function ScriptDetailModal({
         </div>
 
         {/* Footer – Download-Button */}
-        <div className="flex items-center justify-between gap-4 px-6 py-4 border-t border-white/8 bg-white/2">
-          <p className="text-xs text-gray-500">
+        <div className="flex items-center justify-between gap-4 px-6 py-4 border-t border-line bg-ghost-fill">
+          <p className="text-xs text-ink-faint">
             {t('createdLabel')}: {timeAgo(script.created_at, timeAgoMessages)} · {t('licenseLabel')}
           </p>
           <div className="flex gap-2">
-            <button onClick={onClose} className="press px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition duration-200 ease-out">
+            <button onClick={onClose} className="press px-4 py-2 min-h-[44px] rounded-md bg-surface border border-line hover:bg-surface-raised text-ink-muted text-sm font-medium transition duration-200 ease-out">
               {t('closeButton')}
             </button>
             <a
               href={`data:text/plain;charset=utf-8,${encodeURIComponent(fullScript)}`}
               download={`${script.name.replace(/\s+/g, '_').toLowerCase()}.py`}
-              className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out"
+              className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-md bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge text-sm font-semibold   transition duration-200 ease-out"
             >
               <Download className="w-4 h-4" /> {t('downloadButton')}
             </a>
@@ -399,33 +399,33 @@ function ScriptDetailModal({
 
 function DuplicateNameErrorModal({ name, onClose, t }: { name: string; onClose: () => void; t: ReturnType<typeof useTranslations> }) {
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="glass-strong rounded-2xl border border-red-500/20 max-w-sm w-full p-6 space-y-4">
+    <div className="fixed inset-0 bg-[rgba(5,5,10,0.72)] flex items-center justify-center z-50 p-4">
+      <div className="bg-surface border border-line rounded-lg border border-danger max-w-sm w-full p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
-            <AlertCircle className="w-6 h-6 text-red-400" />
+          <div className="w-12 h-12 rounded-full bg-ghost-fill border border-danger flex items-center justify-center">
+            <AlertCircle className="w-6 h-6 text-danger" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">{t('duplicateNameTitle')}</h3>
-            <p className="text-sm text-gray-400 mt-1">{t('duplicateNameSubtitle')}</p>
+            <h3 className="text-lg font-semibold text-ink">{t('duplicateNameTitle')}</h3>
+            <p className="text-sm text-ink-muted mt-1">{t('duplicateNameSubtitle')}</p>
           </div>
         </div>
 
-        <div className="bg-red-500/8 border border-red-500/20 rounded-lg p-3">
-          <p className="text-sm text-red-200">
-            {t.rich('duplicateNameText', { name, b: (chunks) => <strong className="text-red-300">{chunks}</strong> })}
+        <div className="bg-ghost-fill border border-danger rounded-sm p-3">
+          <p className="text-sm text-danger">
+            {t.rich('duplicateNameText', { name, b: (chunks) => <strong className="text-danger">{chunks}</strong> })}
           </p>
         </div>
 
-        <div className="bg-blue-500/8 border border-blue-500/20 rounded-lg p-3">
-          <p className="text-xs text-blue-200">
+        <div className="bg-indigo-soft border border-line rounded-sm p-3">
+          <p className="text-xs text-indigo-text">
             {t.rich('duplicateNameTip', { b: (chunks) => <strong>{chunks}</strong> })}
           </p>
         </div>
 
         <button
           onClick={onClose}
-          className="press w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transition duration-200 ease-out hover:from-purple-500 hover:to-pink-500"
+          className="press w-full py-2.5 rounded-sm bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-medium transition duration-200 ease-out  "
         >
           {t('duplicateNameRetry')}
         </button>
@@ -542,21 +542,21 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-2xl glass-strong border border-white/15 rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
-        <div className="flex items-center justify-between p-6 border-b border-white/8">
+      <div className="absolute inset-0 bg-[rgba(5,5,10,0.72)] " onClick={onClose} />
+      <div className="relative z-10 w-full max-w-2xl bg-surface border border-line border border-line-strong rounded-lg overflow-hidden ">
+        <div className="flex items-center justify-between p-6 border-b border-line">
           <div>
-            <h2 className="text-lg font-bold text-white">{t('upload.title')}</h2>
-            <p className="text-gray-400 text-sm">{t('upload.subtitle')}</p>
+            <h2 className="text-lg font-semibold text-ink">{t('upload.title')}</h2>
+            <p className="text-ink-muted text-sm">{t('upload.subtitle')}</p>
           </div>
-          <button onClick={onClose} className="press p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition duration-200 ease-out">
+          <button onClick={onClose} className="press p-2 rounded-md hover:bg-surface-raised text-ink-muted hover:text-ink transition duration-200 ease-out">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
           {error && (
-            <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/25 text-red-300 text-sm">
+            <div className="flex items-center gap-2 px-4 py-3 rounded-md bg-ghost-fill border border-danger text-danger text-sm">
               <AlertCircle className="w-4 h-4 flex-shrink-0" /> {error}
             </div>
           )}
@@ -564,47 +564,47 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
           <div className="grid grid-cols-2 gap-4">
             {/* Community Name Input */}
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.communityNameLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.communityNameLabel')}</label>
               {!authorLocked ? (
                 <input
                   value={authorInput}
                   onChange={(e) => setAuthorInput(e.target.value.replace(/[^a-z0-9_\-. ]/gi, ''))}
                   placeholder={t('upload.communityNamePlaceholder')}
                   maxLength={40}
-                  className="w-full px-4 py-2.5 rounded-xl glass border border-purple-500/30 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50"
+                  className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong"
                 />
               ) : (
-                <div className="flex items-center gap-2 px-4 py-2.5 glass border border-white/10 rounded-xl">
-                  <span className="text-white text-sm flex-1">@{authorInput}</span>
-                  <span className="text-[10px] text-gray-600">{t('upload.savedLabel')}</span>
+                <div className="flex items-center gap-2 px-4 py-2.5 bg-surface border border-line border border-line rounded-md">
+                  <span className="text-ink text-sm flex-1">@{authorInput}</span>
+                  <span className="text-[10px] text-ink-faint">{t('upload.savedLabel')}</span>
                 </div>
               )}
-              <p className="text-xs text-gray-400 mt-1.5">
+              <p className="text-xs text-ink-muted mt-1.5">
                 {!authorLocked ? t('upload.communityNameHintNew') : t('upload.communityNameHintLocked')}
               </p>
             </div>
 
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.nameLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.nameLabel')}</label>
               <input
                 value={form.name} onChange={set('name')} placeholder={t('upload.namePlaceholder')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50"
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong"
               />
             </div>
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.descriptionLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.descriptionLabel')}</label>
               <textarea
                 value={form.description} onChange={set('description')} rows={2}
                 placeholder={t('upload.descriptionPlaceholder')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50 resize-none"
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong resize-none"
               />
             </div>
 
             {/* Typ */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.typeLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.typeLabel')}</label>
               <select value={form.script_type} onChange={set('script_type')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm focus:outline-none focus:border-purple-500/50">
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm focus:outline-none focus:border-line-strong">
                 <option value="train">{t('upload.typeTraining')}</option>
                 <option value="test">{t('upload.typeTest')}</option>
               </select>
@@ -612,9 +612,9 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
 
             {/* Framework */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.frameworkLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.frameworkLabel')}</label>
               <select value={form.framework} onChange={set('framework')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm focus:outline-none focus:border-purple-500/50">
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm focus:outline-none focus:border-line-strong">
                 <option value="transformers">transformers</option>
                 <option value="pytorch">pytorch</option>
                 <option value="tensorflow">tensorflow</option>
@@ -624,39 +624,39 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.modelTypeLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.modelTypeLabel')}</label>
               <input value={form.model_type} onChange={set('model_type')} placeholder={t('upload.modelTypePlaceholder')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50" />
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.taskTypeLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.taskTypeLabel')}</label>
               <input value={form.task_type} onChange={set('task_type')} placeholder={t('upload.taskTypePlaceholder')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50" />
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong" />
             </div>
 
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.tagsLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.tagsLabel')}</label>
               <input value={form.tags} onChange={set('tags')} placeholder={t('upload.tagsPlaceholder')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50" />
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong" />
             </div>
 
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">{t('upload.scriptLabel')}</label>
+              <label className="block text-xs font-medium text-ink-muted mb-1.5">{t('upload.scriptLabel')}</label>
               <textarea value={form.script} onChange={set('script')} rows={10}
                 placeholder={t('upload.scriptPlaceholder')}
-                className="w-full px-4 py-2.5 rounded-xl glass border border-white/10 text-white text-xs font-mono placeholder-gray-600 focus:outline-none focus:border-purple-500/50 resize-none"
+                className="w-full px-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-xs font-mono placeholder-ink-faint focus:outline-none focus:border-line-strong resize-none"
               />
             </div>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-white/8">
-          <button onClick={onClose} className="press px-4 py-2 min-h-[44px] rounded-xl glass hover:bg-white/10 text-gray-400 text-sm font-medium transition duration-200 ease-out">
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-line">
+          <button onClick={onClose} className="press px-4 py-2 min-h-[44px] rounded-md bg-surface border border-line hover:bg-surface-raised text-ink-muted text-sm font-medium transition duration-200 ease-out">
             {t('upload.cancel')}
           </button>
           <button
             onClick={handleSubmit} disabled={loading}
-            className="press inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out disabled:opacity-60"
+            className="press inline-flex items-center gap-2 px-5 py-2 rounded-md bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge text-sm font-semibold   transition duration-200 ease-out disabled:opacity-60"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
             {t('upload.submit')}
@@ -743,34 +743,34 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-12">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-purple-500/25 text-purple-300 text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-line border border-line text-indigo-text text-sm font-medium mb-6">
               <Globe className="w-4 h-4" />
               {t('badge')}
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight">
-              <span className="text-gradient-brand">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-5 leading-tight">
+              <span className="text-ink">
                 {t('heroTitlePart1')}
               </span>{' '}
-              <span className="text-white">{t('heroTitlePart2')}</span>
+              <span className="text-ink">{t('heroTitlePart2')}</span>
             </h1>
 
-            <p className="text-xl text-gray-400 leading-relaxed mb-8">
-              {t.rich('heroSubtitle', { b: (chunks) => <strong className="text-white">{chunks}</strong> })}
+            <p className="text-xl text-ink-muted leading-relaxed mb-8">
+              {t.rich('heroSubtitle', { b: (chunks) => <strong className="text-ink">{chunks}</strong> })}
             </p>
 
             {/* Stats pills */}
             <div className="flex items-center justify-center gap-4 flex-wrap mb-8">
-              <div className="glass px-4 py-2 rounded-full text-sm text-gray-300 flex items-center gap-2">
-                <Dumbbell className="w-4 h-4 text-violet-400" />
+              <div className="bg-surface border border-line px-4 py-2 rounded-full text-sm text-ink flex items-center gap-2">
+                <Dumbbell className="w-4 h-4 text-indigo-text" />
                 <span>{t('statsTrain', { count: totalTrain })}</span>
               </div>
-              <div className="glass px-4 py-2 rounded-full text-sm text-gray-300 flex items-center gap-2">
-                <FlaskConical className="w-4 h-4 text-amber-400" />
+              <div className="bg-surface border border-line px-4 py-2 rounded-full text-sm text-ink flex items-center gap-2">
+                <FlaskConical className="w-4 h-4 text-warning" />
                 <span>{t('statsTest', { count: totalTest })}</span>
               </div>
-              <div className="glass px-4 py-2 rounded-full text-sm text-gray-300 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <div className="bg-surface border border-line px-4 py-2 rounded-full text-sm text-ink flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-success" />
                 <span>{t('statsVerified', { count: scripts.filter((s) => s.verified).length })}</span>
               </div>
             </div>
@@ -779,14 +779,14 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             {isAuthenticated ? (
               <button
                 onClick={() => setShowUpload(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out shadow-lg shadow-purple-500/30"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold   transition duration-200 ease-out  "
               >
                 <Upload className="w-4 h-4" /> {t('uploadCta')}
               </button>
             ) : (
               <Link
                 href="/login"
-                className="card-lift inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/15 text-gray-300 hover:border-white/30 hover:text-white font-semibold transition duration-200 ease-out"
+                className="card-lift inline-flex items-center gap-2 px-6 py-3 rounded-md bg-surface border border-line border border-line-strong text-ink hover:border-line-strong hover:text-ink font-semibold transition duration-200 ease-out"
               >
                 <Upload className="w-4 h-4" /> {t('loginCta')}
                 <ArrowRight className="w-4 h-4" />
@@ -795,28 +795,28 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
           </div>
 
           {/* ── Search & Filter bar ── */}
-          <div className="glass-strong rounded-2xl p-4 border border-white/8 flex flex-col md:flex-row md:flex-wrap gap-3">
+          <div className="bg-surface border border-line rounded-lg p-4 border border-line flex flex-col md:flex-row md:flex-wrap gap-3">
             {/* Search */}
             <div className="relative flex-1 md:min-w-[220px]">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-faint" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('searchPlaceholder')}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl glass border border-white/10 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500/50"
+                className="w-full pl-9 pr-4 py-2.5 rounded-md bg-surface border border-line border border-line text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-line-strong"
               />
             </div>
 
             {/* Type filter */}
-            <div className="flex rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
+            <div className="flex rounded-md overflow-hidden border border-line flex-shrink-0">
               {(['all', 'train', 'test'] as const).map((tf) => (
                 <button
                   key={tf}
                   onClick={() => setTypeFilter(tf)}
                   className={`px-4 py-2.5 min-h-[44px] text-sm font-medium transition duration-200 ease-out ${
                     typeFilter === tf
-                      ? 'bg-purple-500/20 text-purple-300'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-indigo-soft text-indigo-text'
+                      : 'text-ink-muted hover:text-ink hover:bg-ghost-fill'
                   }`}
                 >
                   {tf === 'all' ? t('filterAll') : tf === 'train' ? t('filterTrain') : t('filterTest')}
@@ -828,7 +828,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             <select
               value={frameworkFilter}
               onChange={(e) => setFrameworkFilter(e.target.value)}
-              className="px-4 py-2.5 min-h-[44px] rounded-xl glass border border-white/10 text-gray-300 text-sm focus:outline-none focus:border-purple-500/50 flex-shrink-0"
+              className="px-4 py-2.5 min-h-[44px] rounded-md bg-surface border border-line border border-line text-ink text-sm focus:outline-none focus:border-line-strong flex-shrink-0"
             >
               <option value="">{t('allFrameworks')}</option>
               <option value="transformers">transformers</option>
@@ -841,7 +841,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-4 py-2.5 min-h-[44px] rounded-xl glass border border-white/10 text-gray-300 text-sm focus:outline-none focus:border-purple-500/50 flex-shrink-0"
+              className="px-4 py-2.5 min-h-[44px] rounded-md bg-surface border border-line border border-line text-ink text-sm focus:outline-none focus:border-line-strong flex-shrink-0"
             >
               <option value="downloads">{t('sortDownloads')}</option>
               <option value="stars">{t('sortStars')}</option>
@@ -851,10 +851,10 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
             {/* Verified toggle */}
             <button
               onClick={() => setVerifiedOnly((v) => !v)}
-              className={`px-4 py-2.5 min-h-[44px] rounded-xl border text-sm font-medium transition duration-200 ease-out flex items-center gap-2 flex-shrink-0 ${
+              className={`px-4 py-2.5 min-h-[44px] rounded-md border text-sm font-medium transition duration-200 ease-out flex items-center gap-2 flex-shrink-0 ${
                 verifiedOnly
-                  ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/25'
-                  : 'glass border-white/10 text-gray-400 hover:text-white'
+                  ? 'bg-ghost-fill text-success border-line'
+                  : 'bg-surface border border-line border-line text-ink-muted hover:text-ink'
               }`}
             >
               <CheckCircle2 className="w-4 h-4" />
@@ -869,7 +869,7 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
         <div className="max-w-7xl mx-auto">
           {/* Result count */}
           <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-ink-faint">
               {loading ? (
                 <span className="flex items-center gap-2"><Loader2 className="w-3.5 h-3.5 animate-spin" /> {t('loadingText')}</span>
               ) : (
@@ -879,14 +879,14 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
           </div>
 
           {sorted.length === 0 && !loading ? (
-            <div className="text-center py-24 glass-strong rounded-2xl border border-white/8">
-              <Code2 className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-white mb-2">{t('emptyTitle')}</h3>
-              <p className="text-gray-500 text-sm mb-6">{t('emptyText')}</p>
+            <div className="text-center py-24 bg-surface border border-line rounded-lg border border-line">
+              <Code2 className="w-12 h-12 text-ink-faint mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-ink mb-2">{t('emptyTitle')}</h3>
+              <p className="text-ink-faint text-sm mb-6">{t('emptyText')}</p>
               {isAuthenticated && (
                 <button
                   onClick={() => setShowUpload(true)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge text-sm font-semibold"
                 >
                   <Upload className="w-4 h-4" /> {t('emptyCta')}
                 </button>
@@ -910,47 +910,47 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
       </section>
 
       {/* ── SEO Rich Content Section ── */}
-      <section className="py-20 px-4 border-t border-white/5">
+      <section className="py-20 px-4 border-t border-line">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold mb-4 text-gradient-brand">
+            <h2 className="text-4xl font-semibold mb-4 text-ink">
               {t('seo.heading')}
             </h2>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+            <p className="text-ink-muted text-lg max-w-3xl mx-auto">
               {t('seo.subtitle')}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mb-16">
             {[Dumbbell, FlaskConical, CheckCircle2].map((Icon, i) => (
-              <div key={seoCards[i].title} className="glass-strong rounded-2xl p-7">
-                <div className={`w-12 h-12 bg-gradient-to-br ${['from-violet-500 to-purple-600', 'from-amber-500 to-orange-600', 'from-emerald-500 to-green-600'][i]} rounded-xl flex items-center justify-center mb-5`}>
-                  <Icon className="w-6 h-6 text-white" />
+              <div key={seoCards[i].title} className="bg-surface border border-line rounded-lg p-7">
+                <div className={`w-12 h-12 bg-ghost-fill border border-line ${[' ', ' ', ' '][i]} rounded-md flex items-center justify-center mb-5`}>
+                  <Icon className="w-6 h-6 text-ink" />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">{seoCards[i].title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{seoCards[i].desc}</p>
+                <h3 className="text-lg font-semibold text-ink mb-3">{seoCards[i].title}</h3>
+                <p className="text-ink-muted text-sm leading-relaxed">{seoCards[i].desc}</p>
               </div>
             ))}
           </div>
 
           {/* Supported frameworks */}
-          <div className="glass-strong rounded-2xl p-8 mb-10">
-            <h3 className="text-xl font-bold text-white mb-2">{t('seo.frameworksHeading')}</h3>
-            <p className="text-gray-400 text-sm mb-6">
+          <div className="bg-surface border border-line rounded-lg p-8 mb-10">
+            <h3 className="text-xl font-semibold text-ink mb-2">{t('seo.frameworksHeading')}</h3>
+            <p className="text-ink-muted text-sm mb-6">
               {t('seo.frameworksIntro')}
             </p>
             <div className="flex flex-wrap gap-3">
               {[
-                { name: 'HuggingFace Transformers', color: 'from-yellow-500/20 to-orange-500/20 border-yellow-500/25 text-yellow-300' },
-                { name: 'PyTorch', color: 'from-orange-500/20 to-red-500/20 border-orange-500/25 text-orange-300' },
-                { name: 'PEFT / LoRA', color: 'from-purple-500/20 to-violet-500/20 border-purple-500/25 text-purple-300' },
-                { name: 'bitsandbytes (4-bit)', color: 'from-blue-500/20 to-cyan-500/20 border-blue-500/25 text-blue-300' },
-                { name: 'Datasets', color: 'from-green-500/20 to-emerald-500/20 border-green-500/25 text-green-300' },
-                { name: 'TRL', color: 'from-pink-500/20 to-rose-500/20 border-pink-500/25 text-pink-300' },
-                { name: 'Accelerate', color: 'from-indigo-500/20 to-blue-500/20 border-indigo-500/25 text-indigo-300' },
-                { name: 'scikit-learn', color: 'from-cyan-500/20 to-teal-500/20 border-cyan-500/25 text-cyan-300' },
+                { name: 'HuggingFace Transformers', color: '  border-line text-warning' },
+                { name: 'PyTorch', color: '  border-line text-warning' },
+                { name: 'PEFT / LoRA', color: '  border-line text-indigo-text' },
+                { name: 'bitsandbytes (4-bit)', color: '  border-line text-indigo-text' },
+                { name: 'Datasets', color: '  border-line text-success' },
+                { name: 'TRL', color: '  border-line text-indigo-text' },
+                { name: 'Accelerate', color: '  border-line text-indigo-text' },
+                { name: 'scikit-learn', color: '  border-line text-indigo-text' },
               ].map((fw) => (
-                <span key={fw.name} className={`px-3 py-1.5 rounded-lg bg-gradient-to-r border text-sm font-medium ${fw.color}`}>
+                <span key={fw.name} className={`px-3 py-1.5 rounded-sm border text-sm font-medium ${fw.color}`}>
                   {fw.name}
                 </span>
               ))}
@@ -958,20 +958,20 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
           </div>
 
           {/* How to use */}
-          <div className="glass-strong rounded-2xl p-8 mb-10">
-            <h3 className="text-xl font-bold text-white mb-6">{t('seo.howToHeading')}</h3>
+          <div className="bg-surface border border-line rounded-lg p-8 mb-10">
+            <h3 className="text-xl font-semibold text-ink mb-6">{t('seo.howToHeading')}</h3>
             <div className="grid md:grid-cols-3 gap-6">
               {[Search, BookOpen, Sparkles].map((Icon, i) => (
                 <div key={seoSteps[i].step} className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white">
+                    <div className="w-10 h-10 bg-ghost-fill border border-line rounded-md flex items-center justify-center text-ink">
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
                   <div>
-                    <span className="text-xs font-mono text-gray-600">{seoSteps[i].step}</span>
-                    <h4 className="font-semibold text-white text-sm mb-1">{seoSteps[i].title}</h4>
-                    <p className="text-gray-400 text-xs leading-relaxed">{seoSteps[i].desc}</p>
+                    <span className="text-xs font-mono text-ink-faint">{seoSteps[i].step}</span>
+                    <h4 className="font-semibold text-ink text-sm mb-1">{seoSteps[i].title}</h4>
+                    <p className="text-ink-muted text-xs leading-relaxed">{seoSteps[i].desc}</p>
                   </div>
                 </div>
               ))}
@@ -979,23 +979,23 @@ export function LibraryPageClient({ initialScripts }: { initialScripts: LibraryS
           </div>
 
           {/* CTA Download App */}
-          <div className="glass-strong rounded-2xl p-8 border border-purple-500/15 bg-gradient-to-br from-purple-600/5 to-transparent text-center">
-            <h3 className="text-2xl font-bold text-white mb-3">
+          <div className="bg-surface border border-line rounded-lg p-8 border border-line to-transparent text-center">
+            <h3 className="text-2xl font-semibold text-ink mb-3">
               {t('seo.ctaHeading')}
             </h3>
-            <p className="text-gray-400 text-base mb-6 max-w-xl mx-auto">
+            <p className="text-ink-muted text-base mb-6 max-w-xl mx-auto">
               {t('seo.ctaText')}
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Link
                 href="/download"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-500 hover:to-pink-500 transition duration-200 ease-out shadow-lg shadow-purple-500/30"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge font-semibold   transition duration-200 ease-out  "
               >
                 <Sparkles className="w-4 h-4" /> {t('seo.ctaDownload')}
               </Link>
               <Link
                 href="/docs"
-                className="card-lift inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/15 text-gray-300 hover:border-white/30 hover:text-white font-semibold transition duration-200 ease-out"
+                className="card-lift inline-flex items-center gap-2 px-6 py-3 rounded-md bg-surface border border-line border border-line-strong text-ink hover:border-line-strong hover:text-ink font-semibold transition duration-200 ease-out"
               >
                 <BookOpen className="w-4 h-4" /> {t('seo.ctaDocs')}
                 <ArrowRight className="w-4 h-4" />

@@ -66,7 +66,8 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 - Core tech: PyTorch, Hugging Face, PEFT/LoRA, QLoRA, BitsAndBytes, Tauri/Rust
 - Pricing: Early Access from €4.99/month (€39.99/year)
 - Privacy: training runs fully local, GDPR-compliant, no cloud required
-- Source / releases: https://github.com/FrameSphere/FrameTrain-App
+- Source: https://github.com/FrameSphere/FrameTrain-App
+- Downloads: https://github.com/FrameSphere/FrameTrain-Releases/releases/latest
 `
 
   return new Response(body, {

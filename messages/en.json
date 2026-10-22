@@ -49,7 +49,19 @@
         "madeWithPre": "Made with",
         "madeWithPost": "for ML Engineers",
         "appleSilicon": "Apple Silicon",
-        "compare": "Compare"
+        "compare": "Compare",
+        "taglineNeuron": "The desktop app for training your own AI models – no code, right on your computer.",
+        "learnHeading": "Learn",
+        "coach": "AI Training Coach",
+        "madeIn": "Built solo in Mainz, Germany",
+        "status": "Platform status",
+        "audienceHeading": "For you",
+        "computerVision": "Object detection",
+        "mac": "Mac & Apple Silicon",
+        "gdpr": "GDPR & companies",
+        "vsUnsloth": "vs. Unsloth",
+        "vsColab": "vs. Google Colab",
+        "mlxVsPytorch": "MLX vs. PyTorch"
     },
     "Imprint": {
         "metaTitle": "Imprint – FrameTrain",
@@ -556,13 +568,13 @@
             "planToggle": {
                 "monthly": "Monthly",
                 "yearly": "Yearly",
-                "savePercent": "−20%"
+                "savePercent": "−33%"
             },
             "priceDisplay": {
                 "perMonth": "per month",
                 "perYear": "per year",
                 "earlyAccessSuffix": "Early Access",
-                "saveYearly": "Save 20% vs. monthly",
+                "saveYearly": "Works out to €3.33 a month – 33% less",
                 "cancelMonthly": "Cancel monthly"
             },
             "topLabel": "ONE STEP AWAY FROM ACCESS",
@@ -570,7 +582,7 @@
             "headingLine2": "right now.",
             "subtitleWelcome": "Welcome, {name}.",
             "subtitleDefaultName": "Trainer",
-            "subtitlePrice": "€4.99/month · Early Access · cancel anytime.",
+            "subtitlePrice": "From €3.33/month · Early Access · cancel anytime.",
             "errorFallback": "Error creating checkout session",
             "loadingText": "Loading…",
             "redirecting": "Redirecting to Stripe…",
@@ -655,7 +667,7 @@
                 "ctaPayment": "Go to payment",
                 "ctaDashboard": "Go to dashboard"
             },
-            "successHeading": "Payment successful! 🎉",
+            "successHeading": "Payment successful! ",
             "successText": "Welcome to the FrameTrain family. Your account is now active.",
             "loadingFallback": "Loading...",
             "showcase": {
@@ -699,7 +711,7 @@
                     },
                     {
                         "title": "Start training",
-                        "desc": "Upload your dataset, set your hyperparameters, and click \"Start Training\". Done! 🚀"
+                        "desc": "Upload your dataset, set your hyperparameters, and click \"Start Training\". Done! "
                     }
                 ],
                 "back": "← Back",
@@ -803,7 +815,19 @@
             "errors": {
                 "passwordMismatch": "Passwords do not match",
                 "registrationFailed": "Registration failed"
-            }
+            },
+            "trialEyebrow": "14 days free",
+            "trialHeading": "Try FrameTrain for free.",
+            "trialSubtitle": "No payment details. Your trial starts once you confirm your email – and ends on its own after 14 days.",
+            "trialPoints": [
+                "Every feature, for 14 days",
+                "No payment details, no charge",
+                "Download right after confirming"
+            ],
+            "promoLabel": "Voucher code (optional)",
+            "promoPlaceholder": "e.g. REDDIT-FT-01",
+            "promoNote": "We'll remember the code. Redeem it from your dashboard after confirming – discounts apply when you subscribe.",
+            "promoDetected": "Code {code} detected"
         },
         "verifyEmail": {
             "banner": {
@@ -811,9 +835,9 @@
                 "text": "We've sent you a verification email. Some features are limited until you verify.",
                 "resendButton": "Resend email",
                 "sending": "Sending...",
-                "sent": "✅ Email resent. Please check your inbox (and spam folder).",
+                "sent": "Email resent. Please check your inbox (and spam folder).",
                 "rateLimited": "Too many requests. Please try again in a few minutes.",
-                "sendError": "❌ Email could not be sent. Please try again later."
+                "sendError": "Email could not be sent. Please try again later."
             },
             "page": {
                 "verifyingTitle": "Verifying email...",
@@ -840,9 +864,9 @@
                 "checkError": "Could not check the status. Please try again in a moment.",
                 "resendButton": "Resend email",
                 "sending": "Sending...",
-                "sent": "✅ Email resent. Please check your inbox (and spam folder).",
+                "sent": "Email resent. Please check your inbox (and spam folder).",
                 "rateLimited": "Too many requests. Please try again in a few minutes.",
-                "sendError": "❌ Email could not be sent. Please try again later.",
+                "sendError": "Email could not be sent. Please try again later.",
                 "spamHint": "No email? Check your spam folder too. This page detects your confirmation automatically – you can also open the link on your phone.",
                 "wrongEmail": "Wrong email address?",
                 "logoutLink": "Sign out",
@@ -1006,7 +1030,7 @@
         "downloadButton": "Download for {platform}",
         "startingDownload": "Download is starting...",
         "versionInfo": "Version: {version} • Size: {size} MB",
-        "shotAlt": "FrameTrain after installation: home screen with attention hints, key figures for models, versions, datasets and trainings, plus the most recent trainings and tests",
+        "shotAlt": "FrameTrain after installation: home screen with key figures for models, versions, datasets and trainings, recent trainings and tests, and the \"Worth a look\" panel",
         "shotCaption": "What you get after installing: the home screen with your project status – running trainings, key figures and recent runs. From here you move on to models, datasets and training.",
         "shotLink": "See every screen of the app",
         "installVideoHeading": "Not sure? Here's how to install it in 2 minutes",
@@ -1166,8 +1190,8 @@
             "storageLabel": "Storage",
             "storage": "10 GB free (50 GB+ recommended)",
             "pythonLabel": "Python",
-            "python": "3.8 or newer (required)",
-            "pythonNote": "FrameTrain runs on PyTorch and will not start without Python 3.8+ installed – the first launch checks for it and aborts otherwise. On Windows you usually have to install Python yourself. PyTorch and all other packages are then installed automatically on first launch – only Python itself has to be present beforehand.",
+            "python": "3.10 to 3.13 (required)",
+            "pythonNote": "FrameTrain runs on PyTorch and will not start without Python 3.10–3.13 installed – the first launch checks for it and aborts otherwise. On Windows you usually have to install Python yourself. PyTorch and all other packages are then installed automatically on first launch – only Python itself has to be present beforehand.",
             "pythonCta": "Download Python (python.org)",
             "macNote": "The macOS build is for Apple Silicon (M1/M2/M3/M4) only. Intel Macs are not supported because the PyTorch stack no longer ships the required versions for Intel Macs."
         },
@@ -1215,6 +1239,16 @@
                     "VRAM"
                 ],
                 "href": "/guides/gpu-guide"
+            },
+            {
+                "title": "MLX vs. PyTorch on the Mac",
+                "description": "Which framework for training on Apple Silicon? Differences in memory, ecosystem and LLM fine-tuning – and how FrameTrain uses both.",
+                "tags": [
+                    "Apple Silicon",
+                    "MLX",
+                    "PyTorch"
+                ],
+                "href": "/guides/mlx-vs-pytorch"
             }
         ]
     },
@@ -1309,7 +1343,7 @@
         "hyperparams": {
             "heading": "Key LoRA Hyperparameters",
             "typicalLabel": "typical",
-            "screenshotAlt": "LoRA and QLoRA configuration in FrameTrain: training parameters with epochs, batch size and learning rate, plus a dedicated expandable LoRA / QLoRA section",
+            "screenshotAlt": "LLM fine-tuning in FrameTrain: optimizer and scheduler, the active “LoRA / QLoRA” section and the LLM parameters with backend, GGUF export and DPO",
             "screenshotCaption": "In FrameTrain the “LoRA / QLoRA” section sits right below the base parameters and the optimizer. Expanded, it holds rank, alpha and dropout.",
             "items": [
                 {
@@ -1463,7 +1497,7 @@
             ]
         },
         "privacy": {
-            "screenshotAlt": "FrameTrain AI assistant settings: a choice between Claude, GPT-4o, Groq and local Ollama, plus the Ollama model configuration",
+            "screenshotAlt": "FrameTrain AI assistant settings: a choice between Claude, GPT-4o, Groq and local Ollama without an API key",
             "screenshotCaption": "Even the optional AI features can run locally: Ollama works without an API key on your own machine. Want none of it? Switch the assistant off – training is independent of it.",
             "heading": "Privacy & GDPR – Why Local Is Better",
             "intro": "With cloud services, your training data is uploaded to someone else's servers – in the US, Europe, or elsewhere. For many use cases that's problematic or simply not allowed:",
@@ -1694,12 +1728,12 @@
         "loginCta": "Log in to upload",
         "searchPlaceholder": "Search scripts (name, description, tags)...",
         "filterAll": "All",
-        "filterTrain": "🏋️ Training",
-        "filterTest": "🧪 Test",
+        "filterTrain": "Training",
+        "filterTest": "Test",
         "allFrameworks": "All frameworks",
         "sortDownloads": "↓ Downloads",
-        "sortStars": "⭐ Stars",
-        "sortNewest": "🕐 Newest",
+        "sortStars": "Stars",
+        "sortNewest": "Newest",
         "verifiedToggle": "Verified",
         "loadingText": "Loading...",
         "resultsFound": "{count, plural, one {{count} script found} other {{count} scripts found}}",
@@ -1726,7 +1760,7 @@
         "duplicateNameTitle": "Name already taken",
         "duplicateNameSubtitle": "This community name is already in use.",
         "duplicateNameText": "The name <b>@{name}</b> is already used by someone else.",
-        "duplicateNameTip": "💡 <b>Tip:</b> Try a different community name, e.g. with numbers or underscores.",
+        "duplicateNameTip": "<b>Tip:</b> Try a different community name, e.g. with numbers or underscores.",
         "duplicateNameRetry": "Try a different name",
         "upload": {
             "title": "Upload Script",
@@ -1741,8 +1775,8 @@
             "descriptionLabel": "Description",
             "descriptionPlaceholder": "Brief description of what the script does...",
             "typeLabel": "Type *",
-            "typeTraining": "🏋️ Training",
-            "typeTest": "🧪 Test / Evaluation",
+            "typeTraining": "Training",
+            "typeTest": "Test / Evaluation",
             "frameworkLabel": "Framework",
             "modelTypeLabel": "Model Type",
             "modelTypePlaceholder": "LLM, Classifier, Vision...",
@@ -1898,7 +1932,7 @@
                     },
                     {
                         "q": "Which operating systems are supported?",
-                        "a": "FrameTrain runs on Windows 10/11, macOS 11+ on Apple Silicon (M1/M2/M3/M4), and Ubuntu 20.04+. All common Linux distributions with AppImage support work as well. Intel Macs are not supported, because the PyTorch stack no longer ships the required versions for Intel Macs. On every platform you also need Python 3.8 or newer – the app will not start without it.",
+                        "a": "FrameTrain runs on Windows 10/11, macOS 11+ on Apple Silicon (M1/M2/M3/M4), and Ubuntu 20.04+. All common Linux distributions with AppImage support work as well. Intel Macs are not supported, because the PyTorch stack no longer ships the required versions for Intel Macs. On every platform you also need Python 3.10 to 3.13 – the app will not start without it.",
                         "tags": [
                             "os",
                             "windows",
@@ -2502,7 +2536,7 @@
         "heroTitle": "Documentation",
         "heroSubtitle": "Everything you need to install, configure, and effectively use FrameTrain.",
         "coachBanner": {
-            "title": "AI Training Coach ✨ – ML basics, loss curves, LoRA & more",
+            "title": "AI Training Coach – ML basics, loss curves, LoRA & more",
             "desc": "The complete theory guide for anyone who wants to understand how ML training really works"
         },
         "coachSidebar": {
@@ -2609,7 +2643,7 @@
                     "RAM: 8 GB",
                     "GPU: NVIDIA GTX 1060 6GB or Apple M1",
                     "Storage: 10 GB free (50 GB+ recommended)",
-                    "Python: 3.8 or newer – required, checked on first launch",
+                    "Python: 3.10 to 3.13 – required, checked on first launch",
                     "OS: Windows 10/11, macOS 11+ (Apple Silicon M1–M4 only), Ubuntu 20.04"
                 ],
                 "recItems": [
@@ -2730,7 +2764,7 @@
                     "desc": "Final loss of the last completed runs as a sparkline, and a ranking of the best test results by accuracy."
                 }
             ],
-            "insightsHeading": "Needs attention",
+            "insightsHeading": "Worth a look",
             "insightsText": "The hint panel at the top of the page runs on plain rules – no AI, no tokens, no cost. It only speaks up when there is something to report, and shows at most five hints at a time. One click jumps straight to where the problem can be fixed:",
             "insights": [
                 "A training run is active, but sleep is not suppressed – the machine could doze off mid-run overnight.",
@@ -4036,21 +4070,21 @@
                         "paradigms": [
                             {
                                 "title": "Supervised Learning",
-                                "emoji": "🎯",
+                                "emoji": "",
                                 "desc": "You give the model data WITH correct answers (labels). It learns the mapping from input to output.",
                                 "example": "Email → \"spam\" or \"not spam\"",
                                 "useCase": "Classification, regression, NLP"
                             },
                             {
                                 "title": "Unsupervised Learning",
-                                "emoji": "🔍",
+                                "emoji": "",
                                 "desc": "The model only receives data WITHOUT labels. It searches on its own for patterns, clusters, and structures.",
                                 "example": "Grouping customers by purchasing behavior",
                                 "useCase": "Clustering, dimensionality reduction"
                             },
                             {
                                 "title": "Reinforcement Learning",
-                                "emoji": "🎮",
+                                "emoji": "",
                                 "desc": "The model learns through reward and punishment within an environment. It optimizes its strategy.",
                                 "example": "Playing chess, RLHF in ChatGPT",
                                 "useCase": "Robotics, games, RLHF"
@@ -4113,19 +4147,19 @@
                         "whyFtText": "Training an LLM like GPT or LLaMA from scratch costs <b>millions of euros</b> and requires thousands of GPUs over weeks. With <b>fine-tuning</b>, you take an already pretrained model – one that already knows language, facts, and logic – and specialize it for your task. In hours instead of months, on your own GPU.",
                         "pretrainTitle": "Training from scratch (pretraining)",
                         "pretrainItems": [
-                            "⏱ Weeks to months of compute time",
-                            "💰 Hundreds of thousands to millions of euros",
-                            "📦 Billions of training samples needed",
-                            "🖥 Hundreds to thousands of GPUs simultaneously",
-                            "🧑‍💻 Realistic only for large organizations"
+                            "Weeks to months of compute time",
+                            "Hundreds of thousands to millions of euros",
+                            "Billions of training samples needed",
+                            "Hundreds to thousands of GPUs simultaneously",
+                            "‍ Realistic only for large organizations"
                         ],
                         "ftTitle": "Fine-tuning (with FrameTrain)",
                         "ftItems": [
-                            "⏱ Minutes to a few hours",
-                            "💰 Practically free (your own hardware)",
-                            "📦 A few hundred to a thousand examples are enough",
-                            "🖥 1 GPU – your own computer",
-                            "🧑‍💻 Achievable for anyone"
+                            "Minutes to a few hours",
+                            "Practically free (your own hardware)",
+                            "A few hundred to a thousand examples are enough",
+                            "1 GPU – your own computer",
+                            "‍ Achievable for anyone"
                         ],
                         "transferHeading": "Transfer learning: the foundation of fine-tuning",
                         "transferText": "Fine-tuning is based on <b>transfer learning</b>: the prior knowledge of a large pretrained model (grammar, facts, logic, code) is transferred to a new, specific task. Only a fraction of the parameters need to be adapted.",
@@ -4375,23 +4409,23 @@
                             {
                                 "name": "Full Batch GD",
                                 "batch": "All data",
-                                "speed": "🐌 Slow",
-                                "quality": "🎯 Stable",
-                                "memory": "💾 High"
+                                "speed": "Slow",
+                                "quality": "Stable",
+                                "memory": "High"
                             },
                             {
-                                "name": "Mini-Batch GD ⭐",
+                                "name": "Mini-Batch GD ",
                                 "batch": "Small batches (8–64)",
-                                "speed": "⚡ Fast",
-                                "quality": "🎯 Good",
-                                "memory": "💾 Low"
+                                "speed": "Fast",
+                                "quality": "Good",
+                                "memory": "Low"
                             },
                             {
                                 "name": "Stochastic GD",
                                 "batch": "1 example",
-                                "speed": "⚡ Very fast",
-                                "quality": "📉 Noisy",
-                                "memory": "💾 Minimal"
+                                "speed": "Very fast",
+                                "quality": "Noisy",
+                                "memory": "Minimal"
                             }
                         ],
                         "sgdLabels": {
@@ -4466,7 +4500,7 @@
                             {
                                 "name": "Best Checkpoint",
                                 "desc": "Save only the model with the best validation loss. Saves disk space. Recommended for production.",
-                                "rec": "⭐ Standard"
+                                "rec": "Standard"
                             },
                             {
                                 "name": "Every N Steps/Epochs",
@@ -4630,7 +4664,7 @@
                         "forbiddenLabel": "Forbidden:",
                         "splits": [
                             {
-                                "name": "🏋️ Training set (60–80%)",
+                                "name": "Training set (60–80%)",
                                 "role": "The model learns EXCLUSIVELY on this data. Weights are updated.",
                                 "rule": "The only data the model is allowed to \"see\" while learning.",
                                 "dos": [
@@ -4643,7 +4677,7 @@
                                 ]
                             },
                             {
-                                "name": "🔍 Validation set (10–20%)",
+                                "name": "Validation set (10–20%)",
                                 "role": "Measured after every epoch. Used for hyperparameter selection and early stopping. The model does NOT learn from it.",
                                 "rule": "May be used multiple times, but not for learning!",
                                 "dos": [
@@ -4657,7 +4691,7 @@
                                 ]
                             },
                             {
-                                "name": "🎯 Test set (10–20%)",
+                                "name": "Test set (10–20%)",
                                 "role": "Used only ONCE, at the very end. Gives the honest final performance estimate.",
                                 "rule": "The test set is sacred. Touch it only ONCE!",
                                 "dos": [
@@ -5048,7 +5082,7 @@
                     "overfittingFix": {
                         "screenshotHeading": "Diagnosis in FrameTrain",
                         "screenshotText": "A run's metrics can be handed to a language model of your choice inside FrameTrain. What comes back is not a row of numbers but an assessment in plain language: what went wrong, which measure helps first, and which parameters the next run should start with.",
-                        "screenshotAlt": "FrameTrain AI training analysis with improvement suggestions, recommended parameters as a JSON block and a forecast for the next run",
+                        "screenshotAlt": "FrameTrain AI training analysis with a rating, weaknesses, improvement suggestions and recommended parameters",
                         "screenshotCaption": "The parameter suggestion can be saved as a training template in one click — the analysis stays attached to the model version.",
                         "title": "Fighting Overfitting",
                         "subtitle": "Concrete measures sorted by effectiveness",
@@ -5382,7 +5416,7 @@
                         "impactCards": [
                             {
                                 "lr": "LR too large (e.g. 1e-2)",
-                                "label": "⚡ Chaos",
+                                "label": "Chaos",
                                 "key": "chaos",
                                 "effects": [
                                     "Loss oscillates extremely",
@@ -5402,7 +5436,7 @@
                             },
                             {
                                 "lr": "LR too small (e.g. 1e-8)",
-                                "label": "🐌 Too slow",
+                                "label": "Too slow",
                                 "key": "slow",
                                 "effects": [
                                     "Barely any progress per epoch",
@@ -5466,12 +5500,12 @@
                         "subtitle": "Intelligently steering the learning rate during training",
                         "intro": "An <b>LR scheduler</b> automatically adjusts the LR during training. Instead of a constant LR, it enables fast learning at the start and precise fine-tuning toward the end.",
                         "schedulersHeading": "The 5 most important schedulers in detail",
-                        "recommendedLabel": "⭐ Recommended",
+                        "recommendedLabel": "Recommended",
                         "prosLabel": "Advantages:",
                         "consLabel": "Disadvantages:",
                         "schedulers": [
                             {
-                                "name": "Warmup + Cosine Decay ⭐ (Gold standard)",
+                                "name": "Warmup + Cosine Decay (Gold standard)",
                                 "desc": "LR rises linearly from 0 to the target LR (warmup), then a gentle cosine curve down to nearly 0.",
                                 "use": "Gold standard for all LLM fine-tuning jobs",
                                 "config": "warmup_steps = 5–10% total; scheduler_type = \"cosine\"",
@@ -5645,14 +5679,14 @@
                         "consLabel": "Disadvantages:",
                         "optimizers": [
                             {
-                                "name": "AdamW ⭐ (Standard)",
+                                "name": "AdamW (Standard)",
                                 "formula": "Adam + correct weight decay (decoupled)",
                                 "params": "lr=2e-5, betas=(0.9, 0.999), eps=1e-8, weight_decay=0.01",
                                 "use": "Standard for all modern transformer models",
                                 "desc": "Combines adaptive learning (Adam) with correctly decoupled weight decay. The difference from Adam: weight decay is applied directly to weights, not folded into the gradients. Result: better regularization.",
                                 "pros": "Stable, fast, robust. Works out of the box for almost all LLM fine-tuning jobs.",
                                 "cons": "Needs ~3× the memory of the model weights (moment statistics). For 7B = ~14 GB extra.",
-                                "rec": "⭐ Always use AdamW as the first attempt",
+                                "rec": "Always use AdamW as the first attempt",
                                 "colorKey": "violet"
                             },
                             {
@@ -5920,42 +5954,42 @@
                                 "m": "Full FT (fp32)",
                                 "v": "~60 GB",
                                 "q": "100%",
-                                "s": "⭐⭐⭐",
+                                "s": "",
                                 "r": "A100/H100 cluster"
                             },
                             {
                                 "m": "Full FT (bf16)",
                                 "v": "~40 GB",
                                 "q": "99%",
-                                "s": "⭐⭐⭐",
+                                "s": "",
                                 "r": "A100 40GB"
                             },
                             {
                                 "m": "Full FT (8-bit)",
                                 "v": "~30 GB",
                                 "q": "97%",
-                                "s": "⭐⭐",
+                                "s": "",
                                 "r": "A100/2× RTX 3090"
                             },
                             {
                                 "m": "LoRA (bf16)",
                                 "v": "~16 GB",
                                 "q": "97%",
-                                "s": "⭐⭐⭐⭐",
+                                "s": "",
                                 "r": "RTX 3090 / A6000"
                             },
                             {
-                                "m": "QLoRA (4-bit) ⭐",
+                                "m": "QLoRA (4-bit) ",
                                 "v": "~6 GB",
                                 "q": "93–96%",
-                                "s": "⭐⭐⭐",
+                                "s": "",
                                 "r": "RTX 3070/4060 Ti"
                             },
                             {
                                 "m": "QLoRA (4-bit, GC)",
                                 "v": "~4–5 GB",
                                 "q": "92–95%",
-                                "s": "⭐⭐",
+                                "s": "",
                                 "r": "GTX 1660 Ti or better"
                             }
                         ],
@@ -5972,10 +6006,10 @@
                         "memoryLabel": "Memory:",
                         "qualityLabel": "Quality:",
                         "speedLabel": "Speed:",
-                        "whenLabel": "💡 When:",
+                        "whenLabel": "When:",
                         "methods": [
                             {
-                                "name": "LoRA ⭐ (Low-Rank Adaptation)",
+                                "name": "LoRA (Low-Rank Adaptation)",
                                 "trainable": "0.1–1%",
                                 "memory": "Very good",
                                 "quality": "Very good (97%+)",
@@ -6188,7 +6222,7 @@
                     "datenQualitaet": {
                         "screenshotHeading": "Datasets in FrameTrain",
                         "screenshotText": "FrameTrain shows format, size, file count and modification date per dataset — and whether a train/val/test split already exists. Multi-shard Parquet is read natively; if a split is missing, you create it right in the app.",
-                        "screenshotAlt": "FrameTrain dataset management with Parquet datasets, split status and buttons for splitting and halving",
+                        "screenshotAlt": "FrameTrain dataset management with two YOLO datasets, split status, train/val/test counts and halve buttons",
                         "screenshotCaption": "The dataset overview checks compatibility against the selected model before training even starts.",
                         "title": "Data Quality & Quantity",
                         "subtitle": "The most important foundation for any successful training",
@@ -6387,7 +6421,7 @@
                         "consLabel": "✗ Disadvantages:",
                         "techniques": [
                             {
-                                "name": "Back-translation ⭐",
+                                "name": "Back-translation ",
                                 "quality": "Very high",
                                 "desc": "Translate text into another language, then translate it back. Creates semantically identical, linguistically diverse variants.",
                                 "example": "\"This product is very high-quality.\" → DE: \"Das Produkt ist sehr hochwertig.\" → EN: \"The product is extremely high-quality.\"",
@@ -6396,7 +6430,7 @@
                                 "cons": "Slow (2× translation), API costs"
                             },
                             {
-                                "name": "LLM-based paraphrasing ⭐",
+                                "name": "LLM-based paraphrasing ",
                                 "quality": "Very high",
                                 "desc": "An LLM generates semantically equivalent variants of a text. Currently the best method for NLP augmentation.",
                                 "example": "\"Generate 3 different phrasings with the same meaning: The device is broken.\"",
@@ -6437,7 +6471,7 @@
                         "strategiesHeading": "Solution strategies in detail",
                         "strategies": [
                             {
-                                "name": "Class weights ⭐ (recommended)",
+                                "name": "Class weights (recommended)",
                                 "desc": "Rare classes are weighted more heavily during training. No data modification needed. The simplest and cleanest method.",
                                 "code": "# Computing class weights:\nfrom sklearn.utils.class_weight import compute_class_weight\nimport numpy as np\n\nweights = compute_class_weight(\n    'balanced',\n    classes=np.unique(labels),\n    y=labels\n)\nclass_weights = dict(enumerate(weights))\n# {0: 0.53, 1: 10.0}  ← rare class weighted 19× more\n\n# In FrameTrain: enable \"Class Weighting\"",
                                 "pros": "No data distortion, simple, applied directly in the optimizer",
@@ -6539,7 +6573,7 @@
                                 "m": "10",
                                 "range": "±65,504",
                                 "prec": "Medium",
-                                "rec": "⚠️ Overflow risk",
+                                "rec": "Overflow risk",
                                 "color": "text-yellow-300"
                             },
                             {
@@ -6549,7 +6583,7 @@
                                 "m": "7",
                                 "range": "±3.4e38",
                                 "prec": "Low-medium",
-                                "rec": "⭐ Best choice",
+                                "rec": "Best choice",
                                 "color": "text-green-300"
                             }
                         ],
@@ -6711,7 +6745,7 @@
                                 "improvement": "+1–5% accuracy typical"
                             },
                             {
-                                "name": "Probability Averaging ⭐ (Recommended)",
+                                "name": "Probability Averaging (Recommended)",
                                 "desc": "Softmax probabilities of all models are averaged. Then the highest probability determines the class.",
                                 "code": "# Averaging probabilities:\nprobs_1 = model1.predict_proba(x)  # [0.8, 0.2]\nprobs_2 = model2.predict_proba(x)  # [0.6, 0.4]\nprobs_3 = model3.predict_proba(x)  # [0.9, 0.1]\n\navg_probs = np.mean([probs_1, probs_2, probs_3], axis=0)\n# → [0.77, 0.23]\nfinal_class = np.argmax(avg_probs)  # class 0 = \"positive\"",
                                 "use": "When softmax probabilities are available – almost always better than majority voting",
@@ -6882,8 +6916,8 @@
             "regenerateButton": "Generate new key",
             "regenerating": "Generating...",
             "confirmRegenerate": "Are you sure you want to generate a new API key? The old one will become invalid!",
-            "successRegenerate": "✅ New API key generated successfully!",
-            "errorRegenerate": "❌ Error generating the new key",
+            "successRegenerate": "New API key generated successfully!",
+            "errorRegenerate": "Error generating the new key",
             "emptyText1": "You don't have any API keys yet.",
             "emptyText2": "API keys are created automatically after successful payment.",
             "payButton": "Pay now & get an API key",
@@ -6893,9 +6927,9 @@
             "passwordMissing": "Password still missing",
             "active": "Active",
             "deactivatedExpired": "Deactivated · subscription expired",
-            "noKeyAlert": "❌ You need an active API key",
-            "errorRedirectPayment": "❌ Error redirecting to payment",
-            "errorEmailNotVerified": "❌ Please verify your email address first before creating an API key."
+            "noKeyAlert": "You need an active API key",
+            "errorRedirectPayment": "Error redirecting to payment",
+            "errorEmailNotVerified": "Please verify your email address first before creating an API key."
         },
         "download": {
             "title": "Download desktop app",
@@ -6903,8 +6937,8 @@
             "downloadButton": "Download {ext}",
             "securityWarningText": "You may see a security warning the first time you open it.",
             "installGuideLink": "See installation guide",
-            "downloadFailedAlert": "❌ {message}",
-            "downloadErrorAlert": "❌ Error downloading"
+            "downloadFailedAlert": "{message}",
+            "downloadErrorAlert": "Error downloading"
         },
         "communityName": {
             "title": "Community name",
@@ -6921,7 +6955,7 @@
             "title": "Name already taken",
             "subtitle": "This community name is already in use.",
             "text": "The name <b>@{name}</b> is already used by someone else.",
-            "tip": "💡 <b>Tip:</b> Try a different community name, e.g. with numbers or underscores.",
+            "tip": "<b>Tip:</b> Try a different community name, e.g. with numbers or underscores.",
             "retryButton": "Try a different name"
         },
         "desktopPassword": {
@@ -6955,7 +6989,8 @@
             "redirecting": "Redirecting...",
             "redirectNote": "You'll be redirected to Stripe and brought back here automatically afterward.",
             "errorGeneric": "Error",
-            "errorPortal": "Error opening the portal"
+            "errorPortal": "Error opening the portal",
+            "statusTrial": "Trial (14 days)"
         },
         "cli": {
             "comingSoonBadge": "Coming Soon",
@@ -6966,8 +7001,8 @@
         "support": {
             "title": "Support",
             "ticketCount": "{count, plural, one {# ticket} other {# tickets}}",
-            "tabTickets": "📬 My Tickets",
-            "tabNew": "✏️ New Ticket",
+            "tabTickets": "My Tickets",
+            "tabNew": "New Ticket",
             "newTitle": "New support ticket",
             "subjectLabel": "Subject",
             "subjectPlaceholder": "Brief description of your problem...",
@@ -6977,7 +7012,7 @@
             "submitButton": "Submit ticket",
             "submitting": "Sending...",
             "requiredAlert": "Please fill in subject and message",
-            "submitError": "❌ Error submitting the ticket",
+            "submitError": "Error submitting the ticket",
             "emptyTitle": "You don't have any support tickets yet.",
             "emptyText": "Have a problem or a question? We're happy to help.",
             "emptyButton": "Create first ticket",
@@ -6987,16 +7022,20 @@
             "backToOverview": "← Back to overview",
             "noMessages": "No messages yet",
             "you": "You",
-            "supportLabel": "🔧 Support",
+            "supportLabel": "Support",
             "statusClosedNote": "This ticket is {status} – you can't create another ticket if you still have questions.",
             "replyPlaceholder": "Write a message... (Ctrl+Enter to send)",
-            "sendError": "❌ Failed to send"
+            "sendError": "Failed to send"
         },
         "status": {
             "open": "Open",
             "in_progress": "In progress",
             "resolved": "Resolved",
             "closed": "Closed"
+        },
+        "trialAccess": {
+            "title": "Your trial has {days, plural, one {# day} other {# days}} left",
+            "text": "Free until {date}. It ends on its own and nothing is charged. Subscribe to keep training."
         }
     },
     "Home": {
@@ -7139,53 +7178,53 @@
             "headingHighlight": "AI Training Coach",
             "paragraph": "New to ML? Struggling with overfitting, loss spikes, or LoRA configuration? Our free guide explains it all – from the basics to advanced techniques.",
             "checklist": [
-                "🧠 ML basics & Transformers",
-                "📈 Reading & understanding loss curves",
-                "🩺 Fixing overfitting & underfitting",
-                "🔧 LoRA & QLoRA in detail",
-                "⚙️ Hyperparameter coaching",
-                "📦 Dataset mastery"
+                "ML basics & Transformers",
+                "Reading & understanding loss curves",
+                "Fixing overfitting & underfitting",
+                "LoRA & QLoRA in detail",
+                "Hyperparameter coaching",
+                "Dataset mastery"
             ],
             "ctaMain": "Open the Training Coach",
             "ctaChapter1": "Start Chapter 1",
             "chapters": [
                 {
-                    "emoji": "🧠",
+                    "emoji": "",
                     "title": "ML Basics",
                     "num": "01"
                 },
                 {
-                    "emoji": "📊",
+                    "emoji": "",
                     "title": "Understanding Training",
                     "num": "02"
                 },
                 {
-                    "emoji": "📈",
+                    "emoji": "",
                     "title": "Reading Training Curves",
                     "num": "03"
                 },
                 {
-                    "emoji": "🩺",
+                    "emoji": "",
                     "title": "Diagnosis & Fixes",
                     "num": "04"
                 },
                 {
-                    "emoji": "⚙️",
+                    "emoji": "",
                     "title": "Hyperparameters",
                     "num": "05"
                 },
                 {
-                    "emoji": "🔧",
+                    "emoji": "",
                     "title": "Fine-Tuning Methods",
                     "num": "06"
                 },
                 {
-                    "emoji": "📦",
+                    "emoji": "",
                     "title": "Dataset Mastery",
                     "num": "07"
                 },
                 {
-                    "emoji": "🚀",
+                    "emoji": "",
                     "title": "Advanced Techniques",
                     "num": "08"
                 }
@@ -7194,7 +7233,7 @@
         "pricing": {
             "title": "Early Access Pricing",
             "subtitle": "Get in before the price goes up.",
-            "increaseNote": "⚡ Price increases to €9.99 after 100 users",
+            "increaseNote": "Price increases to €9.99 after 100 users",
             "promoHint": "Have a voucher code?",
             "promoCta": "Redeem code",
             "monthly": {
@@ -7210,7 +7249,7 @@
                 "cta": "Get Started"
             },
             "yearly": {
-                "badge": "SAVE 20%",
+                "badge": "SAVE 33%",
                 "label": "Yearly",
                 "price": "€39.99",
                 "billing": "per year · equivalent to €3.33/month",
@@ -7387,7 +7426,7 @@
                     "href": "/docs#optimization"
                 }
             ],
-            "bannerTitle": "AI Training Coach ✨ – The complete guide",
+            "bannerTitle": "AI Training Coach – The complete guide",
             "bannerDesc": "8 chapters: ML basics, loss curves, LoRA & QLoRA, hyperparameters, datasets, and more",
             "ctaFull": "View Full Documentation"
         },
@@ -7396,54 +7435,6 @@
             "subtitle": "Join hundreds of ML engineers training locally with FrameTrain.",
             "ctaAuthenticated": "Go to Dashboard",
             "ctaGuest": "Start Training Now"
-        }
-    },
-    "ReleaseCountdown": {
-        "downloadLock": {
-            "availableFrom": "Download available from July 20, 2026",
-            "days": "Days",
-            "hours": "Hrs",
-            "minutes": "Min",
-            "seconds": "Sec",
-            "note": "You can sign up & pay now – the download unlocks automatically.",
-            "releasedTitle": "🎉 FrameTrain is now available!",
-            "releasedDesc": "You can download the app now."
-        },
-        "banner": {
-            "label": "Release Countdown",
-            "days": "Days",
-            "hours": "Hours",
-            "minutes": "Minutes",
-            "seconds": "Seconds",
-            "date": "July 20, 2026",
-            "note1": "You can pay & register right now.",
-            "note2": "The download unlocks automatically on release day.",
-            "liveTitle": "FrameTrain is live!",
-            "liveDesc": "The desktop app is now available in the dashboard."
-        },
-        "badge": {
-            "text": "Desktop App – Release July 20"
-        },
-        "promo": {
-            "tag": "Coming soon",
-            "titlePre": "The desktop app",
-            "titleHighlight": "arrives on July 20",
-            "paragraph": "FrameTrain Desktop officially releases on <b>July 20, 2026</b>. Sign up now, pay the Early Access price, and get <b>instant download access</b> on release day.",
-            "features": [
-                {
-                    "emoji": "🔒",
-                    "text": "Lock in your price – increases after 100 users"
-                },
-                {
-                    "emoji": "⚡",
-                    "text": "Instant access on release"
-                },
-                {
-                    "emoji": "🎁",
-                    "text": "Early adopter perks"
-                }
-            ],
-            "footer": "Registration & payment available now · Download from July 20, 12:00 UTC"
         }
     },
     "ChangelogModal": {
@@ -7524,11 +7515,11 @@
                 "slug": "home",
                 "title": "Home screen – what happened while you were away",
                 "text": "After signing in, FrameTrain no longer drops you into the middle of the model list. It opens on an overview of where the project stands: is a training run in progress, and how far along is it? What finished or failed since your last visit? Below that sit the key numbers including disk usage, the most recent trainings and tests, the loss trend across recent runs, and a leaderboard by accuracy. Every tile is a jump into the matching area – the home screen is a status report, not a second menu. The home button at the top left of the sidebar brings you back at any time.",
-                "alt": "FrameTrain home screen after login with greeting, a \"Needs attention\" panel, key figures for models, versions, datasets and trainings, plus the most recent trainings and tests",
-                "caption": "The home screen: what needs attention up top, key figures and recent runs below – every card leads straight into the matching area.",
+                "alt": "FrameTrain home screen with greeting, key figures for models, versions, datasets and trainings, recent trainings and tests, and the \"Worth a look\" panel",
+                "caption": "The home screen: key figures and recent runs on the left, hints worth a look and the best results on the right – every row leads straight to its area.",
                 "bullets": [
                     "Running trainings with progress, plus results since your last visit",
-                    "\"Needs attention\" warns from plain rules – no AI involved, no cost",
+                    "\"Worth a look\" warns from plain rules – no AI involved, no cost",
                     "AI briefing on demand, stored and only regenerated when facts change"
                 ]
             },
@@ -7537,8 +7528,8 @@
                 "slug": "models",
                 "title": "Model management – HuggingFace and local models in one place",
                 "text": "The model overview lists everything FrameTrain knows about: models imported from HuggingFace, weights stored locally, and networks you built yourself in the Synapse Builder. Each card shows file count, size on disk, storage path and the plugin responsible for that model. Models without a matching plugin are flagged up front instead of failing once training starts.",
-                "alt": "FrameTrain model overview showing imported HuggingFace models, local models and Synapse canvas networks with size and plugin labels",
-                "caption": "Model overview: TinyLlama, xlm-roberta, YOLO and custom canvas networks side by side, with size, date and the plugin in charge.",
+                "alt": "FrameTrain models overview with YOLO, Stable Diffusion, vision-language, video, embedding, NER and Whisper models, each with size and plugin",
+                "caption": "Models overview: yolo-obb, tiny-sd, smolvlm, videomae-tiny, minilm, ner-distilbert and whisper-tiny side by side, with size, date and plugin.",
                 "bullets": [
                     "Import from HuggingFace by repo ID",
                     "Size, file count and storage path per model",
@@ -7550,8 +7541,8 @@
                 "slug": "datasets",
                 "title": "Datasets – Parquet, flat files and splits",
                 "text": "Datasets belong to a model: the selector at the top filters the list down to what fits the model you picked. FrameTrain reads multi-shard Parquet natively, shows file size and modification date, and flags whether a train/val/test split already exists. If one is missing, you split the dataset right in the app – halving included.",
-                "alt": "FrameTrain dataset management showing Parquet datasets, split status and buttons for splitting and halving",
-                "caption": "Datasets per model, with format, size and split status. “No split” is a hint, not an error – splitting happens right here.",
+                "alt": "FrameTrain dataset management with two YOLO datasets, split status, train/val/test counts and halve buttons",
+                "caption": "Datasets per model, with format, size and split status – here two YOLO datasets that are already split.",
                 "bullets": [
                     "Multi-shard Parquet supported natively",
                     "Train/val/test split without touching the command line",
@@ -7563,8 +7554,8 @@
                 "slug": "dataset-builder-image-boxes",
                 "title": "Dataset Builder – label your own datasets",
                 "text": "Since version 1.3.4 you build datasets right inside FrameTrain. The image workbench shows the idea: drag boxes, pick the class with a number key, confirm with Enter. A trained model can make suggestions, the “Uncertain” filter brings the hardest cases forward, and on the right you see which classes still have too few examples. Besides images there are project types for texts, recordings, transcripts and video segments.",
-                "alt": "Dataset Builder image workbench with bounding boxes for tree, lift and offroad, class list, counters and distribution warnings",
-                "caption": "Labeling by keyboard, with suggestions and warnings about class balance.",
+                "alt": "Dataset Builder image workbench with boxes for tree, sky and person, class list, counters and a class-balance hint",
+                "caption": "Label with the keyboard, with suggestions and class-balance warnings.",
                 "bullets": [
                     "Seven project types for image, text, audio and video",
                     "Model suggestions, least certain first",
@@ -7578,8 +7569,8 @@
                 "slug": "dataset-builder-web",
                 "title": "Fetch from the web – collect data with provenance",
                 "text": "Instead of downloading files one by one, you give the builder URLs, whole websites or a sitemap. FrameTrain follows links only up to the chosen depth and only on the same domains, keeps limits for pages, files and file size, and respects robots.txt including Crawl-delay. Every fetched file gets its URL, source page and license in PROVENANCE.csv.",
-                "alt": "“Fetch from the web” dialog in website mode with start page, limits for depth, pages, files and file size, license field and robots.txt note",
-                "caption": "Website mode with the limits expanded. robots.txt is always respected.",
+                "alt": "\"Fetch from the web\" dialog with addresses, website and sitemap modes, limits, licence field and robots.txt note",
+                "caption": "Fetch from the web: single addresses, a whole website or a sitemap. robots.txt is always respected.",
                 "bullets": [
                     "URLs, whole websites or sitemaps",
                     "At least one second between requests per server",
@@ -7593,8 +7584,8 @@
                 "slug": "training",
                 "title": "Configure training – hyperparameters, LoRA and QLoRA",
                 "text": "The training screen puts model, version and dataset side by side and checks up front whether the plugin supports that combination. Base parameters are open by default: epochs, batch size, learning rate, max sequence length, warmup ratio and gradient accumulation. Optimizer & scheduler, advanced & evaluation, and LoRA / QLoRA expand when you need them. Mixed precision switches per backend – FP16 stays locked where the hardware wants BF16.",
-                "alt": "FrameTrain training configuration with epochs, batch size, learning rate, warmup ratio and expandable sections for optimizer, evaluation and LoRA/QLoRA",
-                "caption": "Training configuration for xlm-roberta-base: base parameters open, optimizer, evaluation and LoRA/QLoRA one level down.",
+                "alt": "FrameTrain training configuration for SmolLM2-135M-Instruct with epochs, batch size, learning rate, warmup ratio and expandable sections",
+                "caption": "Training configuration for a language model: model, version and dataset on top, base parameters open, optimizer and further sections one level down.",
                 "bullets": [
                     "LoRA and QLoRA as their own configuration section",
                     "Templates and the AI assistant supply sane starting values",
@@ -7617,12 +7608,27 @@
                 ]
             },
             {
+                "id": "analysis-charts",
+                "slug": "analysis-charts",
+                "title": "Loss curves and overfitting indicator",
+                "text": "Loss curve, average loss per epoch and an overfitting indicator (validation minus training) sit on one page, one below the other. A smoothing switch takes the noise out of the curves, and every chart can be exported on its own. Above them are the derived figures: final train loss, epochs and steps, loss reduction and overfitting gap.",
+                "alt": "FrameTrain analysis view with derived statistics, train and validation loss curve, average loss per epoch and an overfitting indicator",
+                "caption": "Training and validation loss in one curve, with average loss per epoch and the val-train gap as its own chart below.",
+                "bullets": [
+                    "Training and validation loss in the same curve",
+                    "Overfitting gap as its own figure and chart",
+                    "Optional smoothing, export per chart"
+                ],
+                "relatedHref": "/docs/ai-training-guide/trainingsverlauf",
+                "relatedLabel": "Chapter: Reading training curves"
+            },
+            {
                 "id": "ai-analysis",
                 "slug": "ai-analysis",
                 "title": "AI training analysis – metrics in plain language",
                 "text": "FrameTrain sends a run's metrics to a language model of your choice and gets back an assessment in plain language: what went wrong, which measures help, and which parameters the next run should start with. The parameter suggestion arrives as a JSON block you can save as a training template in one click.",
-                "alt": "FrameTrain AI training analysis with improvement suggestions, recommended parameters as JSON and a forecast for the next run",
-                "caption": "AI training analysis for a specific model version: diagnosis, recommended parameters, forecast.",
+                "alt": "FrameTrain AI training analysis with a rating, weaknesses, improvement suggestions and recommended parameters",
+                "caption": "AI training analysis for a specific model version: diagnosis, improvement suggestions and recommended parameters to apply.",
                 "bullets": [
                     "An assessment in prose instead of raw number series",
                     "Parameter suggestions can be saved as a training template",
@@ -7636,8 +7642,8 @@
                 "slug": "ai-coach",
                 "title": "AI coach – follow-up questions in the panel's context",
                 "text": "The AI coach is a chat that knows which panel you are standing in. Ask it how to improve validation loss for this run and it answers against the values actually loaded rather than in generalities – learning rate, dropout, weight decay, LoRA capacity. Concrete suggestions are applied via buttons right below the answer, and typing / in the input field opens prepared questions for the page.",
-                "alt": "FrameTrain AI coach as a chat window over the training screen, answering with learning rate, epochs, dropout and LoRA rank suggestions",
-                "caption": "The coach sits on top of the panel it draws its context from – here the training panel.",
+                "alt": "FrameTrain AI coach chat window with a summary of a BERT training and the Apply recommended parameters button",
+                "caption": "The coach knows the panel it was opened from and suggests parameters you can apply directly.",
                 "bullets": [
                     "Knows the state of the current page with every message",
                     "Skills via / – prepared questions for every page",
@@ -7651,8 +7657,8 @@
                 "slug": "ai-providers",
                 "title": "AI providers – your own key, or fully local",
                 "text": "You decide which language model powers the coach, analysis and assistants: Claude, OpenAI and Groq run on your own API key, Ollama fully locally without a key. Each provider keeps its own key, so switching never loses one. The token budget from Minimal to Unlimited sets how detailed and thorough every AI feature is. If you want no AI features at all, switch the assistant off globally. Training itself is independent of this and always runs on your hardware.",
-                "alt": "FrameTrain AI assistant settings with a choice between Claude, GPT-4o, Groq and local Ollama, plus Ollama model configuration",
-                "caption": "Provider choice for the AI features. Ollama runs locally and needs no API key.",
+                "alt": "FrameTrain AI assistant settings with a choice between Claude, GPT-4o, Groq and local Ollama, plus a securely stored API key",
+                "caption": "Provider choice for the AI features. Ollama runs locally without an API key; keys are kept in the operating system keychain.",
                 "bullets": [
                     "Ollama locally, no API key, no data leaving your machine",
                     "One key per provider, stored securely in the system keychain",
@@ -7666,8 +7672,8 @@
                 "slug": "versions",
                 "title": "Versions – every run creates a new state",
                 "text": "A training run overwrites nothing; it creates a new version. The version list shows train loss, validation loss, epochs, size and storage path per state, and the imported original stays untouched. Rolling back means selecting the older version.",
-                "alt": "FrameTrain version list of a model with the original and three trained versions including train loss, validation loss and epochs",
-                "caption": "Four states of the same model. Train and validation loss per version show which run actually helped.",
+                "alt": "FrameTrain version list of a text classifier with the original and a trained version, including train loss, val loss, epochs and duration",
+                "caption": "Two states of the same model. Train and val loss per version show what a run achieved.",
                 "bullets": [
                     "The imported original is always preserved",
                     "Metrics and size per version",
@@ -7679,7 +7685,7 @@
                 "slug": "laboratory",
                 "title": "Laboratory – test trained models on real samples",
                 "text": "In the laboratory you load individual samples from train, val or test and let the trained version answer them: pick test engine or dev script, load the model for inference, load samples, start the session. A loss value alone simply does not answer whether a model is useful in practice.",
-                "alt": "FrameTrain laboratory with model, version, test engine and sample dataset selection plus a preview of the loaded samples",
+                "alt": "FrameTrain Laboratory with model, version, test engine and sample dataset selection plus a preview of 116 loaded samples",
                 "caption": "Laboratory configuration: version, engine and sample selection before the session starts.",
                 "bullets": [
                     "Samples pulled specifically from train, val or test",
@@ -7692,8 +7698,8 @@
                 "slug": "synapse-builder",
                 "title": "Synapse Builder – architecture as a graph",
                 "text": "The Synapse Builder assembles networks from nodes: input, CSV, image and Parquet loaders, tokenizer, dataset split, augmentation, plus dense, Conv2D, embedding, LSTM, attention, transformer block, LayerNorm, BatchNorm and dropout. The training bar at the bottom carries epochs, batch size, learning rate, GPU, precision and grad accum – runs start from the same window.",
-                "alt": "FrameTrain Synapse Builder with node library, a graph of 27 connected layer nodes and a training bar along the bottom",
-                "caption": "Synapse Builder with 27 nodes and 25 connections. The training bar at the bottom starts the run straight from the canvas.",
+                "alt": "FrameTrain Synapse Builder with node library, a graph of CSV loader, dense, output and loss nodes, and the training bar at the bottom",
+                "caption": "Synapse Builder: build networks as a node graph. The training bar at the bottom starts the run straight from the canvas.",
                 "bullets": [
                     "Node library for data, layers and activations",
                     "Start training directly from the canvas",
@@ -7827,7 +7833,7 @@
             "items": [
                 {
                     "question": "Does FrameTrain support Apple Silicon (M1, M2, M3, M4)?",
-                    "answer": "Yes. FrameTrain runs natively on all Apple Silicon chips (M1/M2/M3/M4) and uses Metal MPS for GPU-accelerated training. There is deliberately no Intel Mac build – the PyTorch stack no longer ships the required versions for Intel Macs. You also need Python 3.8 or newer."
+                    "answer": "Yes. FrameTrain runs natively on all Apple Silicon chips (M1/M2/M3/M4) and uses Metal MPS for GPU-accelerated training. There is deliberately no Intel Mac build – the PyTorch stack no longer ships the required versions for Intel Macs. You also need Python 3.10 to 3.13."
                 },
                 {
                     "question": "Do I need an NVIDIA GPU or CUDA to train on a Mac?",
@@ -7848,6 +7854,11 @@
             "text": "Download FrameTrain and start your first local fine-tune on Apple Silicon in minutes.",
             "ctaDownload": "Download for Mac",
             "ctaDocs": "Read the docs"
+        },
+        "mlx": {
+            "heading": "MLX or PyTorch?",
+            "text": "On the Mac there are two routes to the GPU: PyTorch on Metal and Apple’s own framework MLX. For LLM fine-tuning, FrameTrain lets you choose between both.",
+            "cta": "MLX vs. PyTorch compared"
         }
     },
     "Compare": {
@@ -8019,6 +8030,1215 @@
             "text": "The fairest comparison is your own. Download FrameTrain and run a local fine-tune on your hardware.",
             "ctaDownload": "Download FrameTrain",
             "ctaDocs": "See the guides"
+        },
+        "more": {
+            "heading": "Head-to-head comparisons",
+            "items": [
+                {
+                    "href": "/compare/unsloth",
+                    "label": "FrameTrain vs. Unsloth"
+                },
+                {
+                    "href": "/compare/google-colab",
+                    "label": "FrameTrain vs. Google Colab"
+                },
+                {
+                    "href": "/guides/mlx-vs-pytorch",
+                    "label": "MLX vs. PyTorch on the Mac"
+                }
+            ]
+        }
+    },
+    "Landing": {
+        "hero": {
+            "eyebrow": "FrameTrain {version} · macOS, Windows & Linux",
+            "titleA": "Train your own AI model.",
+            "titleB": "No code, right on your computer.",
+            "lead": "FrameTrain is the desktop app where you collect data, label it, train a model and test it – in one interface. Your data and models never leave your machine.",
+            "ctaTrial": "Try it free",
+            "ctaDemo": "Watch the demo",
+            "ctaDashboard": "Go to dashboard",
+            "note": "14 days · No payment details · Ends on its own",
+            "benefits": [
+                {
+                    "title": "No code",
+                    "text": "Pick a model, add your data, start training. All from the interface."
+                },
+                {
+                    "title": "Your data stays with you",
+                    "text": "Datasets and training run locally. Nothing is uploaded."
+                },
+                {
+                    "title": "Everything in one app",
+                    "text": "Dataset Builder → Training → Laboratory. No switching tools."
+                }
+            ]
+        },
+        "neuron": {
+            "aria": "Your data, a base model and your GPU flow together into your own model.",
+            "inputs": [
+                {
+                    "label": "Input 01",
+                    "title": "Your data"
+                },
+                {
+                    "label": "Input 02",
+                    "title": "Base model"
+                },
+                {
+                    "label": "Input 03",
+                    "title": "Your GPU"
+                }
+            ],
+            "outputLabel": "Output",
+            "outputTitle": "Your model",
+            "outputFile": "my-classifier · v3 · safetensors",
+            "export": "Export · local API"
+        },
+        "loop": {
+            "eyebrow": "The loop",
+            "titleA": "From raw material to model.",
+            "titleB": "And back again.",
+            "lead": "Most tools stop at training. FrameTrain sends the mistakes from testing back into your dataset – so every version is better than the last.",
+            "pause": "Pause the tour",
+            "play": "Play the tour",
+            "loopBack": "Mistakes from the Laboratory flow back into the Dataset Builder.",
+            "steps": [
+                {
+                    "key": "collect",
+                    "label": "Collect",
+                    "title": "Collect data",
+                    "text": "Images, texts, recordings and videos – from folders, the microphone, web pages or Hugging Face.",
+                    "shot": "studio",
+                    "alt": "FrameTrain Dataset Builder: overview of text, image, audio and video projects with confirmation progress"
+                },
+                {
+                    "key": "label",
+                    "label": "Label",
+                    "title": "Label with suggestions",
+                    "text": "Draw boxes, assign classes, confirm with the keyboard. A model suggests, you decide.",
+                    "shot": "studio-boxes",
+                    "alt": "Dataset Builder: image with boxes for tree, sky and person, next to classes, progress and a class-balance hint"
+                },
+                {
+                    "key": "train",
+                    "label": "Train",
+                    "title": "Train without code",
+                    "text": "Pick a model and dataset, apply a template, start. LoRA and QLoRA sit one level deeper when you need them.",
+                    "shot": "training",
+                    "alt": "Training view: SmolLM2-135M-Instruct model, dataset, epochs, batch size and learning rate"
+                },
+                {
+                    "key": "test",
+                    "label": "Test",
+                    "title": "Test in the Laboratory",
+                    "text": "Run real examples and mark them right or wrong. You see exactly where your model still misses.",
+                    "shot": "lab-pose",
+                    "alt": "Laboratory: chairlift in fog, the model reports no objects and missed the lift and tree; next to it the Correct and Wrong buttons"
+                },
+                {
+                    "key": "improve",
+                    "label": "Improve",
+                    "title": "Mistakes back into the builder",
+                    "text": "Misdetected examples become corrections in your dataset with one click. Then you train the next version.",
+                    "shot": "lab-results",
+                    "alt": "Laboratory session results: rated samples, accuracy, most common error classes and the Corrections as dataset button"
+                }
+            ]
+        },
+        "io": {
+            "eyebrow": "How it works",
+            "titleA": "Three inputs.",
+            "titleB": "One result you own.",
+            "cells": [
+                {
+                    "label": "Input 01",
+                    "title": "Your data",
+                    "text": "From folders, web pages, the microphone or Hugging Face – cleanly labelled in the Dataset Builder."
+                },
+                {
+                    "label": "Input 02",
+                    "title": "A base model",
+                    "text": "An open model from Hugging Face or a local folder: YOLO, DistilBERT, SmolLM2 and many more."
+                },
+                {
+                    "label": "Input 03",
+                    "title": "Your GPU",
+                    "text": "An NVIDIA graphics card or Apple Silicon. No cloud account, no hourly prices."
+                },
+                {
+                    "label": "Output",
+                    "title": "Your model",
+                    "text": "Versioned, testable, exportable – and ready to use through the local API."
+                }
+            ]
+        },
+        "useCases": {
+            "eyebrow": "What you can build",
+            "titleA": "Three first projects.",
+            "titleB": "No ML degree required.",
+            "lead": "Pick what you want to solve. FrameTrain takes you from the first image to a finished model.",
+            "learnMore": "Learn more",
+            "items": [
+                {
+                    "key": "vision",
+                    "tag": "Vision",
+                    "title": "Object detection for a camera or Raspberry Pi",
+                    "text": "Teach a YOLO model to spot your own objects – tools, animals, parts. Label photos in the Dataset Builder, test them in the Laboratory and through the local API.",
+                    "stack": [
+                        "YOLO11",
+                        "Images + boxes",
+                        "Local API"
+                    ],
+                    "shot": "hosting",
+                    "alt": "Hosting: a YOLO11 model detects two people in a photo",
+                    "href": "/computer-vision"
+                },
+                {
+                    "key": "text",
+                    "tag": "Text",
+                    "title": "Your own text classifier",
+                    "text": "Sort support tickets, emails or reviews into your own categories automatically. Collect examples, assign classes, train DistilBERT.",
+                    "stack": [
+                        "DistilBERT",
+                        "Text + classes",
+                        "Local"
+                    ],
+                    "shot": "analysis",
+                    "alt": "Training analysis of the text classifier myFirstTextclassifier with key figures and loss curve",
+                    "href": "/guides/local-vs-cloud"
+                },
+                {
+                    "key": "chat",
+                    "tag": "Language model",
+                    "title": "A chatbot that knows your documents",
+                    "text": "Adapt a small language model to your manuals, FAQs or notes with LoRA. Confidential material stays on your machine.",
+                    "stack": [
+                        "SmolLM2",
+                        "LoRA",
+                        "Text → answer"
+                    ],
+                    "shot": "training-lora",
+                    "alt": "Training settings for a language model: active LoRA / QLoRA section and LLM parameters with backend, GGUF export and DPO",
+                    "href": "/guides/lora-finetuning"
+                }
+            ]
+        },
+        "features": {
+            "eyebrow": "Everything in one app",
+            "titleA": "One tool",
+            "titleB": "instead of ten scripts.",
+            "lead": "Every step has its own view – and they all know each other. The dataset knows which model needs it; the Laboratory knows which training a model came from.",
+            "cta": "See every screen",
+            "items": [
+                {
+                    "title": "Analysis & AI coach",
+                    "text": "Loss curves, an overfitting indicator and a coach that explains your curves and suggests new parameters – with your own AI provider if you like.",
+                    "shot": "coach",
+                    "alt": "AI training analysis with a rating, weaknesses and recommended parameters for the next run"
+                },
+                {
+                    "title": "Versions",
+                    "text": "Every training run creates a new version with its parameters and metrics. Going back is one click.",
+                    "shot": "versions",
+                    "alt": "Versions overview with models such as yolo-obb, yolo-pose, smolvlm and videomae-tiny"
+                },
+                {
+                    "title": "Home with AI briefing",
+                    "text": "What's running, what failed, what was never tested – and the most useful next step.",
+                    "shot": "briefing",
+                    "alt": "FrameTrain home screen with recent tests, best results and an AI briefing"
+                },
+                {
+                    "title": "Synapse Builder",
+                    "badge": "Beta",
+                    "text": "Build your own network architectures as a node graph and train them directly.",
+                    "shot": "synapse",
+                    "alt": "Synapse Builder with a graph of CSV loader, dense, output and loss nodes and the node library on the left"
+                }
+            ]
+        },
+        "specs": {
+            "label": "At a glance",
+            "items": [
+                {
+                    "label": "Platforms",
+                    "value": "3",
+                    "note": "macOS (Apple Silicon), Windows, Linux"
+                },
+                {
+                    "label": "Project types",
+                    "value": "7",
+                    "note": "in the Dataset Builder"
+                },
+                {
+                    "label": "Memory",
+                    "value": "8 GB",
+                    "note": "16 GB recommended"
+                },
+                {
+                    "label": "Free trial",
+                    "value": "14 days",
+                    "note": "no payment details"
+                }
+            ]
+        },
+        "trust": {
+            "eyebrow": "Who's behind it",
+            "titleA": "A solo project from Mainz.",
+            "titleB": "Built in public.",
+            "founder": {
+                "name": "Karol Paschek",
+                "role": "Builds FrameTrain on his own · Mainz, Germany",
+                "text": "I wanted to adapt a language model to my own sensitive data – and hit a wall of Python scripts, dependencies and config files. FrameTrain is the tool I needed back then: one app that wraps the whole stack and keeps your data on your machine.",
+                "cta": "More about FrameTrain"
+            },
+            "platforms": {
+                "heading": "Platform status",
+                "items": [
+                    {
+                        "name": "macOS",
+                        "detail": "Apple Silicon (M1–M4)",
+                        "status": "Stable",
+                        "level": "ok"
+                    },
+                    {
+                        "name": "Windows",
+                        "detail": "Windows 10 and 11",
+                        "status": "Mostly tested",
+                        "level": "ok"
+                    },
+                    {
+                        "name": "Linux",
+                        "detail": "AppImage, Ubuntu 20.04+",
+                        "status": "Experimental",
+                        "level": "exp"
+                    }
+                ],
+                "intel": "Intel Macs are not supported."
+            },
+            "privacy": {
+                "heading": "Privacy, stated precisely",
+                "items": [
+                    {
+                        "title": "Training and data stay local",
+                        "text": "Datasets, models and training runs never leave your machine."
+                    },
+                    {
+                        "title": "No usage telemetry",
+                        "text": "The app sends no usage data. Anonymous crash reports only if you agree."
+                    },
+                    {
+                        "title": "Account and payment are online",
+                        "text": "Login, licence and payment run through frame-train.com and Stripe – GDPR compliant."
+                    }
+                ]
+            },
+            "build": {
+                "heading": "Built in public",
+                "latest": "Current version",
+                "released": "released {date}",
+                "changelog": "Changelog",
+                "github": "Releases on GitHub"
+            },
+            "support": {
+                "heading": "Support",
+                "text": "Questions, bugs, wishes – you write straight to the developer.",
+                "email": "Send an email",
+                "reddit": "r/FrameTrain"
+            }
+        },
+        "demo": {
+            "eyebrow": "Demo",
+            "titleA": "Prefer to watch?",
+            "titleB": "Two short videos.",
+            "lead": "Install first, then train your first model – step by step. The video only loads once you press play."
+        },
+        "coach": {
+            "eyebrow": "Learn for free",
+            "titleA": "The AI Training Coach.",
+            "titleB": "From your first loss to LoRA.",
+            "lead": "Overfitting, loss spikes, the right LoRA rank? The free guide explains training in plain words – with examples from FrameTrain. Every chapter ends where you can try it in the app.",
+            "cta": "Open the coach",
+            "guides": "More guides"
+        },
+        "pricing": {
+            "eyebrow": "Price",
+            "titleA": "One plan. Everything included.",
+            "titleB": "Try first, decide later.",
+            "lead": "14 days free, no payment details. Afterwards you decide whether to keep going – otherwise the trial simply ends.",
+            "monthly": "Monthly",
+            "yearly": "Yearly",
+            "save": "Save 33%",
+            "recommended": "Recommended",
+            "planName": "FrameTrain Early Access",
+            "perMonth": "/ month",
+            "yearlyPrice": "€3.33",
+            "yearlyBilling": "€39.99 per year",
+            "monthlyPrice": "€4.99",
+            "monthlyBilling": "billed monthly",
+            "features": [
+                "The whole app: Dataset Builder, Training, Analysis, Laboratory, Hosting",
+                "Unlimited models and training runs",
+                "Every update while your subscription runs",
+                "Local API for your models",
+                "Support straight from the developer"
+            ],
+            "cta": "Try it free",
+            "ctaNote": "Cancel anytime · Trial ends on its own",
+            "subscribeDirect": "Subscribe directly",
+            "foundingLabel": "Founding members",
+            "foundingCount": "{count} of 100 spots taken",
+            "foundingNote": "Founding members keep this price for good. After that, FrameTrain costs €9.99 a month.",
+            "promoHint": "Have a voucher code?",
+            "promoCta": "Redeem code"
+        },
+        "faqExtra": [
+            {
+                "question": "How does the free trial work?",
+                "answer": "You create an account and can use FrameTrain with every feature for 14 days – no payment details needed. After 14 days the trial ends on its own and nothing is charged. If you want to keep going, you subscribe from your dashboard."
+            }
+        ],
+        "faqTitle": "Frequently asked questions",
+        "faqMore": "See all questions",
+        "about": {
+            "titleA": "What is FrameTrain?",
+            "whyTitle": "Why local instead of cloud?"
+        },
+        "finalCta": {
+            "title": "Train your first model tonight.",
+            "lead": "14 days free, no payment details. If it isn't for you, the trial simply ends.",
+            "primary": "Try it free",
+            "secondary": "Watch the demo"
+        },
+        "mobilePill": {
+            "cta": "Try it free",
+            "price": "from €3.33/month"
+        }
+    },
+    "Island": {
+        "home": "Go to home page",
+        "links": {
+            "loop": "How it works",
+            "pricing": "Price",
+            "coach": "Coach",
+            "download": "Download",
+            "dashboard": "Dashboard",
+            "library": "Library",
+            "docs": "Docs",
+            "guides": "Guides"
+        },
+        "login": "Log in",
+        "logout": "Log out",
+        "trial": "Try it free",
+        "menu": "Open menu",
+        "closeMenu": "Close menu",
+        "language": "Language",
+        "status": {
+            "aria": "Demo training, show details",
+            "ariaClose": "Close details",
+            "demo": "Demo",
+            "model": "Model",
+            "epoch": "Epoch",
+            "eta": "Remaining",
+            "loss": "Train loss",
+            "done": "Done",
+            "version": "v{version}",
+            "whatsNew": "What's new?"
+        },
+        "more": {
+            "screenshots": "Screenshots",
+            "extensions": "Extensions",
+            "library": "Open Library",
+            "guides": "Guides",
+            "docs": "Documentation",
+            "about": "About FrameTrain",
+            "faq": "FAQ"
+        }
+    },
+    "Marketing": {
+        "home": "Home",
+        "trial": "Try it free",
+        "dashboard": "Go to dashboard",
+        "demo": "Watch the demo",
+        "trialNote": "14 days · No payment details · Ends on its own",
+        "faqTitle": "Frequently asked questions",
+        "related": "Read next",
+        "ctaLead": "14 days free, no payment details. If it isn't for you, the trial simply ends.",
+        "yes": "Yes",
+        "no": "No",
+        "partial": "Partly"
+    },
+    "PageComputerVision": {
+        "metaTitle": "Train your own object detection – YOLO without code | FrameTrain",
+        "metaDescription": "Train a YOLO model on your own objects: label photos, train, test in the Laboratory and use it through the local API – on your own computer. 14 days free.",
+        "breadcrumb": [
+            {
+                "name": "Object detection",
+                "path": "/computer-vision"
+            }
+        ],
+        "eyebrow": "For makers · Computer vision",
+        "titleA": "Teach your camera what to look for.",
+        "titleB": "Your own object detection, no code.",
+        "lead": "Tools in the workshop, birds at the feeder, parts on the line: with FrameTrain you label your photos, train a <b>YOLO model</b> and test it – all in one app, on your own computer.",
+        "heroShot": "studio-boxes",
+        "heroShotAlt": "FrameTrain Dataset Builder: image with boxes for tree, sky and person",
+        "sections": [
+            {
+                "type": "steps",
+                "eyebrow": "How it works",
+                "title": "From photo to model in four steps.",
+                "items": [
+                    {
+                        "title": "Collect photos",
+                        "text": "From a folder, from web pages or from Hugging Face. Images from cameras at home or at work stay on your machine."
+                    },
+                    {
+                        "title": "Draw boxes",
+                        "text": "In the Dataset Studio you mark objects and assign classes – by keyboard, with suggestions from a model you already trained. The app warns when a class has <b>fewer than 10 examples</b>."
+                    },
+                    {
+                        "title": "Train YOLO",
+                        "text": "Pick a base model (for example YOLO11 or YOLOv8 via Ultralytics), apply a template, start. You follow progress live."
+                    },
+                    {
+                        "title": "Test and improve",
+                        "text": "In the Laboratory you run real images and rate the results. Misdetected images go back into the dataset as corrections with one click."
+                    }
+                ],
+                "shot": "lab-pose",
+                "shotAlt": "FrameTrain Laboratory: result \"no objects\" for a chairlift image, with Correct and Wrong buttons"
+            },
+            {
+                "type": "points",
+                "eyebrow": "Why local",
+                "title": "Image recognition belongs on your machine.",
+                "items": [
+                    {
+                        "title": "Your images stay private",
+                        "text": "Camera images from your home, garden or business are never uploaded. Training runs on your GPU."
+                    },
+                    {
+                        "title": "No uploading thousands of photos",
+                        "text": "Just select large image folders instead of spending hours pushing them to a cloud."
+                    },
+                    {
+                        "title": "No hourly prices",
+                        "text": "Train as often as you like. Experiments don't burn compute credits."
+                    },
+                    {
+                        "title": "Ready to use",
+                        "text": "In the Hosting view you load your model and call it through the <b>local API</b> – from your own script, for instance."
+                    }
+                ]
+            },
+            {
+                "type": "table",
+                "eyebrow": "What you need",
+                "title": "The requirements, listed honestly.",
+                "cols": [
+                    "",
+                    "Minimum",
+                    "Better"
+                ],
+                "rows": [
+                    [
+                        "Computer",
+                        "Mac with Apple Silicon or a Windows/Linux PC",
+                        "NVIDIA graphics card or an M-chip with plenty of unified memory"
+                    ],
+                    [
+                        "Memory",
+                        "8 GB",
+                        "16 GB or more"
+                    ],
+                    [
+                        "Images per class",
+                        "10 (the app warns below that)",
+                        "many more, from different angles and lighting"
+                    ],
+                    [
+                        "Prior knowledge",
+                        "none – everything happens in the interface",
+                        "–"
+                    ]
+                ],
+                "note": "Training also works without a GPU, but takes considerably longer on the CPU."
+            },
+            {
+                "type": "shot",
+                "slug": "hosting",
+                "alt": "FrameTrain Hosting: a YOLO11 model detects two people in a photo",
+                "caption": "In the Hosting view: the finished model detects objects in new images."
+            }
+        ],
+        "faq": [
+            {
+                "question": "Do I need an NVIDIA graphics card?",
+                "answer": "No. FrameTrain trains on NVIDIA GPUs with CUDA and on Macs with Apple Silicon via Metal. Without a GPU, training runs on the CPU – it works, but it is much slower."
+            },
+            {
+                "question": "Which YOLO models can I train?",
+                "answer": "FrameTrain uses Ultralytics and therefore supports YOLO models such as YOLOv8 and YOLO11 – for detection, segmentation, keypoints (poses), rotated boxes and classification."
+            },
+            {
+                "question": "Will my model run on a Raspberry Pi?",
+                "answer": "The trained model is a file on your machine. Ultralytics YOLO models can be exported with the Ultralytics tools to formats such as ONNX that run on small devices like the Raspberry Pi. FrameTrain does not handle that export itself at the moment."
+            },
+            {
+                "question": "How many images do I need?",
+                "answer": "The app warns below 10 examples per class. For reliable results you want far more – especially from different angles, distances and lighting. The Laboratory quickly shows you where the model still needs examples."
+            }
+        ],
+        "related": [
+            {
+                "href": "/apple-silicon",
+                "label": "Training on a Mac"
+            },
+            {
+                "href": "/docs/ai-training-guide/dataset-mastery",
+                "label": "Coach: building good datasets"
+            },
+            {
+                "href": "/guides/gpu-guide",
+                "label": "Which GPU do I need?"
+            }
+        ],
+        "ctaTitle": "Train your first object detection tonight."
+    },
+    "PageGdpr": {
+        "metaTitle": "GDPR-compliant AI training – local instead of cloud | FrameTrain",
+        "metaDescription": "Train AI models on sensitive data without uploading it: FrameTrain runs locally on your own machines. Built in Mainz, Germany. Try it free for 14 days.",
+        "breadcrumb": [
+            {
+                "name": "GDPR",
+                "path": "/gdpr"
+            }
+        ],
+        "eyebrow": "For companies in the EU · GDPR",
+        "titleA": "Train AI on your own data.",
+        "titleB": "Without it leaving the building.",
+        "lead": "Support tickets, contracts, internal documents: training AI models in the cloud means transferring that data. With FrameTrain, training runs <b>on your own machines</b> – built in Mainz, Germany.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "The difference",
+                "title": "Cloud training and local training compared.",
+                "cols": [
+                    "",
+                    "FrameTrain (local)",
+                    "Cloud training"
+                ],
+                "rows": [
+                    [
+                        "Training data leaves the company",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Data processing agreement needed for training data",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Possible transfer to third countries",
+                        "no",
+                        "Depends on provider"
+                    ],
+                    [
+                        "Cost per training hour",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Training without an internet connection",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Own hardware required",
+                        "yes",
+                        "no"
+                    ]
+                ],
+                "note": "Not legal advice. If in doubt, check with your data protection officer."
+            },
+            {
+                "type": "points",
+                "eyebrow": "Stated precisely",
+                "title": "What stays local – and what doesn't.",
+                "items": [
+                    {
+                        "title": "Local: data and models",
+                        "text": "Datasets, training runs and finished models live only on your machines. We never see them."
+                    },
+                    {
+                        "title": "Local: usage",
+                        "text": "The app sends no usage telemetry. Anonymous crash reports are only sent if you agree when signing up."
+                    },
+                    {
+                        "title": "Online: account and licence",
+                        "text": "Sign-in, licence and payment run through frame-train.com and Stripe. Downloading models from Hugging Face also needs the internet."
+                    }
+                ]
+            },
+            {
+                "type": "steps",
+                "eyebrow": "Typical projects",
+                "title": "What teams can use FrameTrain for.",
+                "items": [
+                    {
+                        "title": "Sort tickets and emails",
+                        "text": "A text classifier routes requests into your categories – trained on your real, confidential examples."
+                    },
+                    {
+                        "title": "Classify documents",
+                        "text": "Assign contracts, invoices or reports to a type automatically, without handing them to a cloud service."
+                    },
+                    {
+                        "title": "Adapt an internal language model",
+                        "text": "Tune a small language model to manuals and internal FAQs with LoRA."
+                    },
+                    {
+                        "title": "Visual quality checks",
+                        "text": "An object detector finds defects or missing parts in photos from production."
+                    }
+                ],
+                "shot": "analysis",
+                "shotAlt": "FrameTrain training analysis of the text classifier myFirstTextclassifier with loss curve"
+            },
+            {
+                "type": "text",
+                "eyebrow": "Who's behind it",
+                "title": "Built in Mainz, Germany.",
+                "paragraphs": [
+                    "FrameTrain is developed by <b>Karol Paschek</b> in Mainz, Germany. It started with a project of his own: adapting a language model to sensitive data without putting it in the cloud.",
+                    "You'll find the privacy policy and legal notice in the footer of every page. Questions about privacy or company use are answered directly by email."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Is FrameTrain GDPR compliant?",
+                "answer": "Training itself processes no personal data on our servers – datasets and models stay on your machines. Our privacy policy covers account and payment data. Whether your specific project is lawful depends on the data and the purpose; no software alone can guarantee that."
+            },
+            {
+                "question": "Do we need a data processing agreement?",
+                "answer": "Usually not for the training data, because we never receive it. For account data, our privacy policy applies. If in doubt, check with your data protection officer."
+            },
+            {
+                "question": "Does FrameTrain work offline?",
+                "answer": "Training runs locally. Sign-in, licence checks and downloading models from Hugging Face need a connection."
+            },
+            {
+                "question": "Are there team or company licences?",
+                "answer": "Right now there are individual licences per account. If you want to use FrameTrain as a team, write to us – we'll find a solution."
+            }
+        ],
+        "related": [
+            {
+                "href": "/guides/local-vs-cloud",
+                "label": "Local or cloud? An honest comparison"
+            },
+            {
+                "href": "/privacy",
+                "label": "Privacy policy"
+            },
+            {
+                "href": "/about",
+                "label": "About FrameTrain"
+            }
+        ],
+        "ctaTitle": "Try FrameTrain with your own data."
+    },
+    "PageVsUnsloth": {
+        "metaTitle": "FrameTrain vs. Unsloth – desktop app or Python library? | FrameTrain",
+        "metaDescription": "FrameTrain or Unsloth for local LLM fine-tuning? An honest comparison: GUI vs. code, platforms, Apple Silicon, LoRA/QLoRA and who each one is for.",
+        "breadcrumb": [
+            {
+                "name": "Comparison",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. Unsloth",
+                "path": "/compare/unsloth"
+            }
+        ],
+        "eyebrow": "Comparison",
+        "titleA": "FrameTrain vs. Unsloth.",
+        "titleB": "Interface or Python code?",
+        "lead": "Both fine-tune models with LoRA on your own hardware. <b>Unsloth</b> is a Python library optimised for speed on NVIDIA GPUs. <b>FrameTrain</b> is a desktop app that covers the whole path from dataset to tested model.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "At a glance",
+                "title": "What each can do – and what it can't.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Unsloth"
+                ],
+                "rows": [
+                    [
+                        "How you use it",
+                        "Desktop app with an interface",
+                        "Python code, e.g. in notebooks"
+                    ],
+                    [
+                        "Platforms",
+                        "Windows, macOS, Linux",
+                        "Linux, Windows (often via WSL)"
+                    ],
+                    [
+                        "Apple Silicon (M1–M4)",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "NVIDIA CUDA",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "LoRA",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "QLoRA (4-bit)",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Building and labelling datasets",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Testing and rating models",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Versioning of training runs",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "Open source",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Cost",
+                        "from €3.33 a month",
+                        "open-source version is free"
+                    ]
+                ],
+                "note": "As of October 2026. Both projects move fast – check Unsloth's details yourself if in doubt."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Deciding",
+                "title": "Which one fits you?",
+                "cards": [
+                    {
+                        "title": "Choose FrameTrain if …",
+                        "items": [
+                            "you don't want to or can't write code",
+                            "you train on a Mac or on Windows without WSL",
+                            "you still need to build and label your dataset",
+                            "you want to test and improve models after training",
+                            "you want image, text and language models in one app"
+                        ]
+                    },
+                    {
+                        "title": "Choose Unsloth if …",
+                        "items": [
+                            "you're comfortable with Python",
+                            "you want maximum speed on an NVIDIA GPU",
+                            "your dataset is already done",
+                            "you want training inside your own scripts or pipelines",
+                            "you only fine-tune language models"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "eyebrow": "The core",
+                "title": "Different tools for different people.",
+                "paragraphs": [
+                    "Unsloth is excellent at making LoRA fine-tuning of language models faster and more memory-efficient. In return, it assumes you work in Python and your data is already in the right shape.",
+                    "FrameTrain starts earlier – with collecting and labelling data. And it ends later – with testing in the Laboratory, feeding mistakes back and serving the model through the local API. It is not a tool for squeezing the last percent of speed out of a GPU."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Is FrameTrain an interface for Unsloth?",
+                "answer": "No. FrameTrain is a standalone desktop app built on PyTorch and Hugging Face. If you want to use your own training scripts, you can run them in Dev Train mode."
+            },
+            {
+                "question": "Which one is faster?",
+                "answer": "On NVIDIA GPUs, Unsloth is optimised for speed and is usually faster at pure LLM fine-tuning. FrameTrain saves time elsewhere: on the dataset, on testing and because there's no code to write."
+            },
+            {
+                "question": "Does Unsloth run on a Mac?",
+                "answer": "Unsloth is primarily aimed at NVIDIA GPUs; Apple Silicon support is limited. FrameTrain runs on M1 to M4 via Metal."
+            }
+        ],
+        "related": [
+            {
+                "href": "/compare",
+                "label": "FrameTrain vs. MLX LoRA Studio vs. Unsloth"
+            },
+            {
+                "href": "/compare/google-colab",
+                "label": "FrameTrain vs. Google Colab"
+            },
+            {
+                "href": "/guides/lora-finetuning",
+                "label": "LoRA fine-tuning explained"
+            }
+        ],
+        "ctaTitle": "Try the no-code route."
+    },
+    "PageVsColab": {
+        "metaTitle": "FrameTrain vs. Google Colab – train locally instead of in a notebook | FrameTrain",
+        "metaDescription": "Google Colab or local training with FrameTrain? A comparison of privacy, session limits, cost, code and GPU – and when Colab is the better choice.",
+        "breadcrumb": [
+            {
+                "name": "Comparison",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. Google Colab",
+                "path": "/compare/google-colab"
+            }
+        ],
+        "eyebrow": "Comparison",
+        "titleA": "FrameTrain vs. Google Colab.",
+        "titleB": "Your machine or Google's notebook?",
+        "lead": "For many people Colab is their first contact with machine learning: a notebook in the browser, a GPU from the cloud. FrameTrain takes the other route – <b>an app on your own computer</b>, without code and without uploads.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "At a glance",
+                "title": "The differences that matter day to day.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Google Colab"
+                ],
+                "rows": [
+                    [
+                        "Where training runs",
+                        "on your computer",
+                        "on Google's servers"
+                    ],
+                    [
+                        "Coding required",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Upload your data",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Sessions end after time or inactivity",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Works without your own GPU",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Label datasets in the app",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Share and co-edit notebooks",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Cost",
+                        "from €3.33 a month",
+                        "free with limits, paid plans"
+                    ]
+                ],
+                "note": "As of October 2026. Colab's terms change; check Google for current plans."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Deciding",
+                "title": "Which one fits you?",
+                "cards": [
+                    {
+                        "title": "Choose FrameTrain if …",
+                        "items": [
+                            "your data is confidential",
+                            "you have a machine with an NVIDIA GPU or Apple Silicon",
+                            "you want to work without code",
+                            "trainings run long and shouldn't be cut off",
+                            "you still need to build and label datasets"
+                        ]
+                    },
+                    {
+                        "title": "Choose Colab if …",
+                        "items": [
+                            "you don't have a GPU of your own",
+                            "you already work in Python",
+                            "you want to share notebooks with others",
+                            "your data is public or not sensitive",
+                            "you only want to try something quickly"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "points",
+                "eyebrow": "Why local",
+                "title": "What changes when you stop training in the cloud.",
+                "items": [
+                    {
+                        "title": "No uploads",
+                        "text": "Large datasets are already on your machine. Pick the folder – done."
+                    },
+                    {
+                        "title": "No cut-off sessions",
+                        "text": "A training run keeps going until it's finished. No browser tab that has to stay open."
+                    },
+                    {
+                        "title": "Models stay put",
+                        "text": "Every version is stored locally with its parameters and metrics, ready to test."
+                    },
+                    {
+                        "title": "Predictable cost",
+                        "text": "A fixed monthly or yearly price instead of compute credits."
+                    }
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Isn't Colab free?",
+                "answer": "Colab has a free tier with limited, varying GPU availability and time-limited sessions. Paid plans offer more compute. FrameTrain starts at €3.33 a month and uses your own hardware."
+            },
+            {
+                "question": "I don't have a GPU. Can I still use FrameTrain?",
+                "answer": "Yes, training then runs on the CPU – fine for small models and datasets, much slower for larger ones. If you have no suitable hardware at all, a cloud notebook like Colab is the better choice."
+            },
+            {
+                "question": "Can I reuse my Colab notebooks?",
+                "answer": "Not directly. If you want to use your own Python scripts, you can run them in FrameTrain's Dev Train mode."
+            }
+        ],
+        "related": [
+            {
+                "href": "/guides/local-vs-cloud",
+                "label": "Local or cloud? Cost and privacy"
+            },
+            {
+                "href": "/compare/unsloth",
+                "label": "FrameTrain vs. Unsloth"
+            },
+            {
+                "href": "/guides/gpu-guide",
+                "label": "Which GPU do I need?"
+            }
+        ],
+        "ctaTitle": "Train without uploads and without time limits."
+    },
+    "PageMlxVsPytorch": {
+        "metaTitle": "MLX vs. PyTorch on the Mac – which is better for training? | FrameTrain",
+        "metaDescription": "MLX or PyTorch (MPS) for machine learning on Apple Silicon? Differences in memory, ecosystem and LLM fine-tuning – and how FrameTrain uses both.",
+        "breadcrumb": [
+            {
+                "name": "Guides",
+                "path": "/guides"
+            },
+            {
+                "name": "MLX vs. PyTorch",
+                "path": "/guides/mlx-vs-pytorch"
+            }
+        ],
+        "eyebrow": "Guide · Apple Silicon",
+        "titleA": "MLX vs. PyTorch on the Mac.",
+        "titleB": "Which framework for training?",
+        "lead": "If you train models on a Mac with an M-chip, you end up with two options: <b>PyTorch</b> with the Metal backend (MPS) or Apple's own framework <b>MLX</b>. Both use the M-chip's GPU – but in different ways.",
+        "sections": [
+            {
+                "type": "text",
+                "eyebrow": "The short version",
+                "title": "Two routes to the Mac GPU.",
+                "paragraphs": [
+                    "<b>PyTorch</b> is the standard framework of the ML world. On the Mac it runs on the Metal backend MPS. Its big advantage is the ecosystem: Hugging Face Transformers, PEFT/LoRA and countless examples work out of the box. Some operations aren't supported by MPS yet and fall back to the CPU.",
+                    "<b>MLX</b> is an open-source framework from Apple, released in 2023 and built specifically for Apple Silicon. It uses the unified memory shared by CPU and GPU directly. With <b>mlx-lm</b> there's a dedicated library for fine-tuning language models with LoRA."
+                ]
+            },
+            {
+                "type": "table",
+                "eyebrow": "Compared",
+                "title": "MLX and PyTorch (MPS) side by side.",
+                "cols": [
+                    "",
+                    "PyTorch (MPS)",
+                    "MLX"
+                ],
+                "rows": [
+                    [
+                        "Developed by",
+                        "Meta and the community",
+                        "Apple"
+                    ],
+                    [
+                        "Platforms",
+                        "macOS, Windows, Linux",
+                        "Apple Silicon only"
+                    ],
+                    [
+                        "Uses unified memory",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Ecosystem (Hugging Face, PEFT)",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "LoRA for language models",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Vision and special models (e.g. YOLO)",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "Same code on NVIDIA and Mac",
+                        "yes",
+                        "no"
+                    ]
+                ],
+                "note": "As of October 2026. Real speeds depend heavily on model, chip and memory – that's why there are deliberately no benchmark numbers here."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Deciding",
+                "title": "When to use which?",
+                "cards": [
+                    {
+                        "title": "PyTorch (MPS) if …",
+                        "items": [
+                            "you train image, text or audio models from Hugging Face",
+                            "your project should also run on NVIDIA machines",
+                            "you want to use existing tutorials and scripts",
+                            "you need YOLO or other special models"
+                        ]
+                    },
+                    {
+                        "title": "MLX if …",
+                        "items": [
+                            "you work exclusively on Apple Silicon",
+                            "you fine-tune language models with LoRA",
+                            "you want to make full use of your Mac's shared memory",
+                            "you can live with a younger, smaller ecosystem"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "steps",
+                "eyebrow": "In FrameTrain",
+                "title": "You don't have to choose up front.",
+                "items": [
+                    {
+                        "title": "PyTorch for everything",
+                        "text": "On the Mac, FrameTrain trains with PyTorch on Metal by default – for image, text, audio and language models."
+                    },
+                    {
+                        "title": "MLX for language models",
+                        "text": "LLM fine-tuning has a <b>Backend</b> field with the options auto, torch and mlx. MLX needs the mlx-lm package installed; the app tells you if it's missing."
+                    },
+                    {
+                        "title": "Compare the results",
+                        "text": "Every run is saved as its own version, so the Analysis view shows you which backend does better on your Mac."
+                    }
+                ],
+                "shot": "training-lora",
+                "shotAlt": "FrameTrain training settings with the active LoRA section and the Backend field (auto, torch, mlx)"
+            }
+        ],
+        "faq": [
+            {
+                "question": "Is MLX faster than PyTorch?",
+                "answer": "For LoRA fine-tuning of language models on Apple Silicon, MLX is often described as faster and more memory-efficient. How big the difference is depends on model, chip and memory. For other model types, PyTorch is usually the more practical choice thanks to its larger ecosystem."
+            },
+            {
+                "question": "Can I reuse MLX models in PyTorch?",
+                "answer": "Partly. Weights can be converted between formats, but that's an extra step. If your model should also run on NVIDIA hardware later, PyTorch is the more direct route."
+            },
+            {
+                "question": "Does MLX run on Intel Macs?",
+                "answer": "No, MLX is built for Apple Silicon only. FrameTrain also supports only Apple Silicon on the Mac."
+            }
+        ],
+        "related": [
+            {
+                "href": "/apple-silicon",
+                "label": "AI training on Apple Silicon"
+            },
+            {
+                "href": "/compare",
+                "label": "FrameTrain vs. MLX LoRA Studio vs. Unsloth"
+            },
+            {
+                "href": "/guides/lora-finetuning",
+                "label": "LoRA fine-tuning explained"
+            }
+        ],
+        "ctaTitle": "Try both backends on your Mac."
+    },
+    "Channel": {
+        "metaTitle": "Welcome to FrameTrain",
+        "metaDescription": "Train your own AI model without code, right on your computer. Try it free for 14 days.",
+        "eyebrow": "Hello from Mainz",
+        "lead": "FrameTrain is a desktop app for training your own AI models – without code, right on your computer. A solo project, built in public.",
+        "codeLabel": "Your code",
+        "codeSaved": "It's saved and will be filled in automatically when you sign up.",
+        "points": [
+            "14 days free, no payment details",
+            "Data and models stay on your machine",
+            "Dataset Builder, training and Laboratory in one app"
+        ],
+        "more": "More about FrameTrain",
+        "channels": {
+            "reddit": {
+                "title": "Welcome from Reddit.",
+                "back": "Back to r/FrameTrain"
+            },
+            "youtube": {
+                "title": "Welcome from YouTube.",
+                "back": "Watch the tutorials"
+            },
+            "tiktok": {
+                "title": "Welcome from TikTok.",
+                "back": ""
+            },
+            "instagram": {
+                "title": "Welcome from Instagram.",
+                "back": ""
+            }
         }
     }
 }
