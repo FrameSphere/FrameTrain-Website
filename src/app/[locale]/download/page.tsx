@@ -113,7 +113,7 @@ export default function DownloadPage() {
 
           {/* ── Launch-kritischer Hinweis 1: Python ──
               Die Desktop-App bricht beim Pre-Flight-Check ab, wenn kein
-              Python 3.8+ installiert ist (vor allem unter Windows). Der Kasten
+              Python 3.10–3.13 installiert ist (vor allem unter Windows). Der Kasten
               steht bewusst ÜBER der Download-Karte: wer das erst nach dem Kauf
               erfährt, sitzt in der Sackgasse. Nicht nach unten schieben und
               nicht einklappen. */}
