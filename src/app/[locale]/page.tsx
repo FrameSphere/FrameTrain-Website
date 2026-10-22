@@ -362,7 +362,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                       {t('trust.build.changelog')}
                     </Link>
                     <a
-                      href={release?.url ?? 'https://github.com/FrameSphere/FrameTrain-App/releases'}
+                      href={release?.url ?? 'https://github.com/FrameSphere/FrameTrain-Releases/releases'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ft-btn ft-btn--ghost ft-btn--sm"
