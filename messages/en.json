@@ -1030,7 +1030,7 @@
         "downloadButton": "Download for {platform}",
         "startingDownload": "Download is starting...",
         "versionInfo": "Version: {version} • Size: {size} MB",
-        "shotAlt": "FrameTrain after installation: home screen with attention hints, key figures for models, versions, datasets and trainings, plus the most recent trainings and tests",
+        "shotAlt": "FrameTrain after installation: home screen with key figures for models, versions, datasets and trainings, recent trainings and tests, and the \"Worth a look\" panel",
         "shotCaption": "What you get after installing: the home screen with your project status – running trainings, key figures and recent runs. From here you move on to models, datasets and training.",
         "shotLink": "See every screen of the app",
         "installVideoHeading": "Not sure? Here's how to install it in 2 minutes",
@@ -1343,7 +1343,7 @@
         "hyperparams": {
             "heading": "Key LoRA Hyperparameters",
             "typicalLabel": "typical",
-            "screenshotAlt": "LoRA and QLoRA configuration in FrameTrain: training parameters with epochs, batch size and learning rate, plus a dedicated expandable LoRA / QLoRA section",
+            "screenshotAlt": "LLM fine-tuning in FrameTrain: optimizer and scheduler, the active “LoRA / QLoRA” section and the LLM parameters with backend, GGUF export and DPO",
             "screenshotCaption": "In FrameTrain the “LoRA / QLoRA” section sits right below the base parameters and the optimizer. Expanded, it holds rank, alpha and dropout.",
             "items": [
                 {
@@ -1497,7 +1497,7 @@
             ]
         },
         "privacy": {
-            "screenshotAlt": "FrameTrain AI assistant settings: a choice between Claude, GPT-4o, Groq and local Ollama, plus the Ollama model configuration",
+            "screenshotAlt": "FrameTrain AI assistant settings: a choice between Claude, GPT-4o, Groq and local Ollama without an API key",
             "screenshotCaption": "Even the optional AI features can run locally: Ollama works without an API key on your own machine. Want none of it? Switch the assistant off – training is independent of it.",
             "heading": "Privacy & GDPR – Why Local Is Better",
             "intro": "With cloud services, your training data is uploaded to someone else's servers – in the US, Europe, or elsewhere. For many use cases that's problematic or simply not allowed:",
@@ -2764,7 +2764,7 @@
                     "desc": "Final loss of the last completed runs as a sparkline, and a ranking of the best test results by accuracy."
                 }
             ],
-            "insightsHeading": "Needs attention",
+            "insightsHeading": "Worth a look",
             "insightsText": "The hint panel at the top of the page runs on plain rules – no AI, no tokens, no cost. It only speaks up when there is something to report, and shows at most five hints at a time. One click jumps straight to where the problem can be fixed:",
             "insights": [
                 "A training run is active, but sleep is not suppressed – the machine could doze off mid-run overnight.",
@@ -5082,7 +5082,7 @@
                     "overfittingFix": {
                         "screenshotHeading": "Diagnosis in FrameTrain",
                         "screenshotText": "A run's metrics can be handed to a language model of your choice inside FrameTrain. What comes back is not a row of numbers but an assessment in plain language: what went wrong, which measure helps first, and which parameters the next run should start with.",
-                        "screenshotAlt": "FrameTrain AI training analysis with improvement suggestions, recommended parameters as a JSON block and a forecast for the next run",
+                        "screenshotAlt": "FrameTrain AI training analysis with a rating, weaknesses, improvement suggestions and recommended parameters",
                         "screenshotCaption": "The parameter suggestion can be saved as a training template in one click — the analysis stays attached to the model version.",
                         "title": "Fighting Overfitting",
                         "subtitle": "Concrete measures sorted by effectiveness",
@@ -6222,7 +6222,7 @@
                     "datenQualitaet": {
                         "screenshotHeading": "Datasets in FrameTrain",
                         "screenshotText": "FrameTrain shows format, size, file count and modification date per dataset — and whether a train/val/test split already exists. Multi-shard Parquet is read natively; if a split is missing, you create it right in the app.",
-                        "screenshotAlt": "FrameTrain dataset management with Parquet datasets, split status and buttons for splitting and halving",
+                        "screenshotAlt": "FrameTrain dataset management with two YOLO datasets, split status, train/val/test counts and halve buttons",
                         "screenshotCaption": "The dataset overview checks compatibility against the selected model before training even starts.",
                         "title": "Data Quality & Quantity",
                         "subtitle": "The most important foundation for any successful training",
@@ -7515,11 +7515,11 @@
                 "slug": "home",
                 "title": "Home screen – what happened while you were away",
                 "text": "After signing in, FrameTrain no longer drops you into the middle of the model list. It opens on an overview of where the project stands: is a training run in progress, and how far along is it? What finished or failed since your last visit? Below that sit the key numbers including disk usage, the most recent trainings and tests, the loss trend across recent runs, and a leaderboard by accuracy. Every tile is a jump into the matching area – the home screen is a status report, not a second menu. The home button at the top left of the sidebar brings you back at any time.",
-                "alt": "FrameTrain home screen after login with greeting, a \"Needs attention\" panel, key figures for models, versions, datasets and trainings, plus the most recent trainings and tests",
-                "caption": "The home screen: what needs attention up top, key figures and recent runs below – every card leads straight into the matching area.",
+                "alt": "FrameTrain home screen with greeting, key figures for models, versions, datasets and trainings, recent trainings and tests, and the \"Worth a look\" panel",
+                "caption": "The home screen: key figures and recent runs on the left, hints worth a look and the best results on the right – every row leads straight to its area.",
                 "bullets": [
                     "Running trainings with progress, plus results since your last visit",
-                    "\"Needs attention\" warns from plain rules – no AI involved, no cost",
+                    "\"Worth a look\" warns from plain rules – no AI involved, no cost",
                     "AI briefing on demand, stored and only regenerated when facts change"
                 ]
             },
@@ -7528,8 +7528,8 @@
                 "slug": "models",
                 "title": "Model management – HuggingFace and local models in one place",
                 "text": "The model overview lists everything FrameTrain knows about: models imported from HuggingFace, weights stored locally, and networks you built yourself in the Synapse Builder. Each card shows file count, size on disk, storage path and the plugin responsible for that model. Models without a matching plugin are flagged up front instead of failing once training starts.",
-                "alt": "FrameTrain model overview showing imported HuggingFace models, local models and Synapse canvas networks with size and plugin labels",
-                "caption": "Model overview: TinyLlama, xlm-roberta, YOLO and custom canvas networks side by side, with size, date and the plugin in charge.",
+                "alt": "FrameTrain models overview with YOLO, Stable Diffusion, vision-language, video, embedding, NER and Whisper models, each with size and plugin",
+                "caption": "Models overview: yolo-obb, tiny-sd, smolvlm, videomae-tiny, minilm, ner-distilbert and whisper-tiny side by side, with size, date and plugin.",
                 "bullets": [
                     "Import from HuggingFace by repo ID",
                     "Size, file count and storage path per model",
@@ -7541,8 +7541,8 @@
                 "slug": "datasets",
                 "title": "Datasets – Parquet, flat files and splits",
                 "text": "Datasets belong to a model: the selector at the top filters the list down to what fits the model you picked. FrameTrain reads multi-shard Parquet natively, shows file size and modification date, and flags whether a train/val/test split already exists. If one is missing, you split the dataset right in the app – halving included.",
-                "alt": "FrameTrain dataset management showing Parquet datasets, split status and buttons for splitting and halving",
-                "caption": "Datasets per model, with format, size and split status. “No split” is a hint, not an error – splitting happens right here.",
+                "alt": "FrameTrain dataset management with two YOLO datasets, split status, train/val/test counts and halve buttons",
+                "caption": "Datasets per model, with format, size and split status – here two YOLO datasets that are already split.",
                 "bullets": [
                     "Multi-shard Parquet supported natively",
                     "Train/val/test split without touching the command line",
@@ -7554,8 +7554,8 @@
                 "slug": "dataset-builder-image-boxes",
                 "title": "Dataset Builder – label your own datasets",
                 "text": "Since version 1.3.4 you build datasets right inside FrameTrain. The image workbench shows the idea: drag boxes, pick the class with a number key, confirm with Enter. A trained model can make suggestions, the “Uncertain” filter brings the hardest cases forward, and on the right you see which classes still have too few examples. Besides images there are project types for texts, recordings, transcripts and video segments.",
-                "alt": "Dataset Builder image workbench with bounding boxes for tree, lift and offroad, class list, counters and distribution warnings",
-                "caption": "Labeling by keyboard, with suggestions and warnings about class balance.",
+                "alt": "Dataset Builder image workbench with boxes for tree, sky and person, class list, counters and a class-balance hint",
+                "caption": "Label with the keyboard, with suggestions and class-balance warnings.",
                 "bullets": [
                     "Seven project types for image, text, audio and video",
                     "Model suggestions, least certain first",
@@ -7569,8 +7569,8 @@
                 "slug": "dataset-builder-web",
                 "title": "Fetch from the web – collect data with provenance",
                 "text": "Instead of downloading files one by one, you give the builder URLs, whole websites or a sitemap. FrameTrain follows links only up to the chosen depth and only on the same domains, keeps limits for pages, files and file size, and respects robots.txt including Crawl-delay. Every fetched file gets its URL, source page and license in PROVENANCE.csv.",
-                "alt": "“Fetch from the web” dialog in website mode with start page, limits for depth, pages, files and file size, license field and robots.txt note",
-                "caption": "Website mode with the limits expanded. robots.txt is always respected.",
+                "alt": "\"Fetch from the web\" dialog with addresses, website and sitemap modes, limits, licence field and robots.txt note",
+                "caption": "Fetch from the web: single addresses, a whole website or a sitemap. robots.txt is always respected.",
                 "bullets": [
                     "URLs, whole websites or sitemaps",
                     "At least one second between requests per server",
@@ -7584,8 +7584,8 @@
                 "slug": "training",
                 "title": "Configure training – hyperparameters, LoRA and QLoRA",
                 "text": "The training screen puts model, version and dataset side by side and checks up front whether the plugin supports that combination. Base parameters are open by default: epochs, batch size, learning rate, max sequence length, warmup ratio and gradient accumulation. Optimizer & scheduler, advanced & evaluation, and LoRA / QLoRA expand when you need them. Mixed precision switches per backend – FP16 stays locked where the hardware wants BF16.",
-                "alt": "FrameTrain training configuration with epochs, batch size, learning rate, warmup ratio and expandable sections for optimizer, evaluation and LoRA/QLoRA",
-                "caption": "Training configuration for xlm-roberta-base: base parameters open, optimizer, evaluation and LoRA/QLoRA one level down.",
+                "alt": "FrameTrain training configuration for SmolLM2-135M-Instruct with epochs, batch size, learning rate, warmup ratio and expandable sections",
+                "caption": "Training configuration for a language model: model, version and dataset on top, base parameters open, optimizer and further sections one level down.",
                 "bullets": [
                     "LoRA and QLoRA as their own configuration section",
                     "Templates and the AI assistant supply sane starting values",
@@ -7608,12 +7608,27 @@
                 ]
             },
             {
+                "id": "analysis-charts",
+                "slug": "analysis-charts",
+                "title": "Loss curves and overfitting indicator",
+                "text": "Loss curve, average loss per epoch and an overfitting indicator (validation minus training) sit on one page, one below the other. A smoothing switch takes the noise out of the curves, and every chart can be exported on its own. Above them are the derived figures: final train loss, epochs and steps, loss reduction and overfitting gap.",
+                "alt": "FrameTrain analysis view with derived statistics, train and validation loss curve, average loss per epoch and an overfitting indicator",
+                "caption": "Training and validation loss in one curve, with average loss per epoch and the val-train gap as its own chart below.",
+                "bullets": [
+                    "Training and validation loss in the same curve",
+                    "Overfitting gap as its own figure and chart",
+                    "Optional smoothing, export per chart"
+                ],
+                "relatedHref": "/docs/ai-training-guide/trainingsverlauf",
+                "relatedLabel": "Chapter: Reading training curves"
+            },
+            {
                 "id": "ai-analysis",
                 "slug": "ai-analysis",
                 "title": "AI training analysis – metrics in plain language",
                 "text": "FrameTrain sends a run's metrics to a language model of your choice and gets back an assessment in plain language: what went wrong, which measures help, and which parameters the next run should start with. The parameter suggestion arrives as a JSON block you can save as a training template in one click.",
-                "alt": "FrameTrain AI training analysis with improvement suggestions, recommended parameters as JSON and a forecast for the next run",
-                "caption": "AI training analysis for a specific model version: diagnosis, recommended parameters, forecast.",
+                "alt": "FrameTrain AI training analysis with a rating, weaknesses, improvement suggestions and recommended parameters",
+                "caption": "AI training analysis for a specific model version: diagnosis, improvement suggestions and recommended parameters to apply.",
                 "bullets": [
                     "An assessment in prose instead of raw number series",
                     "Parameter suggestions can be saved as a training template",
@@ -7627,8 +7642,8 @@
                 "slug": "ai-coach",
                 "title": "AI coach – follow-up questions in the panel's context",
                 "text": "The AI coach is a chat that knows which panel you are standing in. Ask it how to improve validation loss for this run and it answers against the values actually loaded rather than in generalities – learning rate, dropout, weight decay, LoRA capacity. Concrete suggestions are applied via buttons right below the answer, and typing / in the input field opens prepared questions for the page.",
-                "alt": "FrameTrain AI coach as a chat window over the training screen, answering with learning rate, epochs, dropout and LoRA rank suggestions",
-                "caption": "The coach sits on top of the panel it draws its context from – here the training panel.",
+                "alt": "FrameTrain AI coach chat window with a summary of a BERT training and the Apply recommended parameters button",
+                "caption": "The coach knows the panel it was opened from and suggests parameters you can apply directly.",
                 "bullets": [
                     "Knows the state of the current page with every message",
                     "Skills via / – prepared questions for every page",
@@ -7642,8 +7657,8 @@
                 "slug": "ai-providers",
                 "title": "AI providers – your own key, or fully local",
                 "text": "You decide which language model powers the coach, analysis and assistants: Claude, OpenAI and Groq run on your own API key, Ollama fully locally without a key. Each provider keeps its own key, so switching never loses one. The token budget from Minimal to Unlimited sets how detailed and thorough every AI feature is. If you want no AI features at all, switch the assistant off globally. Training itself is independent of this and always runs on your hardware.",
-                "alt": "FrameTrain AI assistant settings with a choice between Claude, GPT-4o, Groq and local Ollama, plus Ollama model configuration",
-                "caption": "Provider choice for the AI features. Ollama runs locally and needs no API key.",
+                "alt": "FrameTrain AI assistant settings with a choice between Claude, GPT-4o, Groq and local Ollama, plus a securely stored API key",
+                "caption": "Provider choice for the AI features. Ollama runs locally without an API key; keys are kept in the operating system keychain.",
                 "bullets": [
                     "Ollama locally, no API key, no data leaving your machine",
                     "One key per provider, stored securely in the system keychain",
@@ -7657,8 +7672,8 @@
                 "slug": "versions",
                 "title": "Versions – every run creates a new state",
                 "text": "A training run overwrites nothing; it creates a new version. The version list shows train loss, validation loss, epochs, size and storage path per state, and the imported original stays untouched. Rolling back means selecting the older version.",
-                "alt": "FrameTrain version list of a model with the original and three trained versions including train loss, validation loss and epochs",
-                "caption": "Four states of the same model. Train and validation loss per version show which run actually helped.",
+                "alt": "FrameTrain version list of a text classifier with the original and a trained version, including train loss, val loss, epochs and duration",
+                "caption": "Two states of the same model. Train and val loss per version show what a run achieved.",
                 "bullets": [
                     "The imported original is always preserved",
                     "Metrics and size per version",
@@ -7670,7 +7685,7 @@
                 "slug": "laboratory",
                 "title": "Laboratory – test trained models on real samples",
                 "text": "In the laboratory you load individual samples from train, val or test and let the trained version answer them: pick test engine or dev script, load the model for inference, load samples, start the session. A loss value alone simply does not answer whether a model is useful in practice.",
-                "alt": "FrameTrain laboratory with model, version, test engine and sample dataset selection plus a preview of the loaded samples",
+                "alt": "FrameTrain Laboratory with model, version, test engine and sample dataset selection plus a preview of 116 loaded samples",
                 "caption": "Laboratory configuration: version, engine and sample selection before the session starts.",
                 "bullets": [
                     "Samples pulled specifically from train, val or test",
@@ -7683,8 +7698,8 @@
                 "slug": "synapse-builder",
                 "title": "Synapse Builder – architecture as a graph",
                 "text": "The Synapse Builder assembles networks from nodes: input, CSV, image and Parquet loaders, tokenizer, dataset split, augmentation, plus dense, Conv2D, embedding, LSTM, attention, transformer block, LayerNorm, BatchNorm and dropout. The training bar at the bottom carries epochs, batch size, learning rate, GPU, precision and grad accum – runs start from the same window.",
-                "alt": "FrameTrain Synapse Builder with node library, a graph of 27 connected layer nodes and a training bar along the bottom",
-                "caption": "Synapse Builder with 27 nodes and 25 connections. The training bar at the bottom starts the run straight from the canvas.",
+                "alt": "FrameTrain Synapse Builder with node library, a graph of CSV loader, dense, output and loss nodes, and the training bar at the bottom",
+                "caption": "Synapse Builder: build networks as a node graph. The training bar at the bottom starts the run straight from the canvas.",
                 "bullets": [
                     "Node library for data, layers and activations",
                     "Start training directly from the canvas",
@@ -8095,7 +8110,7 @@
                     "title": "Collect data",
                     "text": "Images, texts, recordings and videos – from folders, the microphone, web pages or Hugging Face.",
                     "shot": "studio",
-                    "alt": "FrameTrain Dataset Studio: overview of text, image, audio and video projects with progress bars"
+                    "alt": "FrameTrain Dataset Builder: overview of text, image, audio and video projects with confirmation progress"
                 },
                 {
                     "key": "label",
@@ -8103,7 +8118,7 @@
                     "title": "Label with suggestions",
                     "text": "Draw boxes, assign classes, confirm with the keyboard. A model suggests, you decide.",
                     "shot": "studio-boxes",
-                    "alt": "Dataset Studio: photo of a ski slope with boxes for lift, tree and offroad, classes and distribution hints on the right"
+                    "alt": "Dataset Builder: image with boxes for tree, sky and person, next to classes, progress and a class-balance hint"
                 },
                 {
                     "key": "train",
@@ -8111,7 +8126,7 @@
                     "title": "Train without code",
                     "text": "Pick a model and dataset, apply a template, start. LoRA and QLoRA sit one level deeper when you need them.",
                     "shot": "training",
-                    "alt": "Training view: SmolLM2 model, dataset, epochs, batch size and learning rate"
+                    "alt": "Training view: SmolLM2-135M-Instruct model, dataset, epochs, batch size and learning rate"
                 },
                 {
                     "key": "test",
@@ -8119,7 +8134,7 @@
                     "title": "Test in the Laboratory",
                     "text": "Run real examples and mark them right or wrong. You see exactly where your model still misses.",
                     "shot": "lab-pose",
-                    "alt": "Laboratory: pose detection on a photo at 92% confidence with Correct and Wrong buttons"
+                    "alt": "Laboratory: chairlift in fog, the model reports no objects and missed the lift and tree; next to it the Correct and Wrong buttons"
                 },
                 {
                     "key": "improve",
@@ -8127,7 +8142,7 @@
                     "title": "Mistakes back into the builder",
                     "text": "Misdetected examples become corrections in your dataset with one click. Then you train the next version.",
                     "shot": "lab-results",
-                    "alt": "Laboratory results with rated samples, most common error classes and the Corrections as dataset button"
+                    "alt": "Laboratory session results: rated samples, accuracy, most common error classes and the Corrections as dataset button"
                 }
             ]
         },
@@ -8176,7 +8191,7 @@
                         "Local API"
                     ],
                     "shot": "hosting",
-                    "alt": "Hosting view: a YOLO11 model detects three people in a photo",
+                    "alt": "Hosting: a YOLO11 model detects two people in a photo",
                     "href": "/computer-vision"
                 },
                 {
@@ -8190,7 +8205,7 @@
                         "Local"
                     ],
                     "shot": "analysis",
-                    "alt": "Training analysis of a text classifier with train and validation loss curves",
+                    "alt": "Training analysis of the text classifier myFirstTextclassifier with key figures and loss curve",
                     "href": "/guides/local-vs-cloud"
                 },
                 {
@@ -8204,7 +8219,7 @@
                         "Text → answer"
                     ],
                     "shot": "training-lora",
-                    "alt": "Training settings with the LoRA section active: rank 16, alpha 32, target modules",
+                    "alt": "Training settings for a language model: active LoRA / QLoRA section and LLM parameters with backend, GGUF export and DPO",
                     "href": "/guides/lora-finetuning"
                 }
             ]
@@ -8220,26 +8235,26 @@
                     "title": "Analysis & AI coach",
                     "text": "Loss curves, an overfitting indicator and a coach that explains your curves and suggests new parameters – with your own AI provider if you like.",
                     "shot": "coach",
-                    "alt": "Training analysis with the AI coach chat open next to loss and duration values"
+                    "alt": "AI training analysis with a rating, weaknesses and recommended parameters for the next run"
                 },
                 {
                     "title": "Versions",
                     "text": "Every training run creates a new version with its parameters and metrics. Going back is one click.",
                     "shot": "versions",
-                    "alt": "Versions overview with models such as yolo-pose, smolvlm and ner-distilbert"
+                    "alt": "Versions overview with models such as yolo-obb, yolo-pose, smolvlm and videomae-tiny"
                 },
                 {
                     "title": "Home with AI briefing",
                     "text": "What's running, what failed, what was never tested – and the most useful next step.",
                     "shot": "briefing",
-                    "alt": "FrameTrain home screen with loss trend, best results and an AI briefing"
+                    "alt": "FrameTrain home screen with recent tests, best results and an AI briefing"
                 },
                 {
                     "title": "Synapse Builder",
                     "badge": "Beta",
                     "text": "Build your own network architectures as a node graph and train them directly.",
                     "shot": "synapse",
-                    "alt": "Synapse Builder with a large node graph and the node library on the left"
+                    "alt": "Synapse Builder with a graph of CSV loader, dense, output and loss nodes and the node library on the left"
                 }
             ]
         },
@@ -8468,7 +8483,7 @@
         "titleB": "Your own object detection, no code.",
         "lead": "Tools in the workshop, birds at the feeder, parts on the line: with FrameTrain you label your photos, train a <b>YOLO model</b> and test it – all in one app, on your own computer.",
         "heroShot": "studio-boxes",
-        "heroShotAlt": "FrameTrain Dataset Studio: photo of a ski slope with boxes drawn around lift, tree and offroad",
+        "heroShotAlt": "FrameTrain Dataset Builder: image with boxes for tree, sky and person",
         "sections": [
             {
                 "type": "steps",
@@ -8493,7 +8508,7 @@
                     }
                 ],
                 "shot": "lab-pose",
-                "shotAlt": "FrameTrain Laboratory: pose detection on a photo at 92% confidence with Correct and Wrong buttons"
+                "shotAlt": "FrameTrain Laboratory: result \"no objects\" for a chairlift image, with Correct and Wrong buttons"
             },
             {
                 "type": "points",
@@ -8554,7 +8569,7 @@
             {
                 "type": "shot",
                 "slug": "hosting",
-                "alt": "FrameTrain Hosting: a YOLO11 model detects three people in a photo",
+                "alt": "FrameTrain Hosting: a YOLO11 model detects two people in a photo",
                 "caption": "In the Hosting view: the finished model detects objects in new images."
             }
         ],
@@ -8691,7 +8706,7 @@
                     }
                 ],
                 "shot": "analysis",
-                "shotAlt": "FrameTrain training analysis of a text classifier with loss curve"
+                "shotAlt": "FrameTrain training analysis of the text classifier myFirstTextclassifier with loss curve"
             },
             {
                 "type": "text",
@@ -9161,7 +9176,7 @@
                     }
                 ],
                 "shot": "training-lora",
-                "shotAlt": "FrameTrain training settings with the LoRA section and the Backend field (auto, torch, mlx)"
+                "shotAlt": "FrameTrain training settings with the active LoRA section and the Backend field (auto, torch, mlx)"
             }
         ],
         "faq": [

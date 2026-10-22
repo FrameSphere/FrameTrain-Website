@@ -62,18 +62,13 @@ function LossKurvenSection({ c, locale }: { c: any; locale: string }) {
 
       <H2>{c.frametrainHeading}</H2>
       <P><Rich html={c.frametrainText} /></P>
-      {/* Der Screenshot der Analyse-Charts liegt bislang nur in der deutschen
-          Oberfläche vor. Sobald die englische Fassung existiert, kann die
-          Locale-Bedingung ersatzlos raus. */}
-      {locale === 'de' && (
-        <AppScreenshot
-          locale="de"
-          slug="analysis-charts"
-          alt={c.screenshotAlt}
-          caption={c.screenshotCaption}
-          className="mt-6"
-        />
-      )}
+      <AppScreenshot
+        locale={locale}
+        slug="analysis-charts"
+        alt={c.screenshotAlt}
+        caption={c.screenshotCaption}
+        className="mt-6"
+      />
     </div>
   )
 }

@@ -1026,7 +1026,7 @@
         "downloadButton": "Download für {platform}",
         "startingDownload": "Download wird gestartet...",
         "versionInfo": "Version: {version} • Größe: {size} MB",
-        "shotAlt": "FrameTrain nach der Installation: Startseite mit Hinweisen, Kennzahlen zu Modellen, Versionen, Datasets und Trainings sowie den letzten Trainings und Tests",
+        "shotAlt": "FrameTrain nach der Installation: Startseite mit Kennzahlen zu Modellen, Versionen, Datasets und Trainings, den letzten Trainings und Tests und dem Bereich „Lohnt einen Blick“",
         "shotCaption": "Das erwartet dich nach der Installation: die Startseite mit dem Stand deines Projekts – laufende Trainings, Kennzahlen und die letzten Läufe. Von hier geht es in Modelle, Datensätze und Training.",
         "shotLink": "Alle Oberflächen der App ansehen",
         "installVideoHeading": "Unsicher? So installierst du es in 2 Minuten",
@@ -1431,7 +1431,7 @@
                     "desc": "Final-Loss der letzten abgeschlossenen Trainings als Sparkline und eine Rangliste der besten Testergebnisse nach Accuracy."
                 }
             ],
-            "insightsHeading": "Braucht Aufmerksamkeit",
+            "insightsHeading": "Lohnt einen Blick",
             "insightsText": "Der Hinweisbereich am Kopf der Seite arbeitet rein regelbasiert – keine KI, keine Tokens, keine Kosten. Er meldet sich nur, wenn es etwas zu melden gibt, und zeigt höchstens fünf Hinweise auf einmal. Ein Klick springt direkt an die Stelle, an der sich das Problem beheben lässt:",
             "insights": [
                 "Ein Training läuft, aber der Ruhezustand ist nicht unterdrückt – der Rechner könnte mitten im Nachtlauf einschlafen.",
@@ -3430,7 +3430,7 @@
         "hyperparams": {
             "heading": "Wichtige LoRA Hyperparameter",
             "typicalLabel": "typisch",
-            "screenshotAlt": "LoRA- und QLoRA-Konfiguration in FrameTrain: Trainingsparameter mit Epochs, Batch Size und Learning Rate, darunter ein eigener aufklappbarer Abschnitt für LoRA / QLoRA",
+            "screenshotAlt": "LLM-Fine-Tuning in FrameTrain: Optimizer und Scheduler, der aktive Abschnitt „LoRA / QLoRA“ und die LLM-Parameter mit Backend, GGUF-Export und DPO",
             "screenshotCaption": "In FrameTrain liegt der Abschnitt „LoRA / QLoRA“ direkt unter den Basis-Parametern und dem Optimizer. Aufgeklappt stehen dort Rank, Alpha und Dropout.",
             "items": [
                 {
@@ -3584,7 +3584,7 @@
             ]
         },
         "privacy": {
-            "screenshotAlt": "FrameTrain Einstellungen für den KI-Assistenten: Auswahl zwischen Claude, GPT-4o, Groq und lokalem Ollama, dazu die Ollama-Modellkonfiguration",
+            "screenshotAlt": "FrameTrain Einstellungen für den KI-Assistenten: Auswahl zwischen Claude, GPT-4o, Groq und lokalem Ollama ohne API-Key",
             "screenshotCaption": "Auch die optionalen KI-Funktionen lassen sich lokal fahren: Ollama läuft ohne API-Key auf dem eigenen Rechner. Wer gar nichts davon will, schaltet den Assistenten ab – trainiert wird davon unabhängig.",
             "heading": "Datenschutz & DSGVO – warum lokal besser ist",
             "intro": "Bei Cloud-Diensten werden deine Trainingsdaten auf fremde Server hochgeladen – in den USA, Europa oder anderswo. Das ist für viele Anwendungsfälle problematisch oder schlicht illegal:",
@@ -5083,7 +5083,7 @@
                     "overfittingFix": {
                         "screenshotHeading": "Diagnose in FrameTrain",
                         "screenshotText": "Die Metriken eines Laufs lassen sich in FrameTrain an ein Sprachmodell deiner Wahl geben. Zurück kommt keine Zahlenreihe, sondern eine Einschätzung im Klartext: was schiefgelaufen ist, welche Maßnahme zuerst greift und mit welchen Parametern der nächste Lauf starten sollte.",
-                        "screenshotAlt": "FrameTrain KI-Trainingsanalyse mit Verbesserungsvorschlägen, empfohlenen Parametern als JSON-Block und einer Prognose für den nächsten Lauf",
+                        "screenshotAlt": "FrameTrain KI-Trainingsanalyse mit Bewertung, Schwachstellen, Verbesserungsvorschlägen und empfohlenen Parametern",
                         "screenshotCaption": "Der Parametervorschlag lässt sich mit einem Klick als Training-Template speichern – die Analyse bleibt an der Modellversion hängen.",
                         "title": "Overfitting bekämpfen",
                         "subtitle": "Konkrete Maßnahmen nach Effektivität sortiert",
@@ -6223,7 +6223,7 @@
                     "datenQualitaet": {
                         "screenshotHeading": "Datensätze in FrameTrain",
                         "screenshotText": "FrameTrain zeigt pro Datensatz Format, Größe, Dateianzahl und Änderungsdatum – und ob bereits ein Train-/Val-/Test-Split existiert. Multi-Shard-Parquet wird nativ gelesen; fehlt ein Split, teilst du den Datensatz direkt in der App.",
-                        "screenshotAlt": "FrameTrain Datensatz-Verwaltung mit Parquet-Datensätzen, Split-Status und Buttons zum Aufteilen und Halbieren",
+                        "screenshotAlt": "FrameTrain Datensatz-Verwaltung mit zwei YOLO-Datensätzen, Split-Status, Train/Val/Test-Zahlen und Buttons zum Halbieren",
                         "screenshotCaption": "Die Datensatz-Übersicht prüft die Kompatibilität gegen das gewählte Modell, bevor das Training überhaupt startet.",
                         "title": "Datenqualität & -menge",
                         "subtitle": "Die wichtigste Grundlage für jedes erfolgreiche Training",
@@ -7516,11 +7516,11 @@
                 "slug": "home",
                 "title": "Startseite – was passiert ist, während du weg warst",
                 "text": "Nach dem Login öffnet FrameTrain nicht mehr mitten in der Modell-Liste, sondern auf einer Übersicht des Projektstands: Läuft gerade ein Training, samt Fortschritt? Was ist seit dem letzten Besuch fertig geworden oder fehlgeschlagen? Darunter Kennzahlen inklusive Speicherbelegung, die letzten Trainings und Tests, der Loss-Trend der letzten Läufe und eine Bestenliste nach Accuracy. Jede Kachel ist ein Sprung in den passenden Bereich – die Startseite ist ein Statusbericht, kein zweites Menü. Über den Home-Button oben links in der Seitenleiste kommst du jederzeit zurück.",
-                "alt": "FrameTrain Startseite nach dem Login mit Begrüßung, Hinweisbereich „Braucht Aufmerksamkeit“, Kennzahlen zu Modellen, Versionen, Datasets und Trainings sowie den letzten Trainings und Tests",
-                "caption": "Die Startseite: oben die Hinweise, die gerade Aufmerksamkeit brauchen, darunter Kennzahlen und die letzten Läufe – jede Karte führt direkt in den zugehörigen Bereich.",
+                "alt": "FrameTrain Startseite mit Begrüßung, Kennzahlen zu Modellen, Versionen, Datasets und Trainings, den letzten Trainings und Tests und dem Bereich „Lohnt einen Blick“",
+                "caption": "Die Startseite: Kennzahlen und letzte Läufe links, rechts die Hinweise, die einen Blick lohnen, und die besten Ergebnisse – jede Zeile führt direkt in den zugehörigen Bereich.",
                 "bullets": [
                     "Laufende Trainings mit Fortschritt und Ergebnisse seit dem letzten Besuch",
-                    "„Braucht Aufmerksamkeit“ warnt regelbasiert – ohne KI und ohne Kosten",
+                    "„Lohnt einen Blick“ warnt regelbasiert – ohne KI und ohne Kosten",
                     "KI-Briefing auf Knopfdruck, gespeichert und nur bei echter Änderung neu"
                 ]
             },
@@ -7529,8 +7529,8 @@
                 "slug": "models",
                 "title": "Modelle verwalten – HuggingFace und Lokales an einem Ort",
                 "text": "Die Modellübersicht listet alles, was FrameTrain kennt: von HuggingFace importierte Modelle, lokal abgelegte Gewichte und im Synapse Builder selbst gebaute Netze. Jede Karte zeigt Dateianzahl, Größe auf der Platte, Ablagepfad und das Plugin, das für dieses Modell zuständig ist. Modelle ohne passendes Plugin sind vorab als solche markiert, statt erst beim Trainingsstart zu scheitern.",
-                "alt": "FrameTrain Modellübersicht mit importierten HuggingFace-Modellen, lokalen Modellen und Synapse-Canvas-Netzen, jeweils mit Größe und Plugin-Kennzeichnung",
-                "caption": "Modellübersicht: TinyLlama, xlm-roberta, YOLO und eigene Canvas-Netze nebeneinander, mit Größe, Datum und zuständigem Plugin.",
+                "alt": "FrameTrain Modellübersicht mit YOLO-, Stable-Diffusion-, Vision-Language-, Video-, Embedding-, NER- und Whisper-Modellen, jeweils mit Größe und zuständigem Plugin",
+                "caption": "Modellübersicht: yolo-obb, tiny-sd, smolvlm, videomae-tiny, minilm, ner-distilbert und whisper-tiny nebeneinander, mit Größe, Datum und zuständigem Plugin.",
                 "bullets": [
                     "Import von HuggingFace über die Repo-ID",
                     "Größe, Dateianzahl und Speicherpfad pro Modell",
@@ -7542,8 +7542,8 @@
                 "slug": "datasets",
                 "title": "Datensätze – Parquet, Flat Files und Splits",
                 "text": "Datensätze hängen am Modell: Die Auswahl oben filtert die Liste auf das, was zum gewählten Modell passt. FrameTrain liest Multi-Shard-Parquet nativ, zeigt Dateigröße und Änderungsdatum und markiert, ob bereits ein Train-/Val-/Test-Split existiert. Fehlt einer, teilst du den Datensatz direkt in der App – halbieren inklusive.",
-                "alt": "FrameTrain Datensatz-Verwaltung mit Parquet-Datensätzen, Split-Status und Buttons zum Aufteilen und Halbieren",
-                "caption": "Datensätze pro Modell, mit Format, Größe und Split-Status. „Kein Split“ ist ein Hinweis, kein Fehler – teilen geht direkt hier.",
+                "alt": "FrameTrain Datensatz-Verwaltung mit zwei YOLO-Datensätzen, Split-Status, Train/Val/Test-Zahlen und Buttons zum Halbieren",
+                "caption": "Datensätze pro Modell, mit Format, Größe und Split-Status – hier zwei bereits aufgeteilte YOLO-Datensätze.",
                 "bullets": [
                     "Multi-Shard-Parquet wird nativ unterstützt",
                     "Train-/Val-/Test-Split ohne Umweg über die Kommandozeile",
@@ -7555,7 +7555,7 @@
                 "slug": "dataset-builder-image-boxes",
                 "title": "Datensatz-Werkstatt – eigene Datensätze beschriften",
                 "text": "Seit Version 1.3.4 baust du Datensätze direkt in FrameTrain. Die Bild-Werkbank zeigt das Prinzip: Boxen aufziehen, Klasse per Zifferntaste wählen, mit Enter bestätigen. Ein trainiertes Modell kann Vorschläge machen, der Filter „Unsicher“ bringt die schwierigsten Fälle nach vorn, und rechts siehst du, welche Klassen noch zu wenige Beispiele haben. Neben Bildern gibt es Projektarten für Texte, Aufnahmen, Transkripte und Videoabschnitte.",
-                "alt": "Bild-Werkbank der Datensatz-Werkstatt mit Bounding-Boxen für Baum, Lift und Offroad, Klassenliste, Zählern und Verteilungswarnungen",
+                "alt": "Bild-Werkbank der Datensatz-Werkstatt mit Boxen für Baum, Himmel und Person, Klassenliste, Zählern und Verteilungshinweis",
                 "caption": "Beschriften per Tastatur, mit Vorschlägen und Warnungen zur Klassenverteilung.",
                 "bullets": [
                     "Sieben Projektarten für Bild, Text, Audio und Video",
@@ -7570,8 +7570,8 @@
                 "slug": "dataset-builder-web",
                 "title": "Aus dem Netz holen – Daten sammeln mit Herkunft",
                 "text": "Statt Dateien einzeln herunterzuladen, gibst du der Werkstatt Adressen, ganze Websites oder eine Sitemap. FrameTrain folgt Links nur bis zur gewählten Tiefe und nur auf denselben Domains, hält Grenzen für Seiten, Dateien und Dateigröße ein und befolgt robots.txt samt Crawl-delay. Jede geholte Datei bekommt Adresse, Fundseite und Lizenz in PROVENANCE.csv.",
-                "alt": "Dialog „Aus dem Netz holen“ im Website-Modus mit Startseite, Grenzen für Tiefe, Seiten, Dateien und Dateigröße, Lizenzfeld und robots.txt-Hinweis",
-                "caption": "Website-Modus mit aufgeklappten Grenzen. robots.txt wird immer befolgt.",
+                "alt": "Dialog „Aus dem Netz holen“ mit den Modi Adressen, Website und Sitemap, Grenzen, Lizenzfeld und robots.txt-Hinweis",
+                "caption": "Aus dem Netz holen: einzelne Adressen, eine ganze Website oder eine Sitemap. robots.txt wird immer befolgt.",
                 "bullets": [
                     "Adressen, ganze Websites oder Sitemaps",
                     "Mindestens eine Sekunde Pause je Server",
@@ -7585,8 +7585,8 @@
                 "slug": "training",
                 "title": "Training konfigurieren – Hyperparameter, LoRA und QLoRA",
                 "text": "Der Trainingsbereich zeigt Modell, Version und Datensatz nebeneinander und prüft vorab, ob das Plugin diese Kombination unterstützt. Die Basis-Parameter stehen offen: Epochs, Batch Size, Learning Rate, Max Seq Length, Warmup Ratio und Gradient Accumulation. Optimizer & Scheduler, Erweitert & Evaluation sowie LoRA / QLoRA klappen bei Bedarf auf. Mixed Precision lässt sich pro Backend umschalten – FP16 bleibt gesperrt, wo die Hardware BF16 verlangt.",
-                "alt": "FrameTrain Trainingskonfiguration mit Epochs, Batch Size, Learning Rate, Warmup Ratio und aufklappbaren Abschnitten für Optimizer, Evaluation und LoRA/QLoRA",
-                "caption": "Trainingskonfiguration für xlm-roberta-base: Basis-Parameter offen, Optimizer, Evaluation und LoRA/QLoRA eine Ebene tiefer.",
+                "alt": "FrameTrain Trainingskonfiguration für SmolLM2-135M-Instruct mit Epochs, Batch Size, Learning Rate, Warmup Ratio und aufklappbaren Abschnitten",
+                "caption": "Trainingskonfiguration für ein Sprachmodell: Modell, Version und Datensatz oben, Basis-Parameter offen, Optimizer und weitere Abschnitte eine Ebene tiefer.",
                 "bullets": [
                     "LoRA und QLoRA als eigener Konfigurationsabschnitt",
                     "Templates und KI-Assistent liefern belastbare Startwerte",
@@ -7613,7 +7613,7 @@
                 "slug": "analysis-charts",
                 "title": "Loss-Kurven und Overfitting-Indikator",
                 "text": "Loss-Verlauf, Ø Loss pro Epoche und ein Overfitting-Indikator (Val minus Train) liegen untereinander auf einer Seite. Ein Smoothing-Schalter nimmt Rauschen aus den Kurven, jede Grafik lässt sich einzeln exportieren. Darüber stehen die abgeleiteten Kennzahlen: Final Train Loss, Epochen und Steps, Loss-Reduktion und Overfitting-Gap.",
-                "alt": "FrameTrain Analyse-Ansicht mit Loss-Verlauf für Train und Validation, durchschnittlichem Loss pro Epoche und Overfitting-Indikator",
+                "alt": "FrameTrain Analyse-Ansicht mit abgeleiteten Statistiken, Loss-Verlauf für Train und Validation, Ø Loss pro Epoche und Overfitting-Indikator",
                 "caption": "Train- und Validation-Loss in einer Kurve, darunter Ø Loss pro Epoche und der Val-Train-Gap als eigenes Diagramm.",
                 "bullets": [
                     "Train- und Validation-Loss in derselben Kurve",
@@ -7628,8 +7628,8 @@
                 "slug": "ai-analysis",
                 "title": "KI-Trainingsanalyse – Metriken im Klartext",
                 "text": "FrameTrain schickt die Metriken eines Laufs an ein Sprachmodell deiner Wahl und bekommt eine Auswertung im Klartext zurück: was schiefgelaufen ist, welche Maßnahmen helfen und mit welchen Parametern der nächste Lauf starten sollte. Der Parametervorschlag kommt als JSON-Block, den du mit einem Klick als Training-Template speicherst.",
-                "alt": "FrameTrain KI-Trainingsanalyse mit Verbesserungsvorschlägen, empfohlenen Parametern als JSON und einer Prognose für den nächsten Lauf",
-                "caption": "KI-Trainingsanalyse zu einer konkreten Modellversion: Diagnose, empfohlene Parameter, Prognose.",
+                "alt": "FrameTrain KI-Trainingsanalyse mit Bewertung, Schwachstellen, Verbesserungsvorschlägen und empfohlenen Parametern",
+                "caption": "KI-Trainingsanalyse zu einer konkreten Modellversion: Diagnose, Verbesserungsvorschläge und empfohlene Parameter zum Übernehmen.",
                 "bullets": [
                     "Auswertung in Fließtext statt roher Zahlenreihen",
                     "Parametervorschlag als Training-Template speicherbar",
@@ -7643,8 +7643,8 @@
                 "slug": "ai-coach",
                 "title": "KI-Coach – Rückfragen im Kontext des Panels",
                 "text": "Der KI-Coach ist ein Chat, der weiß, in welchem Panel du gerade stehst. Auf „Wie kann ich den Val Loss bei diesem Training verbessern?“ antwortet er mit Bezug auf die geladenen Werte statt mit Allgemeinplätzen – von der Learning Rate über Dropout und Weight Decay bis zur LoRA-Kapazität. Konkrete Vorschläge übernimmst du per Button direkt unter der Antwort, und ein / im Eingabefeld öffnet vorbereitete Fragen passend zur Seite.",
-                "alt": "FrameTrain KI-Coach als Chatfenster über dem Trainingsbereich, mit Antwort zu Learning Rate, Epochs, Dropout und LoRA-Rang",
-                "caption": "Der Coach sitzt über dem Panel, aus dem er seinen Kontext zieht – hier das Training-Panel.",
+                "alt": "FrameTrain KI-Coach als Chatfenster mit einer Zusammenfassung eines BERT-Trainings und dem Button „Empfohlene Parameter übernehmen“",
+                "caption": "Der Coach kennt das Panel, aus dem er geöffnet wurde, und schlägt passende Parameter direkt zum Übernehmen vor.",
                 "bullets": [
                     "Kennt bei jeder Nachricht den Zustand der aktuellen Seite",
                     "Skills per / – vorbereitete Fragen für jede Seite",
@@ -7658,8 +7658,8 @@
                 "slug": "ai-providers",
                 "title": "KI-Anbieter – eigener Key oder komplett lokal",
                 "text": "Welches Sprachmodell hinter Coach, Analyse und Assistenten steckt, entscheidest du: Claude, OpenAI und Groq laufen über deinen eigenen API-Key, Ollama komplett lokal und ohne Key. Jeder Anbieter behält seinen Key, ein Wechsel verliert keinen. Das Token-Budget von Minimal bis Unlimited legt fest, wie ausführlich und gründlich alle KI-Funktionen arbeiten. Wer gar keine KI-Funktionen möchte, schaltet den Assistenten global ab. Das Training selbst ist davon unabhängig und läuft in jedem Fall auf deiner Hardware.",
-                "alt": "FrameTrain Einstellungen für den KI-Assistenten mit Auswahl zwischen Claude, GPT-4o, Groq und lokalem Ollama sowie Ollama-Modellkonfiguration",
-                "caption": "Anbieterwahl für die KI-Funktionen. Ollama läuft lokal und braucht keinen API-Key.",
+                "alt": "FrameTrain Einstellungen für den KI-Assistenten mit Auswahl zwischen Claude, GPT-4o, Groq und lokalem Ollama sowie sicher gespeichertem API-Key",
+                "caption": "Anbieterwahl für die KI-Funktionen. Ollama läuft lokal und braucht keinen API-Key; Schlüssel liegen im Schlüsselbund des Betriebssystems.",
                 "bullets": [
                     "Ollama lokal, ohne API-Key und ohne Datenabfluss",
                     "Ein Key pro Anbieter, sicher im Schlüsselbund des Systems",
@@ -7673,8 +7673,8 @@
                 "slug": "versions",
                 "title": "Versionen – jedes Training legt einen neuen Stand an",
                 "text": "Ein Trainingslauf überschreibt nichts, sondern legt eine neue Version an. Die Versionsliste zeigt pro Stand Train Loss, Val Loss, Epochen, Größe und Ablagepfad; das importierte Original bleibt unangetastet. Ein Rückschritt auf einen früheren Stand heißt: die ältere Version auswählen.",
-                "alt": "FrameTrain Versionsliste eines Modells mit Original und drei trainierten Versionen samt Train Loss, Val Loss und Epochen",
-                "caption": "Vier Stände desselben Modells. Am Train- und Val-Loss je Version ist ablesbar, welcher Lauf etwas gebracht hat.",
+                "alt": "FrameTrain Versionsliste eines Textklassifizierers mit Original und trainierter Version samt Train Loss, Val Loss, Epochen und Dauer",
+                "caption": "Zwei Stände desselben Modells. Am Train- und Val-Loss je Version ist ablesbar, was ein Lauf gebracht hat.",
                 "bullets": [
                     "Das importierte Original bleibt immer erhalten",
                     "Metriken und Größe je Version",
@@ -7686,7 +7686,7 @@
                 "slug": "laboratory",
                 "title": "Labor – trainierte Modelle an echten Samples testen",
                 "text": "Im Labor lädst du einzelne Samples aus Train, Val oder Test und lässt die trainierte Version darauf antworten: Test Engine oder Dev-Script wählen, Modell in Inferenz laden, Samples laden, Session starten. Für die Frage, ob ein Modell in der Praxis taugt, reicht ein Loss-Wert nun einmal nicht aus.",
-                "alt": "FrameTrain Labor mit Auswahl von Modell, Version, Test Engine und Sample-Datensatz sowie Vorschau der geladenen Samples",
+                "alt": "FrameTrain Labor mit Auswahl von Modell, Version, Test Engine und Sample-Datensatz sowie Vorschau von 116 geladenen Samples",
                 "caption": "Labor-Konfiguration: Version, Engine und Sample-Auswahl, bevor die Session startet.",
                 "bullets": [
                     "Samples gezielt aus Train, Val oder Test",
@@ -7699,8 +7699,8 @@
                 "slug": "synapse-builder",
                 "title": "Synapse Builder – Architektur als Graph",
                 "text": "Der Synapse Builder baut Netze aus Knoten: Input, CSV-, Image- und Parquet-Loader, Tokenizer, Dataset Split, Augmentation, dazu Dense, Conv2D, Embedding, LSTM, Attention, Transformer Block, LayerNorm, BatchNorm und Dropout. Unten liegt die Trainingsleiste mit Epochs, Batch Size, Learning Rate, GPU, Precision und Grad Accum – trainiert wird aus demselben Fenster heraus.",
-                "alt": "FrameTrain Synapse Builder mit Knotenbibliothek, Graph aus 27 verbundenen Layer-Knoten und Trainingsleiste am unteren Rand",
-                "caption": "Synapse Builder mit 27 Knoten und 25 Verbindungen. Die Trainingsleiste unten startet den Lauf direkt aus dem Canvas.",
+                "alt": "FrameTrain Synapse Builder mit Knotenbibliothek, einem Graphen aus CSV-Loader, Dense-, Output- und Loss-Knoten und der Trainingsleiste unten",
+                "caption": "Synapse Builder: Netze als Knoten-Graph bauen. Die Trainingsleiste unten startet den Lauf direkt aus dem Canvas.",
                 "bullets": [
                     "Knotenbibliothek für Daten, Layer und Aktivierungen",
                     "Training direkt aus dem Canvas starten",
@@ -8111,7 +8111,7 @@
                     "title": "Daten sammeln",
                     "text": "Bilder, Texte, Aufnahmen und Videos – aus Ordnern, vom Mikrofon, von Webseiten oder von Hugging Face.",
                     "shot": "studio",
-                    "alt": "FrameTrain Dataset Studio: Übersicht über Projekte für Texte, Bilder, Audio und Video mit Fortschrittsbalken"
+                    "alt": "FrameTrain Datensatz-Werkstatt: Übersicht der Projekte für Texte, Bilder, Audio und Video mit Bestätigungsfortschritt"
                 },
                 {
                     "key": "label",
@@ -8119,7 +8119,7 @@
                     "title": "Labeln mit Vorschlägen",
                     "text": "Boxen ziehen, Klassen vergeben, per Tastatur bestätigen. Ein Modell schlägt vor, du entscheidest.",
                     "shot": "studio-boxes",
-                    "alt": "Dataset Studio: Foto einer Skipiste mit Boxen für Lift, Baum und Offroad, rechts Klassen und Verteilungshinweise"
+                    "alt": "Datensatz-Werkstatt: Bild mit Boxen für Baum, Himmel und Person, daneben Klassen, Stand und ein Hinweis zur Klassenverteilung"
                 },
                 {
                     "key": "train",
@@ -8127,7 +8127,7 @@
                     "title": "Trainieren ohne Code",
                     "text": "Modell und Datensatz wählen, Vorlage übernehmen, starten. LoRA und QLoRA liegen eine Ebene tiefer, wenn du sie brauchst.",
                     "shot": "training",
-                    "alt": "Trainingsansicht: Modell SmolLM2, Datensatz, Epochs, Batch Size und Learning Rate"
+                    "alt": "Trainingsansicht: Modell SmolLM2-135M-Instruct, Datensatz, Epochs, Batch Size und Learning Rate"
                 },
                 {
                     "key": "test",
@@ -8135,7 +8135,7 @@
                     "title": "Im Labor testen",
                     "text": "Echte Beispiele durchlaufen lassen und als richtig oder falsch bewerten. So siehst du, wo dein Modell noch danebenliegt.",
                     "shot": "lab-pose",
-                    "alt": "Laboratory: Posen-Erkennung auf einem Foto mit 92 % Konfidenz und den Buttons Richtig und Falsch"
+                    "alt": "Labor: Sessellift im Nebel, das Modell meldet „Keine Objekte“ und hat Lift und Baum nicht erkannt; daneben die Buttons Korrekt und Falsch"
                 },
                 {
                     "key": "improve",
@@ -8143,7 +8143,7 @@
                     "title": "Fehler zurück in den Builder",
                     "text": "Falsch erkannte Beispiele landen mit einem Klick als Korrekturen im Datensatz. Dann trainierst du die nächste Version.",
                     "shot": "lab-results",
-                    "alt": "Laboratory-Auswertung mit bewerteten Beispielen, häufigsten Fehlerklassen und dem Button Korrekturen als Datensatz"
+                    "alt": "Labor-Auswertung einer Session: bewertete Beispiele, Trefferquote, häufigste Fehlerklassen und der Button „Korrekturen als Dataset“"
                 }
             ]
         },
@@ -8192,7 +8192,7 @@
                         "Lokale API"
                     ],
                     "shot": "hosting",
-                    "alt": "Hosting-Ansicht: ein YOLO11-Modell erkennt drei Personen auf einem Foto",
+                    "alt": "Hosting: ein YOLO11-Modell erkennt zwei Personen auf einem Foto",
                     "href": "/computer-vision"
                 },
                 {
@@ -8206,7 +8206,7 @@
                         "Lokal"
                     ],
                     "shot": "analysis",
-                    "alt": "Trainingsanalyse eines Textklassifizierers mit Loss-Kurve für Train und Validation",
+                    "alt": "Trainingsanalyse des Textklassifizierers myFirstTextclassifier mit Kennzahlen und Loss-Kurve",
                     "href": "/guides/local-vs-cloud"
                 },
                 {
@@ -8220,7 +8220,7 @@
                         "Text → Antwort"
                     ],
                     "shot": "training-lora",
-                    "alt": "Trainingseinstellungen mit aktivem LoRA-Abschnitt: Rank 16, Alpha 32, Target Modules",
+                    "alt": "Trainingseinstellungen für ein Sprachmodell: aktiver Abschnitt LoRA / QLoRA und LLM-Parameter mit Backend, GGUF-Export und DPO",
                     "href": "/guides/lora-finetuning"
                 }
             ]
@@ -8236,26 +8236,26 @@
                     "title": "Analyse & KI-Coach",
                     "text": "Loss-Kurven, Overfitting-Anzeige und ein Coach, der deine Kurven erklärt und neue Parameter vorschlägt – mit deinem eigenen KI-Anbieter, wenn du willst.",
                     "shot": "coach",
-                    "alt": "Trainingsanalyse mit geöffnetem KI-Coach-Chat neben Loss- und Laufzeitwerten"
+                    "alt": "KI-Trainingsanalyse mit Bewertung, Schwachstellen und empfohlenen Parametern für das nächste Training"
                 },
                 {
                     "title": "Versionen",
                     "text": "Jedes Training legt eine neue Version mit Parametern und Metriken an. Zurück zu einer älteren ist ein Klick.",
                     "shot": "versions",
-                    "alt": "Versionsübersicht mit Modellen wie yolo-pose, smolvlm und ner-distilbert"
+                    "alt": "Versionsübersicht mit Modellen wie yolo-obb, yolo-pose, smolvlm und videomae-tiny"
                 },
                 {
                     "title": "Startseite mit KI-Briefing",
                     "text": "Was läuft, was ist fehlgeschlagen, was wurde nie getestet – und was der sinnvollste nächste Schritt ist.",
                     "shot": "briefing",
-                    "alt": "FrameTrain-Startseite mit Loss-Trend, besten Ergebnissen und KI-Briefing"
+                    "alt": "FrameTrain-Startseite mit letzten Tests, besten Ergebnissen und KI-Briefing"
                 },
                 {
                     "title": "Synapse Builder",
                     "badge": "Beta",
                     "text": "Eigene Netzarchitekturen als Knoten-Graph bauen und direkt trainieren.",
                     "shot": "synapse",
-                    "alt": "Synapse Builder mit einem großen Knoten-Graphen und der Knotenbibliothek links"
+                    "alt": "Synapse Builder mit einem Graphen aus CSV-Loader, Dense-, Output- und Loss-Knoten und der Knotenbibliothek links"
                 }
             ]
         },
@@ -8484,7 +8484,7 @@
         "titleB": "Eigene Objekterkennung, ohne Code.",
         "lead": "Werkzeuge in der Werkstatt, Vögel am Futterhaus, Bauteile auf dem Band: Mit FrameTrain labelst du deine Fotos, trainierst ein <b>YOLO-Modell</b> und testest es – alles in einer App, lokal auf deinem Rechner.",
         "heroShot": "studio-boxes",
-        "heroShotAlt": "FrameTrain Dataset Studio: Foto einer Skipiste mit gezeichneten Boxen für Lift, Baum und Offroad",
+        "heroShotAlt": "FrameTrain Datensatz-Werkstatt: Bild mit Boxen für Baum, Himmel und Person",
         "sections": [
             {
                 "type": "steps",
@@ -8509,7 +8509,7 @@
                     }
                 ],
                 "shot": "lab-pose",
-                "shotAlt": "FrameTrain Laboratory: Posen-Erkennung auf einem Foto mit 92 % Konfidenz und den Buttons Richtig und Falsch"
+                "shotAlt": "FrameTrain Labor: Ergebnis „Keine Objekte“ für ein Bild mit Sessellift, mit den Buttons Korrekt und Falsch"
             },
             {
                 "type": "points",
@@ -8570,7 +8570,7 @@
             {
                 "type": "shot",
                 "slug": "hosting",
-                "alt": "FrameTrain Hosting: ein YOLO11-Modell erkennt drei Personen auf einem Foto",
+                "alt": "FrameTrain Hosting: ein YOLO11-Modell erkennt zwei Personen auf einem Foto",
                 "caption": "Im Hosting-Bereich: das fertige Modell erkennt Objekte auf neuen Bildern."
             }
         ],
@@ -8707,7 +8707,7 @@
                     }
                 ],
                 "shot": "analysis",
-                "shotAlt": "FrameTrain Trainingsanalyse eines Textklassifizierers mit Loss-Kurve"
+                "shotAlt": "FrameTrain Trainingsanalyse des Textklassifizierers myFirstTextclassifier mit Loss-Kurve"
             },
             {
                 "type": "text",
@@ -9177,7 +9177,7 @@
                     }
                 ],
                 "shot": "training-lora",
-                "shotAlt": "FrameTrain Trainingseinstellungen mit LoRA-Abschnitt und dem Feld Backend (auto, torch, mlx)"
+                "shotAlt": "FrameTrain Trainingseinstellungen mit aktivem LoRA-Abschnitt und dem Feld Backend (auto, torch, mlx)"
             }
         ],
         "faq": [

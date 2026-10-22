@@ -8,13 +8,13 @@
  * Plain <img> statt next/image aus denselben Gründen wie in AppScreenshot.tsx
  * (sprechende URLs, keine Vercel-Transformationen, feste Maße gegen CLS).
  *
- * Die deutschen Screenshots folgen; bis dahin zeigen beide Sprachen die
- * englische Oberfläche.
+ * Stand App 1.6.0, deutsche und englische Oberfläche. Erzeugt mit
+ * scripts/build-screenshots.py.
  */
 export const APP_SHOT_WIDTH = 1200
 export const APP_SHOT_HEIGHT = 772
 
-const AVAILABLE_LOCALES = new Set(['en'])
+const AVAILABLE_LOCALES = new Set(['de', 'en'])
 
 export function appShotBase(locale: string, slug: string) {
   const dir = AVAILABLE_LOCALES.has(locale) ? locale : 'en'

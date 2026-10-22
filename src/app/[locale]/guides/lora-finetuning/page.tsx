@@ -213,7 +213,7 @@ export default async function LoraGuidePage({ params }: Props) {
                   erklärt sie, der Screenshot zeigt den Ort. */}
               <AppScreenshot
                 locale={locale}
-                slug="training"
+                slug="training-lora"
                 alt={t('hyperparams.screenshotAlt')}
                 caption={t('hyperparams.screenshotCaption')}
                 className="mt-8"
