@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyJWT } from '@/lib/jwt';
+import { cookies } from 'next/headers';
 import { fetchLatestRelease, type GitHubRelease, type ReleaseAsset } from '@/lib/github-releases';
 
 // Force dynamic rendering for this route
@@ -91,6 +92,11 @@ async function verifyAccess(apiKey?: string, token?: string): Promise<boolean> {
   }
 }
 
+/** Login-Cookie als JWT, falls der Nutzer auf der Website angemeldet ist. */
+async function getCurrentUserToken(): Promise<string | undefined> {
+  return (await cookies()).get('auth-token')?.value;
+}
+
 /**
  * Log download for analytics
  */
@@ -109,7 +115,9 @@ export async function GET(request: NextRequest) {
     const platform = searchParams.get('platform');
     const apiKey = searchParams.get('key');
     const authHeader = request.headers.get('authorization');
-    const token = authHeader?.replace('Bearer ', '');
+    // Bearer-Token (CLI/App) oder – für den Ein-Klick-Download auf der
+    // Website – das Login-Cookie des angemeldeten Nutzers.
+    const token = authHeader?.replace('Bearer ', '') || (await getCurrentUserToken());
 
     // Validate platform
     if (!platform || !['windows', 'mac', 'linux'].includes(platform)) {

@@ -61,7 +61,8 @@
         "gdpr": "GDPR & companies",
         "vsUnsloth": "vs. Unsloth",
         "vsColab": "vs. Google Colab",
-        "mlxVsPytorch": "MLX vs. PyTorch"
+        "mlxVsPytorch": "MLX vs. PyTorch",
+        "feedback": "Feedback"
     },
     "Imprint": {
         "metaTitle": "Imprint – FrameTrain",
@@ -1022,7 +1023,7 @@
         },
         "apiKeyLabel": "API Key",
         "apiKeyPlaceholder": "Enter your API key...",
-        "apiKeyHint": "You'll receive your API key after purchase on the <link>payment page</link>",
+        "apiKeyHint": "You can find your API key in your <link>dashboard</link>.",
         "missingKeyError": "Please enter your API key",
         "downloadFailedError": "Download failed",
         "genericError": "An error occurred",
@@ -1065,7 +1066,36 @@
             "commentInstallApp": "# Install the desktop app",
             "commentStart": "# Start FrameTrain"
         },
-        "supportText": "Problems downloading? <link>Contact our support</link>"
+        "supportText": "Problems downloading? <link>Contact our support</link>",
+        "detected": "Detected: {os}",
+        "mobile": {
+            "label": "On your phone",
+            "title": "FrameTrain runs on your computer.",
+            "text": "FrameTrain is a desktop app for macOS (Apple Silicon), Windows and Linux. Send yourself the download link and continue on your computer.",
+            "send": "Email me the download link",
+            "sending": "Sending …",
+            "sent": "Sent to {email}. Open the email on your computer.",
+            "rateLimited": "You just requested the link. Check your inbox.",
+            "error": "The email could not be sent. Please try again in a moment.",
+            "guestText": "Start the free trial first. Open the confirmation email on your computer – you continue right there.",
+            "showAnyway": "Show the downloads anyway"
+        },
+        "intel": {
+            "title": "Your Mac seems to have an Intel chip.",
+            "text": "On the Mac, FrameTrain only runs on Apple Silicon (M1–M4). If you have a Windows or Linux computer, you can use FrameTrain there."
+        },
+        "account": {
+            "signedInAs": "Signed in as {email} – no API key needed.",
+            "guestTitle": "You need an account to download.",
+            "guestText": "The trial is free for 14 days, no payment details.",
+            "trial": "Try it free",
+            "login": "Log in",
+            "haveKey": "Already have an API key?",
+            "noAccessTitle": "Your account has no access right now.",
+            "noAccessText": "Subscribe or redeem a voucher code and the download works right away.",
+            "subscribe": "Subscribe",
+            "redeem": "Redeem code"
+        }
     },
     "Install": {
         "metaTitle": "Installation – Set up FrameTrain on macOS, Windows & Linux",
@@ -7036,6 +7066,44 @@
         "trialAccess": {
             "title": "Your trial has {days, plural, one {# day} other {# days}} left",
             "text": "Free until {date}. It ends on its own and nothing is charged. Subscribe to keep training."
+        },
+        "checklist": {
+            "label": "Getting started",
+            "title": "Five steps to your first model",
+            "progress": "{done} of {total} done",
+            "hide": "Hide",
+            "doneTitle": "Done – your first model is ready.",
+            "doneText": "Next: feed mistakes from the Laboratory back into your dataset and train the next version.",
+            "auto": "detected automatically",
+            "markDone": "Mark as done",
+            "markOpen": "Reopen",
+            "steps": {
+                "download": {
+                    "title": "Download the app",
+                    "text": "The right installer for your system.",
+                    "cta": "Go to download"
+                },
+                "connect": {
+                    "title": "Sign in to the app",
+                    "text": "With your email or API key – we tick this off automatically.",
+                    "cta": "Watch the install"
+                },
+                "dataset": {
+                    "title": "Create your first dataset",
+                    "text": "In the Dataset Builder: fetch images or texts and label a few examples.",
+                    "cta": "How it works"
+                },
+                "train": {
+                    "title": "Start your first training",
+                    "text": "Pick a model and dataset, apply a template, start.",
+                    "cta": "Video: first model"
+                },
+                "test": {
+                    "title": "Test in the Laboratory",
+                    "text": "Run real examples and rate them right or wrong.",
+                    "cta": "Coach: reading results"
+                }
+            }
         }
     },
     "Home": {
@@ -8454,7 +8522,8 @@
             "docs": "Documentation",
             "about": "About FrameTrain",
             "faq": "FAQ"
-        }
+        },
+        "feedback": "Feedback"
     },
     "Marketing": {
         "home": "Home",
@@ -9240,5 +9309,31 @@
                 "back": ""
             }
         }
+    },
+    "Feedback": {
+        "title": "Feedback",
+        "lead": "What did you notice? Bugs, ideas, praise – it goes straight to the developer.",
+        "types": {
+            "bug": "Bug",
+            "idea": "Idea",
+            "praise": "Praise",
+            "other": "Other"
+        },
+        "typeLabel": "What's it about?",
+        "messageLabel": "Your message",
+        "messagePlaceholder": "What happened, and what did you expect?",
+        "emailLabel": "Email (optional, for a reply)",
+        "emailPlaceholder": "you@example.com",
+        "signedIn": "You're signed in – you'll see the reply in your dashboard under Support.",
+        "send": "Send feedback",
+        "sending": "Sending …",
+        "success": "Thanks, it arrived.",
+        "successSignedIn": "Thanks, it arrived. You'll find the reply in your dashboard under Support.",
+        "toDashboard": "Go to dashboard",
+        "error": "That didn't work. Please try again in a moment or write to framesphere@gmx.net.",
+        "tooShort": "Please write a few more words.",
+        "tooFast": "Give it a moment, you just sent something.",
+        "close": "Close",
+        "open": "Give feedback"
     }
 }

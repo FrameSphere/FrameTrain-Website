@@ -1,12 +1,13 @@
 'use client'
 
-import { Menu, X } from 'lucide-react'
+import { Menu, X, MessageSquarePlus } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEffect, useState, useCallback, useId } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { ChangelogModal, useChangelogBadge } from '@/components/ChangelogModal'
 import { trackEvent } from '@/lib/events'
+import { openFeedback } from '@/components/FeedbackDialog'
 
 /**
  * Die Dynamic Island – Navigation im Design-System „Neuron".
@@ -269,6 +270,15 @@ export function Header() {
 
             <div className="hidden lg:flex items-center gap-1 ml-1">
               <LangSwitch />
+              <button
+                type="button"
+                onClick={openFeedback}
+                aria-label={t('feedback')}
+                title={t('feedback')}
+                className="flex items-center justify-center w-[34px] h-[34px] rounded-pill text-ink-muted hover:text-ink hover:bg-ghost-fill transition-colors duration-150"
+              >
+                <MessageSquarePlus className="w-4 h-4" strokeWidth={1.5} />
+              </button>
               {!loading &&
                 (isAuthenticated ? (
                   <button type="button" onClick={logout} className={linkCls}>
@@ -366,6 +376,17 @@ export function Header() {
                   {l.label}
                 </Link>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  closeMenu()
+                  openFeedback()
+                }}
+                className="flex items-center gap-2.5 min-h-[48px] px-4 rounded-[18px] text-[16px] text-ink-muted hover:text-ink hover:bg-ghost-fill transition-colors duration-150 text-left"
+              >
+                <MessageSquarePlus className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                {t('feedback')}
+              </button>
             </nav>
             <div className="mt-2 pt-3 px-2 pb-1 border-t border-glass-edge flex flex-col gap-3">
               <div>

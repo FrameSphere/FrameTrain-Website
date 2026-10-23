@@ -99,3 +99,62 @@ export async function sendVerificationEmail(to: string, token: string, locale: L
 
   return { sent: true as const }
 }
+
+/**
+ * Download-Link für den Rechner – angefordert vom Handy aus (Download-Seite).
+ * Geht ausschließlich an die Adresse des angemeldeten Kontos, siehe
+ * /api/download-link.
+ */
+function downloadLinkCopy(locale: Locale, downloadUrl: string) {
+  const button = (label: string) => `
+          <p style="margin: 24px 0;">
+            <a href="${downloadUrl}" style="background: #3b3ed6; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+              ${label}
+            </a>
+          </p>`
+  if (locale === 'en') {
+    return {
+      subject: 'Your FrameTrain download for your computer',
+      html: `
+        <div style="font-family: -apple-system, Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; color: #111;">
+          <h2 style="margin-bottom: 8px;">Continue on your computer</h2>
+          <p>You sent yourself this link from your phone. Open it on the computer you want to train on – the right installer is picked automatically.</p>
+          ${button('Open the download page')}
+          <p style="color: #666; font-size: 13px;">Requirements: macOS with Apple Silicon (M1–M4), Windows 10/11 or Linux, plus Python 3.10 to 3.13.</p>
+          <p style="color: #666; font-size: 13px;">Or copy this link:<br>${downloadUrl}</p>
+          ${installVideoBlock('en')}
+        </div>
+      `,
+      text: `Continue on your computer: ${downloadUrl}\n\nRequirements: macOS with Apple Silicon (M1–M4), Windows 10/11 or Linux, plus Python 3.10 to 3.13.\n\nInstall tutorial: ${installVideoUrl}`,
+    }
+  }
+  return {
+    subject: 'Dein FrameTrain-Download für den Rechner',
+    html: `
+      <div style="font-family: -apple-system, Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; color: #111;">
+        <h2 style="margin-bottom: 8px;">Am Rechner weitermachen</h2>
+        <p>Du hast dir diesen Link vom Handy geschickt. Öffne ihn an dem Rechner, auf dem du trainieren willst – der passende Installer wird automatisch vorgewählt.</p>
+        ${button('Zur Download-Seite')}
+        <p style="color: #666; font-size: 13px;">Voraussetzungen: macOS mit Apple Silicon (M1–M4), Windows 10/11 oder Linux, dazu Python 3.10 bis 3.13.</p>
+        <p style="color: #666; font-size: 13px;">Oder kopiere diesen Link:<br>${downloadUrl}</p>
+        ${installVideoBlock('de')}
+      </div>
+    `,
+    text: `Am Rechner weitermachen: ${downloadUrl}\n\nVoraussetzungen: macOS mit Apple Silicon (M1–M4), Windows 10/11 oder Linux, dazu Python 3.10 bis 3.13.\n\nInstallations-Tutorial: ${installVideoUrl}`,
+  }
+}
+
+export async function sendDownloadLinkEmail(to: string, locale: Locale = 'de') {
+  if (!resend) {
+    console.error('RESEND_API_KEY ist nicht gesetzt – Download-Link-Mail wurde NICHT versendet.')
+    return { sent: false as const }
+  }
+  const downloadUrl = `${siteUrl}/${locale}/download?utm_source=email&utm_medium=download_link`
+  const copy = downloadLinkCopy(locale, downloadUrl)
+  const { error } = await resend.emails.send({ from: EMAIL_FROM, to, subject: copy.subject, html: copy.html, text: copy.text })
+  if (error) {
+    console.error('Resend: Download-Link-Mail konnte nicht gesendet werden:', error)
+    return { sent: false as const }
+  }
+  return { sent: true as const }
+}
