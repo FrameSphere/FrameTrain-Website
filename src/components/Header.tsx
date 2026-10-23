@@ -1,12 +1,13 @@
 'use client'
 
-import { Menu, X } from 'lucide-react'
+import { Menu, X, MessageSquarePlus } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEffect, useState, useCallback, useId } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { ChangelogModal, useChangelogBadge } from '@/components/ChangelogModal'
 import { trackEvent } from '@/lib/events'
+import { openFeedback } from '@/components/FeedbackDialog'
 
 /**
  * Die Dynamic Island – Navigation im Design-System „Neuron".
@@ -21,7 +22,7 @@ import { trackEvent } from '@/lib/events'
  */
 
 const linkCls =
-  'px-3.5 py-[7px] rounded-pill text-[14px] leading-5 font-medium text-ink-muted hover:text-ink hover:bg-ghost-fill transition-colors duration-150 ease-out'
+  'px-3 xl:px-3.5 py-[7px] rounded-pill whitespace-nowrap text-[14px] leading-5 font-medium text-ink-muted hover:text-ink hover:bg-ghost-fill transition-colors duration-150 ease-out'
 const linkActive = 'text-ink bg-ghost-fill'
 
 /* ── Demo-Training ──────────────────────────────────────────────────── */
@@ -166,6 +167,19 @@ export function Header() {
     return () => window.removeEventListener('keydown', onKey)
   }, [menuOpen, detailOpen])
 
+  // Oben großzügig, beim Scrollen kompakt. Hysterese, damit sie an der
+  // Schwelle nicht flackert: erst ab 48px klein, erst unter 8px wieder groß.
+  const [compact, setCompact] = useState(false)
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      setCompact((c) => (c ? y > 8 : y > 48))
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const closeMenu = useCallback(() => setMenuOpen(false), [])
   const onTrialClick = useCallback(() => trackEvent('trial_click', { from: 'island' }), [])
 
@@ -229,23 +243,35 @@ export function Header() {
   return (
     <>
       {/* Platzhalter für die fixierte Island */}
-      <div className="h-[84px]" aria-hidden="true" />
+      <div className="h-[100px]" aria-hidden="true" />
 
-      <div className="fixed top-4 inset-x-0 z-50 flex flex-col items-center px-3 pointer-events-none">
+      <div
+        className={`fixed inset-x-0 z-50 flex flex-col items-center px-3 pointer-events-none transition-[top] duration-300 ease-out motion-reduce:transition-none ${
+          compact ? 'top-3' : 'top-5'
+        }`}
+      >
         <nav
           aria-label="FrameTrain"
           className="ft-glass pointer-events-auto rounded-island max-w-full overflow-hidden"
         >
-          <div className="flex items-center gap-1.5 py-1.5 pl-2 pr-1.5">
+          <div
+            className={`flex items-center transition-[padding,gap] duration-300 ease-out motion-reduce:transition-none ${
+              compact ? 'gap-1.5 py-1.5 pl-2 pr-1.5' : 'gap-2 py-2.5 pl-3 pr-2.5'
+            }`}
+          >
             <Link
               href="/"
               aria-label={t('home')}
-              className="flex items-center gap-2.5 pr-2 rounded-pill text-ink"
+              className="flex-none flex items-center gap-2.5 pr-2.5 rounded-pill text-ink"
               onClick={closeMenu}
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- SVG-Logo, next/image bringt hier nichts */}
-              <img src="/brand/frametrain-icon-indigo.svg" alt="" width={30} height={30} className="w-[30px] h-[30px] block" />
-              <span className="font-semibold text-[15px] leading-5 tracking-[-0.01em]">FrameTrain</span>
+              <img src="/brand/frametrain-icon-indigo.svg" alt="" width={34} height={34}
+                className={`flex-none block transition-[width,height] duration-300 ease-out motion-reduce:transition-none ${
+                  compact ? 'w-[30px] h-[30px]' : 'w-[34px] h-[34px]'
+                }`}
+              />
+              <span className="font-semibold text-[15px] leading-5 tracking-[-0.01em] whitespace-nowrap">FrameTrain</span>
             </Link>
 
             {/* Links ab lg */}
@@ -269,6 +295,15 @@ export function Header() {
 
             <div className="hidden lg:flex items-center gap-1 ml-1">
               <LangSwitch />
+              <button
+                type="button"
+                onClick={openFeedback}
+                aria-label={t('feedback')}
+                title={t('feedback')}
+                className="flex items-center justify-center w-[34px] h-[34px] rounded-pill text-ink-muted hover:text-ink hover:bg-ghost-fill transition-colors duration-150"
+              >
+                <MessageSquarePlus className="w-4 h-4" strokeWidth={1.5} />
+              </button>
               {!loading &&
                 (isAuthenticated ? (
                   <button type="button" onClick={logout} className={linkCls}>
@@ -366,6 +401,17 @@ export function Header() {
                   {l.label}
                 </Link>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  closeMenu()
+                  openFeedback()
+                }}
+                className="flex items-center gap-2.5 min-h-[48px] px-4 rounded-[18px] text-[16px] text-ink-muted hover:text-ink hover:bg-ghost-fill transition-colors duration-150 text-left"
+              >
+                <MessageSquarePlus className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                {t('feedback')}
+              </button>
             </nav>
             <div className="mt-2 pt-3 px-2 pb-1 border-t border-glass-edge flex flex-col gap-3">
               <div>

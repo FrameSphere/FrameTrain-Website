@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
         email,
         passwordHash,
         termsAcceptedAt: now,
+        emailLocale,
         diagnosticsConsent: !!diagnosticsConsent,
         diagnosticsConsentAt: diagnosticsConsent ? now : null,
         emailVerificationTokenHash: tokenHash,

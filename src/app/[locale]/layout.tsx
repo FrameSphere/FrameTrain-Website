@@ -10,6 +10,7 @@ import { Analytics } from '@/components/Analytics'
 import { VercelAnalytics } from '@/components/VercelAnalytics'
 import { CookieBanner } from '@/components/CookieBanner'
 import { PromoCapture } from '@/components/PromoCapture'
+import { FeedbackDialog } from '@/components/FeedbackDialog'
 import { siteUrl, pageAlternates, pageOpenGraph } from '@/lib/seo'
 
 // Neuron: eine Textfamilie (Hanken Grotesk) plus Mono für Daten und Labels.
@@ -242,7 +243,10 @@ try {
       </head>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+            <FeedbackDialog />
+          </AuthProvider>
           <CookieBanner />
           <PromoCapture />
         </NextIntlClientProvider>

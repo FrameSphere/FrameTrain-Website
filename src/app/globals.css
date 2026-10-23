@@ -304,6 +304,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    flex: none;
+    white-space: nowrap;
     height: 34px;
     padding: 0 12px;
     border-radius: var(--radius-pill);

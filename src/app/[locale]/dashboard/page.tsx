@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { EmailVerificationBanner } from '@/components/EmailVerificationBanner'
+import { GettingStartedChecklist, DOWNLOAD_FLAG } from '@/components/GettingStartedChecklist'
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
@@ -384,7 +385,10 @@ function DashboardPageInner() {
       const res = await fetch(`/api/download-app?platform=${platform}&key=${activeKey.key}`, { credentials: 'include' })
       if (!res.ok) { const e = await res.json(); alert(t('download.downloadFailedAlert', { message: e.message || '' })); return }
       const data = await res.json()
-      if (data.download_url) window.location.href = data.download_url
+      if (data.download_url) {
+        try { window.localStorage.setItem(DOWNLOAD_FLAG, '1') } catch {}
+        window.location.href = data.download_url
+      }
     } catch { alert(t('download.downloadErrorAlert')) }
   }
 
@@ -532,6 +536,11 @@ function DashboardPageInner() {
               </div>
             )
           })()}
+
+          {/* ── Erste Schritte ──────────────────────────────────────── */}
+          {hasPaid && user?.id && (
+            <GettingStartedChecklist userId={user.id} appConnected={apiKeys.some(k => !!k.lastUsedAt)} />
+          )}
 
           {/* ── Gratiszeit (Promo-Code ohne Abo) läuft ab ──────────── */}
           {hasPaid && !lifetimeAccess && !hasSubscription && promoAccessUntil && (() => {

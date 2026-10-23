@@ -61,7 +61,8 @@
         "gdpr": "DSGVO & Unternehmen",
         "vsUnsloth": "vs. Unsloth",
         "vsColab": "vs. Google Colab",
-        "mlxVsPytorch": "MLX vs. PyTorch"
+        "mlxVsPytorch": "MLX vs. PyTorch",
+        "feedback": "Feedback"
     },
     "Imprint": {
         "metaTitle": "Impressum – FrameTrain",
@@ -107,7 +108,7 @@
         "metaTitle": "Datenschutzerklärung – FrameTrain",
         "metaDescription": "Datenschutzerklärung für FrameTrain",
         "heading": "Datenschutzerklärung",
-        "lastUpdated": "Zuletzt aktualisiert: Januar 2025",
+        "lastUpdated": "Zuletzt aktualisiert: Oktober 2026",
         "s1": {
             "heading": "1. Verantwortlicher",
             "intro": "Verantwortlicher im Sinne der DSGVO für den Betrieb von FrameTrain ist:",
@@ -122,6 +123,10 @@
                 {
                     "name": "E-Mail-Adresse",
                     "desc": "Für Account-Erstellung, Authentifizierung und Support"
+                },
+                {
+                    "name": "E-Mail-Sprache und Einstiegs-Tipps",
+                    "desc": "Sprache für E-Mails sowie, ob und welche Einstiegs-Tipps du schon bekommen hast"
                 },
                 {
                     "name": "Passwort (gehasht)",
@@ -176,6 +181,11 @@
                     "name": "Stripe",
                     "role": "Zahlungsabwicklung",
                     "privacy": "https://stripe.com/de/privacy"
+                },
+                {
+                    "name": "Resend",
+                    "role": "Versand von E-Mails (Bestätigung, Konto, Einstiegs-Tipps)",
+                    "privacy": "https://resend.com/legal/privacy-policy"
                 },
                 {
                     "name": "Vercel",
@@ -239,6 +249,10 @@
         "s9": {
             "heading": "9. Kontakt & Beschwerden",
             "text": "Bei Fragen oder Beschwerden zu dieser Datenschutzerklärung wende dich an <link>framesphere@gmx.net</link>. Du hast außerdem das Recht, dich bei deiner zuständigen Datenschutzbehörde zu beschweren."
+        },
+        "mail": {
+            "heading": "E-Mails zum Einstieg",
+            "text": "Nach der Registrierung schicken wir dir in den ersten zwei Wochen höchstens vier kurze E-Mails mit Hinweisen zur Nutzung von FrameTrain, bei einer Testphase zusätzlich eine Erinnerung, wann sie endet. Die Mails beziehen sich ausschließlich auf dein Konto und die App; Werbung für andere Produkte enthalten sie nicht. Rechtsgrundlage ist die Bereitstellung des Dienstes (Art. 6 Abs. 1 lit. b DSGVO) sowie unser berechtigtes Interesse, dir den Einstieg zu erleichtern (Art. 6 Abs. 1 lit. f DSGVO). Du kannst die Mails jederzeit über den Link am Ende jeder Mail abbestellen, ohne dass dafür andere als die Übermittlungskosten nach den Basistarifen entstehen. Wir messen nicht, ob du die Mails öffnest oder Links anklickst. Versanddienstleister ist Resend (Resend, Inc., USA) auf Grundlage von EU-Standardvertragsklauseln."
         }
     },
     "Terms": {
@@ -823,7 +837,8 @@
             "promoLabel": "Gutscheincode (optional)",
             "promoPlaceholder": "z. B. REDDIT-FT-01",
             "promoNote": "Wir merken uns den Code. Du löst ihn nach der Bestätigung im Dashboard ein – Rabatte gelten beim Abo-Abschluss.",
-            "promoDetected": "Code {code} erkannt"
+            "promoDetected": "Code {code} erkannt",
+            "onboardingNotice": "Nach der Anmeldung schicken wir dir in den ersten zwei Wochen höchstens vier kurze Tipps zum Einstieg. Abbestellen geht mit einem Klick in jeder Mail."
         },
         "verifyEmail": {
             "banner": {
@@ -1018,7 +1033,7 @@
         },
         "apiKeyLabel": "API-Key",
         "apiKeyPlaceholder": "Gib deinen API-Key ein...",
-        "apiKeyHint": "Du erhältst deinen API-Key nach dem Kauf auf der <link>Payment-Seite</link>",
+        "apiKeyHint": "Deinen API-Key findest du im <link>Dashboard</link>.",
         "missingKeyError": "Bitte gib deinen API-Key ein",
         "downloadFailedError": "Download fehlgeschlagen",
         "genericError": "Ein Fehler ist aufgetreten",
@@ -1061,7 +1076,36 @@
             "commentInstallApp": "# Installiere die Desktop-App",
             "commentStart": "# Starte FrameTrain"
         },
-        "supportText": "Probleme beim Download? <link>Kontaktiere unseren Support</link>"
+        "supportText": "Probleme beim Download? <link>Kontaktiere unseren Support</link>",
+        "detected": "Erkannt: {os}",
+        "mobile": {
+            "label": "Am Handy",
+            "title": "FrameTrain läuft auf deinem Rechner.",
+            "text": "FrameTrain ist eine Desktop-App für macOS (Apple Silicon), Windows und Linux. Schick dir den Download-Link und mach am Rechner weiter.",
+            "send": "Download-Link an meine E-Mail schicken",
+            "sending": "Wird gesendet …",
+            "sent": "Gesendet an {email}. Öffne die Mail am Rechner.",
+            "rateLimited": "Du hast den Link gerade schon angefordert. Schau in dein Postfach.",
+            "error": "Die Mail konnte nicht gesendet werden. Versuch es gleich noch einmal.",
+            "guestText": "Starte zuerst den kostenlosen Test. Die Bestätigungsmail öffnest du dann am Rechner – dort geht es direkt weiter.",
+            "showAnyway": "Trotzdem die Downloads zeigen"
+        },
+        "intel": {
+            "title": "Dein Mac scheint einen Intel-Chip zu haben.",
+            "text": "FrameTrain läuft auf dem Mac nur mit Apple Silicon (M1–M4). Falls du einen Windows- oder Linux-Rechner hast, kannst du FrameTrain dort nutzen."
+        },
+        "account": {
+            "signedInAs": "Angemeldet als {email} – kein API-Key nötig.",
+            "guestTitle": "Für den Download brauchst du ein Konto.",
+            "guestText": "Der Test ist 14 Tage kostenlos und ohne Zahlungsdaten.",
+            "trial": "Kostenlos testen",
+            "login": "Anmelden",
+            "haveKey": "Du hast schon einen API-Key?",
+            "noAccessTitle": "Dein Konto hat gerade keinen Zugang.",
+            "noAccessText": "Schließ ein Abo ab oder löse einen Gutscheincode ein, dann geht der Download sofort.",
+            "subscribe": "Abo abschließen",
+            "redeem": "Code einlösen"
+        }
     },
     "Install": {
         "metaTitle": "FrameTrain installieren – macOS, Windows & Linux",
@@ -7037,6 +7081,44 @@
         "trialAccess": {
             "title": "Deine Testphase läuft noch {days, plural, one {# Tag} other {# Tage}}",
             "text": "Kostenlos bis {date}. Danach endet sie automatisch, es wird nichts abgebucht. Mit einem Abo trainierst du einfach weiter."
+        },
+        "checklist": {
+            "label": "Erste Schritte",
+            "title": "In fünf Schritten zu deinem ersten Modell",
+            "progress": "{done} von {total} erledigt",
+            "hide": "Ausblenden",
+            "doneTitle": "Geschafft – dein erstes Modell steht.",
+            "doneText": "Als Nächstes: Fehler aus dem Labor zurück in den Datensatz spielen und die nächste Version trainieren.",
+            "auto": "automatisch erkannt",
+            "markDone": "Als erledigt markieren",
+            "markOpen": "Wieder öffnen",
+            "steps": {
+                "download": {
+                    "title": "App herunterladen",
+                    "text": "Der passende Installer für dein System.",
+                    "cta": "Zum Download"
+                },
+                "connect": {
+                    "title": "In der App anmelden",
+                    "text": "Mit deiner E-Mail oder deinem API-Key – das haken wir automatisch ab.",
+                    "cta": "Installation ansehen"
+                },
+                "dataset": {
+                    "title": "Ersten Datensatz anlegen",
+                    "text": "In der Datensatz-Werkstatt: Bilder oder Texte holen und ein paar Beispiele labeln.",
+                    "cta": "So geht's"
+                },
+                "train": {
+                    "title": "Erstes Training starten",
+                    "text": "Modell und Datensatz wählen, Vorlage übernehmen, starten.",
+                    "cta": "Video: erstes Modell"
+                },
+                "test": {
+                    "title": "Im Labor testen",
+                    "text": "Echte Beispiele durchlaufen lassen und als richtig oder falsch bewerten.",
+                    "cta": "Coach: Ergebnisse lesen"
+                }
+            }
         }
     },
     "Home": {
@@ -8455,7 +8537,8 @@
             "docs": "Dokumentation",
             "about": "Über FrameTrain",
             "faq": "FAQ"
-        }
+        },
+        "feedback": "Feedback"
     },
     "Marketing": {
         "home": "Start",
@@ -9241,5 +9324,45 @@
                 "back": ""
             }
         }
+    },
+    "Feedback": {
+        "title": "Feedback",
+        "lead": "Was ist dir aufgefallen? Fehler, Ideen, Lob – es landet direkt beim Entwickler.",
+        "types": {
+            "bug": "Fehler",
+            "idea": "Idee",
+            "praise": "Lob",
+            "other": "Sonstiges"
+        },
+        "typeLabel": "Worum geht es?",
+        "messageLabel": "Deine Nachricht",
+        "messagePlaceholder": "Was ist passiert, was hast du erwartet?",
+        "emailLabel": "E-Mail (optional, für eine Antwort)",
+        "emailPlaceholder": "du@beispiel.de",
+        "signedIn": "Du bist angemeldet – die Antwort siehst du im Dashboard unter Support.",
+        "send": "Feedback senden",
+        "sending": "Wird gesendet …",
+        "success": "Danke, ist angekommen.",
+        "successSignedIn": "Danke, ist angekommen. Die Antwort findest du im Dashboard unter Support.",
+        "toDashboard": "Zum Dashboard",
+        "error": "Das hat nicht geklappt. Versuch es gleich noch einmal oder schreib an framesphere@gmx.net.",
+        "tooShort": "Schreib bitte ein paar Worte mehr.",
+        "tooFast": "Kurz warten, du hast gerade schon etwas geschickt.",
+        "close": "Schließen",
+        "open": "Feedback geben"
+    },
+    "Unsubscribe": {
+        "metaTitle": "Einstiegs-Tipps abbestellen – FrameTrain",
+        "label": "E-Mail-Einstellungen",
+        "title": "Einstiegs-Tipps abbestellen?",
+        "text": "Du bekommst dann keine weiteren Tipps zum Einstieg mehr. Wichtige Mails zu deinem Konto (z. B. Passwort, Zahlungen) kommen weiterhin.",
+        "button": "Abbestellen",
+        "doneTitle": "Erledigt – keine Tipps mehr",
+        "doneText": "Du bekommst keine Einstiegs-Tipps mehr von uns. Danke, dass du FrameTrain ausprobierst.",
+        "undo": "Doch weiter bekommen",
+        "backTitle": "Du bist wieder dabei",
+        "backText": "Die restlichen Tipps kommen wie geplant, höchstens eine Mail alle zwei Tage.",
+        "errorTitle": "Dieser Link funktioniert nicht",
+        "errorText": "Der Abmelde-Link ist unvollständig oder ungültig. Öffne ihn direkt aus der Mail oder schreib uns über den Feedback-Button – wir tragen dich sofort aus."
     }
 }

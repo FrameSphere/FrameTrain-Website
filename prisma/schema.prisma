@@ -33,6 +33,10 @@ model User {
   termsAcceptedAt      DateTime? @map("terms_accepted_at")            // Zeitpunkt der Zustimmung zu AGB & Datenschutz
   diagnosticsConsent   Boolean   @default(false) @map("diagnostics_consent") // Optionale Einwilligung: Desktop-App darf anonyme Fehlerdaten senden
   diagnosticsConsentAt DateTime? @map("diagnostics_consent_at")
+  emailLocale          String    @default("de") @map("email_locale")          // Sprache für E-Mails ("de" | "en"), gesetzt bei der Registrierung
+  onboardingEmails     Boolean   @default(true) @map("onboarding_emails")    // Einstiegs-Tipps per Mail; Abmeldung per Link in jeder Mail
+  onboardingStep       Int       @default(0) @map("onboarding_step")         // Zuletzt versendete Onboarding-Mail (0 = noch keine)
+  onboardingLastSentAt DateTime? @map("onboarding_last_sent_at")
   createdAt            DateTime  @default(now()) @map("created_at")
   updatedAt            DateTime  @updatedAt @map("updated_at")
 

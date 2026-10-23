@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { CookieSettingsButton } from '@/components/CookieSettingsButton'
+import { FeedbackButton } from '@/components/FeedbackButton'
 
 /**
  * Fußzeile im Design-System „Neuron": ruhig, 1px-Linie oben, Mono-Labels
@@ -92,6 +93,11 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                {i === 2 && (
+                  <li>
+                    <FeedbackButton label={t('feedback')} className={`${footerLink} text-left`} />
+                  </li>
+                )}
                 {i === 3 && (
                   <li>
                     {/* Widerruf der Analyse-Einwilligung – erscheint nur, wenn ein Tag konfiguriert ist */}
