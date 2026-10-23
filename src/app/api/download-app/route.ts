@@ -2,15 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyJWT } from '@/lib/jwt';
 import { cookies } from 'next/headers';
-import { fetchLatestRelease, type GitHubRelease, type ReleaseAsset } from '@/lib/github-releases';
+import { fetchLatestRelease, findInstaller, type GitHubRelease, type Platform } from '@/lib/github-releases';
 
 // Force dynamic rendering for this route
 export const dynamic = 'force-dynamic';
 
 // Releases kommen aus FrameTrain-Releases, mit Rückfall auf FrameTrain-App
 // (siehe lib/github-releases.ts)
-async function getLatestRelease(): Promise<GitHubRelease | null> {
-  const found = await fetchLatestRelease({ cache: 'no-store' });
+async function getLatestRelease(platform: Platform): Promise<GitHubRelease | null> {
+  const found = await fetchLatestRelease({ cache: 'no-store' }, platform);
   if (!found) {
     console.error('[Download] Kein veröffentlichtes Release gefunden');
     return null;
@@ -29,35 +29,6 @@ const PLATFORM_NOTES: Record<string, string> = {
   mac: 'Der macOS-Build ist ausschließlich für Apple Silicon (M1/M2/M3/M4). Auf Intel-Macs startet die App nicht.',
 };
 
-/**
- * Find the correct asset for the platform
- */
-function findAssetForPlatform(assets: ReleaseAsset[], platform: string): ReleaseAsset | null {
-  // Exclude source code archives
-  const installerAssets = assets.filter(asset => 
-    !asset.name.includes('Source code') &&
-    !asset.name.endsWith('.zip') && 
-    !asset.name.endsWith('.tar.gz')
-  );
-  
-  const patterns: Record<string, RegExp> = {
-    windows: /\.(msi|exe)$/i,
-    mac: /\.dmg$/i,
-    linux: /\.AppImage$/i,
-  };
-
-  const pattern = patterns[platform];
-  if (!pattern) return null;
-
-  const found = installerAssets.find(asset => pattern.test(asset.name));
-  
-  // Debug logging
-  console.log('Platform:', platform);
-  console.log('Available installer assets:', installerAssets.map(a => a.name));
-  console.log('Found asset:', found?.name);
-  
-  return found || null;
-}
 
 /**
  * Verify API key and check if user has access
@@ -141,7 +112,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get latest release from GitHub
-    const release = await getLatestRelease();
+    const release = await getLatestRelease(platform as Platform);
     
     if (!release) {
       return NextResponse.json(
@@ -154,7 +125,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Find the correct asset for the platform
-    const asset = findAssetForPlatform(release.assets, platform);
+    const asset = findInstaller(release.assets, platform);
     
     if (!asset) {
       return NextResponse.json(

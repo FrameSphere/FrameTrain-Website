@@ -34,7 +34,29 @@ export interface GitHubRelease {
 
 type FetchInit = { cache?: RequestCache; next?: { revalidate?: number | false } }
 
-async function latestFrom(repo: string, init: FetchInit): Promise<GitHubRelease | null> {
+export type Platform = 'windows' | 'mac' | 'linux'
+
+const INSTALLER_PATTERNS: Record<Platform, RegExp> = {
+  windows: /\.(msi|exe)$/i,
+  mac: /\.dmg$/i,
+  linux: /\.AppImage$/i,
+}
+
+/** Installer für ein System – Quellcode-Archive zählen nicht. */
+export function findInstaller(assets: ReleaseAsset[], platform: string): ReleaseAsset | null {
+  const pattern = INSTALLER_PATTERNS[platform as Platform]
+  if (!pattern) return null
+  return assets.find((a) => !a.name.includes('Source code') && pattern.test(a.name)) ?? null
+}
+
+const hasAnyInstaller = (r: GitHubRelease) =>
+  (Object.keys(INSTALLER_PATTERNS) as Platform[]).some((p) => findInstaller(r.assets, p))
+
+async function latestFrom(
+  repo: string,
+  init: FetchInit,
+  usable: (r: GitHubRelease) => boolean
+): Promise<GitHubRelease | null> {
   const headers: HeadersInit = {
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
@@ -50,23 +72,32 @@ async function latestFrom(repo: string, init: FetchInit): Promise<GitHubRelease 
     return null
   }
   const releases: GitHubRelease[] = await res.json()
-  // Nicht auf GitHubs "latest"-Flag verlassen: nach Datum sortieren
+  // Nicht auf GitHubs "latest"-Flag verlassen: nach Datum sortieren.
+  // Ein Release, dessen Installer noch gebaut und hochgeladen werden, ist
+  // schon veröffentlicht, hat aber noch keine Dateien – solange zählt das
+  // vorige Release, sonst gäbe es ein paar Minuten lang keinen Download.
   return (
     releases
-      .filter((r) => !r.prerelease && !r.draft)
+      .filter((r) => !r.prerelease && !r.draft && usable(r))
       .sort((a, b) => +new Date(b.published_at) - +new Date(a.published_at))[0] ?? null
   )
 }
 
 /**
- * Neuestes veröffentlichtes Release – erst aus FrameTrain-Releases, sonst aus
- * dem bisherigen Repo. Gibt zusätzlich zurück, aus welchem Repo es stammt.
+ * Neuestes veröffentlichtes Release mit Installer – erst aus
+ * FrameTrain-Releases, sonst aus dem bisherigen Repo. Mit `platform` zählt
+ * nur ein Release, das für dieses System schon einen Installer hat.
+ * Gibt zusätzlich zurück, aus welchem Repo es stammt.
  */
-export async function fetchLatestRelease(init: FetchInit = {}): Promise<{ release: GitHubRelease; repo: string } | null> {
+export async function fetchLatestRelease(
+  init: FetchInit = {},
+  platform?: Platform
+): Promise<{ release: GitHubRelease; repo: string } | null> {
+  const usable = platform ? (r: GitHubRelease) => !!findInstaller(r.assets, platform) : hasAnyInstaller
   const repos = Array.from(new Set([RELEASES_REPO, LEGACY_RELEASES_REPO]))
   for (const repo of repos) {
     try {
-      const release = await latestFrom(repo, init)
+      const release = await latestFrom(repo, init, usable)
       if (release) return { release, repo }
     } catch (err) {
       console.error(`[Releases] ${RELEASES_OWNER}/${repo} nicht abrufbar:`, err)
