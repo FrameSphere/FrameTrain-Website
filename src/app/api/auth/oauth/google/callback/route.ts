@@ -130,6 +130,7 @@ export async function GET(req: NextRequest) {
           emailVerified: true,
           emailVerifiedAt: new Date(),
           termsAcceptedAt: new Date(),
+          emailLocale: req.cookies.get('NEXT_LOCALE')?.value === 'en' ? 'en' : 'de',
         },
       })
       // Neues, vom Anbieter bestätigtes Konto: 14 Tage Testphase ohne Zahlungsdaten

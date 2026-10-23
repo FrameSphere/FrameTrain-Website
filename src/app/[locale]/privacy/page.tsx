@@ -131,6 +131,11 @@ export default function PrivacyPage() {
             </section>
 
             <section>
+              <h2 className="text-xl font-semibold text-ink mb-3">{t('mail.heading')}</h2>
+              <p className="text-sm">{t('mail.text')}</p>
+            </section>
+
+            <section>
               <h2 className="text-xl font-semibold text-ink mb-3">{t('s7.heading')}</h2>
               <p className="text-sm">
                 {t.rich('s7.text', {

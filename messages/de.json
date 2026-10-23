@@ -108,7 +108,7 @@
         "metaTitle": "Datenschutzerklärung – FrameTrain",
         "metaDescription": "Datenschutzerklärung für FrameTrain",
         "heading": "Datenschutzerklärung",
-        "lastUpdated": "Zuletzt aktualisiert: Januar 2025",
+        "lastUpdated": "Zuletzt aktualisiert: Oktober 2026",
         "s1": {
             "heading": "1. Verantwortlicher",
             "intro": "Verantwortlicher im Sinne der DSGVO für den Betrieb von FrameTrain ist:",
@@ -123,6 +123,10 @@
                 {
                     "name": "E-Mail-Adresse",
                     "desc": "Für Account-Erstellung, Authentifizierung und Support"
+                },
+                {
+                    "name": "E-Mail-Sprache und Einstiegs-Tipps",
+                    "desc": "Sprache für E-Mails sowie, ob und welche Einstiegs-Tipps du schon bekommen hast"
                 },
                 {
                     "name": "Passwort (gehasht)",
@@ -177,6 +181,11 @@
                     "name": "Stripe",
                     "role": "Zahlungsabwicklung",
                     "privacy": "https://stripe.com/de/privacy"
+                },
+                {
+                    "name": "Resend",
+                    "role": "Versand von E-Mails (Bestätigung, Konto, Einstiegs-Tipps)",
+                    "privacy": "https://resend.com/legal/privacy-policy"
                 },
                 {
                     "name": "Vercel",
@@ -240,6 +249,10 @@
         "s9": {
             "heading": "9. Kontakt & Beschwerden",
             "text": "Bei Fragen oder Beschwerden zu dieser Datenschutzerklärung wende dich an <link>framesphere@gmx.net</link>. Du hast außerdem das Recht, dich bei deiner zuständigen Datenschutzbehörde zu beschweren."
+        },
+        "mail": {
+            "heading": "E-Mails zum Einstieg",
+            "text": "Nach der Registrierung schicken wir dir in den ersten zwei Wochen höchstens vier kurze E-Mails mit Hinweisen zur Nutzung von FrameTrain, bei einer Testphase zusätzlich eine Erinnerung, wann sie endet. Die Mails beziehen sich ausschließlich auf dein Konto und die App; Werbung für andere Produkte enthalten sie nicht. Rechtsgrundlage ist die Bereitstellung des Dienstes (Art. 6 Abs. 1 lit. b DSGVO) sowie unser berechtigtes Interesse, dir den Einstieg zu erleichtern (Art. 6 Abs. 1 lit. f DSGVO). Du kannst die Mails jederzeit über den Link am Ende jeder Mail abbestellen, ohne dass dafür andere als die Übermittlungskosten nach den Basistarifen entstehen. Wir messen nicht, ob du die Mails öffnest oder Links anklickst. Versanddienstleister ist Resend (Resend, Inc., USA) auf Grundlage von EU-Standardvertragsklauseln."
         }
     },
     "Terms": {
@@ -824,7 +837,8 @@
             "promoLabel": "Gutscheincode (optional)",
             "promoPlaceholder": "z. B. REDDIT-FT-01",
             "promoNote": "Wir merken uns den Code. Du löst ihn nach der Bestätigung im Dashboard ein – Rabatte gelten beim Abo-Abschluss.",
-            "promoDetected": "Code {code} erkannt"
+            "promoDetected": "Code {code} erkannt",
+            "onboardingNotice": "Nach der Anmeldung schicken wir dir in den ersten zwei Wochen höchstens vier kurze Tipps zum Einstieg. Abbestellen geht mit einem Klick in jeder Mail."
         },
         "verifyEmail": {
             "banner": {
@@ -9336,5 +9350,19 @@
         "tooFast": "Kurz warten, du hast gerade schon etwas geschickt.",
         "close": "Schließen",
         "open": "Feedback geben"
+    },
+    "Unsubscribe": {
+        "metaTitle": "Einstiegs-Tipps abbestellen – FrameTrain",
+        "label": "E-Mail-Einstellungen",
+        "title": "Einstiegs-Tipps abbestellen?",
+        "text": "Du bekommst dann keine weiteren Tipps zum Einstieg mehr. Wichtige Mails zu deinem Konto (z. B. Passwort, Zahlungen) kommen weiterhin.",
+        "button": "Abbestellen",
+        "doneTitle": "Erledigt – keine Tipps mehr",
+        "doneText": "Du bekommst keine Einstiegs-Tipps mehr von uns. Danke, dass du FrameTrain ausprobierst.",
+        "undo": "Doch weiter bekommen",
+        "backTitle": "Du bist wieder dabei",
+        "backText": "Die restlichen Tipps kommen wie geplant, höchstens eine Mail alle zwei Tage.",
+        "errorTitle": "Dieser Link funktioniert nicht",
+        "errorText": "Der Abmelde-Link ist unvollständig oder ungültig. Öffne ihn direkt aus der Mail oder schreib uns über den Feedback-Button – wir tragen dich sofort aus."
     }
 }

@@ -292,6 +292,8 @@ export default function RegisterPage() {
               </button>
             </form>
 
+            <p className="mt-4 mb-0 text-[12px] leading-5 text-ink-faint">{t('onboardingNotice')}</p>
+
             <p className="mt-6 mb-0 text-center text-[14px] text-ink-muted">
               {t('haveAccount')}{' '}
               <Link href="/login" className="ft-link font-medium">

@@ -109,7 +109,7 @@
         "metaTitle": "Privacy Policy – FrameTrain",
         "metaDescription": "Privacy policy for FrameTrain",
         "heading": "Privacy Policy",
-        "lastUpdated": "Last updated: January 2025",
+        "lastUpdated": "Last updated: October 2026",
         "courtesyNote": "This page is provided in English for convenience. The German version is the legally binding original.",
         "s1": {
             "heading": "1. Data Controller",
@@ -125,6 +125,10 @@
                 {
                     "name": "Email address",
                     "desc": "For account creation, authentication, and support"
+                },
+                {
+                    "name": "Email language and getting-started tips",
+                    "desc": "Language for emails and whether and which getting-started tips you have received"
                 },
                 {
                     "name": "Password (hashed)",
@@ -179,6 +183,11 @@
                     "name": "Stripe",
                     "role": "Payment processing",
                     "privacy": "https://stripe.com/privacy"
+                },
+                {
+                    "name": "Resend",
+                    "role": "Sending emails (verification, account, getting-started tips)",
+                    "privacy": "https://resend.com/legal/privacy-policy"
                 },
                 {
                     "name": "Vercel",
@@ -242,6 +251,10 @@
         "s9": {
             "heading": "9. Contact & Complaints",
             "text": "If you have questions or complaints about this privacy policy, please contact <link>framesphere@gmx.net</link>. You also have the right to lodge a complaint with your competent data protection authority."
+        },
+        "mail": {
+            "heading": "Getting-started emails",
+            "text": "After you sign up, we send you at most four short emails with tips on using FrameTrain during your first two weeks, plus a reminder of when your trial ends if you are on one. These emails relate only to your account and the app; they contain no advertising for other products. The legal basis is providing the service (Art. 6(1)(b) GDPR) and our legitimate interest in helping you get started (Art. 6(1)(f) GDPR). You can unsubscribe at any time via the link at the end of every email, at no cost other than standard transmission costs. We do not track whether you open the emails or click links. Our email provider is Resend (Resend, Inc., USA), based on EU Standard Contractual Clauses."
         }
     },
     "Terms": {
@@ -828,7 +841,8 @@
             "promoLabel": "Voucher code (optional)",
             "promoPlaceholder": "e.g. REDDIT-FT-01",
             "promoNote": "We'll remember the code. Redeem it from your dashboard after confirming – discounts apply when you subscribe.",
-            "promoDetected": "Code {code} detected"
+            "promoDetected": "Code {code} detected",
+            "onboardingNotice": "After signing up, we'll send you at most four short getting-started tips in your first two weeks. Unsubscribe with one click in any of them."
         },
         "verifyEmail": {
             "banner": {
@@ -9335,5 +9349,19 @@
         "tooFast": "Give it a moment, you just sent something.",
         "close": "Close",
         "open": "Give feedback"
+    },
+    "Unsubscribe": {
+        "metaTitle": "Unsubscribe from getting-started tips – FrameTrain",
+        "label": "Email settings",
+        "title": "Unsubscribe from getting-started tips?",
+        "text": "You won't get any more getting-started tips. Important emails about your account (e.g. password, payments) still arrive.",
+        "button": "Unsubscribe",
+        "doneTitle": "Done – no more tips",
+        "doneText": "You won't get any more getting-started tips from us. Thanks for trying FrameTrain.",
+        "undo": "Keep getting them after all",
+        "backTitle": "You're back in",
+        "backText": "The remaining tips arrive as planned, at most one email every two days.",
+        "errorTitle": "This link doesn't work",
+        "errorText": "The unsubscribe link is incomplete or invalid. Open it straight from the email or reach us via the feedback button – we'll remove you right away."
     }
 }

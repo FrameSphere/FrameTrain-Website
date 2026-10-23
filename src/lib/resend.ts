@@ -158,3 +158,17 @@ export async function sendDownloadLinkEmail(to: string, locale: Locale = 'de') {
   }
   return { sent: true as const }
 }
+
+/** Generischer Versand für Mails mit eigenem Inhalt (z. B. Onboarding-Serie). */
+export async function sendEmail(mail: { to: string; subject: string; html: string; text: string; headers?: Record<string, string> }) {
+  if (!resend) {
+    console.error('RESEND_API_KEY ist nicht gesetzt – Mail wurde NICHT versendet:', mail.subject)
+    return { sent: false as const }
+  }
+  const { error } = await resend.emails.send({ from: EMAIL_FROM, ...mail })
+  if (error) {
+    console.error('Resend: Mail konnte nicht gesendet werden:', mail.subject, error)
+    return { sent: false as const }
+  }
+  return { sent: true as const }
+}
