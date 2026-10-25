@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer'
 import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { pageAlternates, pageOpenGraph, siteUrl } from '@/lib/seo'
+import { SAME_AS } from '@/lib/channels'
 import {
   Sparkles, Heart, Shield, Zap, Brain, Globe, Lock,
   Code2, Cpu, ArrowRight, Github, Users, Rocket, Star,
@@ -91,7 +92,7 @@ export default function AboutPage() {
           name: 'FrameTrain',
           url: siteUrl,
           logo: `${siteUrl}/favicon.svg`,
-          sameAs: ['https://github.com/FrameSphere/FrameTrain-App'],
+          sameAs: SAME_AS,
         },
       },
     ],

@@ -12,6 +12,7 @@ import { CookieBanner } from '@/components/CookieBanner'
 import { PromoCapture } from '@/components/PromoCapture'
 import { FeedbackDialog } from '@/components/FeedbackDialog'
 import { siteUrl, pageAlternates, pageOpenGraph } from '@/lib/seo'
+import { SAME_AS } from '@/lib/channels'
 
 // Neuron: eine Textfamilie (Hanken Grotesk) plus Mono für Daten und Labels.
 const sans = Hanken_Grotesk({
@@ -141,7 +142,7 @@ export default async function RootLayout({ children, params }: Props) {
         name: 'FrameTrain',
         url: baseUrl,
         logo: `${baseUrl}/brand/frametrain-icon-512.png`,
-        sameAs: ['https://github.com/FrameSphere/FrameTrain-App'],
+        sameAs: SAME_AS,
       },
       {
         '@type': 'SoftwareApplication',

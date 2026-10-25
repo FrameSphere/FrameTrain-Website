@@ -68,6 +68,9 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 - Privacy: training runs fully local, GDPR-compliant, no cloud required
 - Source: https://github.com/FrameSphere/FrameTrain-App
 - Downloads: https://github.com/FrameSphere/FrameTrain-Releases/releases/latest
+- Community: https://www.reddit.com/r/FrameTrain/
+- Video tutorials: https://www.youtube.com/@FrameTrain
+- Social: https://www.tiktok.com/@frametrainofficial, https://www.instagram.com/frametrainofficial/
 `
 
   return new Response(body, {

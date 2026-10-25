@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { CookieSettingsButton } from '@/components/CookieSettingsButton'
 import { FeedbackButton } from '@/components/FeedbackButton'
+import { GITHUB_URL, SOCIAL_PROFILES } from '@/lib/channels'
 
 /**
  * Fußzeile im Design-System „Neuron": ruhig, 1px-Linie oben, Mono-Labels
@@ -58,22 +59,17 @@ export function Footer() {
             </Link>
             <p className="mt-4 ft-small max-w-[300px]">{t('taglineNeuron')}</p>
             <div className="mt-6 flex flex-wrap gap-2">
-              <a
-                href="https://github.com/FrameSphere/FrameTrain-App"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ft-btn ft-btn--ghost ft-btn--sm"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://www.reddit.com/r/FrameTrain/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ft-btn ft-btn--ghost ft-btn--sm"
-              >
-                r/FrameTrain
-              </a>
+              {[{ label: 'GitHub', url: GITHUB_URL }, ...SOCIAL_PROFILES].map((p) => (
+                <a
+                  key={p.url}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ft-btn ft-btn--ghost ft-btn--sm"
+                >
+                  {p.label}
+                </a>
+              ))}
             </div>
           </div>
 
