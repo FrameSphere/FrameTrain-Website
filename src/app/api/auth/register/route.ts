@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { signToken, setAuthCookie } from '@/lib/auth'
 import { generateVerificationToken } from '@/lib/email-verification'
 import { sendVerificationEmail } from '@/lib/resend'
+import { CURRENT_TERMS_VERSION } from '@/lib/legal-version'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -59,6 +60,7 @@ export async function POST(req: NextRequest) {
         email,
         passwordHash,
         termsAcceptedAt: now,
+        termsVersion: CURRENT_TERMS_VERSION,
         emailLocale,
         diagnosticsConsent: !!diagnosticsConsent,
         diagnosticsConsentAt: diagnosticsConsent ? now : null,

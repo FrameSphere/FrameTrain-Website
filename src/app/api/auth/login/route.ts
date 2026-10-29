@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { signToken, setAuthCookie } from '@/lib/auth'
+import { CURRENT_TERMS_VERSION } from '@/lib/legal-version'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -68,7 +69,9 @@ export async function POST(req: NextRequest) {
     if (!user.termsAcceptedAt) {
       await prisma.user.update({
         where: { id: user.id },
-        data: { termsAcceptedAt: new Date() },
+        // Nur Erstzustimmung – eine veraltete Version setzt der Login nicht
+        // hoch, dafür gibt es den Zustimmungsschritt im Dashboard.
+        data: { termsAcceptedAt: new Date(), termsVersion: CURRENT_TERMS_VERSION },
       })
     }
 

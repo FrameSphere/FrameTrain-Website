@@ -75,6 +75,15 @@ export function writeConsent(status: 'granted' | 'denied') {
   }
 
   window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: { status } }))
+
+  // Für Abonnenten auch das serverseitige Tracking (Stripe-Webhook) umstellen.
+  // Ohne Login antwortet die Route mit 401 – das ist hier egal.
+  fetch('/api/user/ad-consent', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ status }),
+  }).catch(() => {})
 }
 
 /**

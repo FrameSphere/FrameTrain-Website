@@ -51,6 +51,7 @@ export default function ImprintPage() {
               <h2 className="text-xl font-semibold text-ink mb-4">{t('provider.heading')}</h2>
               <div className="bg-surface border border-line border border-line rounded-md px-6 py-5 space-y-1 text-sm">
                 <p className="text-ink font-semibold text-base">{t('provider.name')}</p>
+                <p>{t('provider.street')}</p>
                 <p>{t('provider.location')}</p>
                 <p>{t('provider.country')}</p>
               </div>
@@ -64,6 +65,9 @@ export default function ImprintPage() {
                   <a href="mailto:framesphere@gmx.net" className="text-indigo-text hover:text-indigo-text">
                     framesphere@gmx.net
                   </a>
+                </p>
+                <p>
+                  {t('contact.formLabel')} {t('contact.formText')}
                 </p>
                 <p>
                   {t('contact.websiteLabel')}{' '}
@@ -101,20 +105,7 @@ export default function ImprintPage() {
 
             <section>
               <h2 className="text-xl font-semibold text-ink mb-4">{t('dispute.heading')}</h2>
-              <p className="text-sm text-ink-muted">
-                {t.rich('dispute.text', {
-                  link: (chunks) => (
-                    <a
-                      href="https://ec.europa.eu/consumers/odr/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-indigo-text hover:text-indigo-text"
-                    >
-                      {chunks}
-                    </a>
-                  ),
-                })}
-              </p>
+              <p className="text-sm text-ink-muted">{t('dispute.text')}</p>
             </section>
 
           </div>

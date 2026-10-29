@@ -31,6 +31,7 @@ model User {
   subscriptionCancelAt DateTime? @map("subscription_cancel_at")
   subscriptionTrialEnd DateTime? @map("subscription_trial_end") // Ende der Stripe-Gratiszeit (Trial); erste Abbuchung erfolgt danach
   termsAcceptedAt      DateTime? @map("terms_accepted_at")            // Zeitpunkt der Zustimmung zu AGB & Datenschutz
+  termsVersion         String?   @map("terms_version")                // Fassung, der zugestimmt wurde (CURRENT_TERMS_VERSION in src/lib/legal-version.ts); null = vor Oktober 2026
   diagnosticsConsent   Boolean   @default(false) @map("diagnostics_consent") // Optionale Einwilligung: Desktop-App darf anonyme Fehlerdaten senden
   diagnosticsConsentAt DateTime? @map("diagnostics_consent_at")
   emailLocale          String    @default("de") @map("email_locale")          // Sprache für E-Mails ("de" | "en"), gesetzt bei der Registrierung

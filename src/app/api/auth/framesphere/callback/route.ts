@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { grantTrialIfEligible } from '@/lib/trial'
 import { signToken } from '@/lib/auth'
+import { CURRENT_TERMS_VERSION } from '@/lib/legal-version'
 
 export const dynamic = 'force-dynamic'
 
@@ -72,6 +73,10 @@ export async function GET(req: NextRequest) {
             // Der SSO-Weg ist auf Login-/Registrierungsseite erst nach
             // Zustimmung anklickbar – Zeitstempel dokumentiert das.
             termsAcceptedAt: user.termsAcceptedAt ?? new Date(),
+            // Nur die Erstzustimmung setzt die Version. Eine veraltete Fassung
+            // wird hier NICHT hochgesetzt – das passiert ausschließlich über
+            // den Zustimmungsschritt im Dashboard (/api/user/accept-terms).
+            ...(user.termsAcceptedAt ? {} : { termsVersion: CURRENT_TERMS_VERSION }),
           },
         })
       } else {
@@ -86,6 +91,7 @@ export async function GET(req: NextRequest) {
             emailVerified: true,
             emailVerifiedAt: new Date(),
             termsAcceptedAt: new Date(),
+            termsVersion: CURRENT_TERMS_VERSION,
             emailLocale: req.cookies.get('NEXT_LOCALE')?.value === 'en' ? 'en' : 'de',
           },
         })

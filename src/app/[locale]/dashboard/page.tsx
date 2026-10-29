@@ -6,6 +6,8 @@ import { useRouter, Link } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
+import { DeleteAccountCard } from '@/components/DeleteAccountCard'
+import { TermsUpdateBanner } from '@/components/TermsUpdateBanner'
 import { Footer } from '@/components/Footer'
 import { EmailVerificationBanner } from '@/components/EmailVerificationBanner'
 import { GettingStartedChecklist, DOWNLOAD_FLAG } from '@/components/GettingStartedChecklist'
@@ -477,6 +479,9 @@ function DashboardPageInner() {
 
           {/* ── E-Mail-Verifikations-Banner ────────────────────────── */}
           <EmailVerificationBanner />
+
+          {/* ── Neuzustimmung zu geänderten AGB ───────────────────── */}
+          <TermsUpdateBanner />
 
           {/* ── Abo-Status-Banner (nur wenn abgelaufen) ───────────── */}
           {!hasPaid && (
@@ -1190,6 +1195,8 @@ function DashboardPageInner() {
               </div>
             )}
           </div>
+
+          {user?.email && <DeleteAccountCard email={user.email} hasSubscription={hasSubscription} />}
 
         </div>
       </main>

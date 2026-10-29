@@ -5,7 +5,7 @@ import { Shield } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
 import { pageAlternates } from '@/lib/seo'
-import { Link } from '@/i18n/navigation'
+import { LegalSections, type LegalSection } from '@/components/legal/LegalSections'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -19,19 +19,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-type ItemWithDesc = { name: string; desc: string }
-type ThirdParty = { name: string; role: string; privacy: string }
-
 export default function PrivacyPage() {
   const t = useTranslations('Privacy')
   const locale = useLocale()
 
-  const s2items = t.raw('s2.items') as ItemWithDesc[]
-  const s3items = t.raw('s3.items') as string[]
-  const s4items = t.raw('s4.items') as string[]
-  const s4excluded = t.raw('s4.excludedItems') as string[]
-  const s5items = t.raw('s5.items') as ThirdParty[]
-  const s6items = t.raw('s6.items') as string[]
+  const sections = t.raw('sections') as LegalSection[]
 
   return (
     <div className="min-h-screen flex flex-col bg-bg ">
@@ -59,104 +51,17 @@ export default function PrivacyPage() {
           <div className="bg-surface border border-line rounded-lg p-8 md:p-12 border border-line space-y-10 text-ink leading-relaxed">
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s1.heading')}</h2>
-              <p>{t('s1.intro')}</p>
-              <div className="mt-3 bg-surface border border-line border border-line rounded-md px-5 py-4 text-sm">
-                <p className="text-ink font-semibold">{t('s1.name')}</p>
-                <p>{t('s1.location')}</p>
-                <p>{t('s1.emailLabel')} <a href="mailto:framesphere@gmx.net" className="text-indigo-text hover:text-indigo-text">framesphere@gmx.net</a></p>
+              <h2 className="text-xl font-semibold text-ink mb-3">{t('controller.heading')}</h2>
+              <p>{t('controller.intro')}</p>
+              <div className="mt-3 bg-surface border border-line rounded-md px-5 py-4 text-sm">
+                <p className="text-ink font-semibold">{t('controller.name')}</p>
+                <p>{t('controller.street')}</p>
+                <p>{t('controller.city')}</p>
+                <p>{t('controller.emailLabel')} <a href="mailto:framesphere@gmx.net" className="text-indigo-text hover:text-indigo-text">framesphere@gmx.net</a></p>
               </div>
             </section>
 
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s2.heading')}</h2>
-              <p className="mb-4">{t('s2.intro')}</p>
-              <ul className="space-y-2 text-sm list-none">
-                {s2items.map((item) => (
-                  <li key={item.name} className="flex gap-3">
-                    <span className="text-indigo-text mt-0.5">•</span>
-                    <span><span className="text-ink font-semibold">{item.name}:</span> {item.desc}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s3.heading')}</h2>
-              <p className="mb-3">{t('s3.intro')}</p>
-              <ul className="space-y-1 text-sm list-disc list-inside text-ink-muted">
-                {s3items.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s4.heading')}</h2>
-              <p className="mb-3">{t('s4.intro')}</p>
-              <ul className="space-y-1 text-sm list-disc list-inside text-ink-muted mb-4">
-                {s4items.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-              <p className="text-sm font-semibold text-ink mb-2">{t('s4.excludedLabel')}</p>
-              <ul className="space-y-1 text-sm list-disc list-inside text-ink-muted mb-4">
-                {s4excluded.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-              <p className="text-sm mb-3">{t('s4.consentText')}</p>
-              <p className="text-sm">{t('s4.purposeText')}</p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s5.heading')}</h2>
-              <div className="space-y-3 text-sm">
-                {s5items.map((tp) => (
-                  <div key={tp.name} className="flex items-center justify-between bg-surface border border-line border border-line rounded-md px-4 py-3">
-                    <span><span className="text-ink font-semibold">{tp.name}</span> – {tp.role}</span>
-                    <a href={tp.privacy} target="_blank" rel="noopener noreferrer" className="text-indigo-text hover:text-indigo-text text-xs">
-                      {t('s5.linkLabel')}
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s6.heading')}</h2>
-              <p className="mb-3">{t('s6.intro')}</p>
-              <ul className="space-y-1 text-sm list-disc list-inside text-ink-muted">
-                {s6items.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-              <p className="mt-3 text-sm">
-                {t.rich('s6.contact', {
-                  link: (chunks) => <a href="mailto:framesphere@gmx.net" className="text-indigo-text hover:text-indigo-text">{chunks}</a>,
-                })}
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('mail.heading')}</h2>
-              <p className="text-sm">{t('mail.text')}</p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s7.heading')}</h2>
-              <p className="text-sm">
-                {t.rich('s7.text', {
-                  link: (chunks) => <Link href="/cookies" className="text-indigo-text hover:text-indigo-text">{chunks}</Link>,
-                })}
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s8.heading')}</h2>
-              <p className="text-sm">{t('s8.text')}</p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">{t('s9.heading')}</h2>
-              <p className="text-sm">
-                {t.rich('s9.text', {
-                  link: (chunks) => <a href="mailto:framesphere@gmx.net" className="text-indigo-text hover:text-indigo-text">{chunks}</a>,
-                })}
-              </p>
-            </section>
+            <LegalSections sections={sections} />
 
           </div>
         </div>

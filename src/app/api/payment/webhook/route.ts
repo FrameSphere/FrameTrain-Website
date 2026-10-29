@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { generateApiKey } from '@/lib/api-key'
 import { consumeRedemptionSlot } from '@/lib/promo'
 import { sendServerPurchase } from '@/lib/server-analytics'
+import { sendContractConfirmation } from '@/lib/legal-emails'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -238,6 +239,28 @@ export async function POST(req: NextRequest) {
         // Falls ein Promo-Code im Spiel war: Einlösung jetzt final verbuchen
         await finalizePromoRedemption(session, user.id)
 
+        // Vertragsbestätigung + Widerrufsverzicht auf dauerhaftem Datenträger
+        // (§ 312f Abs. 2, § 356 Abs. 5 BGB). Ein Mail-Fehler darf den Webhook
+        // nicht scheitern lassen.
+        try {
+          const meta = session.metadata ?? {}
+          const locale = meta.locale === 'en' ? 'en' : 'de'
+          const currency = (session.currency ?? 'eur').toUpperCase()
+          const total = (session.amount_total ?? 0) / 100
+          await sendContractConfirmation({
+            to: session.customer_email ?? user.email,
+            locale,
+            plan: meta.plan ?? 'monthly',
+            amount: `${total.toLocaleString(locale === 'en' ? 'en-GB' : 'de-DE', { style: 'currency', currency })} / ${
+              meta.plan === 'yearly' ? (locale === 'en' ? 'year' : 'Jahr') : (locale === 'en' ? 'month' : 'Monat')
+            }`,
+            waiverAt: meta.withdrawalWaiverAt ? new Date(meta.withdrawalWaiverAt) : new Date(),
+            trialEnd,
+          })
+        } catch (mailError) {
+          console.error('❌ Contract confirmation mail failed (ignored):', mailError)
+        }
+
         console.log('✅ Subscription started & API Key created for:', user.email)
       } catch (dbError) {
         console.error('❌ Database error in checkout.session.completed:', dbError)
@@ -404,8 +427,19 @@ export async function POST(req: NextRequest) {
         // Läuft bewusst NACH allen DB-Updates und wirft nie — ein Tracking-
         // Fehler darf keinen Webhook-Retry auslösen.
         // Ohne META_CAPI_ACCESS_TOKEN / GA4_API_SECRET ist der Aufruf ein No-Op.
+        // Nur mit Einwilligung aus dem Cookie-Banner (beim Checkout in die
+        // Subscription-Metadaten geschrieben, bei Widerruf überschrieben).
         const amountPaid = invoice.amount_paid ?? 0
+        let adConsent = false
         if (amountPaid > 0) {
+          try {
+            const sub = await stripe.subscriptions.retrieve(subscriptionId)
+            adConsent = sub.metadata?.adConsent === 'granted'
+          } catch (e) {
+            console.error('Could not read adConsent from subscription:', e)
+          }
+        }
+        if (amountPaid > 0 && adConsent) {
           const eventId = await resolvePurchaseEventId(invoice, subscriptionId)
           await sendServerPurchase({
             eventId,

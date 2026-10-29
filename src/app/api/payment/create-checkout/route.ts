@@ -78,6 +78,21 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json().catch(() => ({}))
     const plan: 'monthly' | 'yearly' = body.plan === 'yearly' ? 'yearly' : 'monthly'
+    const locale: 'de' | 'en' = body.locale === 'en' ? 'en' : 'de'
+
+    // § 356 Abs. 5 BGB: Das Widerrufsrecht erlischt bei digitalen Inhalten nur,
+    // wenn der Verbraucher dem sofortigen Beginn ausdrücklich zugestimmt UND
+    // seine Kenntnis vom Verlust bestätigt hat. Ohne diese Erklärung kein Checkout.
+    if (body.withdrawalWaiver !== true) {
+      return NextResponse.json({ error: 'withdrawal_waiver_required' }, { status: 400 })
+    }
+    const waiverAt = new Date().toISOString()
+
+    // Serverseitiges Conversion-Tracking (Meta CAPI / GA4 MP) nur, wenn der
+    // Nutzer im Cookie-Banner zugestimmt hat. Der Webhook liest das aus den
+    // Subscription-Metadaten; ein späterer Widerruf überschreibt es
+    // (/api/user/ad-consent).
+    const adConsent = body.adConsent === 'granted' ? 'granted' : 'denied'
 
     const priceId = plan === 'yearly'
       ? process.env.STRIPE_PRICE_ID_YEARLY!
@@ -120,6 +135,9 @@ export async function POST(req: NextRequest) {
       // plan landet mit in der Session, damit das Conversion-Tracking auf der
       // Success-Seite monatlich/jährlich unterscheiden kann.
       plan,
+      locale,
+      adConsent,
+      withdrawalWaiverAt: waiverAt,
       ...(promo ? { promoCodeId: promo.id, promoCode: promo.code } : {}),
     }
 
@@ -177,6 +195,16 @@ export async function POST(req: NextRequest) {
       subscription_data: {
         ...(trialEnd ? { trial_end: trialEnd } : {}),
         metadata,
+      },
+      locale,
+      // § 312j Abs. 3 BGB: Der Stripe-Button lautet nur „Abonnieren“ – der
+      // Hinweis direkt darüber macht die Zahlungspflicht eindeutig.
+      custom_text: {
+        submit: {
+          message: locale === 'en'
+            ? 'By clicking "Subscribe" you place a paid order. The subscription renews automatically until cancelled.'
+            : 'Mit Klick auf „Abonnieren“ bestellst du zahlungspflichtig. Das Abo verlängert sich automatisch, bis du kündigst.',
+        },
       },
       success_url: `${fullBaseUrl}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${fullBaseUrl}/payment/cancel`,

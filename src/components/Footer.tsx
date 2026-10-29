@@ -45,6 +45,8 @@ export function Footer() {
     { href: '/terms', label: t('terms') },
     { href: '/imprint', label: t('imprint') },
     { href: '/cookies', label: t('cookies') },
+    { href: '/withdrawal', label: t('withdrawal') },
+    { href: '/cancel', label: t('cancel') },
   ]
 
   return (

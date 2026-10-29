@@ -9,6 +9,7 @@ interface User {
   communityName?: string
   emailVerified?: boolean
   hasPaid?: boolean
+  termsUpdateRequired?: boolean
 }
 
 interface AuthContextType {

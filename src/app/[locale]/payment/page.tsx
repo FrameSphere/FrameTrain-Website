@@ -10,8 +10,9 @@ import {
   CreditCard, Shield, Zap, Brain, BarChart3, Layers,
   Lock, ArrowRight, CheckCircle2, Check, Ticket
 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { trackSignUp } from '@/lib/analytics'
+import { useTranslations, useLocale } from 'next-intl'
+import { trackSignUp, readConsent } from '@/lib/analytics'
+import { WithdrawalWaiver } from '@/components/WithdrawalWaiver'
 
 // ─── Feature items ─────────────────────────────────────────────────────────────
 const FEATURE_META = [
@@ -72,6 +73,8 @@ function PaymentPageInner() {
   const tFeatures = useTranslations('Payment.page.features')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [waiver, setWaiver] = useState(false)
+  const locale = useLocale()
   const [plan, setPlan] = useState<Plan>(() => {
     // Wird während SSR immer 'monthly' sein; useSearchParams läuft nur client-side
     return 'monthly'
@@ -124,7 +127,7 @@ function PaymentPageInner() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ plan }),
+        body: JSON.stringify({ plan, locale, withdrawalWaiver: waiver, adConsent: readConsent() }),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -205,6 +208,8 @@ function PaymentPageInner() {
               <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
             </button>
 
+            <WithdrawalWaiver checked={waiver} onChange={setWaiver} />
+
             {error && (
               <div role="alert" className="mt-6 px-4 py-3 rounded-sm border border-danger text-danger text-[14px]">
                 {error}
@@ -214,7 +219,7 @@ function PaymentPageInner() {
             <button
               type="button"
               onClick={handlePayment}
-              disabled={loading}
+              disabled={loading || !waiver}
               className="ft-btn ft-btn--primary w-full mt-7"
             >
               {loading ? (

@@ -30,6 +30,7 @@ const pages: PageDef[] = [
   { path: '/imprint', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/withdrawal', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/cookies', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/docs', changeFrequency: 'weekly', priority: 0.92 },
   { path: '/docs/ai-training-guide', changeFrequency: 'monthly', priority: 0.92 },

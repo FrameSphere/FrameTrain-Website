@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
+import { CURRENT_TERMS_VERSION } from '@/lib/legal-version'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -90,6 +91,9 @@ export async function POST(req: NextRequest) {
             passwordHash: true,
             desktopPasswordHash: true,
             hasPaid: true,
+            termsAcceptedAt: true,
+            termsVersion: true,
+            diagnosticsConsent: true,
           }
         }
       }
@@ -187,6 +191,12 @@ export async function POST(req: NextRequest) {
       isValid: true,
       userId: apiKeyRecord.user.id,
       email: apiKeyRecord.user.email,
+      // Einwilligungen aus der Registrierung — die App übernimmt sie als Standard
+      // AGB-Zustimmung zählt nur für die aktuelle Fassung; termsUpdated = früher
+      // zugestimmt, aber einer älteren Fassung (App zeigt "AGB aktualisiert").
+      termsAccepted: apiKeyRecord.user.termsVersion === CURRENT_TERMS_VERSION,
+      termsUpdated: !!apiKeyRecord.user.termsAcceptedAt && apiKeyRecord.user.termsVersion !== CURRENT_TERMS_VERSION,
+      diagnosticsConsent: apiKeyRecord.user.diagnosticsConsent,
       message: 'Validierung erfolgreich'
     })
 

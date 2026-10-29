@@ -62,24 +62,29 @@
         "vsUnsloth": "vs. Unsloth",
         "vsColab": "vs. Google Colab",
         "mlxVsPytorch": "MLX vs. PyTorch",
-        "feedback": "Feedback"
+        "feedback": "Feedback",
+        "withdrawal": "Withdraw from contract",
+        "cancel": "Cancel contracts here"
     },
     "Imprint": {
         "metaTitle": "Imprint – FrameTrain",
         "metaDescription": "Legal notice (Imprint) for FrameTrain",
         "heading": "Imprint",
-        "subtitle": "Information according to § 5 TMG (German Telemedia Act)",
+        "subtitle": "Information according to § 5 DDG (German Digital Services Act)",
         "courtesyNote": "This page is provided in English for convenience. The German version is the legally binding original.",
         "provider": {
             "heading": "Provider",
             "name": "Karol Paschek",
-            "location": "Mainz, Rhineland-Palatinate",
-            "country": "Germany"
+            "location": "55270 Zornheim, Rhineland-Palatinate",
+            "country": "Germany",
+            "street": "Universitätsstraße 8"
         },
         "contact": {
             "heading": "Contact",
             "emailLabel": "Email:",
-            "websiteLabel": "Website:"
+            "websiteLabel": "Website:",
+            "formLabel": "Contact form:",
+            "formText": "Feedback button at the bottom right of every page"
         },
         "responsible": {
             "heading": "Responsible for content",
@@ -89,7 +94,7 @@
             "heading": "Disclaimer",
             "content": {
                 "title": "Liability for content",
-                "text": "As a service provider, we are responsible for our own content on these pages in accordance with general law under § 7 (1) TMG. However, under §§ 8 to 10 TMG, we as a service provider are not obligated to monitor transmitted or stored third-party information."
+                "text": "As a service provider, we are responsible for our own content on these pages in accordance with general law under § 7 (1) DDG. However, under §§ 8 to 10 DDG, we as a service provider are not obligated to monitor transmitted or stored third-party information."
             },
             "links": {
                 "title": "Liability for links",
@@ -101,233 +106,385 @@
             }
         },
         "dispute": {
-            "heading": "Dispute resolution",
-            "text": "The European Commission provides a platform for online dispute resolution (ODR): <link>https://ec.europa.eu/consumers/odr/</link>. You can find our email address above in the imprint. We are not willing or obligated to participate in dispute resolution proceedings before a consumer arbitration board."
+            "heading": "Consumer dispute resolution",
+            "text": "We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board."
         }
     },
     "Privacy": {
         "metaTitle": "Privacy Policy – FrameTrain",
-        "metaDescription": "Privacy policy for FrameTrain",
+        "metaDescription": "What data FrameTrain processes on the website and in the desktop app, why, for how long, and what rights you have.",
         "heading": "Privacy Policy",
         "lastUpdated": "Last updated: October 2026",
-        "courtesyNote": "This page is provided in English for convenience. The German version is the legally binding original.",
-        "s1": {
-            "heading": "1. Data Controller",
-            "intro": "The data controller within the meaning of the GDPR for the operation of FrameTrain is:",
+        "controller": {
+            "heading": "1. Controller",
+            "intro": "The controller within the meaning of the GDPR for the website frame-train.com and the FrameTrain desktop app is:",
             "name": "Karol Paschek",
-            "location": "Mainz, Germany",
+            "street": "Universitätsstraße 8",
+            "city": "55270 Zornheim, Germany",
             "emailLabel": "Email:"
         },
-        "s2": {
-            "heading": "2. Data We Collect",
-            "intro": "We collect the following personal data:",
-            "items": [
-                {
-                    "name": "Email address",
-                    "desc": "For account creation, authentication, and support"
-                },
-                {
-                    "name": "Email language and getting-started tips",
-                    "desc": "Language for emails and whether and which getting-started tips you have received"
-                },
-                {
-                    "name": "Password (hashed)",
-                    "desc": "For secure authentication, never stored in plain text"
-                },
-                {
-                    "name": "Payment data",
-                    "desc": "Processed directly by Stripe – we do not store any credit card data"
-                },
-                {
-                    "name": "API key usage",
-                    "desc": "Anonymized logs for abuse detection and license validation"
-                },
-                {
-                    "name": "Support tickets",
-                    "desc": "Voluntarily submitted messages in the support system"
-                }
-            ]
-        },
-        "s3": {
-            "heading": "3. Purpose of Processing",
-            "intro": "Your data is processed exclusively for the following purposes:",
-            "items": [
-                "Providing the FrameTrain service and desktop app",
-                "License validation via API key",
-                "Processing payments (via Stripe)",
-                "Handling support requests",
-                "Sending important service emails (no marketing without consent)"
-            ]
-        },
-        "s4": {
-            "heading": "4. Diagnostic & Error Data from the Desktop App",
-            "intro": "The FrameTrain desktop app does not automatically transmit telemetry. If you explicitly enable optional error reporting in the app's settings, the app may send the following data to us when a crash or error occurs:",
-            "items": [
-                "Error type and stack trace",
-                "App version and operating system",
-                "Anonymized hardware information (e.g. GPU type, available VRAM)"
-            ],
-            "excludedLabel": "Never included:",
-            "excludedItems": [
-                "Your training data or datasets",
-                "Model weights or checkpoints",
-                "File paths or file contents from your machine"
-            ],
-            "consentText": "This feature is off by default and can be switched on or off at any time in the app's settings. Enabling it means you consent to this data processing (Art. 6(1)(a) GDPR); you may withdraw this consent at any time with future effect.",
-            "purposeText": "We use this data exclusively to fix bugs, improve the product, and provide better support when you contact us."
-        },
-        "s5": {
-            "heading": "5. Third-Party Providers",
-            "items": [
-                {
-                    "name": "Stripe",
-                    "role": "Payment processing",
-                    "privacy": "https://stripe.com/privacy"
-                },
-                {
-                    "name": "Resend",
-                    "role": "Sending emails (verification, account, getting-started tips)",
-                    "privacy": "https://resend.com/legal/privacy-policy"
-                },
-                {
-                    "name": "Vercel",
-                    "role": "Website hosting & cookieless reach measurement (Vercel Web Analytics, no personal profiles)",
-                    "privacy": "https://vercel.com/legal/privacy-policy"
-                },
-                {
-                    "name": "Cloudflare",
-                    "role": "API infrastructure / CDN",
-                    "privacy": "https://www.cloudflare.com/privacypolicy/"
-                },
-                {
-                    "name": "Google",
-                    "role": "OAuth login (optional)",
-                    "privacy": "https://policies.google.com/privacy"
-                },
-                {
-                    "name": "Google Analytics / Google Ads",
-                    "role": "Reach measurement & conversion tracking – only with consent",
-                    "privacy": "https://policies.google.com/privacy"
-                },
-                {
-                    "name": "Meta (Facebook Pixel)",
-                    "role": "Conversion tracking – only with consent",
-                    "privacy": "https://www.facebook.com/privacy/policy"
-                },
-                {
-                    "name": "GitHub",
-                    "role": "OAuth login (optional)",
-                    "privacy": "https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement"
-                },
-                {
-                    "name": "FrameSphere",
-                    "role": "SSO login (optional)",
-                    "privacy": "https://frame-sphere.vercel.app/privacy"
-                }
-            ],
-            "linkLabel": "Privacy policy →"
-        },
-        "s6": {
-            "heading": "6. Your Rights (GDPR)",
-            "intro": "You have the following rights regarding your personal data:",
-            "items": [
-                "Right to access (Art. 15 GDPR)",
-                "Right to rectification (Art. 16 GDPR)",
-                "Right to erasure (\"right to be forgotten\", Art. 17 GDPR)",
-                "Right to restriction of processing (Art. 18 GDPR)",
-                "Right to data portability (Art. 20 GDPR)",
-                "Right to object (Art. 21 GDPR)"
-            ],
-            "contact": "To exercise your rights, please contact: <link>framesphere@gmx.net</link>"
-        },
-        "s7": {
-            "heading": "7. Cookies",
-            "text": "FrameTrain sets strictly necessary cookies without consent. Analytics and marketing services (Google Analytics 4, Google Ads, Meta Pixel) only load after you have explicitly consented in the cookie banner, and can be declined at any time. See our <link>Cookie Policy</link> for the full list and all details."
-        },
-        "s8": {
-            "heading": "8. Data Security",
-            "text": "All data transfers are encrypted via HTTPS/TLS. Passwords are hashed with bcrypt and never stored in plain text. Payment data is processed exclusively by Stripe (PCI-DSS Level 1 certified)."
-        },
-        "s9": {
-            "heading": "9. Contact & Complaints",
-            "text": "If you have questions or complaints about this privacy policy, please contact <link>framesphere@gmx.net</link>. You also have the right to lodge a complaint with your competent data protection authority."
-        },
-        "mail": {
-            "heading": "Getting-started emails",
-            "text": "After you sign up, we send you at most four short emails with tips on using FrameTrain during your first two weeks, plus a reminder of when your trial ends if you are on one. These emails relate only to your account and the app; they contain no advertising for other products. The legal basis is providing the service (Art. 6(1)(b) GDPR) and our legitimate interest in helping you get started (Art. 6(1)(f) GDPR). You can unsubscribe at any time via the link at the end of every email, at no cost other than standard transmission costs. We do not track whether you open the emails or click links. Our email provider is Resend (Resend, Inc., USA), based on EU Standard Contractual Clauses."
-        }
+        "sections": [
+            {
+                "heading": "2. Summary",
+                "paragraphs": [
+                    "Training with FrameTrain runs locally on your computer. We never receive your datasets, training runs or models.",
+                    "Online, we only process what is needed for your account, licence, payment, emails and support. Analytics and marketing services only run with your consent. Error reports from the desktop app are off by default.",
+                    "This policy applies wherever you live. We apply the GDPR as the standard for all users worldwide."
+                ]
+            },
+            {
+                "heading": "3. Visiting the website and hosting",
+                "paragraphs": [
+                    "The website is hosted by Vercel Inc. (USA). When you visit it, Vercel processes technically necessary data such as IP address, time, requested URL, referrer and browser identifier in server logs. This serves secure and stable operation (Art. 6(1)(f) GDPR). Vercel keeps these logs only briefly under its own retention periods.",
+                    "We use Vercel Web Analytics to measure reach. It works without cookies and without cross-device profiles and only gives us aggregated numbers (Art. 6(1)(f) GDPR).",
+                    "Fonts are served from our own server. No connection to Google Fonts is made.",
+                    "Some of our APIs and the forms for support and error reports run on Cloudflare Inc. (USA)."
+                ]
+            },
+            {
+                "heading": "4. Customer account",
+                "paragraphs": [
+                    "For an account we process: email address, password (bcrypt hash only), where applicable a separate desktop password (also hashed), the sign-in method, your email verification status, your chosen email language, the time you accepted the terms and privacy policy, your optional community name, your API keys (licence keys) with the time of last use, and information about trial, vouchers and subscription status.",
+                    "The legal basis is performance of the contract (Art. 6(1)(b) GDPR). Without this data we cannot provide an account or licence.",
+                    "The database is hosted by Supabase (Supabase Inc., USA) in a data centre in the EU (Ireland).",
+                    "We keep the data as long as your account exists. You can delete your account at any time in the dashboard under “Delete account”. Payment records we are required to keep are excluded (see section 6)."
+                ]
+            },
+            {
+                "heading": "5. Sign-in with Google, GitHub or FrameSphere",
+                "paragraphs": [
+                    "If you sign in via Google, GitHub or FrameSphere, we receive your email address, your name where available and an identifier of your account there. The legal basis is Art. 6(1)(b) GDPR. Processing by the provider is governed by its privacy policy."
+                ]
+            },
+            {
+                "heading": "6. Payment",
+                "paragraphs": [
+                    "Payments are handled by Stripe (Stripe Payments Europe Ltd., Ireland). You enter your card or payment details directly with Stripe. We never see or store them.",
+                    "We store: Stripe customer and subscription ID, amount, currency, payment status, invoice ID, email address and timestamps. Legal bases are Art. 6(1)(b) GDPR (contract) and Art. 6(1)(c) GDPR (retention duties under tax and commercial law).",
+                    "We keep payment records for the statutory periods, usually up to 10 years (§ 147 AO, § 257 HGB), even if you delete your account. Stripe also processes data as an independent controller, for example for fraud prevention."
+                ]
+            },
+            {
+                "heading": "7. Emails",
+                "paragraphs": [
+                    "We send emails via Resend (Resend, Inc., USA): email verification, contract, cancellation and withdrawal confirmations, and important account notices (Art. 6(1)(b) and (c) GDPR).",
+                    "After you sign up we send you at most four short emails with tips on using FrameTrain during your first two weeks, plus a reminder when a trial ends. They only concern your account and the app and contain no advertising for other products. The legal basis is our legitimate interest in helping you get started (Art. 6(1)(f) GDPR). You can unsubscribe at any time via the link at the end of each email.",
+                    "We do not track whether you open our emails or click links."
+                ]
+            },
+            {
+                "heading": "8. Support, feedback and tickets",
+                "paragraphs": [
+                    "Feedback and support requests from the website or the desktop app go to our ticket system, which runs on Cloudflare Workers (Cloudflare Inc., USA).",
+                    "We process: your message and subject, your email address (automatically for signed-in users, otherwise voluntary), the part of your email address before the “@” as a display name, your user ID, and the page and operating system you are writing from.",
+                    "So that you can see replies in the dashboard, your browser stores a ticket identifier locally.",
+                    "The legal basis is Art. 6(1)(b) GDPR, for guests Art. 6(1)(f) GDPR (answering your request). We keep tickets as long as needed to handle them and possible follow-up questions, then delete them. On request we delete them immediately."
+                ]
+            },
+            {
+                "heading": "9. Desktop app",
+                "paragraphs": [
+                    "Sign-in and licence check: the app sends your login details or API key to frame-train.com to verify your licence (Art. 6(1)(b) GDPR).",
+                    "Automatic error reports (only with consent): this feature is off by default. You can turn it on with the checkbox when signing up or in the app under Settings › Support with the switch “Report errors automatically”, and turn it off again at any time; withdrawal takes effect immediately for the future. We store your choice with a timestamp in your account; it applies on all your devices. On sign-in the app adopts the setting from your account; switching it in the app takes effect immediately and is transferred to your account. If you switch it while offline, the change is sent at the next sign-in and takes precedence, so a withdrawal is never lost. When enabled, the app sends on an error: error type, title and message, stack trace, the affected app area, app version, platform and time. No user ID or email address is included. Stack traces may however contain file paths that include, for example, your username on the computer. The legal basis is your consent (Art. 6(1)(a) GDPR, § 25(1) TDDDG).",
+                    "Manual error reports: if you explicitly send an error report from the app, it first shows you exactly what will be sent. Depending on the area this includes the training script, the training output or latest events, the training configuration and a diagnostic text. These may contain file paths, dataset names and excerpts of data. Please check the preview before sending. The legal basis is your consent by sending (Art. 6(1)(a) GDPR).",
+                    "Error reports go to our ticket system on Cloudflare Workers (see section 8). We use them only to fix bugs and improve the product and delete them once they are no longer needed for that.",
+                    "AI features with your own API key: if you add your own key for an AI provider in the app (e.g. OpenAI, Anthropic, Groq), the app sends your requests directly from your computer to that provider. Depending on the feature this includes scripts, model information and excerpts of your datasets. We do not receive this data. Processing is governed by your contract with the provider; most are based in the USA. Do not send personal or confidential training data to an AI provider unless you are entitled to. With Ollama everything stays local.",
+                    "Downloads and updates: when downloading models and datasets (Hugging Face), Python packages (PyPI, PyTorch) and app updates (GitHub), the app connects to these providers, which technically receive your IP address. If you upload a model to Hugging Face, it is published there according to your settings.",
+                    "Local storage: the app stores projects, settings, chat histories and ticket identifiers locally on your computer, and API keys and tokens in your operating system's keychain. We have no access to them. Uninstalling does not always remove this data automatically; you can delete the app data folder yourself."
+                ]
+            },
+            {
+                "heading": "10. Open Library",
+                "paragraphs": [
+                    "If you upload a script to the Open Library, its name, description, tags, the script content and your community name are shown publicly (Art. 6(1)(b) GDPR).",
+                    "Before publication we check every script automatically for malicious code and quality. For this we send the script content and its details to the AI API of Anthropic (Anthropic PBC, USA). Based on this check a script is published, rejected or held for manual review. This decision only concerns the publication of the script. You can request a review by a human at any time.",
+                    "Your scripts stay published until you ask us to delete them or delete your account."
+                ]
+            },
+            {
+                "heading": "11. Cookies, analytics and marketing",
+                "paragraphs": [
+                    "We set technically necessary cookies (sign-in, protection of the sign-in process, language choice) without consent (§ 25(2) TDDDG).",
+                    "Google Analytics 4, Google Ads and the Meta Pixel (Google Ireland Ltd., Meta Platforms Ireland Ltd.) only load if you agree in the cookie banner (Art. 6(1)(a) GDPR, § 25(1) TDDDG).",
+                    "With your consent we also report purchases and subscription renewals to these services from our server: amount, currency and a transaction ID; to Meta additionally your email address and Stripe customer ID, both only as SHA-256 hashes; to Google a pseudonymous user ID.",
+                    "You can withdraw your consent at any time via “Cookie settings” in the footer. If you are signed in and have a subscription, withdrawal also stops the server-side reports.",
+                    "Details are in the cookie policy."
+                ]
+            },
+            {
+                "heading": "12. Embedded videos",
+                "paragraphs": [
+                    "YouTube videos only load after you click the preview image, via youtube-nocookie.com. Only then is data such as your IP address sent to Google (Art. 6(1)(a) GDPR)."
+                ]
+            },
+            {
+                "heading": "13. Recipients and transfers to third countries",
+                "paragraphs": [
+                    "We use the following service providers. Where they act on our behalf, we have concluded a data processing agreement with them (Art. 28 GDPR)."
+                ],
+                "providers": [
+                    {
+                        "name": "Vercel Inc., USA",
+                        "role": "Hosting, web analytics",
+                        "privacy": "https://vercel.com/legal/privacy-policy"
+                    },
+                    {
+                        "name": "Supabase Inc., USA (data in the EU)",
+                        "role": "Database",
+                        "privacy": "https://supabase.com/privacy"
+                    },
+                    {
+                        "name": "Cloudflare Inc., USA",
+                        "role": "APIs, ticket system, error reports",
+                        "privacy": "https://www.cloudflare.com/privacypolicy/"
+                    },
+                    {
+                        "name": "Stripe Payments Europe Ltd., Ireland",
+                        "role": "Payment processing",
+                        "privacy": "https://stripe.com/privacy"
+                    },
+                    {
+                        "name": "Resend, Inc., USA",
+                        "role": "Email delivery",
+                        "privacy": "https://resend.com/legal/privacy-policy"
+                    },
+                    {
+                        "name": "Anthropic PBC, USA",
+                        "role": "Automatic review of library scripts",
+                        "privacy": "https://www.anthropic.com/legal/privacy"
+                    },
+                    {
+                        "name": "Google Ireland Ltd. / Google LLC",
+                        "role": "Sign-in (optional), Analytics and Ads (consent only), YouTube (after click)",
+                        "privacy": "https://policies.google.com/privacy"
+                    },
+                    {
+                        "name": "Meta Platforms Ireland Ltd.",
+                        "role": "Conversion measurement (consent only)",
+                        "privacy": "https://www.facebook.com/privacy/policy"
+                    },
+                    {
+                        "name": "GitHub Inc., USA",
+                        "role": "Sign-in (optional), app downloads and updates",
+                        "privacy": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+                    },
+                    {
+                        "name": "FrameSphere",
+                        "role": "SSO sign-in (optional)",
+                        "privacy": "https://frame-sphere.vercel.app/privacy"
+                    }
+                ],
+                "after": [
+                    "Some of these providers process data in the USA. Transfers are based on the adequacy decision for the EU-US Data Privacy Framework where the provider is certified under it, and otherwise on EU Standard Contractual Clauses (Art. 46(2)(c) GDPR). You can request a copy of the safeguards from us."
+                ],
+                "linkLabel": "Privacy →"
+            },
+            {
+                "heading": "14. Retention at a glance",
+                "items": [
+                    "Account data: until you delete your account",
+                    "Payment records: statutory retention period, usually up to 10 years",
+                    "Support tickets and error reports: until resolved and any follow-up questions are answered, then deleted",
+                    "Server logs at Vercel: briefly, under Vercel's retention periods",
+                    "Cookie consent: locally in your browser until you change it or clear browser storage",
+                    "Library scripts: until you ask us to delete them or delete your account"
+                ]
+            },
+            {
+                "heading": "15. Your rights",
+                "paragraphs": [
+                    "You have the right of access (Art. 15 GDPR), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18) and data portability (Art. 20). You can withdraw any consent at any time with effect for the future (Art. 7(3) GDPR).",
+                    "Right to object: where we process data on the basis of legitimate interests (Art. 6(1)(f) GDPR), you may object at any time on grounds relating to your particular situation (Art. 21 GDPR). You can object to the onboarding emails at any time without giving reasons.",
+                    "Write to us at framesphere@gmx.net. You can also delete your account yourself in the dashboard.",
+                    "You can lodge a complaint with a data protection supervisory authority, in particular in your country of residence. The authority responsible for us is the State Commissioner for Data Protection and Freedom of Information of Rhineland-Palatinate (www.datenschutz.rlp.de)."
+                ]
+            },
+            {
+                "heading": "16. Automated decisions",
+                "paragraphs": [
+                    "We do not make automated decisions that produce legal effects concerning you or similarly significantly affect you (Art. 22 GDPR). The automatic review of library scripts (section 10) only concerns their publication."
+                ]
+            },
+            {
+                "heading": "17. Minimum age",
+                "paragraphs": [
+                    "FrameTrain is intended for people aged 16 and over. We do not knowingly process data of children under 16."
+                ]
+            },
+            {
+                "heading": "18. Users outside the EU",
+                "paragraphs": [
+                    "We give all users worldwide the level of protection and the rights described in this policy. Your data is processed in the EU and, as described above, in the USA. We do not sell personal data. Sharing for advertising purposes (Meta, Google Ads) only happens with your consent in the cookie banner."
+                ]
+            },
+            {
+                "heading": "19. Data security",
+                "paragraphs": [
+                    "All connections are encrypted via HTTPS/TLS. We store passwords only as bcrypt hashes and verification tokens only as SHA-256 hashes. Payment data is processed exclusively by Stripe (PCI-DSS Level 1)."
+                ]
+            },
+            {
+                "heading": "20. Changes",
+                "paragraphs": [
+                    "We update this policy when our services or the law change. The version published here applies."
+                ]
+            }
+        ],
+        "courtesyNote": "This page is provided in English for convenience. The German version is the legally binding original."
     },
     "Terms": {
         "metaTitle": "Terms of Service – FrameTrain",
-        "metaDescription": "Terms of Service for FrameTrain",
+        "metaDescription": "Terms of service for FrameTrain (website and desktop app).",
         "heading": "Terms of Service",
-        "lastUpdated": "Last updated: January 2025",
-        "courtesyNote": "This is a courtesy translation. The German version (AGB) is the legally binding original and governs in case of any discrepancy.",
-        "s1": {
-            "heading": "1. Scope",
-            "text": "These Terms of Service apply to the use of the FrameTrain service (website and desktop application), operated by Karol Paschek, Mainz, Germany. By using the service, you accept these Terms."
-        },
-        "s2": {
-            "heading": "2. Description of Services",
-            "intro": "FrameTrain is a desktop application for local machine learning training. The service includes:",
-            "items": [
-                "Subscription access: €4.99/month or €39.99/year (Early Access price, increasing to €9.99 after the first 100 users)",
-                "Access to the desktop app (Windows, macOS, Linux) for the duration of the active subscription",
-                "Free updates throughout the subscription term",
-                "Access to the online documentation",
-                "Email support"
-            ]
-        },
-        "s3": {
-            "heading": "3. Conclusion of Contract, Payment & Term",
-            "text1": "A contract is formed when you register and provide a payment method for the chosen subscription (monthly or yearly). Payment is processed by Stripe and charged automatically at the start of each billing period. After successful payment, you receive an API key that serves as your license key for the duration of the active subscription.",
-            "text2": "The subscription automatically renews for the respective billing period (month or year) unless cancelled before the end of the current period."
-        },
-        "s4": {
-            "heading": "4. Cancellation",
-            "text": "The subscription can be cancelled at any time, effective at the end of the current billing period, without giving reasons. Cancellation can be done via the dashboard or by email to <link>framesphere@gmx.net</link>. Once the cancellation takes effect, access to the desktop app ends at the end of the already-paid billing period."
-        },
-        "s5": {
-            "heading": "5. Right of Withdrawal",
-            "text1": "As this involves digital content that is provided immediately after the conclusion of the contract, the right of withdrawal expires under § 356 (5) of the German Civil Code (BGB) once performance of the contract has begun, provided you have expressly agreed that performance begins before the withdrawal period ends.",
-            "text2": "Contact us with any questions: <link>framesphere@gmx.net</link>"
-        },
-        "s6": {
-            "heading": "6. License to Use",
-            "text1": "Upon purchase, you receive a non-exclusive, non-transferable license to use the FrameTrain desktop application for private and commercial purposes on your own devices.",
-            "prohibitedLabel": "The following is expressly prohibited:",
-            "items": [
-                "Sharing, selling, or sublicensing your API key",
-                "Reverse engineering or decompiling the app",
-                "Using the API for automated abuse"
-            ]
-        },
-        "s7": {
-            "heading": "7. Availability",
-            "text": "We strive for high availability of the service but cannot guarantee 100% uptime. The desktop app works fully locally – an internet outage does not affect training. Only license validation at startup requires an internet connection."
-        },
-        "s8": {
-            "heading": "8. Limitation of Liability",
-            "text": "The operator is not liable for indirect damages, lost profits, or data loss arising from the use of FrameTrain. Liability is limited to the sum of subscription fees paid in the last 12 months, to the extent permitted by law."
-        },
-        "s9": {
-            "heading": "9. Changes to these Terms",
-            "text": "We reserve the right to change these Terms. Material changes will be communicated to you by email. Continued use of the service after amended Terms take effect constitutes acceptance."
-        },
-        "s10": {
-            "heading": "10. Governing Law",
-            "text": "German law applies, excluding the UN Convention on the International Sale of Goods (CISG). The place of jurisdiction is Mainz, to the extent permitted by law."
-        },
-        "s11": {
-            "heading": "11. Contact",
-            "text": "Karol Paschek, Mainz · <link>framesphere@gmx.net</link>"
-        }
+        "lastUpdated": "Last updated: October 2026",
+        "sections": [
+            {
+                "heading": "1. Scope and provider",
+                "paragraphs": [
+                    "These terms apply to all contracts for the use of FrameTrain (website frame-train.com and desktop app) between you and Karol Paschek, Universitätsstraße 8, 55270 Zornheim, Germany, email: framesphere@gmx.net (“we”).",
+                    "A consumer is anyone who concludes the contract predominantly for private purposes (§ 13 BGB). Provisions that apply only to consumers or only to businesses are marked as such.",
+                    "The contract language is German. This English version is for information only."
+                ]
+            },
+            {
+                "heading": "2. Services",
+                "paragraphs": [
+                    "FrameTrain is a desktop application for training machine learning models locally. During a trial or an active subscription you get:"
+                ],
+                "items": [
+                    "access to the desktop app for Windows, macOS (Apple Silicon) and Linux within the published system requirements",
+                    "all updates during the term",
+                    "access to the online documentation and the Open Library",
+                    "support by email and ticket system"
+                ],
+                "after": [
+                    "Training runs on your own hardware. How fast it is and which models are possible depends on your hardware."
+                ]
+            },
+            {
+                "heading": "3. Account and minimum age",
+                "paragraphs": [
+                    "You need an account to use FrameTrain. You must be at least 16 years old and provide truthful information. Keep your login details and your API key secret."
+                ]
+            },
+            {
+                "heading": "4. Trial and vouchers",
+                "paragraphs": [
+                    "New accounts receive a one-time free 14-day trial without entering a payment method. It ends automatically and does not turn into a paid subscription.",
+                    "Vouchers are non-transferable, cannot be redeemed for cash and can be redeemed once per account. Free months without a subscription end automatically. If you redeem free months together with a subscription, the first charge is made after the free period; you can cancel at any time before then."
+                ]
+            },
+            {
+                "heading": "5. Conclusion of contract",
+                "paragraphs": [
+                    "The presentation of subscriptions on the website is not a binding offer. You choose a subscription, confirm the information on the right of withdrawal and are forwarded to Stripe's payment page, where you can check and correct your entries. By clicking “Subscribe” you make a binding offer to pay. The contract is concluded when we activate your access; we send you the contract confirmation by email.",
+                    "We do not store the contract text separately for you. You can view and save these terms at any time at frame-train.com/terms."
+                ]
+            },
+            {
+                "heading": "6. Prices and payment",
+                "paragraphs": [
+                    "The prices shown when you order apply. Payment is made via Stripe in advance for each billing period (month or year) and is collected automatically.",
+                    "Price changes for running subscriptions only take effect if we notify you in text form at least six weeks in advance and you expressly agree. If you do not agree, your subscription continues at the previous price; we may then terminate it with ordinary notice at the end of a billing period."
+                ]
+            },
+            {
+                "heading": "7. Term and cancellation",
+                "paragraphs": [
+                    "The subscription renews automatically for the chosen billing period. You can cancel at any time to the end of the current period without giving reasons: in the dashboard, via “Cancel contracts here” (frame-train.com/cancel, no sign-in required) or by email. You receive a confirmation by email. You keep full access until the end of the paid period.",
+                    "The right of either party to terminate for good cause remains unaffected."
+                ]
+            },
+            {
+                "heading": "8. Right of withdrawal for consumers",
+                "paragraphs": [
+                    "As a consumer you have a statutory right of withdrawal. Details, the model withdrawal form and the withdrawal function are at frame-train.com/withdrawal.",
+                    "For digital content the right of withdrawal expires if, before purchase, you expressly agreed that we start performing the contract before the withdrawal period ends and confirmed that you thereby lose your right of withdrawal. We obtain this consent before every purchase and confirm it by email."
+                ]
+            },
+            {
+                "heading": "9. Licence",
+                "paragraphs": [
+                    "For the term you receive a simple, non-transferable right to use the desktop app on your own devices for private and commercial purposes. You may use models you train as permitted by the licences of the base models and data used (section 10). The following is prohibited:"
+                ],
+                "items": [
+                    "passing on, selling or sublicensing your API key",
+                    "reverse engineering or decompiling the app, except where permitted by law (§ 69e UrhG)",
+                    "automated or abusive use of our APIs",
+                    "use in breach of applicable sanctions and export control rules, in particular by listed persons or in countries subject to such restrictions"
+                ]
+            },
+            {
+                "heading": "10. Your responsibility for data, models and AI",
+                "paragraphs": [
+                    "You are responsible for ensuring that you may lawfully use the data you train with. This includes copyright and licence rights as well as data protection where personal data is included. Unlawful content, in particular child sexual abuse material, is strictly prohibited.",
+                    "Third-party base models and datasets (e.g. from Hugging Face) are subject to their own licences, such as non-commercial restrictions. You must comply with these licences yourself.",
+                    "If you offer or deploy models trained with FrameTrain, you are responsible for complying with the applicable rules, in particular the EU Artificial Intelligence Act (AI Act).",
+                    "AI features in the app that you use with your own API key run via the respective provider under its terms. AI output and recommendations can be wrong; check them before relying on them."
+                ]
+            },
+            {
+                "heading": "11. Open Library",
+                "paragraphs": [
+                    "You can publish scripts in the Open Library. You warrant that you hold the rights to them and that the script contains no malicious code and no unlawful content. You grant us the non-exclusive, free, worldwide right to publish the script in the library, and all users the right to use, adapt and share it for their own purposes.",
+                    "Scripts are checked automatically before publication and may be rejected or removed later. In that case we tell you the reasons. You can request a new review by a human.",
+                    "You run other users' scripts at your own risk. Check them before you start them. We give no warranty for third-party scripts but are liable within the limits of section 14.",
+                    "You can report unlawful content to us at any time by email to framesphere@gmx.net or via the feedback button, stating the script and your reasons. We review reports promptly and tell you the outcome. Our single point of contact under Art. 11 and 12 of the Digital Services Act is the same email address; languages: German and English."
+                ]
+            },
+            {
+                "heading": "12. Availability and online features",
+                "paragraphs": [
+                    "Training runs locally and works without an internet connection. You need a connection for sign-in and licence check, updates, downloading models, datasets and packages, AI features, the Open Library, support and (if enabled) error reports. We aim for high availability but cannot guarantee uninterrupted access."
+                ]
+            },
+            {
+                "heading": "13. Warranty",
+                "paragraphs": [
+                    "The statutory rights for defects in digital products apply (§§ 327 et seq. BGB). During the term we provide the updates required to keep the product in conformity with the contract."
+                ]
+            },
+            {
+                "heading": "14. Liability",
+                "paragraphs": [
+                    "We are liable without limitation for intent and gross negligence, for injury to life, body or health, under the Product Liability Act and where we have given a guarantee.",
+                    "For slight negligence we are only liable for breach of an essential contractual obligation, i.e. one whose fulfilment makes proper performance of the contract possible in the first place and on which you may regularly rely. In that case liability is limited to the foreseeable damage typical for the contract.",
+                    "For loss of data we are only liable to the extent that would have occurred if you had backed up your data regularly. Otherwise liability is excluded."
+                ]
+            },
+            {
+                "heading": "15. Changes to these terms",
+                "paragraphs": [
+                    "We notify you of changes by email at least six weeks before they take effect. They only apply to running contracts if you expressly agree. If you do not agree, the previous terms continue to apply; we may then terminate the contract with ordinary notice at the end of a billing period."
+                ]
+            },
+            {
+                "heading": "16. Governing law and jurisdiction",
+                "paragraphs": [
+                    "German law applies, excluding the UN Convention on Contracts for the International Sale of Goods. If you are a consumer, this choice of law only applies insofar as it does not deprive you of the protection of mandatory provisions of the country in which you have your habitual residence.",
+                    "If you are a merchant, a legal entity under public law or have no general place of jurisdiction in Germany, the place of jurisdiction is Mainz."
+                ]
+            },
+            {
+                "heading": "17. Dispute resolution",
+                "paragraphs": [
+                    "We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board."
+                ]
+            },
+            {
+                "heading": "18. Contact",
+                "paragraphs": [
+                    "Karol Paschek, Universitätsstraße 8, 55270 Zornheim · framesphere@gmx.net"
+                ]
+            }
+        ],
+        "courtesyNote": "This is a courtesy translation. The German version (AGB) is the legally binding original and governs in case of any discrepancy."
     },
     "Cookies": {
         "metaTitle": "Cookie Policy – FrameTrain",
         "metaDescription": "Cookie policy for FrameTrain",
         "heading": "Cookie Policy",
-        "lastUpdated": "Last updated: July 2026",
+        "lastUpdated": "Last updated: October 2026",
         "courtesyNote": "This page is provided in English for convenience. The German version is the legally binding original.",
         "s1": {
             "heading": "1. What are cookies?",
@@ -365,6 +522,36 @@
                     "name": "NEXT_LOCALE",
                     "purpose": "Remembers your language preference (German/English)",
                     "duration": "1 year",
+                    "type": "Necessary"
+                },
+                {
+                    "name": "ft_consent_v1",
+                    "purpose": "Stores your choice in the cookie banner (localStorage)",
+                    "duration": "Until you change it",
+                    "type": "Necessary"
+                },
+                {
+                    "name": "ft_tickets_*, ft_ticket_seen_*",
+                    "purpose": "Shows your support tickets and replies in the dashboard (localStorage)",
+                    "duration": "Until you clear browser storage",
+                    "type": "Necessary"
+                },
+                {
+                    "name": "ft_feedback_last_sent",
+                    "purpose": "Prevents sending feedback twice by accident (localStorage)",
+                    "duration": "Until you clear browser storage",
+                    "type": "Necessary"
+                },
+                {
+                    "name": "ft_promo_code",
+                    "purpose": "Remembers a voucher code from a link until it is redeemed (localStorage)",
+                    "duration": "Until redeemed",
+                    "type": "Necessary"
+                },
+                {
+                    "name": "ft_app_downloaded, ft_changelog_last_seen, ft_author_*",
+                    "purpose": "Remembers onboarding checklist progress, the latest news you have seen and your author name (localStorage)",
+                    "duration": "Until you clear browser storage",
                     "type": "Necessary"
                 }
             ]
@@ -803,7 +990,7 @@
                 "framesphere_misconfigured": "FrameSphere SSO is not configured. Please contact support.",
                 "framesphere_server_error": "Server error during FrameSphere login. Please try again."
             },
-            "consentLabel": "I have read and agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy> – including the transmission and processing of my data by FrameTrain.",
+            "consentLabel": "I am at least 16 years old and have read and agree to the <terms>terms</terms> and the <privacy>privacy policy</privacy>.",
             "consentRequired": "Please agree to the Terms of Service and Privacy Policy to sign in.",
             "consentHint": "Sign-in is only possible once you have agreed.",
             "loadingFallback": "Loading..."
@@ -822,10 +1009,10 @@
             "loginLink": "Sign in now",
             "frameSphereHint": "Signing up with FrameSphere logs you in with your FrameSphere account.",
             "frameSphereCta": "Don't have a FrameSphere account yet?",
-            "consentLabel": "I have read and agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+            "consentLabel": "I am at least 16 years old and have read and agree to the <terms>terms</terms> and the <privacy>privacy policy</privacy>.",
             "consentRequired": "Please agree to the Terms of Service and Privacy Policy to continue.",
-            "diagnosticsLabel": "I agree that the FrameTrain desktop app may optionally send anonymized error and diagnostic data to FrameTrain to improve the product and provide better support (optional, changeable anytime in the app's settings).",
-            "oauthConsentNotice": "By signing up with one of these providers, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+            "diagnosticsLabel": "Optional: the desktop app may automatically send an error report when something goes wrong (error message, stack trace, app version, operating system; no user ID or email, stack traces may contain file paths). You can change this anytime in the app under Settings › Support.",
+            "oauthConsentNotice": "By signing up with one of these providers you confirm that you are at least 16 years old and agree to our <terms>terms</terms> and <privacy>privacy policy</privacy>.",
             "errors": {
                 "passwordMismatch": "Passwords do not match",
                 "registrationFailed": "Registration failed"
@@ -7118,6 +7305,31 @@
                     "cta": "Coach: reading results"
                 }
             }
+        },
+        "deleteAccount": {
+            "title": "Delete account",
+            "description": "Permanently deletes your account, your API keys and your library scripts. We keep payment records because the law requires it. We delete support tickets on request by email.",
+            "subscriptionWarning": "Your running subscription ends immediately. There is no pro-rata refund for the remaining term.",
+            "open": "Delete account …",
+            "confirmLabel": "Type your email address to confirm ({email}):",
+            "confirm": "Delete account permanently",
+            "deleting": "Deleting …",
+            "cancel": "Cancel",
+            "error": "The account could not be deleted. Please try again or write to us."
+        },
+        "termsUpdate": {
+            "title": "Our terms and privacy policy have changed",
+            "text": "A new version applies since October 2026. The main changes:",
+            "changes": [
+                "Cancel without signing in via “Cancel contracts here”, withdraw via a dedicated function",
+                "Clearer rules on liability and on changes to prices and terms (only with your consent)",
+                "New sections on the Open Library, AI features, third-party model licences and a minimum age of 16",
+                "The privacy policy now covers all service providers, retention periods and the desktop app's data flows"
+            ],
+            "consent": "I am at least 16 years old and agree to the updated <terms>terms</terms>. I have taken note of the <privacy>privacy policy</privacy>.",
+            "accept": "Agree",
+            "saving": "Saving …",
+            "error": "That didn't work. Please try again."
         }
     },
     "Home": {
@@ -8758,7 +8970,7 @@
                     },
                     {
                         "title": "Local: usage",
-                        "text": "The app sends no usage telemetry. Anonymous crash reports are only sent if you agree when signing up."
+                        "text": "The app sends no usage telemetry. Error reports are only sent if you turn them on when signing up or in the app settings."
                     },
                     {
                         "title": "Online: account and licence",
@@ -9363,5 +9575,87 @@
         "backText": "The remaining tips arrive as planned, at most one email every two days.",
         "errorTitle": "This link doesn't work",
         "errorText": "The unsubscribe link is incomplete or invalid. Open it straight from the email or reach us via the feedback button – we'll remove you right away."
+    },
+    "Withdrawal": {
+        "metaTitle": "Withdrawal Policy – FrameTrain",
+        "metaDescription": "Withdrawal policy, model withdrawal form and withdrawal function for FrameTrain subscriptions.",
+        "heading": "Withdrawal Policy",
+        "lastUpdated": "Last updated: October 2026",
+        "courtesyNote": "This English version is provided for convenience. The German version is legally binding.",
+        "sections": [
+            {
+                "heading": "Right of withdrawal",
+                "paragraphs": [
+                    "As a consumer you have the right to withdraw from this contract within fourteen days without giving any reason. The withdrawal period is fourteen days from the day the contract is concluded.",
+                    "To exercise the right of withdrawal, you must inform us (Karol Paschek, Universitätsstraße 8, 55270 Zornheim, Germany, email: framesphere@gmx.net) of your decision to withdraw from this contract by an unequivocal statement (e.g. a letter sent by post or an email). You may use the model withdrawal form below, but it is not obligatory. You can also withdraw via the withdrawal function on this page (“Withdraw from contract here”); we will then confirm receipt by email without delay.",
+                    "To meet the withdrawal deadline, it is sufficient for you to send your communication concerning your exercise of the right of withdrawal before the withdrawal period has expired."
+                ]
+            },
+            {
+                "heading": "Effects of withdrawal",
+                "paragraphs": [
+                    "If you withdraw from this contract, we shall reimburse all payments received from you without undue delay and in any event not later than fourteen days from the day on which we are informed about your decision to withdraw. We will carry out such reimbursement using the same means of payment as you used for the initial transaction, unless you have expressly agreed otherwise; in any event, you will not incur any fees as a result of such reimbursement.",
+                    "If you requested to begin the performance of services during the withdrawal period, you shall pay us an amount which is in proportion to what has been provided until you have communicated to us your withdrawal from this contract, in comparison with the full coverage of the contract."
+                ]
+            },
+            {
+                "heading": "Early expiry of the right of withdrawal",
+                "paragraphs": [
+                    "For a contract for the supply of digital content, the right of withdrawal expires once we have begun performance after you expressly consented to us beginning before the end of the withdrawal period, acknowledged that you thereby lose your right of withdrawal once performance has begun, and we have confirmed this to you by email (§ 356(5) BGB)."
+                ]
+            }
+        ],
+        "modelFormHeading": "Model withdrawal form",
+        "modelForm": [
+            "(Complete and return this form only if you wish to withdraw from the contract.)",
+            "",
+            "To: Karol Paschek, Universitätsstraße 8, 55270 Zornheim, Germany, email: framesphere@gmx.net",
+            "",
+            "I/We (*) hereby give notice that I/We (*) withdraw from my/our (*) contract of sale of the following goods (*) / for the provision of the following service (*)",
+            "Ordered on (*) / received on (*)",
+            "Name of consumer(s)",
+            "Address of consumer(s)",
+            "Signature of consumer(s) (only if this form is notified on paper)",
+            "Date",
+            "",
+            "(*) Delete as appropriate."
+        ]
+    },
+    "Declaration": {
+        "nameLabel": "First and last name",
+        "emailLabel": "Email address of your FrameTrain account",
+        "emailHint": "We send the confirmation to this address and use it to match your statement to your contract.",
+        "contractLabel": "Contract (optional)",
+        "contractPlaceholder": "e.g. monthly subscription since March 2026",
+        "sending": "Sending …",
+        "error": "That didn't work. Please try again or write to framesphere@gmx.net.",
+        "doneReceived": "Received on {when}.",
+        "doneMailed": "We have sent a confirmation with the content and time of your statement to {email}.",
+        "doneNotMailed": "The confirmation email could not be sent right now. Please take a screenshot of this page; we have received your statement anyway.",
+        "cancel": {
+            "metaTitle": "Cancel contracts here – FrameTrain",
+            "heading": "Cancel contracts here",
+            "intro": "Cancel your FrameTrain subscription here without signing in. An ordinary cancellation takes effect at the end of the current billing period; you keep full access until then.",
+            "typeLabel": "Type of cancellation",
+            "type": {
+                "ordinary": "Ordinary cancellation at the earliest possible date",
+                "extraordinary": "Extraordinary cancellation for good cause (immediately)"
+            },
+            "reasonLabel": "Reason for the extraordinary cancellation",
+            "submit": "Cancel now",
+            "doneTitle": "Your cancellation has been received"
+        },
+        "withdrawal": {
+            "button": "Withdraw from contract here",
+            "heading": "Withdraw from contract here",
+            "intro": "Use this form to withdraw from your FrameTrain contract. You will immediately receive a confirmation of receipt by email.",
+            "reasonLabel": "Note (optional, no reason required)",
+            "submit": "Confirm withdrawal",
+            "doneTitle": "Your withdrawal has been received"
+        }
+    },
+    "Checkout": {
+        "waiverLabel": "I expressly request that FrameTrain begins performing the contract before the withdrawal period ends (immediate access and API key). I acknowledge that I thereby lose my <withdrawal>right of withdrawal</withdrawal> once performance has begun.",
+        "termsNote": "Our <terms>terms</terms> and <privacy>privacy policy</privacy> apply. In the next step you place a paid order with Stripe."
     }
 }

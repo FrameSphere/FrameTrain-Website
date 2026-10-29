@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { CURRENT_TERMS_VERSION } from '@/lib/legal-version'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,7 +16,7 @@ export async function GET(req: NextRequest) {
     // Fetch full user from DB to include hasPaid and communityName
     const user = await prisma.user.findUnique({
       where: { id: currentUser.userId },
-      select: { id: true, email: true, name: true, hasPaid: true, provider: true, communityName: true, emailVerified: true },
+      select: { id: true, email: true, name: true, hasPaid: true, provider: true, communityName: true, emailVerified: true, termsVersion: true },
     })
 
     if (!user) {
@@ -31,6 +32,7 @@ export async function GET(req: NextRequest) {
         provider: user.provider,
         communityName: user.communityName || undefined,
         emailVerified: user.emailVerified,
+        termsUpdateRequired: user.termsVersion !== CURRENT_TERMS_VERSION,
       },
     })
   } catch (error) {

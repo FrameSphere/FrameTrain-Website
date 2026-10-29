@@ -7,8 +7,9 @@ import { Header } from '@/components/Header'
 import {
   Ticket, ArrowRight, ArrowLeft, CheckCircle2, Sparkles, X, Lock,
 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { trackStartTrial } from '@/lib/analytics'
+import { useTranslations, useLocale } from 'next-intl'
+import { trackStartTrial, readConsent } from '@/lib/analytics'
+import { WithdrawalWaiver } from '@/components/WithdrawalWaiver'
 import { trackEvent } from '@/lib/events'
 import { normalizePromoCode, readStoredPromoCode, clearStoredPromoCode } from '@/components/PromoCapture'
 
@@ -106,6 +107,9 @@ export default function RedeemPage() {
     }
   }
 
+  const [waiver, setWaiver] = useState(false)
+  const locale = useLocale()
+
   // ── Schritt 2: Einlösen ──
   const handleRedeem = async () => {
     if (!promo) return
@@ -149,7 +153,7 @@ export default function RedeemPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ plan, promoCode: promo.code }),
+        body: JSON.stringify({ plan, promoCode: promo.code, locale, withdrawalWaiver: waiver, adConsent: readConsent() }),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -183,6 +187,8 @@ export default function RedeemPage() {
   }
   if (!isAuthenticated) return null
 
+  // Über Stripe (Rabatt oder Gratismonate mit Abo) → Widerrufsverzicht nötig
+  const needsCheckout = !!promo && promo.type !== 'lifetime' && !(promo.type === 'free_months' && mode === 'direct')
   const subLabel = 'ft-label block mb-3'
   const choiceCls = (active: boolean) =>
     `w-full text-left rounded-md border px-4 py-3.5 transition-colors duration-150 ease-out ${
@@ -372,13 +378,15 @@ export default function RedeemPage() {
                     t('noteTrial', { months: promo.freeMonths ?? 0, date: freeUntilDate, price: planPrice })}
                 </p>
 
+                {needsCheckout && <WithdrawalWaiver checked={waiver} onChange={setWaiver} />}
+
                 {error && (
                   <div role="alert" className="mt-4 px-4 py-3 rounded-sm border border-danger text-danger text-[14px]">
                     {error}
                   </div>
                 )}
 
-                <button type="button" onClick={handleRedeem} disabled={redeeming} className="ft-btn ft-btn--primary w-full mt-6">
+                <button type="button" onClick={handleRedeem} disabled={redeeming || (needsCheckout && !waiver)} className="ft-btn ft-btn--primary w-full mt-6">
                   {(() => {
                     const isDirect = promo.type === 'lifetime' || (promo.type === 'free_months' && mode === 'direct')
                     if (redeeming) {
