@@ -37,6 +37,7 @@ export function Footer() {
     { href: '/apple-silicon', label: t('mac') },
     { href: '/gdpr', label: t('gdpr') },
     { href: '/compare/unsloth', label: t('vsUnsloth') },
+    { href: '/compare/mlx-lora-studio', label: t('vsMlxLoraStudio') },
     { href: '/compare/google-colab', label: t('vsColab') },
     { href: '/guides/mlx-vs-pytorch', label: t('mlxVsPytorch') },
   ]

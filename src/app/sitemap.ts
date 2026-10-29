@@ -19,6 +19,7 @@ const pages: PageDef[] = [
   { path: '/apple-silicon', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/compare', changeFrequency: 'monthly', priority: 0.88 },
   { path: '/compare/unsloth', changeFrequency: 'monthly', priority: 0.82 },
+  { path: '/compare/mlx-lora-studio', changeFrequency: 'monthly', priority: 0.82 },
   { path: '/compare/google-colab', changeFrequency: 'monthly', priority: 0.82 },
   { path: '/computer-vision', changeFrequency: 'monthly', priority: 0.88 },
   { path: '/gdpr', changeFrequency: 'monthly', priority: 0.85 },

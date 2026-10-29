@@ -60,6 +60,7 @@
         "mac": "Mac & Apple Silicon",
         "gdpr": "DSGVO & Unternehmen",
         "vsUnsloth": "vs. Unsloth",
+        "vsMlxLoraStudio": "vs. MLX LoRA Studio",
         "vsColab": "vs. Google Colab",
         "mlxVsPytorch": "MLX vs. PyTorch",
         "feedback": "Feedback",
@@ -8159,8 +8160,8 @@
         }
     },
     "Compare": {
-        "metaTitle": "FrameTrain vs. MLX LoRA Studio vs. Unsloth – lokales Fine-Tuning im Vergleich",
-        "metaDescription": "Wie schlägt sich FrameTrain gegen MLX LoRA Studio und Unsloth beim lokalen LLM-Fine-Tuning? Ein fairer Vergleich zu Plattformen, GUI, LoRA/QLoRA, Apple Silicon & mehr.",
+        "metaTitle": "Unsloth vs. MLX LoRA Studio vs. FrameTrain (Vergleich 2026)",
+        "metaDescription": "Unsloth oder MLX für Fine-Tuning auf dem Mac? Unsloth zielt auf NVIDIA-GPUs, MLX LoRA Studio läuft nur auf dem Mac, FrameTrain auf beidem. Plattformen, LoRA/QLoRA und Preis im Vergleich.",
         "keywords": [
             "FrameTrain vs Unsloth",
             "MLX LoRA Studio Alternative",
@@ -8170,17 +8171,17 @@
             "bestes lokales Fine-Tuning Tool",
             "Fine-Tuning Desktop App"
         ],
-        "ogTitle": "FrameTrain vs. MLX LoRA Studio vs. Unsloth",
+        "ogTitle": "Unsloth vs. MLX LoRA Studio vs. FrameTrain",
         "ogDescription": "Ein fairer Direktvergleich lokaler LLM-Fine-Tuning-Tools – Plattformen, GUI, LoRA/QLoRA und Apple Silicon.",
         "breadcrumb": "Vergleich",
         "heroTitleLine1": "FrameTrain vs. MLX LoRA Studio",
         "heroTitleLine2": "vs. Unsloth",
         "heroSubtitle": "Es gibt nicht das eine „beste“ lokale Fine-Tuning-Tool – es hängt von deiner Hardware und Arbeitsweise ab. Hier ein ehrlicher Direktvergleich zur Entscheidung.",
         "intro": {
-            "p1": "Alle drei erlauben Fine-Tuning von Sprachmodellen auf eigener Hardware, lösen aber unterschiedliche Probleme. <b>Unsloth</b> ist eine Code-first-Bibliothek für maximale Geschwindigkeit und Speichereffizienz auf NVIDIA-GPUs. <b>MLX-basierte LoRA-GUIs</b> sind native macOS-Apps auf Basis von Apples MLX-Framework. <b>FrameTrain</b> ist eine plattformübergreifende Desktop-Umgebung, die den gesamten Workflow – Datensätze, Training, Monitoring, Versionierung – in einer GUI bündelt.",
-            "p2": "Willst du ein grafisches All-in-one-Tool für Windows, macOS und Linux, ist FrameTrain gebaut für dich. Lebst du in Python und holst jedes Token/Sekunde aus einer NVIDIA-Karte, ist Unsloth exzellent. Bist du komplett auf Apple Silicon und willst die schlankeste native Option, passt vielleicht eine MLX-GUI am besten."
+            "p1": "Alle drei erlauben Fine-Tuning auf eigener Hardware, lösen aber unterschiedliche Probleme. <b>Unsloth</b> ist eine Code-first-Bibliothek für maximale Geschwindigkeit und Speichereffizienz auf NVIDIA-GPUs. <b>MLX LoRA Studio</b> ist eine kostenlose Open-Source-App für den Mac auf Basis von Apples MLX-Framework. <b>FrameTrain</b> ist eine plattformübergreifende Desktop-Umgebung, die den gesamten Workflow – Datensätze, Training, Monitoring, Testen, Versionierung – in einer GUI bündelt.",
+            "p2": "Willst du ein grafisches All-in-one-Tool für Windows, macOS und Linux, ist FrameTrain gebaut für dich. Lebst du in Python und holst jedes Token pro Sekunde aus einer NVIDIA-Karte, ist Unsloth exzellent. Trainierst du nur Sprachmodelle auf Apple Silicon und willst eine schlanke, kostenlose native App, passt MLX LoRA Studio vielleicht am besten."
         },
-        "lastUpdated": "Vergleich zuletzt geprüft: August 2026.",
+        "lastUpdated": "Vergleich zuletzt geprüft: Oktober 2026.",
         "matrix": {
             "heading": "Feature-Vergleich",
             "colHeaders": [
@@ -8228,7 +8229,7 @@
                 {
                     "feature": "QLoRA (4-bit)",
                     "frametrain": "yes",
-                    "mlx": "partial",
+                    "mlx": "yes",
                     "unsloth": "yes"
                 },
                 {
@@ -8258,7 +8259,7 @@
                 {
                     "feature": "Live-Training-Monitoring (GUI)",
                     "frametrain": "yes",
-                    "mlx": "partial",
+                    "mlx": "yes",
                     "unsloth": "partial"
                 },
                 {
@@ -8270,8 +8271,20 @@
                 {
                     "feature": "Open Source",
                     "frametrain": "partial",
-                    "mlx": "partial",
+                    "mlx": "yes",
                     "unsloth": "yes"
+                },
+                {
+                    "feature": "Python-Einrichtung",
+                    "frametrain": "Python 3.10–3.13 nötig",
+                    "mlx": "Richtet die App ein",
+                    "unsloth": "Eigene Python-Umgebung"
+                },
+                {
+                    "feature": "Preis",
+                    "frametrain": "ab 3,33 € im Monat",
+                    "mlx": "Kostenlos (MIT-Lizenz)",
+                    "unsloth": "Open-Source-Version kostenlos"
                 },
                 {
                     "feature": "Am besten für",
@@ -8293,8 +8306,8 @@
                 {
                     "name": "MLX LoRA Studio",
                     "tag": "Nativ macOS",
-                    "desc": "Schlanke MLX-basierte Apps, die LoRA-Adapter nativ auf Apple Silicon fine-tunen, eng auf den Mac optimiert.",
-                    "bestFor": "Du bist ausschließlich auf Apple Silicon und willst die nativste, minimalste Option."
+                    "desc": "Eine kostenlose Open-Source-App für den Mac auf Apples MLX: LoRA, QLoRA und DoRA, viele Trainingsverfahren von SFT bis DPO und GRPO, Live-Metriken und Upload zu Hugging Face.",
+                    "bestFor": "Du trainierst nur Sprachmodelle, nur auf Apple Silicon, und dein Datensatz ist schon fertig."
                 },
                 {
                     "name": "Unsloth",
@@ -8304,7 +8317,7 @@
                 }
             ]
         },
-        "disclaimer": "¹ „MLX LoRA Studio“ steht hier stellvertretend für MLX-basierte LoRA-GUIs auf macOS. Angaben zu Drittanbieter-Tools geben unser Verständnis ihrer Produktkategorie (Stand August 2026) wieder und können sich ändern – bitte auf den offiziellen Quellen prüfen. Der Vergleich fokussiert dokumentierte Kategorie-Merkmale.",
+        "disclaimer": "¹ „MLX LoRA Studio“ meint die Open-Source-App für den Mac von Goekdeniz Guelmez (github.com/Goekdeniz-Guelmez/MLX-LoRA-Studio). Angaben zu Drittanbieter-Tools geben deren öffentliche Dokumentation mit Stand Oktober 2026 wieder und können sich ändern – bitte auf den offiziellen Quellen prüfen.",
         "faq": {
             "heading": "Vergleichs-FAQ",
             "items": [
@@ -8318,7 +8331,15 @@
                 },
                 {
                     "question": "Welches Tool ist am besten für Apple Silicon?",
-                    "answer": "Sowohl FrameTrain als auch MLX-basierte GUIs laufen nativ auf Apple Silicon. FrameTrain ergänzt einen kompletten Workflow (Datensätze, Versionierung, visueller Builder) und Cross-Platform-Support; eine reine MLX-App ist schlanker, wenn du nur den Mac nutzt."
+                    "answer": "FrameTrain und MLX LoRA Studio laufen beide nativ auf Apple Silicon. MLX LoRA Studio ist schlanker und kostenlos, wenn du nur Sprachmodelle auf dem Mac trainierst. FrameTrain ergänzt Datensätze, Testen, Bildmodelle und Versionierung und läuft auch unter Windows und Linux."
+                },
+                {
+                    "question": "Unsloth oder MLX – was ist auf dem Mac besser?",
+                    "answer": "Auf Apple Silicon ist MLX die native Wahl: Die Geschwindigkeits-Optimierungen von Unsloth zielen auf NVIDIA-GPUs und greifen auf M-Macs nicht. MLX LoRA Studio packt MLX hinter eine Oberfläche. FrameTrain geht einen anderen Weg und trainiert mit PyTorch über Metal (MPS) – dieselbe App läuft so auch auf NVIDIA."
+                },
+                {
+                    "question": "Ist MLX LoRA Studio kostenlos?",
+                    "answer": "Ja. MLX LoRA Studio ist Open Source unter MIT-Lizenz und setzt macOS 14 oder neuer auf Apple Silicon voraus."
                 }
             ]
         },
@@ -8331,6 +8352,10 @@
         "more": {
             "heading": "Einzelvergleiche",
             "items": [
+                {
+                    "href": "/compare/mlx-lora-studio",
+                    "label": "FrameTrain vs. MLX LoRA Studio"
+                },
                 {
                     "href": "/compare/unsloth",
                     "label": "FrameTrain vs. Unsloth"
@@ -9202,6 +9227,174 @@
             }
         ],
         "ctaTitle": "Probier den Weg ohne Code aus."
+    },
+    "PageVsMlxLoraStudio": {
+        "metaTitle": "FrameTrain vs. MLX LoRA Studio – Fine-Tuning auf dem Mac im Vergleich | FrameTrain",
+        "metaDescription": "MLX LoRA Studio oder FrameTrain für Fine-Tuning auf Apple Silicon? Ehrlicher Vergleich: MLX vs. PyTorch, Datensätze, Testen, Plattformen, Einrichtung und Preis.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. MLX LoRA Studio",
+                "path": "/compare/mlx-lora-studio"
+            }
+        ],
+        "eyebrow": "Vergleich",
+        "titleA": "FrameTrain vs. MLX LoRA Studio.",
+        "titleB": "Schlankes Trainingstool oder ganzer Workflow?",
+        "lead": "Beide bringen Fine-Tuning mit Oberfläche auf deinen Mac. <b>MLX LoRA Studio</b> ist eine kostenlose Open-Source-App auf Apples MLX, die sich auf das Training von Sprachmodellen konzentriert. <b>FrameTrain</b> ist eine Desktop-App für Mac, Windows und Linux, die auch das Bauen des Datensatzes und das Testen des fertigen Modells abdeckt.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Was beide können – und was nicht.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "MLX LoRA Studio"
+                ],
+                "rows": [
+                    [
+                        "Bedienung",
+                        "Desktop-App mit Oberfläche",
+                        "Native Mac-App mit Oberfläche"
+                    ],
+                    [
+                        "Plattformen",
+                        "Windows, macOS, Linux",
+                        "macOS 14 oder neuer"
+                    ],
+                    [
+                        "Apple Silicon (M1–M4)",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Intel-Mac",
+                        "no",
+                        "no"
+                    ],
+                    [
+                        "NVIDIA CUDA",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Technische Basis",
+                        "PyTorch und Hugging Face, auf dem Mac über Metal",
+                        "Apple MLX"
+                    ],
+                    [
+                        "LoRA und QLoRA",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Bildmodelle, z. B. Objekterkennung",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Datensätze erstellen und labeln",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Live-Metriken beim Training",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Modell nach dem Training testen",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Python-Einrichtung",
+                        "Python 3.10–3.13 nötig",
+                        "Richtet die App ein"
+                    ],
+                    [
+                        "Open Source",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Kosten",
+                        "ab 3,33 € im Monat",
+                        "kostenlos"
+                    ]
+                ],
+                "note": "Stand: Oktober 2026, laut README von MLX LoRA Studio auf GitHub. Das Projekt entwickelt sich schnell – prüf die Details im Zweifel dort."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Was passt zu dir?",
+                "cards": [
+                    {
+                        "title": "Nimm FrameTrain, wenn …",
+                        "items": [
+                            "du deinen Datensatz erst noch bauen und labeln musst",
+                            "du das Modell testen und Fehler zurück ins Training geben willst",
+                            "du neben Sprachmodellen auch Bildmodelle trainierst",
+                            "du auch unter Windows oder Linux oder mit einer NVIDIA-GPU arbeitest",
+                            "du versionierte Trainingsläufe an einem Ort willst"
+                        ]
+                    },
+                    {
+                        "title": "Nimm MLX LoRA Studio, wenn …",
+                        "items": [
+                            "du ausschließlich Sprachmodelle feinjustierst",
+                            "du nur auf einem Mac mit Apple Silicon arbeitest",
+                            "dein Datensatz schon auf Hugging Face oder im passenden Format liegt",
+                            "du viele Trainingsverfahren wie DPO, ORPO oder GRPO willst",
+                            "du ein kostenloses Open-Source-Tool willst"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "eyebrow": "Der Kern",
+                "title": "Zwei gute Werkzeuge mit anderem Schwerpunkt.",
+                "paragraphs": [
+                    "MLX LoRA Studio ist um den Trainingsschritt selbst gebaut: Modell und Datensatz wählen, Verfahren einstellen, Metriken beobachten, Adapter hochladen. Es läuft auf MLX, Apples eigenem Framework, und ist eng auf den Mac abgestimmt. Bewusst ist es keine Chat-App und kein Inferenz-Server – das Ergebnis stellst du mit Werkzeugen wie mlx-lm oder Ollama bereit.",
+                    "FrameTrain setzt früher an und hört später auf. Es beginnt beim Sammeln und Labeln der Daten im Dataset Builder und endet beim Testen im Labor, beim Zurückspielen von Fehlern und beim Bereitstellen über die lokale API. Trainiert wird mit PyTorch – dasselbe Projekt läuft deshalb auch auf einem Windows-PC mit NVIDIA-Karte."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Nutzt FrameTrain MLX?",
+                "answer": "Nein. FrameTrain trainiert mit PyTorch und Hugging Face und nutzt auf Apple Silicon Metal (MPS). Deshalb läuft es auch unter Windows und Linux mit NVIDIA-GPUs."
+            },
+            {
+                "question": "Ist MLX LoRA Studio kostenlos?",
+                "answer": "Ja. MLX LoRA Studio ist Open Source unter MIT-Lizenz. Es setzt macOS 14 oder neuer auf Apple Silicon voraus."
+            },
+            {
+                "question": "Läuft eins der beiden auf einem Intel-Mac?",
+                "answer": "Nein. Beide brauchen einen Mac mit Apple Silicon (M1 oder neuer)."
+            }
+        ],
+        "related": [
+            {
+                "href": "/compare",
+                "label": "Unsloth vs. MLX LoRA Studio vs. FrameTrain"
+            },
+            {
+                "href": "/apple-silicon",
+                "label": "Fine-Tuning auf Apple Silicon"
+            },
+            {
+                "href": "/guides/mlx-vs-pytorch",
+                "label": "MLX vs. PyTorch auf dem Mac"
+            }
+        ],
+        "ctaTitle": "Probier den ganzen Workflow auf deinem Mac aus."
     },
     "PageVsColab": {
         "metaTitle": "FrameTrain vs. Google Colab – lokal trainieren statt Notebook | FrameTrain",

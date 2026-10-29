@@ -52,7 +52,8 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 ## Product
 - [Homepage](${base}/en): what FrameTrain is and who it is for
 - [Apple Silicon](${base}/en/apple-silicon): local AI training on Mac (M1/M2/M3/M4) via Metal MPS, no CUDA
-- [Compare](${base}/en/compare): FrameTrain vs. MLX LoRA Studio vs. Unsloth
+- [Compare](${base}/en/compare): Unsloth vs. MLX LoRA Studio vs. FrameTrain
+- [FrameTrain vs. MLX LoRA Studio](${base}/en/compare/mlx-lora-studio): MLX-based Mac app vs. full cross-platform workflow
 - [Download](${base}/en/download): get FrameTrain for Windows, macOS and Linux
 - [Screenshots](${base}/en/screenshots): real screenshots of the desktop app
 - [FAQ](${base}/en/faq): common questions (Apple Silicon support, LLM fine-tuning, requirements)
