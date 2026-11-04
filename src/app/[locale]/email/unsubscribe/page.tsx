@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { getTranslations } from 'next-intl/server'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { UnsubscribeForm } from './UnsubscribeForm'
@@ -11,7 +12,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Unsubscribe' })
   // Persönlicher Link – gehört nicht in den Suchindex
-  return { title: t('metaTitle'), robots: { index: false, follow: false } }
+  const title = t('metaTitle')
+  const description = t('metaDescription')
+  return {
+    title,
+    description,
+    alternates: pageAlternates(locale, '/email/unsubscribe'),
+    openGraph: pageOpenGraph({ locale, path: '/email/unsubscribe', title, description }),
+    robots: { index: false, follow: false },
+  }
 }
 
 export default function UnsubscribePage() {

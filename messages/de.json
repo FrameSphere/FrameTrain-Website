@@ -69,7 +69,7 @@
     },
     "Imprint": {
         "metaTitle": "Impressum – FrameTrain",
-        "metaDescription": "Impressum von FrameTrain",
+        "metaDescription": "Impressum von FrameTrain: Anbieterkennzeichnung, Kontaktdaten und rechtliche Angaben zur Website und zur Desktop-App für lokales KI-Training.",
         "heading": "Impressum",
         "subtitle": "Angaben gemäß § 5 DDG",
         "provider": {
@@ -482,7 +482,7 @@
     },
     "Cookies": {
         "metaTitle": "Cookie-Richtlinie – FrameTrain",
-        "metaDescription": "Cookie-Richtlinie von FrameTrain",
+        "metaDescription": "Welche Cookies und lokalen Speicher FrameTrain verwendet, wofür sie dienen, wie lange sie gespeichert werden und wie du deine Einwilligung änderst.",
         "heading": "Cookie-Richtlinie",
         "lastUpdated": "Zuletzt aktualisiert: Oktober 2026",
         "s1": {
@@ -4013,7 +4013,7 @@
     },
     "Library": {
         "metaTitle": "Open Library – Community ML-Skripte | FrameTrain",
-        "metaDescription": "Entdecke hunderte kostenlose ML-Trainings- und Testskripte der FrameTrain-Community. Fine-Tuning, Evaluation, Benchmark-Skripte für HuggingFace, PyTorch, LoRA & mehr – direkt in der App laden.",
+        "metaDescription": "Kostenlose ML-Trainings- und Testskripte der FrameTrain-Community: Fine-Tuning, Evaluation und Benchmarks für HuggingFace, PyTorch und LoRA.",
         "keywords": [
             "ML Skripte Community",
             "HuggingFace Training Script",
@@ -7790,7 +7790,7 @@
     },
     "Screenshots": {
         "metaTitle": "FrameTrain Screenshots – die ML-Training-App im Detail",
-        "metaDescription": "Alle Oberflächen von FrameTrain im Überblick: Startseite mit Projektstand, Training konfigurieren, Loss-Kurven lesen, KI-Analyse, Synapse Builder, Versionen – Screenshots aus der Desktop-App.",
+        "metaDescription": "Alle Oberflächen von FrameTrain: Projektstand, Training konfigurieren, Loss-Kurven, KI-Analyse, Synapse Builder und Versionen – echte App-Screenshots.",
         "ogTitle": "FrameTrain Screenshots – lokales ML-Training in der Praxis",
         "ogDescription": "Von der Startseite über den HuggingFace-Import und LoRA bis zu Loss-Kurven und KI-Analyse: jede Oberfläche der Desktop-App erklärt.",
         "breadcrumb": "Screenshots",
@@ -8008,7 +8008,7 @@
         ]
     },
     "AppleSilicon": {
-        "metaTitle": "KI-Training auf Apple Silicon – LLMs lokal auf dem Mac fine-tunen",
+        "metaTitle": "KI-Training auf Apple Silicon – LLMs auf dem Mac fine-tunen",
         "metaDescription": "LLMs fine-tunen und KI-Modelle lokal auf Apple Silicon (M1, M2, M3, M4) trainieren. FrameTrain nutzt Metal MPS – ohne CUDA, ohne Cloud. Was dein Mac schafft.",
         "keywords": [
             "LLM fine-tunen Mac",
@@ -8161,7 +8161,7 @@
     },
     "Compare": {
         "metaTitle": "Unsloth vs. MLX LoRA Studio vs. FrameTrain (Vergleich 2026)",
-        "metaDescription": "Unsloth oder MLX für Fine-Tuning auf dem Mac? Unsloth zielt auf NVIDIA-GPUs, MLX LoRA Studio läuft nur auf dem Mac, FrameTrain auf beidem. Plattformen, LoRA/QLoRA und Preis im Vergleich.",
+        "metaDescription": "Unsloth oder MLX für Fine-Tuning? Unsloth zielt auf NVIDIA, MLX LoRA Studio nur auf den Mac, FrameTrain läuft auf beidem. Plattformen, LoRA und Preis.",
         "keywords": [
             "FrameTrain vs Unsloth",
             "MLX LoRA Studio Alternative",
@@ -8793,8 +8793,8 @@
         "partial": "Teilweise"
     },
     "PageComputerVision": {
-        "metaTitle": "Eigene Objekterkennung trainieren – YOLO ohne Code | FrameTrain",
-        "metaDescription": "Trainiere ein YOLO-Modell auf deine eigenen Objekte: Fotos labeln, trainieren, im Labor testen und über die lokale API nutzen – auf deinem Rechner. 14 Tage kostenlos.",
+        "metaTitle": "Eigene Objekterkennung trainieren – YOLO ohne Code",
+        "metaDescription": "Trainiere ein YOLO-Modell auf deine eigenen Objekte: Fotos labeln, trainieren, testen und per lokaler API nutzen – auf deinem Rechner. 14 Tage kostenlos.",
         "breadcrumb": [
             {
                 "name": "Objekterkennung",
@@ -8931,7 +8931,7 @@
         "ctaTitle": "Trainiere heute Abend deine erste Objekterkennung."
     },
     "PageGdpr": {
-        "metaTitle": "KI-Modelle DSGVO-konform trainieren – lokal statt Cloud | FrameTrain",
+        "metaTitle": "KI-Modelle DSGVO-konform trainieren – lokal statt Cloud",
         "metaDescription": "Trainiere KI-Modelle auf sensiblen Daten, ohne sie hochzuladen: FrameTrain läuft lokal auf deinem Rechner. Entwickelt in Mainz. 14 Tage kostenlos testen.",
         "breadcrumb": [
             {
@@ -9076,7 +9076,7 @@
         "ctaTitle": "Testet FrameTrain mit euren eigenen Daten."
     },
     "PageVsUnsloth": {
-        "metaTitle": "FrameTrain vs. Unsloth – Desktop-App oder Python-Bibliothek? | FrameTrain",
+        "metaTitle": "FrameTrain vs. Unsloth – Desktop-App oder Python-Bibliothek?",
         "metaDescription": "FrameTrain oder Unsloth für lokales LLM-Fine-Tuning? Ehrlicher Vergleich: GUI vs. Code, Plattformen, Apple Silicon, LoRA/QLoRA und für wen sich was lohnt.",
         "breadcrumb": [
             {
@@ -9229,7 +9229,7 @@
         "ctaTitle": "Probier den Weg ohne Code aus."
     },
     "PageVsMlxLoraStudio": {
-        "metaTitle": "FrameTrain vs. MLX LoRA Studio – Fine-Tuning auf dem Mac im Vergleich | FrameTrain",
+        "metaTitle": "FrameTrain vs. MLX LoRA Studio – Fine-Tuning auf dem Mac",
         "metaDescription": "MLX LoRA Studio oder FrameTrain für Fine-Tuning auf Apple Silicon? Ehrlicher Vergleich: MLX vs. PyTorch, Datensätze, Testen, Plattformen, Einrichtung und Preis.",
         "breadcrumb": [
             {
@@ -9397,7 +9397,7 @@
         "ctaTitle": "Probier den ganzen Workflow auf deinem Mac aus."
     },
     "PageVsColab": {
-        "metaTitle": "FrameTrain vs. Google Colab – lokal trainieren statt Notebook | FrameTrain",
+        "metaTitle": "FrameTrain vs. Google Colab – lokal statt Notebook",
         "metaDescription": "Google Colab oder lokales Training mit FrameTrain? Vergleich zu Datenschutz, Sitzungslimits, Kosten, Code und GPU – und wann Colab die bessere Wahl ist.",
         "breadcrumb": [
             {
@@ -9549,7 +9549,7 @@
         "ctaTitle": "Trainiere ohne Upload und ohne Zeitlimit."
     },
     "PageMlxVsPytorch": {
-        "metaTitle": "MLX vs. PyTorch auf dem Mac – was ist besser fürs Training? | FrameTrain",
+        "metaTitle": "MLX vs. PyTorch auf dem Mac – was ist besser fürs Training?",
         "metaDescription": "MLX oder PyTorch (MPS) für Machine Learning auf Apple Silicon? Unterschiede bei Speicher, Ökosystem und LLM-Fine-Tuning – und wie FrameTrain beide nutzt.",
         "breadcrumb": [
             {
@@ -9770,7 +9770,8 @@
         "backTitle": "Du bist wieder dabei",
         "backText": "Die restlichen Tipps kommen wie geplant, höchstens eine Mail alle zwei Tage.",
         "errorTitle": "Dieser Link funktioniert nicht",
-        "errorText": "Der Abmelde-Link ist unvollständig oder ungültig. Öffne ihn direkt aus der Mail oder schreib uns über den Feedback-Button – wir tragen dich sofort aus."
+        "errorText": "Der Abmelde-Link ist unvollständig oder ungültig. Öffne ihn direkt aus der Mail oder schreib uns über den Feedback-Button – wir tragen dich sofort aus.",
+        "metaDescription": "Hier bestellst du die Einstiegs-Tipps ab, die FrameTrain dir nach der Registrierung per E-Mail schickt."
     },
     "Withdrawal": {
         "metaTitle": "Widerrufsbelehrung – FrameTrain",
@@ -9839,7 +9840,8 @@
             },
             "reasonLabel": "Grund für die außerordentliche Kündigung",
             "submit": "Jetzt kündigen",
-            "doneTitle": "Deine Kündigung ist eingegangen"
+            "doneTitle": "Deine Kündigung ist eingegangen",
+            "metaDescription": "Du kannst jederzeit ohne Anmeldung kündigen. Die Kündigung wirkt zum Ende der Abrechnungsperiode – bis dahin behältst du vollen Zugang zu FrameTrain."
         },
         "withdrawal": {
             "button": "Vertrag hier widerrufen",
@@ -9853,5 +9855,51 @@
     "Checkout": {
         "waiverLabel": "Ich verlange ausdrücklich, dass FrameTrain vor Ablauf der Widerrufsfrist mit der Vertragserfüllung beginnt (sofortiger Zugang und API-Key). Mir ist bekannt, dass ich dadurch mein <withdrawal>Widerrufsrecht</withdrawal> verliere, sobald mit der Vertragserfüllung begonnen wurde.",
         "termsNote": "Es gelten unsere <terms>AGB</terms> und unsere <privacy>Datenschutzerklärung</privacy>. Im nächsten Schritt bestellst du bei Stripe zahlungspflichtig."
+    },
+    "Meta": {
+        "login": {
+            "title": "Anmelden – FrameTrain",
+            "description": "Melde dich bei FrameTrain an, um dein Abo, deine API-Keys und den Download der Desktop-App für lokales KI-Training zu verwalten."
+        },
+        "register": {
+            "title": "Kostenlos registrieren – FrameTrain",
+            "description": "Erstelle dein FrameTrain-Konto und teste die Desktop-App 14 Tage kostenlos: KI-Modelle lokal trainieren, ohne Code und ohne Zahlungsdaten."
+        },
+        "redeem": {
+            "title": "Gutschein einlösen – FrameTrain",
+            "description": "Löse deinen FrameTrain-Gutscheincode ein und schalte die Desktop-App für lokales KI-Training frei – direkt in deinem Konto."
+        },
+        "extensions": {
+            "title": "Extensions – bald verfügbar | FrameTrain",
+            "description": "Der FrameTrain Extension-Marketplace ist in Arbeit: Erweiterungen für Datensätze, Training und Modelltests direkt in der Desktop-App."
+        },
+        "ssoWelcome": {
+            "title": "Willkommen bei FrameTrain",
+            "description": "Du bist angemeldet. Lade jetzt die FrameTrain Desktop-App herunter und trainiere dein erstes KI-Modell lokal auf deinem Rechner."
+        },
+        "verifyEmail": {
+            "title": "E-Mail bestätigen – FrameTrain",
+            "description": "Bestätige deine E-Mail-Adresse, um dein FrameTrain-Konto zu aktivieren und mit lokalem KI-Training ohne Code zu starten."
+        },
+        "verifyEmailPending": {
+            "title": "Bitte E-Mail bestätigen – FrameTrain",
+            "description": "Wir haben dir eine Bestätigungs-E-Mail geschickt. Klicke auf den Link darin, um dein FrameTrain-Konto zu aktivieren."
+        },
+        "dashboard": {
+            "title": "Dashboard – FrameTrain",
+            "description": "Dein FrameTrain-Dashboard: Abo verwalten, API-Keys erstellen und die Desktop-App für lokales KI-Training herunterladen."
+        },
+        "payment": {
+            "title": "Abo abschließen – FrameTrain",
+            "description": "Schließe dein FrameTrain-Abo ab: 4,99 € im Monat oder 39,99 € im Jahr, monatlich kündbar. Sichere Zahlung über Stripe."
+        },
+        "paymentSuccess": {
+            "title": "Zahlung erfolgreich – FrameTrain",
+            "description": "Danke für dein FrameTrain-Abo! Deine Zahlung war erfolgreich – lade jetzt die Desktop-App herunter und starte dein erstes Training."
+        },
+        "paymentCancel": {
+            "title": "Zahlung abgebrochen – FrameTrain",
+            "description": "Die Zahlung wurde abgebrochen und nichts wurde berechnet. Du kannst dein FrameTrain-Abo jederzeit erneut abschließen."
+        }
     }
 }

@@ -8,7 +8,7 @@ import { TrialButton } from '@/components/landing/Ctas'
 import { AppShot } from '@/components/landing/AppShot'
 import { NeuronDiagram } from '@/components/landing/NeuronDiagram'
 import { CHANNELS, type ChannelKey } from '@/lib/channels'
-import { pageAlternates } from '@/lib/seo'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 import { ChannelVisit } from './ChannelVisit'
 
 /**
@@ -18,10 +18,13 @@ import { ChannelVisit } from './ChannelVisit'
  */
 export async function channelMetadata(locale: string, channel: ChannelKey): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'Channel' })
+  const title = `${t(`channels.${channel}.title`)} · FrameTrain`
+  const description = t('metaDescription')
   return {
-    title: `${t(`channels.${channel}.title`)} · FrameTrain`,
-    description: t('metaDescription'),
+    title,
+    description,
     alternates: pageAlternates(locale, `/${channel}`),
+    openGraph: pageOpenGraph({ locale, path: `/${channel}`, title, description }),
     robots: { index: false, follow: true },
   }
 }
