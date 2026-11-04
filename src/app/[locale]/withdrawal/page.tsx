@@ -3,7 +3,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
-import { pageAlternates } from '@/lib/seo'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 import { DeclarationForm } from '@/components/legal/DeclarationForm'
 
 type Props = { params: Promise<{ locale: string }> }
@@ -11,10 +11,13 @@ type Props = { params: Promise<{ locale: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Withdrawal' })
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   return {
-    title: t('metaTitle'),
-    description: t('metaDescription'),
+    title,
+    description,
     alternates: pageAlternates(locale, '/withdrawal'),
+    openGraph: pageOpenGraph({ locale, path: '/withdrawal', title, description }),
   }
 }
 

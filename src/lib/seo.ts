@@ -65,3 +65,28 @@ export function pageOpenGraph({
     ],
   }
 }
+
+/**
+ * Metadata für noindex-Hilfsseiten (Login, Checkout, Bestätigungen …).
+ * Liefert eigenen Titel, Beschreibung, Canonical und OpenGraph, damit beim
+ * Teilen eines solchen Links nicht die Startseiten-Vorschau erscheint.
+ * Texte liegen im Namespace `Meta.<key>` (title, description).
+ */
+export async function utilityMetadata(
+  locale: string,
+  key: string,
+  path: string,
+  follow = true,
+): Promise<Metadata> {
+  const { getTranslations } = await import('next-intl/server')
+  const t = await getTranslations({ locale, namespace: 'Meta' })
+  const title = t(`${key}.title`)
+  const description = t(`${key}.description`)
+  return {
+    title,
+    description,
+    alternates: pageAlternates(locale, path),
+    openGraph: pageOpenGraph({ locale, path, title, description }),
+    robots: { index: false, follow },
+  }
+}

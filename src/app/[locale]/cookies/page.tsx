@@ -4,17 +4,20 @@ import { Footer } from '@/components/Footer'
 import { Cookie } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
-import { pageAlternates } from '@/lib/seo'
+import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Cookies' })
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   return {
-    title: t('metaTitle'),
-    description: t('metaDescription'),
+    title,
+    description,
     alternates: pageAlternates(locale, '/cookies'),
+    openGraph: pageOpenGraph({ locale, path: '/cookies', title, description }),
   }
 }
 
