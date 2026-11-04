@@ -46,6 +46,11 @@ model User {
   payments         Payment[]
   libraryScripts   LibraryScript[]
   promoRedemptions PromoCodeRedemption[]
+  mcpDevices       McpDevice[]
+  mcpJobs          McpJob[]
+  mcpConnections   McpConnection[]
+  oauthAuthCodes   OAuthAuthCode[]
+  oauthTokens      OAuthToken[]
 
   @@map("users")
 }
@@ -212,4 +217,136 @@ model Payment {
   @@index([email])
   @@index([userId])
   @@map("payments")
+}
+
+// ─── KI-Verbindungen (MCP) ──────────────────────────────────────────────────
+// Die Website ist Remote-MCP-Server (/api/mcp) mit eigenem OAuth 2.1 und reicht
+// Werkzeug-Aufrufe per Relay an die Desktop-App des Nutzers weiter. Vertrag:
+// docs/mcp/CONTRACT.md. Tokens/Codes werden nur als SHA-256-Hash gespeichert.
+
+// Eine Desktop-App-Installation mit eingeschaltetem Fernzugriff.
+model McpDevice {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  deviceId     String   @map("device_id") // UUID aus mcp.json der App
+  deviceName   String   @map("device_name")
+  appVersion   String   @map("app_version")
+  manifestHash String?  @map("manifest_hash")
+  manifest     Json? // Tool[] laut Vertrag Abschnitt 1
+  lastSeenAt   DateTime @default(now()) @map("last_seen_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs McpJob[]
+
+  @@unique([userId, deviceId])
+  @@index([userId, lastSeenAt])
+  @@map("mcp_devices")
+}
+
+// Ein Werkzeug-Aufruf von einem KI-Client, der auf die Desktop-App wartet.
+model McpJob {
+  id           String    @id @default(cuid())
+  userId       String    @map("user_id")
+  deviceId     String?   @map("device_id") // McpDevice.id; null = jedes Geraet des Nutzers
+  connectionId String?   @map("connection_id")
+  clientName   String    @map("client_name")
+  tool         String
+  args         Json
+  status       String    @default("queued") // queued | delivered | done | expired
+  result       Json? // CallToolResult
+  createdAt    DateTime  @default(now()) @map("created_at")
+  deliveredAt  DateTime? @map("delivered_at")
+  completedAt  DateTime? @map("completed_at")
+
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device     McpDevice?     @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+  connection McpConnection? @relation(fields: [connectionId], references: [id], onDelete: SetNull)
+
+  @@index([userId, status, createdAt])
+  @@index([createdAt])
+  @@map("mcp_jobs")
+}
+
+// OAuth-Client: per DCR registriert oder per Client-ID-Metadata-Document (CIMD).
+model OAuthClient {
+  id                String    @id @default(cuid())
+  clientId          String    @unique @map("client_id") // zufaellig (DCR) oder HTTPS-URL (CIMD)
+  clientName        String    @map("client_name")
+  redirectUris      String[]  @map("redirect_uris")
+  clientUri         String?   @map("client_uri")
+  logoUri           String?   @map("logo_uri")
+  registrationType  String    @default("dcr") @map("registration_type") // "dcr" | "cimd"
+  metadataFetchedAt DateTime? @map("metadata_fetched_at") // nur CIMD
+  createdAt         DateTime  @default(now()) @map("created_at")
+  lastUsedAt        DateTime? @map("last_used_at")
+
+  @@map("oauth_clients")
+}
+
+// Einmal-Code aus dem Authorize-Schritt (10 Minuten gueltig).
+model OAuthAuthCode {
+  id            String    @id @default(cuid())
+  codeHash      String    @unique @map("code_hash")
+  clientId      String    @map("client_id")
+  userId        String    @map("user_id")
+  redirectUri   String    @map("redirect_uri")
+  codeChallenge String    @map("code_challenge") // PKCE S256
+  scope         String
+  resource      String
+  expiresAt     DateTime  @map("expires_at")
+  usedAt        DateTime? @map("used_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+  @@map("oauth_auth_codes")
+}
+
+// Access- und Refresh-Token-Paar. Refresh rotiert: jede Nutzung erzeugt eine
+// neue Zeile in derselben Familie; Wiederverwendung eines alten Refresh-Tokens
+// widerruft die ganze Familie.
+model OAuthToken {
+  id               String    @id @default(cuid())
+  familyId         String    @map("family_id")
+  userId           String    @map("user_id")
+  clientId         String    @map("client_id")
+  connectionId     String    @map("connection_id")
+  accessTokenHash  String    @unique @map("access_token_hash")
+  refreshTokenHash String    @unique @map("refresh_token_hash")
+  scope            String
+  resource         String
+  accessExpiresAt  DateTime  @map("access_expires_at")
+  refreshExpiresAt DateTime  @map("refresh_expires_at")
+  rotatedAt        DateTime? @map("rotated_at") // Refresh-Token wurde eingeloest
+  revokedAt        DateTime? @map("revoked_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  connection McpConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  @@index([familyId])
+  @@index([connectionId])
+  @@index([refreshExpiresAt])
+  @@map("oauth_tokens")
+}
+
+// Sichtbare Verbindung je Nutzer + Client (Dashboard/App: anzeigen, trennen).
+model McpConnection {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  clientId   String    @map("client_id")
+  clientName String    @map("client_name")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  lastUsedAt DateTime? @map("last_used_at")
+  revokedAt  DateTime? @map("revoked_at")
+
+  user   User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokens OAuthToken[]
+  jobs   McpJob[]
+
+  @@unique([userId, clientId])
+  @@map("mcp_connections")
 }

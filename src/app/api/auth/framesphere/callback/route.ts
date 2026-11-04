@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { POST_LOGIN_COOKIE, postLoginCookieOptions, safeNextPath } from '@/lib/post-login'
 import { prisma } from '@/lib/prisma'
 import { grantTrialIfEligible } from '@/lib/trial'
 import { signToken } from '@/lib/auth'
@@ -103,8 +104,11 @@ export async function GET(req: NextRequest) {
     // Sign JWT
     const token = signToken({ userId: user.id, email: user.email })
 
-    // Always go to /sso-welcome — the page decides based on hasPaid
-    const response = NextResponse.redirect(`${appUrl}/sso-welcome`)
+    // Always go to /sso-welcome — the page decides based on hasPaid –
+    // ausser es wartet ein Ruecksprung (z. B. OAuth-Zustimmung).
+    const nextPath = safeNextPath(req.cookies.get(POST_LOGIN_COOKIE)?.value)
+    const response = NextResponse.redirect(`${appUrl}${nextPath ?? '/sso-welcome'}`)
+    response.cookies.delete(POST_LOGIN_COOKIE)
 
     response.cookies.set('auth-token', token, {
       httpOnly: true,

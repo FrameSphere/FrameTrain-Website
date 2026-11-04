@@ -195,6 +195,14 @@
                 ]
             },
             {
+                "heading": "9a. KI-Verbindungen (MCP)",
+                "paragraphs": [
+                    "Wenn du FrameTrain mit einem KI-Assistenten wie Claude (Anthropic) oder ChatGPT (OpenAI) verbindest, meldest du dich dafür bei frame-train.com an und stimmst der Verbindung ausdrücklich zu. Wir speichern dazu den Namen und die technischen Angaben des Clients, Zeitpunkt der Zustimmung und letzten Nutzung sowie Zugriffs-Token ausschließlich als SHA-256-Hash. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung der von dir gewünschten Funktion).",
+                    "Ruft der Assistent ein FrameTrain-Werkzeug auf, leiten wir den Aufruf (Werkzeugname und Parameter) über unseren Server an deine FrameTrain-App weiter und geben das Ergebnis der App an den Assistenten zurück. Ist der Fernzugriff in der App eingeschaltet, meldet sich die App regelmäßig mit Gerätename, App-Version und der Liste ihrer Werkzeuge bei uns. Training, Modelle und Datensätze bleiben auf deinem Rechner; Inhalte werden nur insoweit übertragen, wie sie Teil eines Aufrufs oder Ergebnisses sind.",
+                    "Aufrufe und Ergebnisse speichern wir zur Zustellung und Anzeige im Dashboard höchstens 30 Tage, Token höchstens bis zu ihrem Ablauf (Refresh-Token 30 Tage). Was der KI-Anbieter mit den Ergebnissen macht, richtet sich nach dessen Datenschutzbestimmungen; die Verbindung startest du dort selbst. Du kannst jede Verbindung jederzeit im Dashboard unter KI-Verbindungen oder in der App trennen und den Fernzugriff in der App abschalten."
+                ]
+            },
+            {
                 "heading": "10. Open Library",
                 "paragraphs": [
                     "Wenn du ein Skript in die Open Library hochlädst, werden Name, Beschreibung, Tags, der Skript-Inhalt und dein Community-Name öffentlich angezeigt (Art. 6 Abs. 1 lit. b DSGVO).",
@@ -7334,6 +7342,11 @@
             "accept": "Zustimmen",
             "saving": "Wird gespeichert …",
             "error": "Das hat nicht geklappt. Bitte versuch es noch einmal."
+        },
+        "aiConnections": {
+            "heading": "KI-Verbindungen",
+            "description": "FrameTrain mit Claude oder ChatGPT steuern und verbundene Assistenten verwalten.",
+            "open": "Öffnen"
         }
     },
     "Home": {
@@ -9900,6 +9913,103 @@
         "paymentCancel": {
             "title": "Zahlung abgebrochen – FrameTrain",
             "description": "Die Zahlung wurde abgebrochen und nichts wurde berechnet. Du kannst dein FrameTrain-Abo jederzeit erneut abschließen."
+        },
+        "oauthAuthorize": {
+            "title": "Verbindung erlauben – FrameTrain",
+            "description": "Erlaube einem KI-Assistenten wie Claude oder ChatGPT, FrameTrain auf deinem Rechner zu steuern."
+        },
+        "aiConnections": {
+            "title": "KI-Verbindungen – FrameTrain",
+            "description": "Verbinde Claude und ChatGPT mit der FrameTrain-App auf deinem Rechner und verwalte verbundene Clients."
+        }
+    },
+    "OAuthConsent": {
+        "title": "{client} möchte FrameTrain auf deinem Rechner steuern",
+        "signedInAs": "Angemeldet als {email}",
+        "redirectTo": "Weiterleitung an",
+        "verifiedBy": "Client-Angaben geprüft über {host}",
+        "loopbackWarning": "Dieser Client leitet nur an deinen eigenen Rechner (localhost) weiter. Erlaube das nur, wenn du die Verbindung gerade selbst in einem Programm wie Claude Code gestartet hast.",
+        "allowsHeading": "Wenn du zustimmst, kann der Assistent:",
+        "allows": {
+            "tools": "Werkzeuge der FrameTrain-App auf deinem Rechner aufrufen – Modelle, Datensätze, Training, Tests und Analysen.",
+            "approval": "Heikle Aktionen wie Löschen, Dateien überschreiben oder Training starten musst du in der App jeweils selbst bestätigen.",
+            "appRequired": "Das klappt nur, solange FrameTrain geöffnet ist und der Fernzugriff eingeschaltet ist.",
+            "revoke": "Du kannst die Verbindung jederzeit im Dashboard unter KI-Verbindungen oder in der App trennen."
+        },
+        "approve": "Erlauben",
+        "deny": "Ablehnen",
+        "cancel": "Abbrechen",
+        "noSubscription": "Für KI-Verbindungen brauchst du ein aktives FrameTrain-Abo oder eine laufende Testphase.",
+        "getLicense": "Lizenz abschließen",
+        "privacyNote": "Was dabei mit deinen Daten passiert, steht in der <privacy>Datenschutzerklärung</privacy>.",
+        "errorTitle": "Verbindung nicht möglich",
+        "errors": {
+            "unknown_client": "Der anfragende Client ist unbekannt oder seine Angaben konnten nicht geladen werden. Starte die Verbindung im KI-Assistenten bitte neu.",
+            "invalid_redirect_uri": "Die Rücksprungadresse des Clients ist nicht registriert. Aus Sicherheitsgründen wird die Anfrage abgebrochen."
+        }
+    },
+    "AiConnections": {
+        "back": "Zurück zum Dashboard",
+        "title": "KI-Verbindungen",
+        "subtitle": "Steuere FrameTrain aus Claude oder ChatGPT. Die Werkzeuge laufen immer in der App auf deinem Rechner – frame-train.com vermittelt nur.",
+        "loading": "Lade …",
+        "loadError": "Status konnte nicht geladen werden.",
+        "retry": "Erneut versuchen",
+        "app": {
+            "heading": "FrameTrain-App",
+            "online": "Online",
+            "offline": "Offline",
+            "never": "Noch keine App mit Fernzugriff verbunden. Öffne FrameTrain und schalte unter Einstellungen > KI-Verbindungen den Fernzugriff ein.",
+            "version": "Version {version}",
+            "lastSeen": "Zuletzt gesehen {time}",
+            "tools": "{count} Werkzeuge",
+            "offlineHint": "Die App ist gerade nicht erreichbar. KI-Assistenten bekommen dann einen Hinweis, FrameTrain zu starten."
+        },
+        "clients": {
+            "heading": "Verbundene Clients",
+            "empty": "Noch kein KI-Assistent verbunden.",
+            "connected": "Verbunden seit {date}",
+            "lastUsed": "Zuletzt genutzt {time}",
+            "disconnect": "Trennen",
+            "disconnecting": "Trenne …",
+            "confirm": "Verbindung zu {client} trennen? Der Assistent muss sich danach neu anmelden."
+        },
+        "jobs": {
+            "heading": "Letzte Aufrufe",
+            "empty": "Noch keine Aufrufe.",
+            "status": {
+                "queued": "Wartet",
+                "delivered": "Läuft",
+                "done": "Fertig",
+                "expired": "Abgelaufen"
+            }
+        },
+        "guide": {
+            "heading": "So verbindest du einen Assistenten",
+            "urlLabel": "Connector-URL",
+            "copy": "Kopieren",
+            "copied": "Kopiert",
+            "claudeTitle": "Claude (claude.ai, Desktop, Mobil)",
+            "claudeSteps": [
+                "Öffne in Claude Einstellungen > Connectors und wähle „Benutzerdefinierten Connector hinzufügen“.",
+                "Gib als Namen FrameTrain ein und füge die Connector-URL oben ein. OAuth-Client-ID und -Secret leer lassen.",
+                "Klicke auf Verbinden, melde dich bei frame-train.com an und erlaube den Zugriff.",
+                "In einem Chat aktivierst du FrameTrain über das Werkzeug-Menü."
+            ],
+            "chatgptTitle": "ChatGPT",
+            "chatgptSteps": [
+                "Aktiviere in ChatGPT unter Einstellungen > Apps & Connectors > Erweitert den Entwicklermodus.",
+                "Wähle „Erstellen“ bzw. „Connector hinzufügen“, gib FrameTrain als Namen ein und füge die Connector-URL ein. Authentifizierung: OAuth.",
+                "Melde dich bei frame-train.com an und erlaube den Zugriff.",
+                "Wähle FrameTrain in einem neuen Chat über das Plus-Menü aus."
+            ],
+            "appTitle": "In der FrameTrain-App",
+            "appSteps": [
+                "Öffne FrameTrain und melde dich mit diesem Konto an.",
+                "Schalte unter Einstellungen > KI-Verbindungen „Fernzugriff über frame-train.com erlauben“ ein.",
+                "Lass die App geöffnet, solange der Assistent mit FrameTrain arbeiten soll."
+            ],
+            "localHint": "Für Claude Desktop, Claude Code und Cursor auf demselben Rechner gibt es zusätzlich eine lokale Verbindung ohne Umweg über frame-train.com – direkt in der App unter Einstellungen > KI-Verbindungen."
         }
     }
 }

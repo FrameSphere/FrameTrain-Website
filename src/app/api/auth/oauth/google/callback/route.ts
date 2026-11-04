@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { POST_LOGIN_COOKIE, postLoginCookieOptions, safeNextPath } from '@/lib/post-login'
 import { prisma } from '@/lib/prisma'
 import { grantTrialIfEligible } from '@/lib/trial'
 import { signToken } from '@/lib/auth'
@@ -150,13 +151,15 @@ export async function GET(req: NextRequest) {
     // Redirect: new users go to /payment, existing paid users go to /dashboard
     // ?signup=google signalisiert der Zielseite eine Neuregistrierung — sie
     // feuert daraufhin (nur mit Consent) genau ein sign_up-Event.
+    const nextPath = safeNextPath(req.cookies.get(POST_LOGIN_COOKIE)?.value)
     const destination =
-      (user.hasPaid ? '/dashboard' : '/payment') + (isNewUser ? '?signup=google' : '')
+      nextPath ?? (user.hasPaid ? '/dashboard' : '/payment') + (isNewUser ? '?signup=google' : '')
 
     const response = NextResponse.redirect(`${baseUrl}${destination}`, {
       headers: { 'Set-Cookie': cookieValue },
     })
     response.cookies.delete('oauth_state')
+    response.cookies.delete(POST_LOGIN_COOKIE)
     return response
   } catch (err) {
     console.error('Google OAuth callback error:', err)

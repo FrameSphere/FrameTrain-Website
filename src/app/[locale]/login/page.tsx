@@ -8,12 +8,14 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { LogIn, Mail, Lock } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { safeNextPath } from '@/lib/post-login'
 
 // `disabled` = Zustimmung fehlt noch. Die Links werden dann nicht nur optisch
 // gedimmt, sondern per pointer-events-none auch wirklich unklickbar – sonst
 // käme man über OAuth an der Zustimmung vorbei.
-function OAuthButtons({ disabled }: { disabled: boolean }) {
+function OAuthButtons({ disabled, next }: { disabled: boolean; next: string | null }) {
   const t = useTranslations('Auth.oauth')
+  const nextQs = next ? `?next=${encodeURIComponent(next)}` : ''
   return (
     <div
       className={`space-y-3 mb-6 transition-opacity ${disabled ? 'opacity-40 pointer-events-none select-none' : ''}`}
@@ -21,7 +23,7 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
     >
       {/* Google */}
       <a
-        href="/api/auth/oauth/google"
+        href={`/api/auth/oauth/google${nextQs}`}
         className="press w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink hover:border-line-strong hover:text-ink hover:bg-ghost-fill transition-colors duration-[180ms] ease-out"
       >
         <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
@@ -35,7 +37,7 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
 
       {/* GitHub */}
       <a
-        href="/api/auth/oauth/github"
+        href={`/api/auth/oauth/github${nextQs}`}
         className="press w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink hover:border-line-strong hover:text-ink hover:bg-ghost-fill transition-colors duration-[180ms] ease-out"
       >
         <svg className="w-5 h-5 flex-shrink-0 text-ink" viewBox="0 0 24 24" fill="currentColor">
@@ -46,7 +48,7 @@ function OAuthButtons({ disabled }: { disabled: boolean }) {
 
       {/* FrameSphere SSO */}
       <a
-        href="/api/auth/framesphere"
+        href={`/api/auth/framesphere${nextQs}`}
         className="press w-full flex items-center gap-3 px-4 py-3 bg-surface border border-line border border-line rounded-md text-ink hover:border-line-strong hover:text-ink hover:bg-indigo-soft transition-colors duration-[180ms] ease-out group"
       >
         <div className="w-5 h-5 flex-shrink-0 rounded-sm bg-ghost-fill border border-line flex items-center justify-center  ">
@@ -74,6 +76,7 @@ function LoginContent() {
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const next = safeNextPath(searchParams.get('next'))
 
   useEffect(() => {
     const oauthError = searchParams.get('error')
@@ -92,7 +95,7 @@ function LoginContent() {
     }
     setLoading(true)
     try {
-      await login(formData.email, formData.password, acceptedTerms)
+      await login(formData.email, formData.password, acceptedTerms, next)
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -132,7 +135,7 @@ function LoginContent() {
         )}
       </div>
 
-      <OAuthButtons disabled={!acceptedTerms} />
+      <OAuthButtons disabled={!acceptedTerms} next={next} />
 
       <div className="flex items-center gap-3 mb-6">
         <div className="flex-1 h-px bg-surface-raised" />
