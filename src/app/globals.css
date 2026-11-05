@@ -15,29 +15,38 @@
   /* ── Design-System „Neuron" (V2) ──────────────────────────────
      Quelle: Design-System-Artifact „FrameTrain Neuron". Nur diese
      Werte verwenden, nie Hex im Markup. Night ist Standard, Day
-     gilt für data-theme="light". */
+     gilt für data-theme="light".
+
+     Farbverteilung 60/30/10:
+       60 % Grundfläche  – Midnight (bläulich getöntes Charcoal statt Schwarz)
+       30 % Marke        – Indigo (Flächen, Links, Licht im Hero)
+       10 % Akzent       – Tangerine, NUR für das, was gedrückt werden soll
+                           (Kostenlos testen) und den Output-Knoten. */
   :root,
   [data-theme='dark'] {
-    --bg: #0a0a12;
-    --surface: #11111b;
-    --surface-raised: #191926;
-    --line: #24243a;
-    --line-strong: #6a6a86;
+    --bg: #0b0c18;
+    --surface: #121427;
+    --surface-raised: #1b1e37;
+    --line: #262a49;
+    --line-strong: #6b6f92;
     --ink: #f4f4f8;
-    --ink-muted: #a6a6bc;
-    --ink-faint: #8a8aa3;
-    --indigo: #3b3ed6;
-    --indigo-button: #4f53f0;
-    --indigo-hover: #5d61ff;
+    --ink-muted: #a8abc6;
+    --ink-faint: #8b8fae;
+    --indigo: #3d43e0;
+    --indigo-button: #4f57f5;
+    --indigo-hover: #6068ff;
     --on-indigo: #ffffff;
     --on-indigo-muted: #e2e3ff;
-    --indigo-text: #9ea1ff;
-    --indigo-soft: #1c1d45;
-    --output: #ff7a3d;
-    --on-output: #0a0a12;
-    --output-text: #ff7a3d;
-    --output-soft: rgba(255, 122, 61, 0.12);
-    --glass-fill: rgba(22, 22, 34, 0.62);
+    --indigo-text: #a3a8ff;
+    --indigo-soft: #1d2050;
+    --output: #fe8500;
+    --output-hover: #ff9a2e;
+    --on-output: #0b0c18;
+    --output-text: #ff9a33;
+    --output-soft: rgba(254, 133, 0, 0.12);
+    --hero-light: rgba(79, 87, 245, 0.32);
+    --hero-line: #5b63ff;
+    --glass-fill: rgba(20, 22, 42, 0.62);
     --glass-edge: rgba(255, 255, 255, 0.12);
     --glass-highlight: rgba(255, 255, 255, 0.16);
     --ghost-fill: rgba(255, 255, 255, 0.06);
@@ -66,8 +75,11 @@
     --indigo-hover: #2f33c0;
     --indigo-text: #3b3ed6;
     --indigo-soft: #e6e7fd;
-    --output-text: #b8461a;
-    --output-soft: #ffe9de;
+    --output-hover: #ff9a2e;
+    --output-text: #a64b00;
+    --output-soft: #fff0e0;
+    --hero-light: rgba(79, 87, 245, 0.16);
+    --hero-line: #4f57f5;
     --glass-fill: rgba(255, 255, 255, 0.68);
     --glass-edge: rgba(14, 14, 26, 0.1);
     --glass-highlight: rgba(255, 255, 255, 0.9);
@@ -105,7 +117,7 @@
     border-color: var(--line);
   }
 
-  /* Neuron: kühles Nachtblau, keine Verläufe, kein Raster, kein Glow. */
+  /* Neuron: kühles Nachtblau, kein Raster. Einziges Licht: der Hero. */
   body {
     @apply antialiased;
     background: var(--bg);
@@ -115,6 +127,8 @@
     line-height: 28px;
     /* Echte Kapitälchen-Ziffern & Ligaturen statt Browser-Default */
     font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    /* Hero-Licht ist 100vw breit – keine horizontale Scrollbar erzeugen */
+    overflow-x: clip;
   }
 
   /* Große Schriftgrade brauchen negatives Tracking, sonst wirken sie
@@ -178,6 +192,25 @@
    eine Handvoll Utility-Klassen bräuchte oder an mehreren Stellen gleich
    aussehen muss, lebt hier. */
 @layer components {
+  /* Hero-Licht: ein indigo Lichtkegel plus eine dünne Bahn, die im
+     orangen Output-Knoten endet – das Logo als Atmosphäre. */
+  .ft-hero { position: relative; isolation: isolate; }
+  .ft-hero__light {
+    position: absolute; top: -120px; left: 50%; width: 100vw; transform: translateX(-50%);
+    height: 760px; z-index: -1;
+    pointer-events: none; overflow: hidden;
+    background: radial-gradient(ellipse 55% 60% at 50% 18%, var(--hero-light), transparent 70%);
+  }
+  .ft-hero__light svg { position: absolute; left: 50%; top: 0; width: 1600px; height: 760px; transform: translateX(-50%); }
+  .ft-hero__arc { fill: none; stroke: var(--hero-line); stroke-width: 1.5; opacity: 0.45; }
+  .ft-hero__arc--glow { stroke-width: 10; opacity: 0.12; filter: blur(6px); }
+  .ft-hero__node { fill: var(--output); }
+  .ft-hero__node-halo { fill: var(--output); opacity: 0.18; }
+  @media (max-width: 767px) {
+    .ft-hero__light { height: 620px; }
+    .ft-hero__light svg { width: 1100px; }
+  }
+
   .ft-container {
     width: 100%;
     max-width: 1120px;
@@ -267,6 +300,10 @@
   .ft-btn--sm { height: 34px; padding: 0 16px; font-size: 14px; }
   .ft-btn--primary { background: var(--indigo-button); color: var(--on-indigo); box-shadow: var(--shadow-button-edge); }
   .ft-btn--primary:hover { background: var(--indigo-hover); }
+  /* Akzent-CTA (10 %): nur „Kostenlos testen“ – die eine Aktion, die
+     gedrückt werden soll. Nicht für Sekundäraktionen verwenden. */
+  .ft-btn--accent { background: var(--output); color: var(--on-output); box-shadow: var(--shadow-button-edge); font-weight: 600; }
+  .ft-btn--accent:hover { background: var(--output-hover); }
   .ft-btn--ghost { background: var(--ghost-fill); border-color: var(--ghost-edge); color: var(--ink); }
   .ft-btn--ghost:hover { background: var(--surface-raised); }
   .ft-btn--on-indigo { background: #ffffff; color: #1d1f7a; }

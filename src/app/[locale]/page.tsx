@@ -136,7 +136,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <main className="flex-1">
         {/* ── Hero ─────────────────────────────────────────────── */}
-        <section id="hero" className="ft-container pt-14 md:pt-[104px] text-center">
+        <section id="hero" className="ft-hero ft-container pt-14 md:pt-[104px] text-center">
+          <div className="ft-hero__light" aria-hidden="true">
+            <svg viewBox="0 0 1600 760" preserveAspectRatio="xMidYMin slice">
+              <path className="ft-hero__arc ft-hero__arc--glow" d="M-40 640 C 360 640, 520 120, 800 120 S 1240 520, 1640 300" />
+              <path className="ft-hero__arc" d="M-40 640 C 360 640, 520 120, 800 120 S 1240 520, 1640 300" />
+              <circle className="ft-hero__node-halo" cx="1379" cy="365" r="16" />
+              <circle className="ft-hero__node" cx="1379" cy="365" r="5" />
+            </svg>
+          </div>
           <p className="ft-label m-0">{t('hero.eyebrow', { version })}</p>
           <h1 className="ft-display-xl mt-6 mb-0 mx-auto max-w-[980px]">
             {t('hero.titleA')} <span className="text-ink-muted">{t('hero.titleB')}</span>
