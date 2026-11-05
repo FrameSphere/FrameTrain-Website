@@ -75,10 +75,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       address: false,
     },
     icons: {
-      icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+      // PNG/ICO zusaetzlich zum SVG: Googles Favicon-Dienst (den u. a. Claude fuer
+      // Connector-Symbole nutzt) liest bevorzugt Raster-Icons in Vielfachen von 48 px.
+      icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/icon-48.png', sizes: '48x48', type: 'image/png' },
+        { url: '/icon-96.png', sizes: '96x96', type: 'image/png' },
+        { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      ],
       apple: '/apple-touch-icon.png',
-      shortcut: '/favicon.svg',
+      shortcut: '/favicon.ico',
     },
+    manifest: '/site.webmanifest',
     openGraph: pageOpenGraph({
       locale,
       title: copy.ogTitle,
