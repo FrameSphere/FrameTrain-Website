@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer'
 import { Link } from '@/i18n/navigation'
 import { pageAlternates, pageOpenGraph } from '@/lib/seo'
 import { ConnectorUrlCopy } from '@/components/mcp/ConnectorUrlCopy'
+import { ClaudeMark, OpenAIMark } from '@/components/mcp/PartnerLogos'
 
 // Oeffentliche Doku fuer die KI-Verbindungen (MCP) – Doku-Link fuer die
 // Einreichung bei Anthropic (Connectors Directory) und OpenAI (ChatGPT-Apps).
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-function Card({ icon: Icon, title, children }: { icon: typeof Bot; title: string; children: React.ReactNode }) {
+function Card({ icon: Icon, title, children }: { icon: React.ComponentType<{ className?: string; strokeWidth?: number | string }>; title: string; children: React.ReactNode }) {
   return (
     <section className="ft-card">
       <h2 className="flex items-center gap-2 text-[22px] leading-tight font-semibold tracking-tight text-ink mb-4">
@@ -48,7 +49,7 @@ function Ordered({ items }: { items: string[] }) {
   )
 }
 
-function Checks({ items, icon: Icon = CheckCircle2 }: { items: string[]; icon?: typeof Bot }) {
+function Checks({ items, icon: Icon = CheckCircle2 }: { items: string[]; icon?: React.ComponentType<{ className?: string; strokeWidth?: number | string }> }) {
   return (
     <ul className="space-y-2 text-sm text-ink-muted">
       {items.map((s) => (
@@ -93,10 +94,10 @@ export default async function McpDocsPage({ params }: Props) {
           </Card>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <Card icon={Bot} title={t('claudeHeading')}>
+            <Card icon={ClaudeMark} title={t('claudeHeading')}>
               <Ordered items={t.raw('claudeSteps') as string[]} />
             </Card>
-            <Card icon={MessageSquare} title={t('chatgptHeading')}>
+            <Card icon={OpenAIMark} title={t('chatgptHeading')}>
               <Ordered items={t.raw('chatgptSteps') as string[]} />
             </Card>
           </div>

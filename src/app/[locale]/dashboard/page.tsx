@@ -6,6 +6,7 @@ import { useRouter, Link } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
+import { ClaudeMark, OpenAIMark } from '@/components/mcp/PartnerLogos'
 import { DeleteAccountCard } from '@/components/DeleteAccountCard'
 import { TermsUpdateBanner } from '@/components/TermsUpdateBanner'
 import { Footer } from '@/components/Footer'
@@ -732,7 +733,10 @@ function DashboardPageInner() {
             href="/dashboard/ai-connections"
             className="card-lift flex items-center gap-4 bg-surface border border-line hover:border-line-strong rounded-lg p-6 mb-8 transition duration-200 ease-out"
           >
-            <Bot className="w-6 h-6 flex-shrink-0 text-ink-muted" strokeWidth={1.5} />
+            <span className="flex items-center gap-1.5 flex-shrink-0" aria-hidden>
+              <ClaudeMark className="w-6 h-6" />
+              <OpenAIMark className="w-6 h-6 text-ink" />
+            </span>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-semibold text-ink">{t('aiConnections.heading')}</h2>
               <p className="text-ink-muted text-sm">{t('aiConnections.description')}</p>

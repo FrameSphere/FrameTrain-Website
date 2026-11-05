@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ConnectorUrlCopy } from '@/components/mcp/ConnectorUrlCopy'
+import { ClaudeMark, OpenAIMark, partnerOf } from '@/components/mcp/PartnerLogos'
 
 
 interface McpStatus {
@@ -34,7 +35,14 @@ function useRelativeTime() {
   )
 }
 
-function Steps({ title, steps, icon: Icon }: { title: string; steps: string[]; icon: typeof Bot }) {
+function ClientMark({ name }: { name: string }) {
+  const partner = partnerOf(name)
+  if (!partner) return null
+  const Mark = partner === 'claude' ? ClaudeMark : OpenAIMark
+  return <Mark className="w-6 h-6 flex-shrink-0 text-ink" />
+}
+
+function Steps({ title, steps, icon: Icon }: { title: string; steps: string[]; icon: React.ComponentType<{ className?: string; strokeWidth?: number | string }> }) {
   return (
     <div className="bg-bg border border-line rounded-md p-5">
       <h3 className="flex items-center gap-2 font-semibold text-ink mb-3">
@@ -184,6 +192,7 @@ export default function AiConnectionsPage() {
                   <ul className="divide-y divide-line">
                     {status.connections.map((c) => (
                       <li key={c.id} className="flex flex-col sm:flex-row sm:items-center gap-3 py-3">
+                        <ClientMark name={c.clientName} />
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-ink truncate">{c.clientName}</p>
                           <p className="text-xs text-ink-faint">
@@ -246,8 +255,8 @@ export default function AiConnectionsPage() {
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <Steps title={t('guide.appTitle')} steps={t.raw('guide.appSteps') as string[]} icon={Laptop} />
-              <Steps title={t('guide.claudeTitle')} steps={t.raw('guide.claudeSteps') as string[]} icon={Bot} />
-              <Steps title={t('guide.chatgptTitle')} steps={t.raw('guide.chatgptSteps') as string[]} icon={MessageSquare} />
+              <Steps title={t('guide.claudeTitle')} steps={t.raw('guide.claudeSteps') as string[]} icon={ClaudeMark} />
+              <Steps title={t('guide.chatgptTitle')} steps={t.raw('guide.chatgptSteps') as string[]} icon={OpenAIMark} />
             </div>
             <p className="mt-4 text-xs text-ink-faint">{t('guide.localHint')}</p>
             <Link href="/docs/mcp" className="mt-3 inline-flex items-center gap-1 text-sm text-indigo-text font-medium">

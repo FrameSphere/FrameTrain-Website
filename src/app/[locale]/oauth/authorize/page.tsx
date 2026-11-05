@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { AlertTriangle, Bot, Check, ExternalLink, Lock, ShieldCheck } from 'lucide-react'
+import { AlertTriangle, Check, ExternalLink, Lock, ShieldCheck } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Link } from '@/i18n/navigation'
@@ -10,6 +10,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { utilityMetadata } from '@/lib/seo'
 import { onlyLoopbackRedirects, resolveClient } from '@/lib/mcp/clients'
 import { checkAuthorizeRequest, signConsentTicket } from '@/lib/mcp/authorize'
+import { PartnerLogos, partnerOf } from '@/components/mcp/PartnerLogos'
 
 // OAuth-2.1-Authorize-Endpunkt fuer Claude.ai / ChatGPT (Vertrag Abschnitt 6).
 // Nutzt die normale Website-Anmeldung (auth-token-Cookie) und zeigt die Zustimmung.
@@ -104,8 +105,8 @@ export default async function OAuthAuthorizePage({ params, searchParams }: Props
 
   return (
     <Shell>
-      <div className="flex justify-center mb-5">
-        <Bot className="w-8 h-8 text-ink-muted" strokeWidth={1.5} />
+      <div className="mb-6">
+        <PartnerLogos partner={partnerOf(client!.clientId, clientName, redirectHost)} />
       </div>
       <h1 className="text-2xl font-semibold text-ink text-center mb-2">{t('title', { client: clientName })}</h1>
       <p className="text-sm text-ink-muted text-center mb-6">{t('signedInAs', { email: dbUser.email })}</p>
