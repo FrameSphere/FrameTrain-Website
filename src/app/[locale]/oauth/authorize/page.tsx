@@ -30,7 +30,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg bg-surface border border-line rounded-lg p-8">{children}</div>
+        <div className="w-full max-w-lg ft-card">{children}</div>
       </main>
       <Footer />
     </div>
@@ -93,8 +93,8 @@ export default async function OAuthAuthorizePage({ params, searchParams }: Props
         type="submit"
         className={
           primary
-            ? 'press w-full py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold'
-            : 'press w-full py-3 bg-ghost-fill border border-line hover:border-line-strong text-ink rounded-md font-medium'
+            ? 'ft-btn ft-btn--primary w-full'
+            : 'ft-btn ft-btn--ghost w-full'
         }
       >
         {label}
@@ -104,13 +104,13 @@ export default async function OAuthAuthorizePage({ params, searchParams }: Props
 
   return (
     <Shell>
-      <div className="flex items-center justify-center w-14 h-14 bg-ghost-fill border border-line rounded-lg mb-5 mx-auto">
-        <Bot className="w-7 h-7 text-ink" />
+      <div className="flex justify-center mb-5">
+        <Bot className="w-8 h-8 text-ink-muted" strokeWidth={1.5} />
       </div>
       <h1 className="text-2xl font-semibold text-ink text-center mb-2">{t('title', { client: clientName })}</h1>
       <p className="text-sm text-ink-muted text-center mb-6">{t('signedInAs', { email: dbUser.email })}</p>
 
-      <div className="mb-5 px-4 py-3 rounded-md bg-ghost-fill border border-line text-sm">
+      <div className="mb-5 px-4 py-3 rounded-md bg-surface-raised border border-line text-sm">
         <div className="flex items-center gap-2 text-ink">
           <ExternalLink className="w-4 h-4 text-ink-muted" />
           <span>{t('redirectTo')}</span>
@@ -138,7 +138,7 @@ export default async function OAuthAuthorizePage({ params, searchParams }: Props
             {denyForm(t('cancel'))}
             <Link
               href="/payment"
-              className="press flex-1 text-center py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold"
+              className="ft-btn ft-btn--primary flex-1"
             >
               {t('getLicense')}
             </Link>
@@ -151,9 +151,9 @@ export default async function OAuthAuthorizePage({ params, searchParams }: Props
             {(['tools', 'approval', 'appRequired', 'revoke'] as const).map((k) => (
               <li key={k} className="flex gap-2">
                 {k === 'approval' ? (
-                  <ShieldCheck className="w-4 h-4 flex-shrink-0 mt-0.5 text-success" />
+                  <ShieldCheck className="w-4 h-4 flex-shrink-0 mt-0.5 text-ink-muted" strokeWidth={1.5} />
                 ) : (
-                  <Check className="w-4 h-4 flex-shrink-0 mt-0.5 text-success" />
+                  <Check className="w-4 h-4 flex-shrink-0 mt-0.5 text-ink-muted" strokeWidth={1.5} />
                 )}
                 <span>{t(`allows.${k}`)}</span>
               </li>
@@ -166,7 +166,7 @@ export default async function OAuthAuthorizePage({ params, searchParams }: Props
               <input type="hidden" name="decision" value="approve" />
               <button
                 type="submit"
-                className="press w-full py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold"
+                className="ft-btn ft-btn--primary w-full"
               >
                 {t('approve')}
               </button>
@@ -175,7 +175,7 @@ export default async function OAuthAuthorizePage({ params, searchParams }: Props
           <p className="mt-5 text-xs text-ink-faint text-center">
             {t.rich('privacyNote', {
               privacy: (chunks) => (
-                <Link href="/privacy" className="underline">
+                <Link href="/privacy" className="text-indigo-text underline">
                   {chunks}
                 </Link>
               ),

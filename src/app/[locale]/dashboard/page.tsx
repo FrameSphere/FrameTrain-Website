@@ -732,9 +732,7 @@ function DashboardPageInner() {
             href="/dashboard/ai-connections"
             className="card-lift flex items-center gap-4 bg-surface border border-line hover:border-line-strong rounded-lg p-6 mb-8 transition duration-200 ease-out"
           >
-            <div className="w-12 h-12 flex-shrink-0 bg-ghost-fill border border-line rounded-lg flex items-center justify-center">
-              <Bot className="w-6 h-6 text-indigo-text" />
-            </div>
+            <Bot className="w-6 h-6 flex-shrink-0 text-ink-muted" strokeWidth={1.5} />
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-semibold text-ink">{t('aiConnections.heading')}</h2>
               <p className="text-ink-muted text-sm">{t('aiConnections.description')}</p>

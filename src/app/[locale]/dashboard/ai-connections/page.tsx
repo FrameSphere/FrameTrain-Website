@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import {
-  ArrowLeft, BookOpen, Bot, CircleDot, Laptop, Link2, Loader2, MessageSquare, RefreshCw, Unplug, Wrench,
+  ArrowLeft, BookOpen, Bot, Laptop, Link2, Loader2, MessageSquare, RefreshCw, Unplug, Wrench,
 } from 'lucide-react'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useAuth } from '@/contexts/AuthContext'
@@ -36,9 +36,9 @@ function useRelativeTime() {
 
 function Steps({ title, steps, icon: Icon }: { title: string; steps: string[]; icon: typeof Bot }) {
   return (
-    <div className="bg-surface-raised border border-line rounded-md p-5">
+    <div className="bg-bg border border-line rounded-md p-5">
       <h3 className="flex items-center gap-2 font-semibold text-ink mb-3">
-        <Icon className="w-5 h-5 text-indigo-text" />
+        <Icon className="w-5 h-5 text-ink-muted" strokeWidth={1.5} />
         {title}
       </h3>
       <ol className="space-y-2 text-sm text-ink-muted list-decimal list-inside">
@@ -112,13 +112,10 @@ export default function AiConnectionsPage() {
             <ArrowLeft className="w-4 h-4" />
             {t('back')}
           </Link>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 flex-shrink-0 bg-ghost-fill border border-line rounded-lg flex items-center justify-center">
-              <Bot className="w-7 h-7 text-ink" />
-            </div>
+          <div className="mb-8">
             <div>
-              <h1 className="text-3xl md:text-4xl font-semibold text-ink">{t('title')}</h1>
-              <p className="text-ink-muted mt-1">{t('subtitle')}</p>
+              <h1 className="text-4xl md:text-[52px] md:leading-[1.02] font-semibold tracking-[-0.04em] text-ink">{t('title')}</h1>
+              <p className="ft-lead mt-4 max-w-[68ch]">{t('subtitle')}</p>
             </div>
           </div>
 
@@ -142,9 +139,9 @@ export default function AiConnectionsPage() {
           {status && (
             <>
               {/* App-Status */}
-              <section className="bg-surface border border-line rounded-lg p-6 mb-6">
-                <h2 className="flex items-center gap-2 text-xl font-semibold text-ink mb-4">
-                  <Laptop className="w-5 h-5 text-indigo-text" />
+              <section className="ft-card mb-6">
+                <h2 className="flex items-center gap-2 text-[22px] leading-tight font-semibold tracking-tight text-ink mb-4">
+                  <Laptop className="w-5 h-5 text-ink-muted" strokeWidth={1.5} />
                   {t('app.heading')}
                 </h2>
                 {!device ? (
@@ -153,18 +150,18 @@ export default function AiConnectionsPage() {
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-3">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border text-xs font-semibold ${
-                          device.online ? 'text-success border-line bg-ghost-fill' : 'text-ink-muted border-line bg-surface-raised'
+                        className={`ft-data inline-flex items-center gap-1.5 px-2.5 py-1 rounded-pill ${
+                          device.online ? 'text-output-text bg-output-soft' : 'text-ink-faint bg-surface-raised'
                         }`}
                       >
-                        <CircleDot className="w-3.5 h-3.5" />
+                        <span className={`w-1.5 h-1.5 rounded-pill ${device.online ? 'bg-output' : 'bg-ink-faint'}`} aria-hidden />
                         {device.online ? t('app.online') : t('app.offline')}
                       </span>
                       <span className="font-semibold text-ink">{device.deviceName}</span>
                       <span className="text-sm text-ink-muted">{t('app.version', { version: device.appVersion })}</span>
                       {device.toolCount > 0 && (
                         <span className="inline-flex items-center gap-1 text-sm text-ink-muted">
-                          <Wrench className="w-3.5 h-3.5" />
+                          <Wrench className="w-3.5 h-3.5" strokeWidth={1.5} />
                           {t('app.tools', { count: device.toolCount })}
                         </span>
                       )}
@@ -176,9 +173,9 @@ export default function AiConnectionsPage() {
               </section>
 
               {/* Verbundene Clients */}
-              <section className="bg-surface border border-line rounded-lg p-6 mb-6">
-                <h2 className="flex items-center gap-2 text-xl font-semibold text-ink mb-4">
-                  <Link2 className="w-5 h-5 text-indigo-text" />
+              <section className="ft-card mb-6">
+                <h2 className="flex items-center gap-2 text-[22px] leading-tight font-semibold tracking-tight text-ink mb-4">
+                  <Link2 className="w-5 h-5 text-ink-muted" strokeWidth={1.5} />
                   {t('clients.heading')}
                 </h2>
                 {status.connections.length === 0 ? (
@@ -197,7 +194,7 @@ export default function AiConnectionsPage() {
                         <button
                           onClick={() => disconnect(c.id, c.clientName)}
                           disabled={busyId === c.id}
-                          className="press inline-flex items-center justify-center gap-2 px-4 py-2 border border-line hover:border-danger text-danger rounded-md text-sm font-medium disabled:opacity-50"
+                          className="ft-btn ft-btn--ghost ft-btn--sm text-danger"
                         >
                           {busyId === c.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Unplug className="w-4 h-4" />}
                           {busyId === c.id ? t('clients.disconnecting') : t('clients.disconnect')}
@@ -209,9 +206,9 @@ export default function AiConnectionsPage() {
               </section>
 
               {/* Letzte Aufrufe */}
-              <section className="bg-surface border border-line rounded-lg p-6 mb-6">
-                <h2 className="flex items-center gap-2 text-xl font-semibold text-ink mb-4">
-                  <MessageSquare className="w-5 h-5 text-indigo-text" />
+              <section className="ft-card mb-6">
+                <h2 className="flex items-center gap-2 text-[22px] leading-tight font-semibold tracking-tight text-ink mb-4">
+                  <MessageSquare className="w-5 h-5 text-ink-muted" strokeWidth={1.5} />
                   {t('jobs.heading')}
                 </h2>
                 {status.recentJobs.length === 0 ? (
@@ -222,12 +219,12 @@ export default function AiConnectionsPage() {
                       <tbody className="divide-y divide-line">
                         {status.recentJobs.map((j) => (
                           <tr key={j.id}>
-                            <td className="py-2 pr-4 font-mono text-ink whitespace-nowrap">{j.tool}</td>
+                            <td className="py-2 pr-4 ft-data text-ink whitespace-nowrap">{j.tool}</td>
                             <td className="py-2 pr-4 text-ink-muted whitespace-nowrap">{j.clientName}</td>
                             <td className="py-2 pr-4 text-ink-muted whitespace-nowrap">
                               {t.has(`jobs.status.${j.status}`) ? t(`jobs.status.${j.status}` as 'jobs.status.done') : j.status}
                             </td>
-                            <td className="py-2 text-ink-faint whitespace-nowrap text-right">
+                            <td className="py-2 ft-data text-ink-faint whitespace-nowrap text-right">
                               {timeFmt.format(new Date(j.createdAt))}
                             </td>
                           </tr>
@@ -241,9 +238,9 @@ export default function AiConnectionsPage() {
           )}
 
           {/* Anleitung */}
-          <section className="bg-surface border border-line rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-ink mb-4">{t('guide.heading')}</h2>
-            <p className="text-sm font-medium text-ink mb-2">{t('guide.urlLabel')}</p>
+          <section className="ft-card">
+            <h2 className="text-[22px] leading-tight font-semibold tracking-tight text-ink mb-4">{t('guide.heading')}</h2>
+            <p className="ft-label mb-3">{t('guide.urlLabel')}</p>
             <div className="mb-6">
               <ConnectorUrlCopy />
             </div>

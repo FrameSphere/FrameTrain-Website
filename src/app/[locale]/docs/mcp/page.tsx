@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import {
-  AlertTriangle, ArrowRight, Bot, CheckCircle2, Cpu, Laptop, Lock, MessageSquare, Plug, ShieldCheck, Wrench,
+  AlertTriangle, ArrowRight, Bot, CheckCircle2, Cpu, Laptop, Lock, MessageSquare, ShieldCheck, Wrench,
 } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -28,9 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function Card({ icon: Icon, title, children }: { icon: typeof Bot; title: string; children: React.ReactNode }) {
   return (
-    <section className="bg-surface border border-line rounded-lg p-6 md:p-8">
-      <h2 className="flex items-center gap-2 text-xl font-semibold text-ink mb-4">
-        <Icon className="w-5 h-5 text-indigo-text" />
+    <section className="ft-card">
+      <h2 className="flex items-center gap-2 text-[22px] leading-tight font-semibold tracking-tight text-ink mb-4">
+        <Icon className="w-5 h-5 text-ink-muted" strokeWidth={1.5} />
         {title}
       </h2>
       {children}
@@ -53,7 +53,7 @@ function Checks({ items, icon: Icon = CheckCircle2 }: { items: string[]; icon?: 
     <ul className="space-y-2 text-sm text-ink-muted">
       {items.map((s) => (
         <li key={s} className="flex gap-2">
-          <Icon className="w-4 h-4 flex-shrink-0 mt-0.5 text-success" />
+          <Icon className="w-4 h-4 flex-shrink-0 mt-0.5 text-ink-muted" strokeWidth={1.5} />
           <span>{s}</span>
         </li>
       ))}
@@ -74,16 +74,13 @@ export default async function McpDocsPage({ params }: Props) {
       <main className="flex-1 px-4 py-16">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="mb-4">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-sm border border-line bg-ghost-fill text-xs font-semibold text-indigo-text mb-4">
-              <Plug className="w-3.5 h-3.5" />
-              {t('badge')}
-            </span>
-            <h1 className="text-3xl md:text-4xl font-semibold text-ink mb-4">{t('heading')}</h1>
-            <p className="text-ink-muted leading-relaxed">{t('intro')}</p>
+            <p className="ft-label mb-4">{t('badge')}</p>
+            <h1 className="text-4xl md:text-[52px] md:leading-[1.02] font-semibold tracking-[-0.04em] text-ink mb-6">{t('heading')}</h1>
+            <p className="ft-lead max-w-[68ch]">{t('intro')}</p>
           </div>
 
-          <section className="bg-surface border border-line rounded-lg p-6">
-            <p className="text-sm font-medium text-ink mb-2">{t('urlLabel')}</p>
+          <section className="ft-card">
+            <p className="ft-label mb-3">{t('urlLabel')}</p>
             <ConnectorUrlCopy />
           </section>
 
@@ -112,7 +109,7 @@ export default async function McpDocsPage({ params }: Props) {
             <p className="text-sm text-ink-muted mb-4">{t('toolsIntro')}</p>
             <dl className="grid sm:grid-cols-2 gap-3">
               {tools.map((tool) => (
-                <div key={tool.name} className="bg-surface-raised border border-line rounded-md p-4">
+                <div key={tool.name} className="bg-bg border border-line rounded-md p-4">
                   <dt className="font-semibold text-ink text-sm mb-1">{tool.name}</dt>
                   <dd className="text-sm text-ink-muted">{tool.desc}</dd>
                 </div>
@@ -150,7 +147,7 @@ export default async function McpDocsPage({ params }: Props) {
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
             <Link
               href="/dashboard/ai-connections"
-              className="press inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold text-sm"
+              className="ft-btn ft-btn--ghost"
             >
               {t('dashboardCta')}
               <ArrowRight className="w-4 h-4" />
