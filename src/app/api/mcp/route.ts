@@ -15,6 +15,7 @@ import { FALLBACK_STATUS_TEXT, FALLBACK_TOOLS } from '@/lib/mcp/fallback'
 import { publicTool, textResult } from '@/lib/mcp/types'
 import { timeoutResult, waitForJobResult } from '@/lib/mcp/jobs'
 import { prismaJobStore } from '@/lib/mcp/jobs-prisma'
+import { isAllowedOrigin } from '@/lib/mcp/origin'
 
 // Remote-MCP (Streamable HTTP, zustandslos, JSON-Antworten). Vertrag Abschnitt 6.
 export const dynamic = 'force-dynamic'
@@ -46,6 +47,14 @@ export async function OPTIONS() {
 }
 
 export async function POST(req: NextRequest) {
+  // 0. Origin (DNS-Rebinding / fremde Webseiten). Fehlender Origin = Server-zu-Server, erlaubt.
+  if (!isAllowedOrigin(req.headers.get('origin'))) {
+    return corsJson(
+      { jsonrpc: '2.0', id: null, error: { code: -32000, message: 'Origin not allowed' } },
+      { status: 403 },
+    )
+  }
+
   // 1. Auth: Bearer-Access-Token aus unserem OAuth-Server.
   const token = bearerToken(req)
   if (!token) return unauthorized()

@@ -1,4 +1,4 @@
-import { issuer, resourceUrl, SCOPES_SUPPORTED } from '@/lib/mcp/config'
+import { issuer, resourceUrl, SCOPES_SUPPORTED, siteOrigin } from '@/lib/mcp/config'
 import { corsJson, withCors } from '@/lib/mcp/http'
 import { NextResponse } from 'next/server'
 
@@ -12,7 +12,7 @@ export async function GET() {
     scopes_supported: SCOPES_SUPPORTED,
     bearer_methods_supported: ['header'],
     resource_name: 'FrameTrain',
-    resource_documentation: 'https://frame-train.com/docs',
+    resource_documentation: `${siteOrigin()}/docs/mcp`,
   })
 }
 

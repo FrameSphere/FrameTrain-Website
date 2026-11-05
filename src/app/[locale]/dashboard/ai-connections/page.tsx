@@ -3,14 +3,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import {
-  ArrowLeft, Bot, Check, CircleDot, Copy, Laptop, Link2, Loader2, MessageSquare, RefreshCw, Unplug, Wrench,
+  ArrowLeft, BookOpen, Bot, CircleDot, Laptop, Link2, Loader2, MessageSquare, RefreshCw, Unplug, Wrench,
 } from 'lucide-react'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { ConnectorUrlCopy } from '@/components/mcp/ConnectorUrlCopy'
 
-const CONNECTOR_URL = `${(process.env.NEXT_PUBLIC_SITE_URL || 'https://frame-train.com').replace(/\/+$/, '')}/api/mcp`
 
 interface McpStatus {
   connections: { id: string; clientName: string; createdAt: string; lastUsedAt: string | null }[]
@@ -31,32 +31,6 @@ function useRelativeTime() {
       return rtf.format(Math.round(diff / 86400), 'day')
     },
     [locale],
-  )
-}
-
-function CopyField({ value }: { value: string }) {
-  const t = useTranslations('AiConnections.guide')
-  const [copied, setCopied] = useState(false)
-  return (
-    <div className="flex items-stretch gap-2">
-      <code className="flex-1 min-w-0 px-4 py-3 bg-ghost-fill border border-line rounded-md text-ink text-sm font-mono break-all">
-        {value}
-      </code>
-      <button
-        type="button"
-        onClick={async () => {
-          try {
-            await navigator.clipboard.writeText(value)
-            setCopied(true)
-            setTimeout(() => setCopied(false), 2000)
-          } catch {}
-        }}
-        className="press flex items-center gap-2 px-4 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-md font-semibold text-sm"
-      >
-        {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-        <span className="hidden sm:inline">{copied ? t('copied') : t('copy')}</span>
-      </button>
-    </div>
   )
 }
 
@@ -271,7 +245,7 @@ export default function AiConnectionsPage() {
             <h2 className="text-xl font-semibold text-ink mb-4">{t('guide.heading')}</h2>
             <p className="text-sm font-medium text-ink mb-2">{t('guide.urlLabel')}</p>
             <div className="mb-6">
-              <CopyField value={CONNECTOR_URL} />
+              <ConnectorUrlCopy />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <Steps title={t('guide.appTitle')} steps={t.raw('guide.appSteps') as string[]} icon={Laptop} />
@@ -279,6 +253,10 @@ export default function AiConnectionsPage() {
               <Steps title={t('guide.chatgptTitle')} steps={t.raw('guide.chatgptSteps') as string[]} icon={MessageSquare} />
             </div>
             <p className="mt-4 text-xs text-ink-faint">{t('guide.localHint')}</p>
+            <Link href="/docs/mcp" className="mt-3 inline-flex items-center gap-1 text-sm text-indigo-text font-medium">
+              <BookOpen className="w-4 h-4" />
+              {t('guide.docsLink')}
+            </Link>
           </section>
         </div>
       </main>

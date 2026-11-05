@@ -10006,7 +10006,111 @@
                 "Under Settings > AI Connections turn on \"Allow remote access via frame-train.com\".",
                 "Keep the app open while the assistant works with FrameTrain."
             ],
-            "localHint": "For Claude Desktop, Claude Code and Cursor on the same computer there is also a local connection that does not go through frame-train.com – in the app under Settings > AI Connections."
+            "localHint": "For Claude Desktop, Claude Code and Cursor on the same computer there is also a local connection that does not go through frame-train.com – in the app under Settings > AI Connections.",
+            "docsLink": "Full guide and tool overview"
         }
+    },
+    "McpDocs": {
+        "metaTitle": "Connect FrameTrain to Claude and ChatGPT (MCP) – Docs",
+        "metaDescription": "Control FrameTrain from Claude or ChatGPT: connector URL, setup, tools, approvals and privacy. Training and data stay on your computer.",
+        "badge": "AI connections (MCP)",
+        "heading": "Connect FrameTrain to Claude and ChatGPT",
+        "intro": "With the Model Context Protocol (MCP) an AI assistant can operate the FrameTrain app on your computer: prepare datasets, load models, start training and evaluate results. The tools always run in the app – frame-train.com only signs you in and relays calls.",
+        "urlLabel": "Connector URL",
+        "howHeading": "How it works",
+        "how": [
+            "You connect Claude or ChatGPT with the connector URL and sign in with your FrameTrain account.",
+            "The assistant sees the tools of your FrameTrain app and calls them when you ask it to.",
+            "frame-train.com relays each call to your open app; the app runs it locally and sends back the result.",
+            "Long tasks such as training or downloads return a job ID right away; the assistant checks progress with status tools."
+        ],
+        "requirementsHeading": "Requirements",
+        "requirements": [
+            "FrameTrain account with an active subscription or a running trial.",
+            "FrameTrain app installed and signed in with the same account.",
+            "In the app under Settings > AI Connections: \"Allow remote access via frame-train.com\" turned on.",
+            "The app must stay open while the assistant works with FrameTrain."
+        ],
+        "claudeHeading": "Set up in Claude",
+        "claudeSteps": [
+            "In Claude (claude.ai, desktop or mobile) open Settings > Connectors and choose \"Add custom connector\".",
+            "Name: FrameTrain. URL: the connector URL above. Leave OAuth client ID and secret empty.",
+            "Click Connect, sign in to frame-train.com and allow access.",
+            "Enable FrameTrain in a chat from the tools menu and describe what you want to train."
+        ],
+        "chatgptHeading": "Set up in ChatGPT",
+        "chatgptSteps": [
+            "In ChatGPT turn on developer mode under Settings > Apps & Connectors > Advanced (until FrameTrain is listed in the app directory).",
+            "Choose \"Create\", name: FrameTrain, paste the connector URL, authentication: OAuth.",
+            "Sign in to frame-train.com and allow access.",
+            "Pick FrameTrain in a new chat from the plus menu."
+        ],
+        "localHeading": "Local: Claude Desktop, Claude Code, Cursor",
+        "localText": "On the same computer you can also connect without going through frame-train.com: in the app under Settings > AI Connections you find \"Connect to Claude Desktop\", the command for Claude Code and the configuration for Cursor. This local server only listens on 127.0.0.1.",
+        "toolsHeading": "Tools",
+        "toolsIntro": "Your app provides the exact list; it grows with new versions. Overview by area:",
+        "tools": [
+            {
+                "name": "System",
+                "desc": "Check app version, GPU, VRAM, RAM and Python environment."
+            },
+            {
+                "name": "Models",
+                "desc": "List local models, search Hugging Face, download, import, rename and delete models."
+            },
+            {
+                "name": "Datasets",
+                "desc": "Browse datasets, preview, load from Hugging Face, import locally, split and delete."
+            },
+            {
+                "name": "Dataset Builder",
+                "desc": "Create projects, add text, images, audio and video, annotate, check quality and export as a dataset."
+            },
+            {
+                "name": "Training",
+                "desc": "Check presets and requirements, estimate resources, start, monitor and stop training."
+            },
+            {
+                "name": "Synapse",
+                "desc": "Build custom model architectures as a graph, validate them, generate code and train."
+            },
+            {
+                "name": "DevTrain, Lab, Tests",
+                "desc": "Edit training scripts, try out models, start test runs and fetch results."
+            },
+            {
+                "name": "Analysis and hosting",
+                "desc": "Compare runs, read metrics and logs, serve models locally and query them."
+            }
+        ],
+        "safetyHeading": "Approvals and safety",
+        "safety": [
+            "Read-only tools run without asking. Actions such as deleting, overwriting files or starting training must be confirmed by you in the app each time.",
+            "Tools only access the FrameTrain data folders or files you confirm in the app via a dialog.",
+            "We store access tokens only as hashes. You can disconnect any connection instantly in the dashboard under AI connections or in the app."
+        ],
+        "privacyHeading": "Privacy",
+        "privacyText": "Training, models and datasets stay on your computer. Only tool calls and their results pass through frame-train.com. See the <privacy>privacy policy</privacy> (section AI connections) for details.",
+        "troubleHeading": "Troubleshooting",
+        "trouble": [
+            {
+                "q": "The assistant says FrameTrain is not open.",
+                "a": "Start the app and turn on remote access under Settings > AI Connections. The dashboard shows whether the app is online."
+            },
+            {
+                "q": "Only the system_status tool appears.",
+                "a": "Your app has never reported with remote access. Turn on remote access, wait a moment and reload the tool list in the assistant."
+            },
+            {
+                "q": "A call reports a timeout.",
+                "a": "Usually an approval dialog is waiting in the app. Confirm it and let the assistant check the status."
+            },
+            {
+                "q": "Sign-in fails.",
+                "a": "AI connections require an active subscription or trial. Disconnected connections must be reconnected in the assistant."
+            }
+        ],
+        "dashboardCta": "Manage connections in the dashboard",
+        "supportText": "Questions? Contact us through support in the dashboard."
     }
 }

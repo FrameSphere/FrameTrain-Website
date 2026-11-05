@@ -10009,7 +10009,111 @@
                 "Schalte unter Einstellungen > KI-Verbindungen „Fernzugriff über frame-train.com erlauben“ ein.",
                 "Lass die App geöffnet, solange der Assistent mit FrameTrain arbeiten soll."
             ],
-            "localHint": "Für Claude Desktop, Claude Code und Cursor auf demselben Rechner gibt es zusätzlich eine lokale Verbindung ohne Umweg über frame-train.com – direkt in der App unter Einstellungen > KI-Verbindungen."
+            "localHint": "Für Claude Desktop, Claude Code und Cursor auf demselben Rechner gibt es zusätzlich eine lokale Verbindung ohne Umweg über frame-train.com – direkt in der App unter Einstellungen > KI-Verbindungen.",
+            "docsLink": "Ausführliche Anleitung und Werkzeugübersicht"
         }
+    },
+    "McpDocs": {
+        "metaTitle": "FrameTrain mit Claude und ChatGPT verbinden (MCP) – Doku",
+        "metaDescription": "So steuerst du FrameTrain aus Claude oder ChatGPT: Connector-URL, Einrichtung, Werkzeuge, Freigaben und Datenschutz. Training und Daten bleiben auf deinem Rechner.",
+        "badge": "KI-Verbindungen (MCP)",
+        "heading": "FrameTrain mit Claude und ChatGPT verbinden",
+        "intro": "Über das Model Context Protocol (MCP) kann ein KI-Assistent die FrameTrain-App auf deinem Rechner bedienen: Datensätze vorbereiten, Modelle laden, Training starten und Ergebnisse auswerten. Die Werkzeuge laufen immer in der App – frame-train.com meldet dich nur an und reicht Aufrufe weiter.",
+        "urlLabel": "Connector-URL",
+        "howHeading": "So funktioniert es",
+        "how": [
+            "Du verbindest Claude oder ChatGPT mit der Connector-URL und meldest dich mit deinem FrameTrain-Konto an.",
+            "Der Assistent sieht die Werkzeuge deiner FrameTrain-App und ruft sie auf, wenn du ihn darum bittest.",
+            "frame-train.com leitet jeden Aufruf an deine geöffnete App weiter; die App führt ihn lokal aus und schickt das Ergebnis zurück.",
+            "Lange Aufgaben wie Training oder Downloads geben sofort eine Job-ID zurück; den Fortschritt fragt der Assistent über Status-Werkzeuge ab."
+        ],
+        "requirementsHeading": "Voraussetzungen",
+        "requirements": [
+            "FrameTrain-Konto mit aktivem Abo oder laufender Testphase.",
+            "Installierte FrameTrain-App, angemeldet mit demselben Konto.",
+            "In der App unter Einstellungen > KI-Verbindungen: „Fernzugriff über frame-train.com erlauben“ eingeschaltet.",
+            "Die App muss geöffnet sein, solange der Assistent mit FrameTrain arbeitet."
+        ],
+        "claudeHeading": "Einrichtung in Claude",
+        "claudeSteps": [
+            "Öffne in Claude (claude.ai, Desktop oder Mobil) Einstellungen > Connectors und wähle „Benutzerdefinierten Connector hinzufügen“.",
+            "Name: FrameTrain. URL: die Connector-URL oben. OAuth-Client-ID und -Secret leer lassen.",
+            "Klicke auf Verbinden, melde dich bei frame-train.com an und erlaube den Zugriff.",
+            "Aktiviere FrameTrain im Chat über das Werkzeug-Menü und beschreibe, was du trainieren möchtest."
+        ],
+        "chatgptHeading": "Einrichtung in ChatGPT",
+        "chatgptSteps": [
+            "Aktiviere in ChatGPT unter Einstellungen > Apps & Connectors > Erweitert den Entwicklermodus (solange FrameTrain noch nicht im App-Verzeichnis steht).",
+            "Wähle „Erstellen“, Name: FrameTrain, Connector-URL einfügen, Authentifizierung: OAuth.",
+            "Melde dich bei frame-train.com an und erlaube den Zugriff.",
+            "Wähle FrameTrain in einem neuen Chat über das Plus-Menü aus."
+        ],
+        "localHeading": "Lokal: Claude Desktop, Claude Code, Cursor",
+        "localText": "Auf demselben Rechner geht es auch ohne Umweg über frame-train.com: In der App unter Einstellungen > KI-Verbindungen findest du „Mit Claude Desktop verbinden“, den Befehl für Claude Code und die Konfiguration für Cursor. Dieser lokale Server hört nur auf 127.0.0.1.",
+        "toolsHeading": "Werkzeuge",
+        "toolsIntro": "Die genaue Liste liefert deine App; sie wächst mit neuen Versionen. Überblick nach Bereichen:",
+        "tools": [
+            {
+                "name": "System",
+                "desc": "App-Version, GPU, VRAM, RAM und Python-Umgebung prüfen."
+            },
+            {
+                "name": "Modelle",
+                "desc": "Lokale Modelle auflisten, Hugging Face durchsuchen, Modelle herunterladen, importieren, umbenennen und löschen."
+            },
+            {
+                "name": "Datensätze",
+                "desc": "Datensätze ansehen, Vorschau, von Hugging Face laden, lokal importieren, aufteilen und löschen."
+            },
+            {
+                "name": "Dataset Builder",
+                "desc": "Projekte anlegen, Texte, Bilder, Audio und Video hinzufügen, annotieren, Qualität prüfen und als Datensatz exportieren."
+            },
+            {
+                "name": "Training",
+                "desc": "Presets und Voraussetzungen prüfen, Ressourcen schätzen, Training starten, überwachen und stoppen."
+            },
+            {
+                "name": "Synapse",
+                "desc": "Eigene Modellarchitekturen als Graph bauen, prüfen, Code erzeugen und trainieren."
+            },
+            {
+                "name": "DevTrain, Lab, Tests",
+                "desc": "Trainingsskripte bearbeiten, Modelle ausprobieren, Testläufe starten und Ergebnisse abrufen."
+            },
+            {
+                "name": "Analyse und Hosting",
+                "desc": "Läufe vergleichen, Metriken und Logs lesen, Modelle lokal bereitstellen und abfragen."
+            }
+        ],
+        "safetyHeading": "Freigaben und Sicherheit",
+        "safety": [
+            "Lesende Werkzeuge laufen ohne Rückfrage. Aktionen wie Löschen, Dateien überschreiben oder Training starten musst du in der App jeweils bestätigen.",
+            "Werkzeuge greifen nur auf die FrameTrain-Datenordner zu oder auf Dateien, die du in der App per Dialog bestätigst.",
+            "Zugriffs-Token speichern wir nur als Hash. Du kannst jede Verbindung im Dashboard unter KI-Verbindungen oder in der App sofort trennen."
+        ],
+        "privacyHeading": "Datenschutz",
+        "privacyText": "Training, Modelle und Datensätze bleiben auf deinem Rechner. Über frame-train.com laufen nur Werkzeugaufrufe und deren Ergebnisse. Details stehen in der <privacy>Datenschutzerklärung</privacy> (Abschnitt KI-Verbindungen).",
+        "troubleHeading": "Probleme lösen",
+        "trouble": [
+            {
+                "q": "Der Assistent sagt, FrameTrain sei nicht geöffnet.",
+                "a": "App starten und unter Einstellungen > KI-Verbindungen den Fernzugriff einschalten. Das Dashboard zeigt, ob die App online ist."
+            },
+            {
+                "q": "Es erscheint nur das Werkzeug system_status.",
+                "a": "Deine App hat sich noch nie mit Fernzugriff gemeldet. Fernzugriff einschalten, kurz warten und die Werkzeugliste im Assistenten neu laden."
+            },
+            {
+                "q": "Ein Aufruf meldet eine Zeitüberschreitung.",
+                "a": "Meist wartet in der App ein Freigabe-Dialog. Bestätigen und den Assistenten den Status abfragen lassen."
+            },
+            {
+                "q": "Anmeldung schlägt fehl.",
+                "a": "Für KI-Verbindungen braucht dein Konto ein aktives Abo oder eine Testphase. Getrennte Verbindungen musst du im Assistenten neu verbinden."
+            }
+        ],
+        "dashboardCta": "Verbindungen im Dashboard verwalten",
+        "supportText": "Fragen? Schreib uns über den Support im Dashboard."
     }
 }

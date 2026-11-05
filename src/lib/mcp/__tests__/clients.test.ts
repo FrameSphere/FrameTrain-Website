@@ -114,6 +114,47 @@ describe('manifest', () => {
       { name: 'datasets_list', inputSchema: {} },
     ])
     expect(tools?.map((t) => t.name)).toEqual(['datasets_list'])
-    expect(publicTool(tools![0])).toEqual({ name: 'datasets_list', inputSchema: { type: 'object' }, annotations: { readOnlyHint: true } })
+    expect(publicTool(tools![0])).toEqual({
+      name: 'datasets_list',
+      title: 'Datasets list',
+      inputSchema: { type: 'object' },
+      annotations: { title: 'Datasets list', readOnlyHint: true, destructiveHint: false, openWorldHint: true },
+    })
+  })
+
+  it('fills safe annotation defaults and forces destructiveHint for approval=always', () => {
+    const bare = publicTool({ name: 'models_rename', inputSchema: { type: 'object' } })
+    expect(bare.annotations).toMatchObject({ readOnlyHint: false, destructiveHint: true, openWorldHint: true })
+    const del = publicTool({
+      name: 'models_delete', title: 'Delete model', inputSchema: { type: 'object' },
+      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+      _meta: { 'frametrain/approval': 'always' },
+    })
+    expect(del).toMatchObject({ title: 'Delete model', annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false } })
+    expect(del).not.toHaveProperty('_meta')
+    const ro = publicTool({ name: 'system_info', inputSchema: {}, annotations: { readOnlyHint: true, openWorldHint: false } })
+    expect(ro.annotations).toMatchObject({ readOnlyHint: true, destructiveHint: false, openWorldHint: false })
+  })
+})
+
+import { isAllowedOrigin } from '../origin'
+
+describe('origin validation', () => {
+  it('allows server-to-server calls without Origin', () => {
+    expect(isAllowedOrigin(null)).toBe(true)
+  })
+  it('allows Claude, ChatGPT, our site and localhost (Inspector)', () => {
+    expect(isAllowedOrigin('https://claude.ai')).toBe(true)
+    expect(isAllowedOrigin('https://claude.com')).toBe(true)
+    expect(isAllowedOrigin('https://chatgpt.com')).toBe(true)
+    expect(isAllowedOrigin('https://frame-train.com')).toBe(true)
+    expect(isAllowedOrigin('http://localhost:6274')).toBe(true)
+    expect(isAllowedOrigin('http://127.0.0.1:6274')).toBe(true)
+  })
+  it('rejects foreign origins, look-alikes, http variants and "null"', () => {
+    expect(isAllowedOrigin('https://evil.example')).toBe(false)
+    expect(isAllowedOrigin('https://claude.ai.evil.example')).toBe(false)
+    expect(isAllowedOrigin('http://claude.ai')).toBe(false)
+    expect(isAllowedOrigin('null')).toBe(false)
   })
 })

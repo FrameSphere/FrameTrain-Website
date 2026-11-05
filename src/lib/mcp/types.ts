@@ -68,12 +68,42 @@ export function sanitizeManifest(raw: unknown, maxTools = 500): ManifestTool[] |
   return tools
 }
 
-/** Fuer tools/list: _meta entfernen, annotations behalten (Vertrag Abschnitt 6). */
+/** Lesbarer Titel aus dem Werkzeugnamen, falls die App keinen liefert: models_list -> "Models list". */
+export function titleFromName(name: string): string {
+  const words = name.split('_').filter(Boolean).join(' ')
+  return words.charAt(0).toUpperCase() + words.slice(1)
+}
+
+/**
+ * Annotations fuer die Verzeichnisse (Anthropic: title + readOnlyHint/destructiveHint,
+ * OpenAI zusaetzlich openWorldHint) immer explizit ausliefern. Fehlende Werte bekommen
+ * die sicheren MCP-Standardwerte (nicht nur lesend, destruktiv, offene Welt);
+ * frametrain/approval = "always" erzwingt destructiveHint = true.
+ */
+export function normalizeAnnotations(tool: ManifestTool): Required<Pick<ToolAnnotations, 'readOnlyHint' | 'destructiveHint' | 'openWorldHint'>> & ToolAnnotations {
+  const a = tool.annotations ?? {}
+  const approval = tool._meta?.['frametrain/approval']
+  const always = approval === 'always'
+  const readOnlyHint = always ? false : a.readOnlyHint === true
+  const destructiveHint = always ? true : readOnlyHint ? false : a.destructiveHint !== false
+  const openWorldHint = a.openWorldHint !== false
+  const out: ToolAnnotations & { readOnlyHint: boolean; destructiveHint: boolean; openWorldHint: boolean } = {
+    ...a,
+    readOnlyHint,
+    destructiveHint,
+    openWorldHint,
+  }
+  if (typeof a.idempotentHint === 'boolean') out.idempotentHint = a.idempotentHint
+  return out
+}
+
+/** Fuer tools/list: _meta entfernen, title + annotations immer vollstaendig (Vertrag Abschnitt 6). */
 export function publicTool(tool: ManifestTool): Omit<ManifestTool, '_meta'> {
-  const out: Omit<ManifestTool, '_meta'> = { name: tool.name, inputSchema: tool.inputSchema }
-  if (tool.title) out.title = tool.title
+  const title = typeof tool.title === 'string' && tool.title.trim() ? tool.title : titleFromName(tool.name)
+  const annotations = normalizeAnnotations(tool)
+  const out: Omit<ManifestTool, '_meta'> = { name: tool.name, title, inputSchema: tool.inputSchema }
   if (tool.description) out.description = tool.description
   if (tool.outputSchema) out.outputSchema = tool.outputSchema
-  if (tool.annotations) out.annotations = tool.annotations
+  out.annotations = { ...annotations, title: annotations.title ?? title }
   return out
 }

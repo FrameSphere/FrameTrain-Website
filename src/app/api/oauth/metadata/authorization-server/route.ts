@@ -22,7 +22,7 @@ export async function GET() {
     code_challenge_methods_supported: ['S256'],
     client_id_metadata_document_supported: true,
     authorization_response_iss_parameter_supported: true,
-    service_documentation: `${base}/docs`,
+    service_documentation: `${base}/docs/mcp`,
     op_policy_uri: `${base}/privacy`,
     op_tos_uri: `${base}/terms`,
   })
