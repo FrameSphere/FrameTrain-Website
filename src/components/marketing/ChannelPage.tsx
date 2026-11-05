@@ -42,7 +42,8 @@ export async function ChannelPage({ locale, channel }: { locale: string; channel
       <ChannelVisit channel={channel} code={code} />
       <Header />
       <main className="flex-1">
-        <section className="ft-container pt-12 md:pt-20 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
+        <section className="ft-hero ft-container pt-12 md:pt-20 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div>
             <p className="ft-label m-0">{t('eyebrow')}</p>
             <h1 className="ft-display-l mt-5 mb-0 !text-[40px] md:!text-[60px]">

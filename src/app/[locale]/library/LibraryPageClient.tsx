@@ -264,7 +264,7 @@ function ScriptDetailModal({
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="absolute inset-0 bg-[rgba(5,5,10,0.72)] " onClick={onClose} />
+      <div className="absolute inset-0 bg-scrim " onClick={onClose} />
       <div className="relative z-10 w-full max-w-4xl max-h-[90vh] flex flex-col bg-surface border border-line border border-line-strong rounded-lg overflow-hidden ">
         {/* Header */}
         <div className="flex items-start justify-between gap-4 p-6 border-b border-line">
@@ -399,7 +399,7 @@ function ScriptDetailModal({
 
 function DuplicateNameErrorModal({ name, onClose, t }: { name: string; onClose: () => void; t: ReturnType<typeof useTranslations> }) {
   return (
-    <div className="fixed inset-0 bg-[rgba(5,5,10,0.72)] flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-scrim flex items-center justify-center z-50 p-4">
       <div className="bg-surface border border-line rounded-lg border border-danger max-w-sm w-full p-6 space-y-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full bg-ghost-fill border border-danger flex items-center justify-center">
@@ -542,7 +542,7 @@ function UploadModal({ onClose, onSuccess, t }: { onClose: () => void; onSuccess
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div className="absolute inset-0 bg-[rgba(5,5,10,0.72)] " onClick={onClose} />
+      <div className="absolute inset-0 bg-scrim " onClick={onClose} />
       <div className="relative z-10 w-full max-w-2xl bg-surface border border-line border border-line-strong rounded-lg overflow-hidden ">
         <div className="flex items-center justify-between p-6 border-b border-line">
           <div>

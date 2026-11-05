@@ -104,7 +104,8 @@ export default async function ComparePage({ params }: Props) {
         </div>
 
         {/* Hero */}
-        <section className="py-16 px-4 border-b border-line">
+        <section className="ft-hero py-16 px-4 border-b border-line">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div className="max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 mb-5 text-xs font-semibold px-3 py-1 rounded-full bg-indigo-soft text-indigo-text border border-line">
               <Scale className="w-3.5 h-3.5" />

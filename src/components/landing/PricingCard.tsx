@@ -94,7 +94,7 @@ export function PricingCard({ copy, foundingCount, foundingSpots }: Props) {
                 <Link
                   href="/register"
                   onClick={() => trackEvent('trial_click', { from: 'pricing', plan })}
-                  className="ft-btn ft-btn--primary"
+                  className="ft-btn ft-btn--accent"
                 >
                   {copy.cta}
                 </Link>
