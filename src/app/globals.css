@@ -60,6 +60,13 @@
     --shadow-island: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 18px 40px -12px rgba(0, 0, 0, 0.7);
     --shadow-window: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
     --shadow-button-edge: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    /* Abdunklung hinter Dialogen und über Video-Thumbnails – aus der
+       Midnight-Basis abgeleitet, nicht neutral schwarz */
+    --scrim: rgba(6, 7, 16, 0.72);
+    --media-dim: rgba(11, 12, 24, 0.45);
+    --media-dim-hover: rgba(11, 12, 24, 0.3);
+    /* Schrift auf der weißen Taste im Indigo-Panel */
+    --on-indigo-ink: #1d1f7a;
   }
 
   [data-theme='light'] {
@@ -210,6 +217,21 @@
     .ft-hero__light { height: 620px; }
     .ft-hero__light svg { width: 1100px; }
   }
+  /* Unterseiten: nur der Lichtkegel, ohne Bahn und Output-Knoten – der
+     gehört der Startseite. Niedriger und etwas schwächer, damit die
+     Überschrift Licht bekommt, der Inhalt darunter aber nicht. */
+  .ft-hero__light--soft {
+    top: -96px;
+    height: 520px;
+    background: radial-gradient(ellipse 50% 58% at 50% 22%, var(--hero-light), transparent 72%);
+    opacity: 0.85;
+  }
+  @media (max-width: 767px) {
+    .ft-hero__light--soft {
+      height: 440px;
+      background: radial-gradient(ellipse 80% 55% at 50% 22%, var(--hero-light), transparent 72%);
+    }
+  }
 
   .ft-container {
     width: 100%;
@@ -306,7 +328,7 @@
   .ft-btn--accent:hover { background: var(--output-hover); }
   .ft-btn--ghost { background: var(--ghost-fill); border-color: var(--ghost-edge); color: var(--ink); }
   .ft-btn--ghost:hover { background: var(--surface-raised); }
-  .ft-btn--on-indigo { background: #ffffff; color: #1d1f7a; }
+  .ft-btn--on-indigo { background: var(--on-indigo); color: var(--on-indigo-ink); }
   .ft-btn--on-indigo:hover { background: var(--on-indigo-muted); }
   .ft-btn--on-indigo-outline { background: transparent; border-color: rgba(255, 255, 255, 0.4); color: var(--on-indigo); }
   .ft-btn--on-indigo-outline:hover { border-color: rgba(255, 255, 255, 0.75); }

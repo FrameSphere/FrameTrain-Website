@@ -61,7 +61,7 @@ export function VideoEmbed({ id, title, poster, className = '' }: Props) {
               />
             )}
             <div
-              className="absolute inset-0 bg-[rgba(10,10,18,0.45)] transition-colors duration-150 group-hover:bg-[rgba(10,10,18,0.3)]"
+              className="absolute inset-0 bg-media-dim transition-colors duration-150 group-hover:bg-media-dim-hover"
               aria-hidden="true"
             />
 

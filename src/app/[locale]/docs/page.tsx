@@ -281,8 +281,8 @@ function InstallationSection() {
         <div>
           <h2 className="text-2xl font-semibold text-ink mb-4">{t('step1.heading')}</h2>
           <p className="text-ink-muted mb-4" dangerouslySetInnerHTML={{ __html: t.raw('step1.text') }} />
-          <Link href="/register" className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-button hover:bg-indigo-hover text-on-indigo shadow-button-edge rounded-sm font-semibold   transition duration-200 ease-out">
-            <Rocket className="w-4 h-4" />
+          <Link href="/register" className="ft-btn ft-btn--accent">
+            <Rocket className="w-4 h-4" aria-hidden="true" />
             {t('step1.cta')}
           </Link>
         </div>

@@ -208,7 +208,7 @@ export function ChangelogModal({ open, onClose, onRead }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4 pb-8 bg-[rgba(5,5,10,0.72)] "
+      className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4 pb-8 bg-scrim "
       onClick={onClose}
     >
       <div

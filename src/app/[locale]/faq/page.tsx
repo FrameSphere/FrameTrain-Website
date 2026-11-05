@@ -235,8 +235,8 @@ export default function FAQPage() {
       <main className="flex-1">
 
         {/* ─── HERO ─── */}
-        <section className="relative py-24 px-4 overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" />
+        <section className="ft-hero py-24 px-4">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div className="max-w-3xl mx-auto text-center relative">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-ghost-fill border border-line rounded-xl mb-8">
               <HelpCircle className="w-10 h-10 text-ink" />
@@ -406,17 +406,14 @@ export default function FAQPage() {
                   href="https://github.com/FrameSphere/FrameTrain-App"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-surface border border-line px-6 py-3 rounded-md text-ink hover:text-ink transition font-semibold border border-line flex items-center gap-2"
+                  className="ft-btn ft-btn--ghost"
                 >
                   <Code2 className="w-4 h-4" />
                   {t('stillQuestions.githubIssues')}
                 </a>
-                <Link href="/register" className="relative group inline-block px-6 py-3 rounded-md overflow-hidden">
-                  <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
-                  <div className="relative flex items-center gap-2 text-ink font-semibold">
-                    <Sparkles className="w-4 h-4" />
-                    <span>{t('stillQuestions.ctaStart')}</span>
-                  </div>
+                <Link href="/register" className="ft-btn ft-btn--accent">
+                  <Sparkles className="w-4 h-4" aria-hidden="true" />
+                  <span>{t('stillQuestions.ctaStart')}</span>
                 </Link>
               </div>
             </div>

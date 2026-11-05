@@ -109,8 +109,8 @@ export default function AboutPage() {
       <main className="flex-1">
 
         {/* ─── HERO ─── */}
-        <section className="relative py-28 px-4 overflow-hidden">
-          <div className="absolute inset-0 via-transparent  pointer-events-none" />
+        <section className="ft-hero py-28 px-4">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
 
           <div className="max-w-4xl mx-auto relative text-center">
             <div className="inline-flex items-center gap-2 bg-surface border border-line px-4 py-2 rounded-full text-sm text-ink-muted mb-8 border border-line">
@@ -340,15 +340,12 @@ export default function AboutPage() {
                   {t('cta.subtitle')}
                 </p>
                 <div className="flex gap-4 justify-center flex-wrap">
-                  <Link href="/register" className="relative group inline-block px-8 py-4 rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
-                    <div className="relative flex items-center gap-2 text-ink font-semibold text-lg">
-                      <Sparkles className="w-5 h-5" />
-                      <span>{t('cta.ctaStart')}</span>
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </div>
+                  <Link href="/register" className="group ft-btn ft-btn--accent">
+                    <Sparkles className="w-5 h-5" aria-hidden="true" />
+                    <span>{t('cta.ctaStart')}</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </Link>
-                  <Link href="/faq" className="bg-surface border border-line px-8 py-4 rounded-lg text-ink hover:text-ink transition font-semibold text-lg border border-line">
+                  <Link href="/faq" className="ft-btn ft-btn--ghost">
                     {t('cta.ctaFaq')}
                   </Link>
                 </div>
