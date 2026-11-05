@@ -48,6 +48,16 @@ describe('DCR validation', () => {
     expect(await fetchCimd(id, fake)).toMatchObject({ clientName: 'Claude', redirectUris: ['https://claude.ai/api/mcp/auth_callback'] })
   })
 
+  it('falls back to the known Claude document when claude.ai answers with a challenge page', async () => {
+    const id = 'https://claude.ai/oauth/mcp-oauth-client-metadata'
+    const challenge = (async () => new Response('<!DOCTYPE html><title>Just a moment...</title>', { status: 403 })) as unknown as typeof fetch
+    expect(await fetchCimd(id, challenge)).toMatchObject({ clientName: 'Claude' })
+    const html200 = (async () => new Response('<!DOCTYPE html>', { status: 200 })) as unknown as typeof fetch
+    expect(await fetchCimd(id, html200)).toMatchObject({ clientName: 'Claude' })
+    const unknown = 'https://evil.example/client'
+    expect(await fetchCimd(unknown, challenge)).toBeNull()
+  })
+
   it('rejects missing or insecure redirect URIs and unsupported grants', () => {
     expect(validateRegistration({})).toMatchObject({ ok: false, error: 'invalid_redirect_uri' })
     expect(validateRegistration({ redirect_uris: ['http://evil.example/cb'] })).toMatchObject({ ok: false })

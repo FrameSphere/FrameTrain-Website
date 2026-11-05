@@ -159,33 +159,60 @@ export function isCimdClientId(clientId: string): boolean {
   }
 }
 
+type CimdData = { clientName: string; redirectUris: string[]; clientUri: string | null; logoUri: string | null }
+
+/**
+ * Bekannte CIMD-Dokumente als Rueckfall, falls der Abruf vom Server aus scheitert
+ * (claude.ai liegt hinter Cloudflare; Anfragen aus Rechenzentren bekommen dort u. U.
+ * eine Challenge statt JSON). Inhalt = das von Anthropic veroeffentlichte Dokument.
+ */
+const KNOWN_CIMD: Record<string, CimdData> = {
+  'https://claude.ai/oauth/mcp-oauth-client-metadata': {
+    clientName: 'Claude',
+    redirectUris: ['https://claude.ai/api/mcp/auth_callback'],
+    clientUri: 'https://claude.ai',
+    logoUri: null,
+  },
+}
+
 /** Laedt und prueft ein Client-ID-Metadata-Document. */
-export async function fetchCimd(
-  clientId: string,
-  fetchImpl: typeof fetch = fetch,
-): Promise<{ clientName: string; redirectUris: string[]; clientUri: string | null; logoUri: string | null } | null> {
+export async function fetchCimd(clientId: string, fetchImpl: typeof fetch = fetch): Promise<CimdData | null> {
   if (!isCimdClientId(clientId)) return null
+  const fallback = KNOWN_CIMD[clientId] ?? null
   try {
     const res = await fetchImpl(clientId, {
-      headers: { Accept: 'application/json' },
+      headers: { Accept: 'application/json', 'User-Agent': 'FrameTrain-OAuth/1.0 (+https://frame-train.com/docs/mcp)' },
       redirect: 'error',
       signal: AbortSignal.timeout(5000),
       cache: 'no-store',
     })
-    if (!res.ok) return null
+    if (!res.ok) {
+      console.warn(`[oauth] CIMD ${clientId}: HTTP ${res.status}`)
+      return fallback
+    }
     const text = await res.text()
-    if (text.length > CIMD_MAX_BYTES) return null
-    const doc = JSON.parse(text) as Record<string, unknown>
+    if (text.length > CIMD_MAX_BYTES) return fallback
+    let doc: Record<string, unknown>
+    try {
+      doc = JSON.parse(text) as Record<string, unknown>
+    } catch {
+      console.warn(`[oauth] CIMD ${clientId}: kein JSON (${text.slice(0, 60).replace(/\s+/g, ' ')})`)
+      return fallback
+    }
     if (doc.client_id !== clientId) return null
     if (doc.token_endpoint_auth_method && doc.token_endpoint_auth_method !== 'none') {
       // Vertrauliche CIMD-Clients (private_key_jwt) bieten wir nicht an.
       return null
     }
     const reg = validateRegistration(doc)
-    if (!reg.ok) return null
+    if (!reg.ok) {
+      console.warn(`[oauth] CIMD ${clientId}: ${reg.error_description}`)
+      return null
+    }
     return reg.data
-  } catch {
-    return null
+  } catch (e) {
+    console.warn(`[oauth] CIMD ${clientId}: ${e instanceof Error ? e.message : String(e)}`)
+    return fallback
   }
 }
 
