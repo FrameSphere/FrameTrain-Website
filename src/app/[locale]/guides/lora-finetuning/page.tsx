@@ -85,7 +85,8 @@ export default async function LoraGuidePage({ params }: Props) {
         </div>
 
         {/* Hero */}
-        <section className="py-16 px-4 border-b border-line">
+        <section className="ft-hero py-16 px-4 border-b border-line">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-soft text-indigo-text border border-line">{badges[0]}</span>
@@ -239,17 +240,11 @@ export default async function LoraGuidePage({ params }: Props) {
                 {t('cta.text')}
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
-                <Link
-                  href="/register"
-                  className="relative group inline-block px-8 py-3 rounded-md overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
-                  <div className="relative flex items-center gap-2 text-ink font-semibold">
-                    <span>{t('cta.ctaStart')}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
+                <Link href="/register" className="ft-btn ft-btn--accent">
+                  <span>{t('cta.ctaStart')}</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
-                <Link href="/docs" className="bg-surface border border-line px-8 py-3 rounded-md text-ink hover:text-ink transition font-semibold">
+                <Link href="/docs" className="ft-btn ft-btn--ghost">
                   {t('cta.ctaDocs')}
                 </Link>
               </div>

@@ -71,7 +71,8 @@ export default function GuidesPage() {
       <Header />
 
       <main className="flex-1">
-        <section className="py-16 sm:py-20 px-4 border-b border-line">
+        <section className="ft-hero py-16 sm:py-20 px-4 border-b border-line">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center justify-center w-14 h-14 bg-ghost-fill border border-line rounded-lg mb-6">
               <Shield className="w-6 h-6 text-ink" />

@@ -12,6 +12,7 @@ const neuronColors = [
   'output', 'on-output', 'output-text', 'output-soft',
   'ghost-fill', 'ghost-edge', 'glass-fill', 'glass-edge',
   'success', 'warning', 'danger', 'chart-grid',
+  'scrim', 'media-dim', 'media-dim-hover',
 ].reduce((acc, name) => ({ ...acc, [name]: token(name) }), {})
 
 module.exports = {

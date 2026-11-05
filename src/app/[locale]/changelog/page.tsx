@@ -160,8 +160,8 @@ export default function ChangelogPage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative py-20 px-4 border-b border-line">
-          <div className="absolute inset-0 pointer-events-none" />
+        <section className="ft-hero py-20 px-4 border-b border-line">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div className="max-w-4xl mx-auto text-center relative">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-ghost-fill border border-line rounded-xl mb-6">
               <Rocket className="w-10 h-10 text-ink" />
@@ -349,11 +349,10 @@ export default function ChangelogPage() {
               <h2 className="text-2xl font-semibold text-ink mb-4">{t('cta.heading')}</h2>
               <p className="text-ink-muted mb-6">{t('cta.text')}</p>
               <div className="flex gap-4 justify-center flex-wrap">
-                <Link href="/register" className="relative group px-6 py-3 rounded-md overflow-hidden inline-block">
-                  <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
-                  <span className="relative text-ink font-semibold">{t('cta.ctaStart')}</span>
+                <Link href="/register" className="ft-btn ft-btn--accent">
+                  {t('cta.ctaStart')}
                 </Link>
-                <Link href="/docs" className="bg-surface border border-line px-6 py-3 rounded-md text-ink hover:text-ink transition font-semibold">
+                <Link href="/docs" className="ft-btn ft-btn--ghost">
                   {t('cta.ctaDocs')}
                 </Link>
               </div>

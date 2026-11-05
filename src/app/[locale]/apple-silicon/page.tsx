@@ -98,7 +98,8 @@ export default async function AppleSiliconPage({ params }: Props) {
         </div>
 
         {/* Hero */}
-        <section className="py-16 px-4 border-b border-line">
+        <section className="ft-hero py-16 px-4 border-b border-line">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-2 mb-5 flex-wrap">
               {badges.map((b) => (

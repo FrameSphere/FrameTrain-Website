@@ -320,7 +320,7 @@ export function Header() {
               <Link
                 href="/register"
                 onClick={onTrialClick}
-                className="hidden md:inline-flex ft-btn ft-btn--primary ft-btn--sm ml-1"
+                className="hidden md:inline-flex ft-btn ft-btn--accent ft-btn--sm ml-1"
               >
                 {t('trial')}
               </Link>
@@ -434,7 +434,7 @@ export function Header() {
                 </>
               ) : (
                 <div className="flex flex-col gap-2">
-                  <Link href="/register" onClick={() => { onTrialClick(); closeMenu() }} className="ft-btn ft-btn--primary w-full">
+                  <Link href="/register" onClick={() => { onTrialClick(); closeMenu() }} className="ft-btn ft-btn--accent w-full">
                     {t('trial')}
                   </Link>
                   <Link href="/login" onClick={closeMenu} className="ft-btn ft-btn--ghost w-full">

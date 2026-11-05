@@ -44,7 +44,7 @@ const C = {
   ink: '#14141f',
   muted: '#5b5b6e',
   line: '#e6e6ee',
-  indigo: '#4f53f0',
+  indigo: '#3b3ed6', // = --indigo-button (Day) – E-Mails sind hell
 }
 
 const url = (locale: Locale, path: string, step: number) =>

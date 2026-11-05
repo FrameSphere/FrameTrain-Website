@@ -149,7 +149,8 @@ export async function MarketingPage({ locale, ns, path }: { locale: string; ns: 
         </nav>
 
         {/* Hero */}
-        <section className="ft-container pt-12 md:pt-20">
+        <section className="ft-hero ft-container pt-12 md:pt-20">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <p className="ft-label m-0">{t('eyebrow')}</p>
           <h1 className="ft-display-l mt-5 mb-0 max-w-[900px] !text-[38px] md:!text-[60px]">
             {t('titleA')} {t.has('titleB') && <span className="text-ink-muted">{t('titleB')}</span>}

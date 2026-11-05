@@ -79,7 +79,7 @@ function useStoredTickets(userId: string | undefined) {
 
 function CommunityNameErrorModal({ name, onClose, t }: { name: string; onClose: () => void; t: ReturnType<typeof useTranslations> }) {
   return (
-    <div className="fixed inset-0 bg-[rgba(5,5,10,0.72)] flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-scrim flex items-center justify-center z-50 p-4">
       <div className="bg-surface border border-line rounded-lg border border-danger max-w-sm w-full p-6 space-y-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full bg-ghost-fill border border-danger flex items-center justify-center">

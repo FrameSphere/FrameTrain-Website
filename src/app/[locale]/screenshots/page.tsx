@@ -116,7 +116,8 @@ export default async function ScreenshotsPage({ params }: Props) {
         </div>
 
         {/* Hero */}
-        <section className="py-14 sm:py-16 px-4 border-b border-line">
+        <section className="ft-hero py-14 sm:py-16 px-4 border-b border-line">
+          <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
           <div className="max-w-4xl mx-auto">
             <span className="inline-block text-[11px] font-semibold uppercase tracking-[0.14em] px-3 py-1 rounded-full bg-indigo-soft text-indigo-text border border-line mb-5">
               {t('badge')}
@@ -224,17 +225,14 @@ export default async function ScreenshotsPage({ params }: Props) {
               <h2 className="text-2xl sm:text-3xl font-semibold text-ink mb-4">{t('ctaHeading')}</h2>
               <p className="text-ink-muted mb-8 max-w-xl mx-auto leading-relaxed">{t('ctaText')}</p>
               <div className="flex gap-3 justify-center flex-wrap">
-                <Link href="/register" className="press relative group inline-block px-7 py-3 rounded-md overflow-hidden">
-                  <div className="absolute inset-0 bg-indigo-button hover:bg-indigo-hover " />
-                  <span className="relative flex items-center gap-2 text-ink font-semibold">
-                    <Sparkles className="w-[18px] h-[18px]" />
-                    {t('ctaStart')}
-                    <ArrowRight className="w-[18px] h-[18px]" />
-                  </span>
+                <Link href="/register" className="ft-btn ft-btn--accent">
+                  <Sparkles className="w-[18px] h-[18px]" aria-hidden="true" />
+                  {t('ctaStart')}
+                  <ArrowRight className="w-[18px] h-[18px]" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/download"
-                  className="press bg-surface border border-line px-6 py-3 rounded-md text-ink hover:text-ink hover:bg-surface-raised transition-colors duration-200 font-semibold inline-flex items-center gap-2"
+                  className="ft-btn ft-btn--ghost"
                 >
                   <Download className="w-[18px] h-[18px]" />
                   {t('ctaDownload')}

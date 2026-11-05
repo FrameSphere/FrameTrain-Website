@@ -133,7 +133,8 @@ export default function DownloadPage() {
       <main className="flex-1 ft-container py-12 md:py-16">
         <div className="max-w-[720px] mx-auto">
           {/* ── Kopf ── */}
-          <div className="text-center mb-10">
+          <div className="ft-hero text-center mb-10">
+            <div className="ft-hero__light ft-hero__light--soft" aria-hidden="true" />
             <h1 className="ft-display-l m-0">{t('heading')}</h1>
             <p className="ft-lead mt-4 mb-0">{t('subtitle')}</p>
             {detected?.os && !isMobile && (
@@ -181,7 +182,7 @@ export default function DownloadPage() {
                     <Link
                       href="/register"
                       onClick={() => trackEvent('trial_click', { from: 'download_mobile' })}
-                      className="ft-btn ft-btn--primary w-full"
+                      className="ft-btn ft-btn--accent w-full"
                     >
                       {t('account.trial')}
                     </Link>
@@ -301,7 +302,7 @@ export default function DownloadPage() {
                       <Link
                         href="/register"
                         onClick={() => trackEvent('trial_click', { from: 'download' })}
-                        className="ft-btn ft-btn--primary ft-btn--sm"
+                        className="ft-btn ft-btn--accent ft-btn--sm"
                       >
                         {t('account.trial')}
                       </Link>

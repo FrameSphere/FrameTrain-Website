@@ -121,7 +121,7 @@ export function FeedbackDialog() {
     <dialog
       ref={dialogRef}
       aria-labelledby="feedback-title"
-      className="m-auto w-[calc(100%-24px)] max-w-[480px] p-0 rounded-xl border border-line bg-surface text-ink backdrop:bg-[rgba(5,5,10,0.72)]"
+      className="m-auto w-[calc(100%-24px)] max-w-[480px] p-0 rounded-xl border border-line bg-surface text-ink backdrop:bg-scrim"
     >
       <div className="p-6 sm:p-7">
         <div className="flex items-start justify-between gap-4">

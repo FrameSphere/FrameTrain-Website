@@ -29,7 +29,7 @@ export function TrialButton({
     <Link
       href={isAuthenticated ? '/dashboard' : '/register'}
       onClick={() => !isAuthenticated && trackEvent('trial_click', { from })}
-      className={`ft-btn ${variant === 'on-indigo' ? 'ft-btn--on-indigo' : 'ft-btn--primary'} ${className}`}
+      className={`ft-btn ${variant === 'on-indigo' ? 'ft-btn--on-indigo' : 'ft-btn--accent'} ${className}`}
     >
       {isAuthenticated ? dashboardLabel : label}
     </Link>
@@ -102,7 +102,7 @@ export function MobileCtaPill({ cta, price, heroId, endId }: { cta: string; pric
           href="/register"
           tabIndex={visible ? 0 : -1}
           onClick={() => trackEvent('trial_click', { from: 'mobile_pill' })}
-          className="ft-btn ft-btn--primary !h-11 !px-5 !text-[15px]"
+          className="ft-btn ft-btn--accent !h-11 !px-5 !text-[15px]"
         >
           {cta}
         </Link>
