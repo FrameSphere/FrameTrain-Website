@@ -58,6 +58,22 @@ describe('DCR validation', () => {
     expect(await fetchCimd(unknown, challenge)).toBeNull()
   })
 
+  it('accepts ChatGPT\'s CIMD document (prefers private_key_jwt, also lists none)', async () => {
+    const id = 'https://chatgpt.com/oauth/client.json'
+    const doc = {
+      client_id: id, client_uri: 'https://chatgpt.com/', client_name: 'ChatGPT',
+      redirect_uris: ['https://chatgpt.com/connector_platform_oauth_redirect'],
+      token_endpoint_auth_method: 'private_key_jwt', token_endpoint_auth_methods_supported: ['none', 'private_key_jwt'],
+      grant_types: ['authorization_code', 'refresh_token'], response_types: ['code'],
+      token_endpoint_auth_signing_alg: 'RS256', jwks_uri: 'https://chatgpt.com/oauth/jwks.json',
+    }
+    const fake = (async () => new Response(JSON.stringify(doc), { status: 200 })) as unknown as typeof fetch
+    expect(await fetchCimd(id, fake)).toMatchObject({ clientName: 'ChatGPT', redirectUris: ['https://chatgpt.com/connector_platform_oauth_redirect'] })
+    const confidentialOnly = { ...doc, token_endpoint_auth_methods_supported: ['private_key_jwt'] }
+    const fake2 = (async () => new Response(JSON.stringify(confidentialOnly), { status: 200 })) as unknown as typeof fetch
+    expect(await fetchCimd(id, fake2)).toBeNull()
+  })
+
   it('rejects missing or insecure redirect URIs and unsupported grants', () => {
     expect(validateRegistration({})).toMatchObject({ ok: false, error: 'invalid_redirect_uri' })
     expect(validateRegistration({ redirect_uris: ['http://evil.example/cb'] })).toMatchObject({ ok: false })

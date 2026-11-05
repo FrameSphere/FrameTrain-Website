@@ -163,7 +163,7 @@ type CimdData = { clientName: string; redirectUris: string[]; clientUri: string 
 
 /**
  * Bekannte CIMD-Dokumente als Rueckfall, falls der Abruf vom Server aus scheitert
- * (claude.ai liegt hinter Cloudflare; Anfragen aus Rechenzentren bekommen dort u. U.
+ * (claude.ai und chatgpt.com liegen hinter Cloudflare; Anfragen aus Rechenzentren bekommen dort u. U.
  * eine Challenge statt JSON). Inhalt = das von Anthropic veroeffentlichte Dokument.
  */
 const KNOWN_CIMD: Record<string, CimdData> = {
@@ -173,6 +173,24 @@ const KNOWN_CIMD: Record<string, CimdData> = {
     clientUri: 'https://claude.ai',
     logoUri: null,
   },
+  'https://chatgpt.com/oauth/client.json': {
+    clientName: 'ChatGPT',
+    redirectUris: ['https://chatgpt.com/connector_platform_oauth_redirect'],
+    clientUri: 'https://chatgpt.com/',
+    logoUri: null,
+  },
+}
+
+/**
+ * Kann der Client ohne Secret Tokens holen? ChatGPT bevorzugt private_key_jwt
+ * (Einzahl-Feld), listet aber "none" in token_endpoint_auth_methods_supported und
+ * nimmt dann die Schnittmenge mit unserer Metadaten-Liste (nur "none").
+ */
+export function supportsPublicAuth(doc: Record<string, unknown>): boolean {
+  const many = doc.token_endpoint_auth_methods_supported
+  if (Array.isArray(many)) return many.includes('none')
+  const one = doc.token_endpoint_auth_method
+  return one === undefined || one === 'none'
 }
 
 /** Laedt und prueft ein Client-ID-Metadata-Document. */
@@ -200,8 +218,9 @@ export async function fetchCimd(clientId: string, fetchImpl: typeof fetch = fetc
       return fallback
     }
     if (doc.client_id !== clientId) return null
-    if (doc.token_endpoint_auth_method && doc.token_endpoint_auth_method !== 'none') {
-      // Vertrauliche CIMD-Clients (private_key_jwt) bieten wir nicht an.
+    if (!supportsPublicAuth(doc)) {
+      // Nur oeffentliche Clients (token_endpoint_auth_method "none"); private_key_jwt bieten wir nicht an.
+      console.warn(`[oauth] CIMD ${clientId}: client supports no "none" token auth`)
       return null
     }
     const reg = validateRegistration(doc)
