@@ -36,6 +36,18 @@ describe('DCR validation', () => {
     expect(r).toMatchObject({ ok: true, data: { clientName: 'Claude' } })
   })
 
+  it('accepts Claude\'s published CIMD document (extra jwt-bearer grant)', async () => {
+    const id = 'https://claude.ai/oauth/mcp-oauth-client-metadata'
+    const doc = {
+      client_id: id, client_name: 'Claude', client_uri: 'https://claude.ai',
+      redirect_uris: ['https://claude.ai/api/mcp/auth_callback'],
+      grant_types: ['authorization_code', 'refresh_token', 'urn:ietf:params:oauth:grant-type:jwt-bearer'],
+      response_types: ['code'], token_endpoint_auth_method: 'none',
+    }
+    const fake = (async () => new Response(JSON.stringify(doc), { status: 200 })) as unknown as typeof fetch
+    expect(await fetchCimd(id, fake)).toMatchObject({ clientName: 'Claude', redirectUris: ['https://claude.ai/api/mcp/auth_callback'] })
+  })
+
   it('rejects missing or insecure redirect URIs and unsupported grants', () => {
     expect(validateRegistration({})).toMatchObject({ ok: false, error: 'invalid_redirect_uri' })
     expect(validateRegistration({ redirect_uris: ['http://evil.example/cb'] })).toMatchObject({ ok: false })

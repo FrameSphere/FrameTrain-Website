@@ -121,9 +121,10 @@ export function validateRegistration(body: unknown): RegistrationResult {
     }
     redirectUris.push(ok)
   }
-  if (Array.isArray(b.grant_types)) {
-    const bad = b.grant_types.find((g) => g !== 'authorization_code' && g !== 'refresh_token')
-    if (bad) return { ok: false, error: 'invalid_client_metadata', error_description: `Unsupported grant_type: ${String(bad)}` }
+  // Weitere Grant-Typen (z. B. jwt-bearer in Claudes CIMD-Dokument) ignorieren wir; wir geben
+  // ohnehin nur authorization_code und refresh_token aus. Ohne authorization_code geht es nicht.
+  if (Array.isArray(b.grant_types) && !b.grant_types.includes('authorization_code')) {
+    return { ok: false, error: 'invalid_client_metadata', error_description: 'grant_types must include "authorization_code"' }
   }
   if (Array.isArray(b.response_types) && b.response_types.some((r) => r !== 'code')) {
     return { ok: false, error: 'invalid_client_metadata', error_description: 'Only response_type "code" is supported' }
