@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 import { routing } from '@/i18n/routing'
+import { PUBLIC_CORS_HEADERS } from '@/lib/mcp/http'
 
 const intlMiddleware = createIntlMiddleware(routing)
 
@@ -22,6 +23,18 @@ export function middleware(request: NextRequest) {
     url.hostname = 'frame-train.com'
     url.port = ''
     return NextResponse.redirect(url, 308)
+  }
+
+  // KI-Verbindungen (MCP/OAuth): oeffentliches CORS ohne Credentials – die
+  // Clients authentifizieren sich per Bearer-Token, nicht per Cookie.
+  const path = request.nextUrl.pathname
+  if (path.startsWith('/.well-known/') || path === '/api/mcp' || path.startsWith('/api/oauth/')) {
+    if (request.method === 'OPTIONS') {
+      return new NextResponse(null, { status: 204, headers: PUBLIC_CORS_HEADERS })
+    }
+    const response = NextResponse.next()
+    for (const [k, v] of Object.entries(PUBLIC_CORS_HEADERS)) response.headers.set(k, v)
+    return response
   }
 
   // API-Routes: nur CORS, kein Locale-Routing (Backend-Endpunkte bleiben
@@ -58,6 +71,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/api/:path*',
+    '/.well-known/:path*',
     // next-intl-Standard-Matcher: alles außer _next, statische Dateien etc.
     '/((?!_next|_vercel|.*\\..*).*)',
   ],

@@ -14,7 +14,7 @@ import { GettingStartedChecklist, DOWNLOAD_FLAG } from '@/components/GettingStar
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
-  Globe, AlertCircle, Pencil, Loader2, CreditCard, Zap,
+  Globe, AlertCircle, Pencil, Loader2, CreditCard, Zap, Bot, ChevronRight,
 } from 'lucide-react'
 /* Temporäre UI Anfang, bald herausnehmen */
 /* Temporäre UI Ende */
@@ -726,6 +726,22 @@ function DashboardPageInner() {
               </p>
             </div>
           </div>
+
+          {/* ── KI-Verbindungen (MCP) ─────────────────────────────── */}
+          <Link
+            href="/dashboard/ai-connections"
+            className="card-lift flex items-center gap-4 bg-surface border border-line hover:border-line-strong rounded-lg p-6 mb-8 transition duration-200 ease-out"
+          >
+            <Bot className="w-6 h-6 flex-shrink-0 text-ink-muted" strokeWidth={1.5} />
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl font-semibold text-ink">{t('aiConnections.heading')}</h2>
+              <p className="text-ink-muted text-sm">{t('aiConnections.description')}</p>
+            </div>
+            <span className="hidden sm:flex items-center gap-1 text-indigo-text font-semibold text-sm">
+              {t('aiConnections.open')}
+              <ChevronRight className="w-4 h-4" />
+            </span>
+          </Link>
 
           {/* ── Community Name ────────────────────────────────── */}
           <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line">

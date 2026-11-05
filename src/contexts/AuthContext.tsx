@@ -15,7 +15,7 @@ interface User {
 interface AuthContextType {
   user: User | null
   loading: boolean
-  login: (email: string, password: string, acceptedTerms: boolean) => Promise<void>
+  login: (email: string, password: string, acceptedTerms: boolean, next?: string | null) => Promise<void>
   logout: () => Promise<void>
   isAuthenticated: boolean
   refreshUser: () => Promise<void>
@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const login = async (email: string, password: string, acceptedTerms: boolean) => {
+  const login = async (email: string, password: string, acceptedTerms: boolean, next?: string | null) => {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -71,7 +71,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(data.user)
     // Ohne bestätigte E-Mail geht es nicht ins Dashboard oder zur Kauf-Seite,
     // sondern auf die Warteseite, die die Bestätigung abwartet.
-    router.push(data.user?.emailVerified === false ? '/verify-email/pending' : '/dashboard')
+    // `next` (bereits per safeNextPath geprüft) z. B. für die OAuth-Zustimmung der KI-Verbindungen.
+    router.push(data.user?.emailVerified === false ? '/verify-email/pending' : next || '/dashboard')
   }
 
   const logout = async () => {

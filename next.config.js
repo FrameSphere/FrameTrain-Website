@@ -120,6 +120,14 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
+        // OAuth-Discovery fuer KI-Verbindungen (MCP): RFC 9728 / RFC 8414.
+        // Auch die pfadbezogene Variante /.well-known/oauth-protected-resource/api/mcp.
+        { source: '/.well-known/oauth-protected-resource', destination: '/api/oauth/metadata/protected-resource' },
+        { source: '/.well-known/oauth-protected-resource/:path*', destination: '/api/oauth/metadata/protected-resource' },
+        { source: '/.well-known/oauth-authorization-server', destination: '/api/oauth/metadata/authorization-server' },
+        { source: '/.well-known/oauth-authorization-server/:path*', destination: '/api/oauth/metadata/authorization-server' },
+        // Domain-Verifizierung fuer die ChatGPT-App (Token aus OPENAI_APPS_CHALLENGE_TOKEN)
+        { source: '/.well-known/openai-apps-challenge', destination: '/api/oauth/metadata/openai-challenge' },
         // NOTE: sitemap.xml is handled automatically by Next.js App Router (src/app/sitemap.ts)
         // Do NOT add a rewrite for /sitemap.xml here — it would override Next.js's built-in handler
       ],

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { POST_LOGIN_COOKIE, postLoginCookieOptions, safeNextPath } from '@/lib/post-login'
 import { prisma } from '@/lib/prisma'
 import { grantTrialIfEligible } from '@/lib/trial'
 import { signToken } from '@/lib/auth'
@@ -172,13 +173,15 @@ export async function GET(req: NextRequest) {
 
     // ?signup=github signalisiert der Zielseite eine Neuregistrierung — sie
     // feuert daraufhin (nur mit Consent) genau ein sign_up-Event.
+    const nextPath = safeNextPath(req.cookies.get(POST_LOGIN_COOKIE)?.value)
     const destination =
-      (user.hasPaid ? '/dashboard' : '/payment') + (isNewUser ? '?signup=github' : '')
+      nextPath ?? (user.hasPaid ? '/dashboard' : '/payment') + (isNewUser ? '?signup=github' : '')
 
     const response = NextResponse.redirect(`${baseUrl}${destination}`, {
       headers: { 'Set-Cookie': cookieValue },
     })
     response.cookies.delete('oauth_state')
+    response.cookies.delete(POST_LOGIN_COOKIE)
     return response
   } catch (err) {
     console.error('GitHub OAuth callback error:', err)

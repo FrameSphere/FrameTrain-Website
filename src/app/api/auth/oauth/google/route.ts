@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
+import { POST_LOGIN_COOKIE, postLoginCookieOptions, safeNextPath } from '@/lib/post-login'
 
 export const dynamic = 'force-dynamic'
 
@@ -36,6 +37,11 @@ export async function GET(req: NextRequest) {
   const response = NextResponse.redirect(
     `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
   )
+
+  // Ruecksprung nach dem Login (z. B. OAuth-Zustimmung fuer KI-Verbindungen)
+  const next = safeNextPath(req.nextUrl.searchParams.get('next'))
+  if (next) response.cookies.set(POST_LOGIN_COOKIE, next, postLoginCookieOptions)
+  else response.cookies.delete(POST_LOGIN_COOKIE)
 
   response.cookies.set('oauth_state', nonce, {
     httpOnly: true,
