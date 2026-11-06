@@ -167,3 +167,27 @@ export function openSupport(view: SupportView = 'list') {
 
 /** Oeffentliche Support-Adresse (Impressum, /support, Verzeichnis-Eintraege). Spaeter: support@frame-train.com */
 export const SUPPORT_EMAIL = 'framesphere@gmx.net'
+
+/**
+ * Angemeldet: lokale Tickets (Konto + Gast) mit dem Konto verknuepfen und die
+ * Konto-Liste zurueckholen – so erscheinen Tickets aus App, Dashboard und Chat
+ * auf jedem Geraet. Liefert die zusammengefuehrte Liste (oder die lokale bei Fehler).
+ */
+export async function syncAccountTickets(userId: string): Promise<StoredTicket[]> {
+  const local = loadTickets(userId)
+  try {
+    const res = await fetch('/api/support/tickets', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tickets: local }),
+    })
+    if (!res.ok) return local
+    const data = await res.json()
+    const remote: StoredTicket[] = Array.isArray(data?.tickets) ? data.tickets : []
+    for (const t of [...remote].reverse()) rememberTicket(userId, t)
+    return loadTickets(userId)
+  } catch {
+    return local
+  }
+}

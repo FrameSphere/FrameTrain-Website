@@ -49,6 +49,7 @@ model User {
   mcpDevices       McpDevice[]
   mcpJobs          McpJob[]
   mcpConnections   McpConnection[]
+  supportTickets   SupportTicketLink[]
   oauthAuthCodes   OAuthAuthCode[]
   oauthTokens      OAuthToken[]
 
@@ -349,4 +350,22 @@ model McpConnection {
 
   @@unique([userId, clientId])
   @@map("mcp_connections")
+}
+
+// Support-Tickets (liegen im Manager) einem Konto zuordnen, damit dieselben
+// Gespraeche im Chat, im Dashboard und in der App auf jedem Geraet erscheinen.
+model SupportTicketLink {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  ticketId  Int      @map("ticket_id")
+  userToken String   @map("user_token")
+  subject   String
+  source    String   @default("web") // web | app
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, ticketId])
+  @@index([userId])
+  @@map("support_ticket_links")
 }

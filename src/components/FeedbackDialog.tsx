@@ -6,6 +6,7 @@ import { X, Loader2, CheckCircle2 } from 'lucide-react'
 import { Link, usePathname } from '@/i18n/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { detectPlatform } from '@/lib/platform'
+import { syncAccountTickets } from '@/lib/support'
 
 /**
  * Feedback-Fenster für die ganze Website.
@@ -103,6 +104,7 @@ export function FeedbackDialog() {
             key,
             JSON.stringify([{ ticket_id: data.ticket_id, user_token: data.user_token, subject }, ...list])
           )
+          void syncAccountTickets(String(user.id))
         } catch {}
       }
       try {

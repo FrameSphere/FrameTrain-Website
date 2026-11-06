@@ -6,6 +6,7 @@ import { useRouter, Link } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import { Header } from '@/components/Header'
+import { syncAccountTickets } from '@/lib/support'
 import { ClaudeMark, OpenAIMark } from '@/components/mcp/PartnerLogos'
 import { DeleteAccountCard } from '@/components/DeleteAccountCard'
 import { TermsUpdateBanner } from '@/components/TermsUpdateBanner'
@@ -185,6 +186,8 @@ function DashboardPageInner() {
   // ── Check for unread admin replies ──────────────────────────────
   useEffect(() => {
     async function checkBadge() {
+      // Tickets aus App und anderen Geraeten ueber das Konto holen
+      if (user?.id) await syncAccountTickets(String(user.id))
       const tickets = getAll()
       if (!tickets.length) return
       let unread = 0
@@ -206,7 +209,7 @@ function DashboardPageInner() {
       setSupportBadge(unread)
     }
     if (!authLoading && isAuthenticated) checkBadge()
-  }, [authLoading, isAuthenticated, getAll])
+  }, [authLoading, isAuthenticated, getAll, user?.id])
 
   // ── Auth redirect ──────────────────────────────────────────────
   useEffect(() => {
@@ -416,6 +419,7 @@ function DashboardPageInner() {
 
       const stored: StoredTicket = { ticket_id: data.ticket_id, user_token: data.user_token, subject: newSubject.trim() }
       add(stored)
+      if (user?.id) void syncAccountTickets(String(user.id))
       setStoredTickets(getAll())
       setNewSubject('')
       setNewMessage('')

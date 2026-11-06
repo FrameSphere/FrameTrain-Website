@@ -16,7 +16,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { detectPlatform } from '@/lib/platform'
 import {
   OPEN_SUPPORT_EVENT, filterHelp, fetchThread, isValidEmail, loadTickets, markSeen, replyToTicket, submitTicket,
-  unreadIn, type StoredTicket, type SupportView, type Thread,
+  syncAccountTickets, unreadIn, type StoredTicket, type SupportView, type Thread,
 } from '@/lib/support'
 
 type View = SupportView | 'thread'
@@ -45,7 +45,13 @@ export function SupportChat() {
   useEffect(() => setMounted(true), [])
 
   // Eigene Tickets und deren Verlauf laden (beim Start, beim Oeffnen, alle 2 min wenn sichtbar)
-  const refresh = useCallback(async () => {
+  const synced = useRef<string | null>(null)
+  const refresh = useCallback(async (forceSync = false) => {
+    // Angemeldet: einmal je Sitzung (und nach neuen Tickets) mit dem Konto abgleichen
+    if (userId && (forceSync || synced.current !== userId)) {
+      synced.current = userId
+      await syncAccountTickets(userId)
+    }
     const list = loadTickets(userId).slice(0, 10)
     setTickets(list)
     if (list.length === 0) return
@@ -182,7 +188,7 @@ export function SupportChat() {
             userEmail={user?.email ?? ''}
             pathname={pathname}
             locale={locale}
-            onCreated={(x) => { void refresh(); openThread(x) }}
+            onCreated={(x) => { void refresh(true); openThread(x) }}
           />
         )}
         {view === 'thread' && active && <ThreadView ticket={active} onLoaded={onThreadLoaded} />}
