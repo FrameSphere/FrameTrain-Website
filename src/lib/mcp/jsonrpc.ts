@@ -34,7 +34,7 @@ export interface McpHandlers {
 export const SERVER_INSTRUCTIONS =
   'FrameTrain trains and runs AI models locally on the user\'s computer. Every tool is executed by the ' +
   'FrameTrain desktop app, which must be open with remote access enabled. Long-running actions (training, ' +
-  'downloads, tests, exports) return a job_id immediately; poll progress with the matching *_status tool. ' +
+  'downloads, tests, exports) return a job_id immediately; the matching *_status tool reports progress. ' +
   'Some actions ask the user for approval inside the app before they run.'
 
 function rpcError(id: JsonRpcId, code: number, message: string, data?: unknown): JsonRpcResponse {

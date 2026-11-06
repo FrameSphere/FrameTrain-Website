@@ -6,7 +6,7 @@ export const FALLBACK_TOOLS: ManifestTool[] = [
     name: 'system_status',
     title: 'FrameTrain status',
     description:
-      'Explains how to connect the FrameTrain desktop app. Call this when no other FrameTrain tools are ' +
+      'Explains how to connect the FrameTrain desktop app. Relevant when no other FrameTrain tools are ' +
       'available: it returns setup steps (install the app, sign in, enable remote access). FrameTrain runs ' +
       'training and data locally on the user\'s computer, so the app must be running.',
     inputSchema: { type: 'object', properties: {}, additionalProperties: false },
