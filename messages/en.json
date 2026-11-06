@@ -65,7 +65,8 @@
         "mlxVsPytorch": "MLX vs. PyTorch",
         "feedback": "Feedback",
         "withdrawal": "Withdraw from contract",
-        "cancel": "Cancel contracts here"
+        "cancel": "Cancel contracts here",
+        "support": "Support"
     },
     "Imprint": {
         "metaTitle": "Imprint – FrameTrain",
@@ -10112,5 +10113,175 @@
         ],
         "dashboardCta": "Manage connections in the dashboard",
         "supportText": "Questions? Contact us through support in the dashboard."
+    },
+    "SupportChat": {
+        "launcher": "Help",
+        "close": "Close",
+        "back": "Back",
+        "title": "FrameTrain support",
+        "responseTime": "Usually answered within 1 business day",
+        "unread": "{count} new replies",
+        "tabs": {
+            "conversations": "Conversations",
+            "help": "Help"
+        },
+        "empty": {
+            "title": "No conversations yet",
+            "text": "Write to us. The reply shows up right here in the chat."
+        },
+        "newRequest": "New request",
+        "karol": "Karol",
+        "you": "You",
+        "status": {
+            "open": "open",
+            "in_progress": "in progress",
+            "resolved": "answered",
+            "closed": "closed"
+        },
+        "help": {
+            "search": "Search help",
+            "none": "Nothing found. Just write to us.",
+            "stillStuck": "Didn't find what you need?",
+            "write": "Write a message",
+            "items": [
+                {
+                    "title": "Connect Claude or ChatGPT to FrameTrain",
+                    "href": "/docs/mcp",
+                    "keywords": "ai connections mcp connector claude chatgpt connect"
+                },
+                {
+                    "title": "Claude only shows system_status",
+                    "href": "/support",
+                    "keywords": "remote access app not running not connected tools missing"
+                },
+                {
+                    "title": "Install FrameTrain",
+                    "href": "/install",
+                    "keywords": "installation mac windows download gatekeeper open"
+                },
+                {
+                    "title": "Download the app",
+                    "href": "/download",
+                    "keywords": "download version update"
+                },
+                {
+                    "title": "FAQ",
+                    "href": "/faq",
+                    "keywords": "faq questions price subscription license"
+                },
+                {
+                    "title": "Documentation",
+                    "href": "/docs",
+                    "keywords": "docs guide training dataset model"
+                },
+                {
+                    "title": "AI training coach",
+                    "href": "/docs/ai-training-guide",
+                    "keywords": "training learn hyperparameters coach"
+                },
+                {
+                    "title": "Account, subscription and invoices",
+                    "href": "/dashboard",
+                    "keywords": "account subscription payment invoice cancel license key"
+                },
+                {
+                    "title": "Privacy",
+                    "href": "/privacy",
+                    "keywords": "privacy gdpr data"
+                }
+            ]
+        },
+        "topicLabel": "What's it about?",
+        "topics": {
+            "ai": "AI connections",
+            "install": "Installation",
+            "account": "Account and subscription",
+            "other": "Other"
+        },
+        "emailLabel": "Your email address",
+        "emailHint": "So I can also reach you by email. You don't need an account.",
+        "messageLabel": "Your message",
+        "messagePlaceholder": "What happened, and what have you tried?",
+        "privacy": "When you send this, we store your message to handle it. See the <link>privacy policy</link>.",
+        "send": "Send",
+        "replyPlaceholder": "Write a reply",
+        "closedHint": "This conversation is closed. Replying reopens it.",
+        "errors": {
+            "email": "Enter a valid email address.",
+            "short": "Describe your request in at least 10 characters.",
+            "tooFast": "Wait a moment, you just sent something.",
+            "send": "Couldn't send. Try again in a moment or write by email.",
+            "load": "Couldn't load this conversation right now.",
+            "empty": "Write a message first."
+        }
+    },
+    "SupportPage": {
+        "metaTitle": "Support and contact – FrameTrain",
+        "metaDescription": "Help with FrameTrain: chat with the developer, email contact, and answers about AI connections with Claude and ChatGPT.",
+        "badge": "Support",
+        "heading": "Help and contact",
+        "intro": "You can reach me directly, no account needed. Write in the chat or by email, and I'll reply personally.",
+        "chat": {
+            "heading": "Chat",
+            "text": "Open the chat in the bottom right. Your conversations stay there, and my reply shows up right in the chat.",
+            "button": "Start chat"
+        },
+        "email": {
+            "heading": "Email",
+            "text": "Prefer email? Write to this address."
+        },
+        "responseTime": "Usually answered within 1 business day, in English or German.",
+        "ai": {
+            "heading": "AI connections (Claude, ChatGPT)",
+            "docsLink": "Read the AI connections guide",
+            "items": [
+                {
+                    "q": "Claude or ChatGPT only show “system_status”",
+                    "a": "The tools come from the desktop app. Start FrameTrain and turn on remote access under Settings > AI connections."
+                },
+                {
+                    "q": "Connecting shows an error",
+                    "a": "Remove the connector in your assistant, add it again with https://frame-train.com/api/mcp, and sign in with your FrameTrain account."
+                },
+                {
+                    "q": "How do I revoke access?",
+                    "a": "Disconnect individual assistants in the dashboard under AI connections. In the app, revoke remembered approvals under Settings > AI connections."
+                },
+                {
+                    "q": "Is my data sent to Claude or ChatGPT?",
+                    "a": "Only the results of the tools the assistant calls. Training data and models stay on your computer. You confirm sensitive actions in the app."
+                }
+            ]
+        },
+        "links": {
+            "heading": "More help",
+            "items": [
+                {
+                    "label": "FAQ",
+                    "href": "/faq"
+                },
+                {
+                    "label": "Documentation",
+                    "href": "/docs"
+                },
+                {
+                    "label": "Installation",
+                    "href": "/install"
+                },
+                {
+                    "label": "Changelog",
+                    "href": "/changelog"
+                },
+                {
+                    "label": "Privacy",
+                    "href": "/privacy"
+                },
+                {
+                    "label": "Imprint",
+                    "href": "/imprint"
+                }
+            ]
+        },
+        "account": "With an account, your conversations also appear in the <link>dashboard</link> and in the app under Settings > Support."
     }
 }

@@ -29,6 +29,7 @@ export function Footer() {
     { href: '/guides', label: t('guides') },
     { href: '/docs', label: t('docs') },
     { href: '/faq', label: t('faq') },
+    { href: '/support', label: t('support') },
     { href: '/library', label: t('library') },
     { href: '/about', label: t('about') },
   ]

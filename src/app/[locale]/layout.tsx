@@ -1,3 +1,4 @@
+import { SupportChat } from '@/components/support/SupportChat'
 import type { Metadata } from 'next'
 import { Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { notFound } from 'next/navigation'
@@ -255,6 +256,7 @@ try {
           <AuthProvider>
             {children}
             <FeedbackDialog />
+            <SupportChat />
           </AuthProvider>
           <CookieBanner />
           <PromoCapture />

@@ -35,6 +35,7 @@ const pages: PageDef[] = [
   { path: '/cookies', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/docs', changeFrequency: 'weekly', priority: 0.92 },
   { path: '/docs/mcp', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/support', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/docs/ai-training-guide', changeFrequency: 'monthly', priority: 0.92 },
   { path: '/docs/ai-training-guide/ml-grundlagen', changeFrequency: 'monthly', priority: 0.88 },
   { path: '/docs/ai-training-guide/training-verstehen', changeFrequency: 'monthly', priority: 0.88 },

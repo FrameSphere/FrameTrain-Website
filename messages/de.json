@@ -65,7 +65,8 @@
         "mlxVsPytorch": "MLX vs. PyTorch",
         "feedback": "Feedback",
         "withdrawal": "Vertrag widerrufen",
-        "cancel": "Verträge hier kündigen"
+        "cancel": "Verträge hier kündigen",
+        "support": "Support"
     },
     "Imprint": {
         "metaTitle": "Impressum – FrameTrain",
@@ -10115,5 +10116,175 @@
         ],
         "dashboardCta": "Verbindungen im Dashboard verwalten",
         "supportText": "Fragen? Schreib uns über den Support im Dashboard."
+    },
+    "SupportChat": {
+        "launcher": "Hilfe",
+        "close": "Schließen",
+        "back": "Zurück",
+        "title": "FrameTrain Support",
+        "responseTime": "Antwort meist innerhalb von 1 Werktag",
+        "unread": "{count} neue Antworten",
+        "tabs": {
+            "conversations": "Gespräche",
+            "help": "Hilfe"
+        },
+        "empty": {
+            "title": "Noch keine Gespräche",
+            "text": "Schreib uns. Die Antwort erscheint hier im Chat."
+        },
+        "newRequest": "Neue Anfrage",
+        "karol": "Karol",
+        "you": "Du",
+        "status": {
+            "open": "offen",
+            "in_progress": "in Arbeit",
+            "resolved": "beantwortet",
+            "closed": "geschlossen"
+        },
+        "help": {
+            "search": "Hilfe durchsuchen",
+            "none": "Nichts gefunden. Schreib uns einfach.",
+            "stillStuck": "Nicht gefunden, was du suchst?",
+            "write": "Nachricht schreiben",
+            "items": [
+                {
+                    "title": "Claude oder ChatGPT mit FrameTrain verbinden",
+                    "href": "/docs/mcp",
+                    "keywords": "ki verbindungen mcp connector claude chatgpt verbinden"
+                },
+                {
+                    "title": "Claude zeigt nur system_status",
+                    "href": "/support",
+                    "keywords": "fernzugriff app läuft nicht verbunden werkzeuge fehlen"
+                },
+                {
+                    "title": "FrameTrain installieren",
+                    "href": "/install",
+                    "keywords": "installation mac windows download gatekeeper öffnen"
+                },
+                {
+                    "title": "App herunterladen",
+                    "href": "/download",
+                    "keywords": "download version update"
+                },
+                {
+                    "title": "Häufige Fragen",
+                    "href": "/faq",
+                    "keywords": "faq fragen preis abo lizenz"
+                },
+                {
+                    "title": "Dokumentation",
+                    "href": "/docs",
+                    "keywords": "doku anleitung training datensatz modell"
+                },
+                {
+                    "title": "KI Training Coach",
+                    "href": "/docs/ai-training-guide",
+                    "keywords": "training lernen hyperparameter coach"
+                },
+                {
+                    "title": "Konto, Abo und Rechnungen",
+                    "href": "/dashboard",
+                    "keywords": "konto abo zahlung rechnung kündigen lizenz schlüssel"
+                },
+                {
+                    "title": "Datenschutz",
+                    "href": "/privacy",
+                    "keywords": "datenschutz dsgvo daten"
+                }
+            ]
+        },
+        "topicLabel": "Worum geht es?",
+        "topics": {
+            "ai": "KI-Verbindungen",
+            "install": "Installation",
+            "account": "Konto und Abo",
+            "other": "Sonstiges"
+        },
+        "emailLabel": "Deine E-Mail-Adresse",
+        "emailHint": "Damit ich dich auch per E-Mail erreiche. Ein Konto brauchst du nicht.",
+        "messageLabel": "Deine Nachricht",
+        "messagePlaceholder": "Was ist passiert, und was hast du schon versucht?",
+        "privacy": "Mit dem Absenden speichern wir deine Nachricht zur Bearbeitung. Mehr in der <link>Datenschutzerklärung</link>.",
+        "send": "Senden",
+        "replyPlaceholder": "Antwort schreiben",
+        "closedHint": "Dieses Gespräch ist abgeschlossen. Wenn du antwortest, wird es wieder geöffnet.",
+        "errors": {
+            "email": "Gib eine gültige E-Mail-Adresse ein.",
+            "short": "Beschreib dein Anliegen in mindestens 10 Zeichen.",
+            "tooFast": "Kurz warten, du hast gerade schon etwas geschickt.",
+            "send": "Senden hat nicht geklappt. Versuch es gleich noch einmal oder schreib per E-Mail.",
+            "load": "Das Gespräch ließ sich gerade nicht laden.",
+            "empty": "Schreib zuerst eine Nachricht."
+        }
+    },
+    "SupportPage": {
+        "metaTitle": "Support und Kontakt – FrameTrain",
+        "metaDescription": "Hilfe zu FrameTrain: Chat mit dem Entwickler, E-Mail-Kontakt und Antworten zu KI-Verbindungen mit Claude und ChatGPT.",
+        "badge": "Support",
+        "heading": "Hilfe und Kontakt",
+        "intro": "Du erreichst mich direkt, auch ohne Konto. Schreib im Chat oder per E-Mail, ich antworte persönlich.",
+        "chat": {
+            "heading": "Chat",
+            "text": "Öffne den Chat unten rechts. Deine Gespräche bleiben dort gespeichert, und meine Antwort erscheint direkt im Chat.",
+            "button": "Chat starten"
+        },
+        "email": {
+            "heading": "E-Mail",
+            "text": "Lieber klassisch? Schreib an diese Adresse."
+        },
+        "responseTime": "Antwort meist innerhalb von 1 Werktag, auf Deutsch oder Englisch.",
+        "ai": {
+            "heading": "KI-Verbindungen (Claude, ChatGPT)",
+            "docsLink": "Zur Anleitung für KI-Verbindungen",
+            "items": [
+                {
+                    "q": "Claude oder ChatGPT zeigen nur „system_status“",
+                    "a": "Die Werkzeuge kommen aus der Desktop-App. Starte FrameTrain und schalte unter Einstellungen > KI-Verbindungen den Fernzugriff ein."
+                },
+                {
+                    "q": "Beim Verbinden erscheint ein Fehler",
+                    "a": "Entferne den Connector im KI-Assistenten, füge ihn mit https://frame-train.com/api/mcp neu hinzu und melde dich mit deinem FrameTrain-Konto an."
+                },
+                {
+                    "q": "Wie widerrufe ich den Zugriff?",
+                    "a": "Im Dashboard unter KI-Verbindungen trennst du einzelne Assistenten. In der App widerrufst du gemerkte Freigaben unter Einstellungen > KI-Verbindungen."
+                },
+                {
+                    "q": "Werden meine Daten an Claude oder ChatGPT geschickt?",
+                    "a": "Nur die Ergebnisse der Werkzeuge, die der Assistent aufruft. Trainingsdaten und Modelle bleiben auf deinem Rechner. Heikle Aktionen bestätigst du in der App."
+                }
+            ]
+        },
+        "links": {
+            "heading": "Weitere Hilfe",
+            "items": [
+                {
+                    "label": "Häufige Fragen",
+                    "href": "/faq"
+                },
+                {
+                    "label": "Dokumentation",
+                    "href": "/docs"
+                },
+                {
+                    "label": "Installation",
+                    "href": "/install"
+                },
+                {
+                    "label": "Änderungen je Version",
+                    "href": "/changelog"
+                },
+                {
+                    "label": "Datenschutz",
+                    "href": "/privacy"
+                },
+                {
+                    "label": "Impressum",
+                    "href": "/imprint"
+                }
+            ]
+        },
+        "account": "Mit Konto findest du deine Gespräche auch im <link>Dashboard</link> und in der App unter Einstellungen > Support."
     }
 }
