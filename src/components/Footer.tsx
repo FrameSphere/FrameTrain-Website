@@ -28,6 +28,7 @@ export function Footer() {
     { href: '/docs/ai-training-guide', label: t('coach') },
     { href: '/guides', label: t('guides') },
     { href: '/docs', label: t('docs') },
+    { href: '/docs/mcp', label: t('aiConnections') },
     { href: '/faq', label: t('faq') },
     { href: '/support', label: t('support') },
     { href: '/library', label: t('library') },
