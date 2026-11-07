@@ -45,6 +45,29 @@ export const OFFLINE_TEXT =
   '(Einstellungen > KI-Verbindungen > Fernzugriff). / The FrameTrain app is not running or remote ' +
   'access is off. Please start FrameTrain (Settings > AI Connections > Remote access).'
 
+/** E-Mail fuer Hinweise gekuerzt: "karol@example.com" -> "ka***@example.com". */
+export function maskEmail(email: string | null | undefined): string | null {
+  if (!email || !email.includes('@')) return null
+  const [name, domain] = email.split('@')
+  return `${name.slice(0, 2)}***@${domain}`
+}
+
+/**
+ * Offline-Hinweis mit dem Konto dieser Verbindung. Haeufigste Ursache neben
+ * "App zu": In der App ist ein anderes Konto angemeldet als beim Verbinden im
+ * KI-Assistenten – dann meldet sich das Geraet bei einem anderen Konto.
+ */
+export function offlineText(email: string | null | undefined): string {
+  const acc = maskEmail(email)
+  if (!acc) return OFFLINE_TEXT
+  return (
+    `FrameTrain ist fuer das Konto ${acc} gerade nicht erreichbar. Pruefe: App geoeffnet, ` +
+    'Einstellungen > KI-Verbindungen > Fernzugriff an, und in der App ist dasselbe Konto angemeldet ' +
+    `(${acc}). / FrameTrain is not reachable for the account ${acc}. Check that the app is open, ` +
+    'remote access is on (Settings > AI Connections), and the app is signed in with the same account.'
+  )
+}
+
 export const TIMEOUT_TEXT =
   'FrameTrain hat nicht innerhalb von 50 Sekunden geantwortet. Die Aktion kann in der App noch laufen ' +
   '(z. B. wartet ein Freigabe-Dialog). Pruefe den Stand mit dem passenden *_status-Werkzeug. / ' +

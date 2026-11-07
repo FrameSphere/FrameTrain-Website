@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import {
   MCP_PROTOCOL_VERSIONS,
-  OFFLINE_TEXT,
+  offlineText,
   resourceUrl,
   SUBSCRIPTION_TEXT,
 } from '@/lib/mcp/config'
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
 
   const connection = await prisma.mcpConnection.findUnique({
     where: { id: grant.connectionId },
-    select: { id: true, clientName: true, revokedAt: true, lastUsedAt: true, user: { select: { hasPaid: true } } },
+    select: { id: true, clientName: true, revokedAt: true, lastUsedAt: true, user: { select: { hasPaid: true, email: true } } },
   })
   if (!connection || connection.revokedAt) return unauthorized('invalid_token', 'The connection was disconnected')
 
@@ -102,12 +102,13 @@ export async function POST(req: NextRequest) {
     async callTool(name, args) {
       if (!connection.user.hasPaid) return textResult(SUBSCRIPTION_TEXT, true)
       const device = await latestDevice(userId)
+      const offline = offlineText(connection.user.email)
       if (!device) {
-        return name === 'system_status' ? textResult(FALLBACK_STATUS_TEXT) : textResult(OFFLINE_TEXT, true)
+        return name === 'system_status' ? textResult(FALLBACK_STATUS_TEXT) : textResult(offline, true)
       }
       if (!isOnline(device.lastSeenAt)) {
-        if (name === 'system_status') return textResult(`${OFFLINE_TEXT}\n\n${FALLBACK_STATUS_TEXT}`, true)
-        return textResult(OFFLINE_TEXT, true)
+        if (name === 'system_status') return textResult(`${offline}\n\n${FALLBACK_STATUS_TEXT}`, true)
+        return textResult(offline, true)
       }
       const job = await prismaJobStore.create(
         { userId, deviceId: device.id, connectionId: connection.id, clientName: connection.clientName, tool: name, args },

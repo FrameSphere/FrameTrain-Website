@@ -196,3 +196,14 @@ describe('origin validation', () => {
     expect(isAllowedOrigin('null')).toBe(false)
   })
 })
+
+import { maskEmail, offlineText } from '../config'
+
+describe('offline hint names the account', () => {
+  it('masks the email and mentions it', () => {
+    expect(maskEmail('karol@example.com')).toBe('ka***@example.com')
+    expect(maskEmail(null)).toBeNull()
+    expect(offlineText('karol@example.com')).toContain('ka***@example.com')
+    expect(offlineText(undefined)).toMatch(/not running or remote/)
+  })
+})
