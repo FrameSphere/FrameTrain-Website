@@ -66,7 +66,8 @@
         "feedback": "Feedback",
         "withdrawal": "Vertrag widerrufen",
         "cancel": "Verträge hier kündigen",
-        "support": "Support"
+        "support": "Support",
+        "aiConnections": "Claude & ChatGPT verbinden"
     },
     "Imprint": {
         "metaTitle": "Impressum – FrameTrain",
@@ -8593,6 +8594,41 @@
                     "alt": "Synapse Builder mit einem Graphen aus CSV-Loader, Dense-, Output- und Loss-Knoten und der Knotenbibliothek links"
                 }
             ]
+        },
+        "aiConnect": {
+            "eyebrow": "KI-Verbindungen · MCP",
+            "titleA": "Sag Claude, was es trainieren soll.",
+            "titleB": "FrameTrain erledigt es auf deiner GPU.",
+            "lead": "Verbinde Claude oder ChatGPT mit FrameTrain. Der Assistent bereitet Datensätze vor, startet Trainings und wertet Ergebnisse aus – ausgeführt von der App auf deinem Rechner.",
+            "points": [
+                "Funktioniert mit Claude (Web, Desktop, Code) und ChatGPT – eine Connector-URL, Anmeldung mit deinem FrameTrain-Konto.",
+                "Training und Daten bleiben lokal. Über frame-train.com laufen nur Aufrufe und Ergebnisse.",
+                "Löschen oder Training starten bestätigst du in der App. Jede Verbindung ist jederzeit trennbar."
+            ],
+            "urlLabel": "Connector-URL",
+            "cta": "So verbindest du Claude und ChatGPT",
+            "secondary": "Datenschutz bei KI-Verbindungen",
+            "window": {
+                "label": "Beispiel",
+                "client": "Claude",
+                "prompt": "Trainiere ein LoRA auf meinem Datensatz support-tickets und sag mir, ob es auf meine GPU passt.",
+                "calls": [
+                    {
+                        "tool": "datasets_info",
+                        "note": "support-tickets · 4.812 Einträge"
+                    },
+                    {
+                        "tool": "training_estimate_resources",
+                        "note": "Llama 3.2 3B · ca. 7,1 GB VRAM"
+                    },
+                    {
+                        "tool": "training_start",
+                        "note": "in FrameTrain bestätigt"
+                    }
+                ],
+                "status": "run-021 · Epoche 1/3",
+                "reply": "Passt auf deine RTX 4070 (12 GB). Das Training läuft – ich melde mich, sobald der Val-Loss steht."
+            }
         },
         "specs": {
             "label": "Auf einen Blick",

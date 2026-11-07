@@ -66,7 +66,8 @@
         "feedback": "Feedback",
         "withdrawal": "Withdraw from contract",
         "cancel": "Cancel contracts here",
-        "support": "Support"
+        "support": "Support",
+        "aiConnections": "Connect Claude & ChatGPT"
     },
     "Imprint": {
         "metaTitle": "Imprint – FrameTrain",
@@ -8590,6 +8591,41 @@
                     "alt": "Synapse Builder with a graph of CSV loader, dense, output and loss nodes and the node library on the left"
                 }
             ]
+        },
+        "aiConnect": {
+            "eyebrow": "AI connections · MCP",
+            "titleA": "Tell Claude what to train.",
+            "titleB": "FrameTrain runs it on your GPU.",
+            "lead": "Connect Claude or ChatGPT to FrameTrain. The assistant prepares datasets, starts training and evaluates results – carried out by the app on your computer.",
+            "points": [
+                "Works with Claude (web, desktop, Code) and ChatGPT – one connector URL, sign in with your FrameTrain account.",
+                "Training and data stay local. Only calls and results pass through frame-train.com.",
+                "You confirm deleting or starting training in the app. Every connection can be disconnected at any time."
+            ],
+            "urlLabel": "Connector URL",
+            "cta": "How to connect Claude and ChatGPT",
+            "secondary": "Privacy for AI connections",
+            "window": {
+                "label": "Example",
+                "client": "Claude",
+                "prompt": "Train a LoRA on my support-tickets dataset and tell me whether it fits my GPU.",
+                "calls": [
+                    {
+                        "tool": "datasets_info",
+                        "note": "support-tickets · 4,812 rows"
+                    },
+                    {
+                        "tool": "training_estimate_resources",
+                        "note": "Llama 3.2 3B · approx. 7.1 GB VRAM"
+                    },
+                    {
+                        "tool": "training_start",
+                        "note": "confirmed in FrameTrain"
+                    }
+                ],
+                "status": "run-021 · epoch 1/3",
+                "reply": "Fits your RTX 4070 (12 GB). Training is running – I'll report back once the val loss is in."
+            }
         },
         "specs": {
             "label": "At a glance",

@@ -36,6 +36,7 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 
 ## Documentation
 - [Documentation home](${base}/en/docs): overview of all guides and references
+- [Connect Claude and ChatGPT (MCP)](${base}/en/docs/mcp): remote MCP connector ${base}/api/mcp – setup, tools, approvals and privacy
 - [AI Training Guide](${base}/en/docs/ai-training-guide): end-to-end guide to local model training
 - [ML fundamentals](${base}/en/docs/ai-training-guide/ml-grundlagen): core machine-learning concepts
 - [Understanding training](${base}/en/docs/ai-training-guide/training-verstehen): how model training works

@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { ArrowRight, Check, CircleDot, Code2, HardDrive, Layers, Mail, MessagesSquare } from 'lucide-react'
+import { ArrowRight, Check, CircleDot, Code2, CornerDownRight, HardDrive, Layers, Mail, MessagesSquare } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -104,6 +104,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const reasons = tHome.raw('whyLocal.reasons') as Reason[]
   const faqItems = [...(t.raw('faqExtra') as FaqEntry[]), ...(tHome.raw('faq.items') as FaqEntry[])]
   const pricingCopy = t.raw('pricing') as PricingCopy
+  const aiPoints = t.raw('aiConnect.points') as string[]
+  const aiCalls = t.raw('aiConnect.window.calls') as { tool: string; note: string }[]
 
   const version = release?.version ?? '1.5'
   const releaseDate = release
@@ -280,6 +282,71 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               {t('features.cta')}
               <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
             </Link>
+          </div>
+        </section>
+
+        {/* ── KI-Verbindungen (MCP) ─────────────────────────────── */}
+        <section id="ai-connections" className="border-t border-line scroll-mt-24" aria-labelledby="ai-connections-title">
+          <div className="ft-container ft-section grid gap-12 lg:grid-cols-[1fr_1fr] items-center">
+            <div>
+              <SectionHead
+                id="ai-connections-title"
+                eyebrow={t('aiConnect.eyebrow')}
+                titleA={t('aiConnect.titleA')}
+                titleB={t('aiConnect.titleB')}
+                lead={t('aiConnect.lead')}
+              />
+              <ul className="m-0 p-0 list-none -mt-4 space-y-3">
+                {aiPoints.map((point) => (
+                  <li key={point} className="flex gap-3 ft-small">
+                    <Check className="w-4 h-4 mt-[5px] flex-none text-ink-muted" strokeWidth={1.5} aria-hidden="true" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="ft-label mt-8 mb-2">{t('aiConnect.urlLabel')}</p>
+              <code className="ft-data inline-block px-3 py-2 rounded-sm bg-surface-raised border border-line text-ink break-all">
+                https://frame-train.com/api/mcp
+              </code>
+              <div className="flex flex-wrap items-center gap-5 mt-8">
+                <Link href="/docs/mcp" className="ft-btn ft-btn--ghost">
+                  {t('aiConnect.cta')}
+                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                </Link>
+                <Link href="/privacy" className="ft-link text-[15px] font-medium">
+                  {t('aiConnect.secondary')}
+                </Link>
+              </div>
+            </div>
+
+            {/* Beispiel-Dialog: Anfrage -> Werkzeugaufrufe in FrameTrain -> Ergebnis */}
+            <figure className="ft-window m-0" aria-label={t('aiConnect.window.label')}>
+              <div className="flex items-center justify-between px-5 py-3 bg-surface-raised border-b border-line">
+                <span className="ft-label">{t('aiConnect.window.client')}</span>
+                <span className="ft-label">{t('aiConnect.window.label')}</span>
+              </div>
+              <div className="p-5 md:p-6 space-y-5">
+                <p className="m-0 ml-auto max-w-[85%] rounded-md bg-surface-raised px-4 py-3 text-[15px] leading-6 text-ink">
+                  {t('aiConnect.window.prompt')}
+                </p>
+                <ol className="m-0 p-0 list-none space-y-2">
+                  {aiCalls.map((call) => (
+                    <li key={call.tool} className="flex items-start gap-2 ft-data">
+                      <CornerDownRight className="w-3.5 h-3.5 mt-[2px] flex-none text-ink-faint" strokeWidth={1.5} aria-hidden="true" />
+                      <span className="min-w-0">
+                        <span className="block text-ink break-all">{call.tool}</span>
+                        <span className="block text-ink-faint">{call.note}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+                <span className="ft-data inline-flex items-center gap-2 px-3 py-1 rounded-pill bg-output-soft text-output-text">
+                  <span className="w-1.5 h-1.5 rounded-pill bg-output" aria-hidden="true" />
+                  {t('aiConnect.window.status')}
+                </span>
+                <p className="m-0 max-w-[90%] text-[15px] leading-6 text-ink-muted">{t('aiConnect.window.reply')}</p>
+              </div>
+            </figure>
           </div>
         </section>
 
