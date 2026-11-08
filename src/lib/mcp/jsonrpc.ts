@@ -36,7 +36,9 @@ export const SERVER_INSTRUCTIONS =
   'FrameTrain desktop app, which must be open with remote access enabled. Long-running actions (training, ' +
   'downloads, tests, exports) return a job_id immediately; the matching *_status tool reports progress. ' +
   'Keep polling (system_job_status with wait_seconds 45) until the job is done or failed, even if that takes ' +
-  'several minutes, and never report a running job as a failure. Good small starting sources: for people and ' +
+  'several minutes, and never report a running job as a failure. A download that is too large or too slow ' +
+  'can be stopped with system_job_cancel; then start a smaller one (include or max_rows for Hugging Face, ' +
+  'max_files for URL imports). Good small starting sources: for people and ' +
   'vehicles (and 78 other everyday COCO classes) the 128 labeled images at ' +
   'https://github.com/ultralytics/assets/releases/download/v0.0.0/coco128.zip via datasets_import_url; for ' +
   'larger samples a Hugging Face dataset via datasets_download_hf with max_rows, which only downloads the ' +
