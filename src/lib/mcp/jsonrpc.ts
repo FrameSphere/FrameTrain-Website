@@ -35,7 +35,14 @@ export const SERVER_INSTRUCTIONS =
   'FrameTrain trains and runs AI models locally on the user\'s computer. Every tool is executed by the ' +
   'FrameTrain desktop app, which must be open with remote access enabled. Long-running actions (training, ' +
   'downloads, tests, exports) return a job_id immediately; the matching *_status tool reports progress. ' +
-  'Some actions ask the user for approval inside the app before they run.'
+  'Some actions ask the user for approval inside the app before they run. ' +
+  'Datasets can come from Hugging Face (datasets_hf_files, datasets_download_hf), from https URLs including ' +
+  'partial reads of large ZIP archives (datasets_import_url), or from local files. datasets_check and ' +
+  'datasets_view show what a dataset contains. The Dataset Builder (studio_*) merges several datasets into one ' +
+  'project with a common class list (studio_import with source dataset and class_map), shows samples as ' +
+  'pictures (studio_view_samples), takes corrections (studio_set_annotation) and exports a training dataset ' +
+  '(studio_export). This works for images with boxes, image, audio and video classification, audio with ' +
+  'transcripts, and text classification or text pairs.'
 
 function rpcError(id: JsonRpcId, code: number, message: string, data?: unknown): JsonRpcResponse {
   return { jsonrpc: '2.0', id, error: data === undefined ? { code, message } : { code, message, data } }
