@@ -71,8 +71,10 @@ export function offlineText(email: string | null | undefined): string {
 export const TIMEOUT_TEXT =
   'FrameTrain hat nicht innerhalb von 50 Sekunden geantwortet. Die Aktion kann in der App noch laufen ' +
   '(z. B. wartet ein Freigabe-Dialog). Pruefe den Stand mit dem passenden *_status-Werkzeug. / ' +
-  'FrameTrain did not answer within 50 seconds. The action may still be running in the app (for example ' +
-  'waiting for approval). Check progress with the matching *_status tool.'
+  'FrameTrain did not answer within 50 seconds. The app is online and remote access is working, so do not ' +
+  'ask the user to enable it. The action may still be running in the app (for example waiting for approval): ' +
+  'check progress with the matching *_status tool or retry the same call once. If it keeps timing out, ask ' +
+  'the user to bring the FrameTrain window to the front.'
 
 export const SUBSCRIPTION_TEXT =
   'Dein FrameTrain-Konto hat kein aktives Abo. Bitte unter https://frame-train.com/dashboard eine Lizenz ' +
