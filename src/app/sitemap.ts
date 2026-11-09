@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { routing } from '@/i18n/routing'
-import { siteUrl } from '@/lib/seo'
+import { siteUrl, xDefaultLocale } from '@/lib/seo'
 
 const baseUrl = siteUrl
 
@@ -68,7 +68,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             de: `${baseUrl}/de${page.path}`,
             en: `${baseUrl}/en${page.path}`,
-            'x-default': `${baseUrl}${page.path || '/'}`,
+            'x-default': `${baseUrl}/${xDefaultLocale}${page.path}`,
           },
         },
       })

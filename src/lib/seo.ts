@@ -11,17 +11,22 @@ export const siteUrl = (
  * Canonical + hreflang für eine Seite.
  * `path` ist der Pfad ohne Locale-Präfix, z.B. '' (Startseite) oder '/faq'.
  *
- * x-default zeigt auf die präfixlose URL, die per Middleware auf die passende
- * Sprache weiterleitet – identisch zu den Link-Headern, die next-intl setzt
- * (HTML-Tags und HTTP-Header dürfen sich nicht widersprechen).
+ * x-default zeigt auf die englische Seite – eine echte 200-URL. Früher zeigte
+ * es auf die präfixlose URL, die per Middleware mit 307 (temporär) auf /de
+ * weiterleitet. Bei temporären Redirects behandelt Google die QUELLE als
+ * kanonisch → alle /de-Seiten landeten in der GSC als „Duplikat – Google hat
+ * eine andere Seite als kanonisch bestimmt“ (Nov. 2026). next-intl-Link-Header
+ * sind deshalb in routing.ts abgeschaltet (alternateLinks: false).
  */
+export const xDefaultLocale = 'en'
+
 export function pageAlternates(locale: string, path = ''): Metadata['alternates'] {
   return {
     canonical: `${siteUrl}/${locale}${path}`,
     languages: {
       de: `${siteUrl}/de${path}`,
       en: `${siteUrl}/en${path}`,
-      'x-default': `${siteUrl}${path || '/'}`,
+      'x-default': `${siteUrl}/${xDefaultLocale}${path}`,
     },
   }
 }
