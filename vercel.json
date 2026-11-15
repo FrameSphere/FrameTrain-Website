@@ -7,6 +7,10 @@
     {
       "path": "/api/cron/onboarding-emails",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/review-library-scripts",
+      "schedule": "30 4 * * *"
     }
   ]
 }
