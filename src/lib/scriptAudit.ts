@@ -54,12 +54,18 @@ export interface AutoReview {
 // Diese Muster führen SOFORT zur Ablehnung – unabhängig vom LLM. Defense in depth:
 // die KI kann getäuscht werden, ein Regex-Treffer auf echten Schadcode nicht.
 // Wort-/Aufruf-Grenzen vermeiden Fehltreffer (z. B. „evaluation" ≠ „eval(").
+// eval/exec nur als eingebaute Funktion: Methodenaufrufe wie PyTorchs
+// `model.eval()` oder `.from_pretrained(...).eval()` sind harmlos und dürfen
+// nicht treffen; `builtins.eval(` bzw. `__builtins__.exec(` dagegen schon.
+const BUILTIN_CALL = (name: string) =>
+  new RegExp(`(?:^|[^\\w.])${name}\\s*\\(|\\b(?:__)?builtins(?:__)?\\.${name}\\s*\\(`, 'm');
+
 const HARD_BLOCKERS: { label: string; re: RegExp }[] = [
   { label: 'os.system-Aufruf',            re: /\bos\.system\s*\(/ },
   { label: 'os.popen-Aufruf',             re: /\bos\.popen\s*\(/ },
   { label: 'subprocess-Nutzung',          re: /\bsubprocess\b/ },
-  { label: 'eval()',                      re: /\beval\s*\(/ },
-  { label: 'exec()',                      re: /\bexec\s*\(/ },
+  { label: 'eval()',                      re: BUILTIN_CALL('eval') },
+  { label: 'exec()',                      re: BUILTIN_CALL('exec') },
   { label: 'dynamischer __import__',      re: /\b__import__\s*\(/ },
   { label: 'pickle.load (Deserialisierung)', re: /\bpickle\.loads?\s*\(/ },
   { label: 'marshal.load',                re: /\bmarshal\.loads?\s*\(/ },
@@ -270,7 +276,8 @@ export function decide(result: AuditResult): { decision: Decision; reason: strin
   if (!c.safety.pass)  return { decision: 'reject', reason: `Sicherheit: ${c.safety.note || 'nicht bestanden'}` };
   if (!c.content.pass) return { decision: 'reject', reason: `Inhalt: ${c.content.note || 'nicht bestanden'}` };
   if (result.verdict === 'reject' || result.score < REJECT_THRESHOLD)
-    return { decision: 'reject', reason: `AI: ${result.summary || 'Score zu niedrig'} (${result.score}/100)` };
+    // Ohne „AI:"-Präfix – die Routen setzen es beim Speichern selbst davor.
+    return { decision: 'reject', reason: `${result.summary || 'Score zu niedrig'} (${result.score}/100)` };
 
   // Freigabe nur bei eindeutig sauberem Ergebnis
   const allPass = c.safety.pass && c.content.pass && c.consistency.pass && c.correctness.pass && c.compatibility.pass;
