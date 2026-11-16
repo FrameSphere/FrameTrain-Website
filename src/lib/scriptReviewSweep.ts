@@ -86,7 +86,10 @@ export async function sweepScripts(candidates: ReviewCandidate[], deps: SweepDep
     .map((s) => ({ s, why: recheckReason(s) }))
     .filter((x): x is { s: ReviewCandidate; why: RecheckReason } => x.why !== null);
 
-  return Promise.all(todo.map(async ({ s, why }): Promise<SweepOutcome> => {
+  // Nacheinander, nicht parallel: der kostenlose Groq-Tarif begrenzt Tokens pro
+  // Minute, vier gleichzeitige Prüfungen liefen dort in ein 429.
+  const outcomes: SweepOutcome[] = [];
+  for (const { s, why } of todo) {
     try {
       const { result, decision, reason } = await review({
         name: s.name, description: s.description, author: s.author,
@@ -94,9 +97,10 @@ export async function sweepScripts(candidates: ReviewCandidate[], deps: SweepDep
         script_type: s.script_type, tags: s.tags, script: s.script,
       });
       await deps.save(s.id, reviewUpdate(result, decision, reason, now()));
-      return { id: s.id, name: s.name, why, decision, reason };
+      outcomes.push({ id: s.id, name: s.name, why, decision, reason });
     } catch (e) {
-      return { id: s.id, name: s.name, why, error: (e as Error).message || 'Prüfung fehlgeschlagen' };
+      outcomes.push({ id: s.id, name: s.name, why, error: (e as Error).message || 'Prüfung fehlgeschlagen' });
     }
-  }));
+  }
+  return outcomes;
 }

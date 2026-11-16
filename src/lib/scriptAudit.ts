@@ -1,7 +1,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// FrameTrain Open Library – automatische Script-Prüfung mit Claude (Anthropic)
+// FrameTrain Open Library – automatische Script-Prüfung (Groq oder Claude)
 // ─────────────────────────────────────────────────────────────────────────────
-// Ersetzt die alte Groq-Prüfung. Wird an zwei Stellen genutzt:
+// Anbieter per Env wählbar (siehe auditProvider): Groq (kostenloser Tarif) oder
+// Claude (Anthropic). Wird an zwei Stellen genutzt:
 //   1. Beim Upload  (POST /api/library/scripts)        → sofortige Auto-Entscheidung
 //   2. Im Admin-UI  (POST /api/library/admin/ai-check) → manuelle Re-Prüfung
 //
@@ -11,6 +12,7 @@
 
 // ── Modell / Konfiguration (per Vercel-Env überschreibbar) ───────────────────
 const AI_MODEL          = process.env.AI_AUDIT_MODEL      ?? 'claude-sonnet-5';
+const GROQ_MODEL        = process.env.GROQ_AUDIT_MODEL    ?? 'llama-3.3-70b-versatile';
 const APPROVE_THRESHOLD = numEnv('AI_APPROVE_THRESHOLD', 85); // Score >= X für Auto-Freigabe
 const REJECT_THRESHOLD  = numEnv('AI_REJECT_THRESHOLD',  40); // Score <  X → Auto-Ablehnung
 
@@ -160,6 +162,86 @@ Verdict-Leitfaden (streng):
 - "reject"  → score < 40 ODER ein Safety-Fail ODER ein Content-Verstoß`;
 }
 
+// ── Anbieter ──────────────────────────────────────────────────────────────────
+export type AuditProvider = 'groq' | 'anthropic';
+
+/**
+ * Welcher Anbieter prüft? `AI_AUDIT_PROVIDER` (groq | anthropic) entscheidet;
+ * ohne Angabe Groq, sobald `GROQ_API_KEY` gesetzt ist, sonst Claude.
+ */
+export function auditProvider(env: Record<string, string | undefined> = process.env): AuditProvider {
+  const wanted = (env.AI_AUDIT_PROVIDER ?? '').trim().toLowerCase();
+  if (wanted === 'groq' || wanted === 'anthropic') return wanted;
+  return env.GROQ_API_KEY ? 'groq' : 'anthropic';
+}
+
+const SYSTEM_PROMPT =
+  'Du bist ein strenger Sicherheits- und ML-Qualitäts-Auditor. Antworte immer ' +
+  'mit reinem JSON. Kein Markdown, kein zusätzlicher Text.';
+
+/** Modellantwort → AuditResult. Wirft, wenn kein JSON-Objekt darin steckt. */
+export function parseAuditJson(rawText: string): AuditResult {
+  const cleaned = rawText.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+  // Robust: falls doch Prosa drumherum steht, das äußere JSON-Objekt ausschneiden.
+  const start = cleaned.indexOf('{');
+  const end   = cleaned.lastIndexOf('}');
+  const jsonStr = start >= 0 && end > start ? cleaned.slice(start, end + 1) : cleaned;
+  let parsed: Partial<AuditResult>;
+  try {
+    parsed = JSON.parse(jsonStr);
+  } catch {
+    console.error('JSON parse failed:', rawText);
+    throw new Error('Die KI-Prüfung hat kein valides JSON zurückgegeben');
+  }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new Error('Die KI-Prüfung hat kein valides JSON zurückgegeben');
+  }
+  return normalizeResult(parsed);
+}
+
+// ── Groq-Aufruf (OpenAI-kompatibel) ───────────────────────────────────────────
+// Der kostenlose Tarif ist nach Anfragen und Tokens pro Minute begrenzt. Ein 429
+// wird einmal nach der genannten Wartezeit wiederholt; danach gilt die Prüfung als
+// ausgefallen und der Nachprüf-Lauf (scriptReviewSweep) holt sie später nach.
+async function callGroq(prompt: string, fetchImpl: typeof fetch = fetch): Promise<AuditResult> {
+  const key = process.env.GROQ_API_KEY;
+  if (!key) throw new Error('GROQ_API_KEY nicht konfiguriert');
+
+  const send = () => fetchImpl('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: GROQ_MODEL,
+      temperature: 0.1,
+      max_tokens: 1500,
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user',   content: prompt },
+      ],
+    }),
+  });
+
+  let res = await send();
+  if (res.status === 429) {
+    const wait = Math.min(Math.max(Number(res.headers.get('retry-after')) || 5, 1), 15);
+    await new Promise((r) => setTimeout(r, wait * 1000));
+    res = await send();
+  }
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Groq error:', res.status, err);
+    throw new Error(`Groq Fehler: ${res.status}`);
+  }
+  const data = await res.json();
+  return parseAuditJson(String(data?.choices?.[0]?.message?.content ?? ''));
+}
+
+/** Ruft den konfigurierten Anbieter auf. */
+async function callModel(prompt: string): Promise<AuditResult> {
+  return auditProvider() === 'groq' ? callGroq(prompt) : callClaude(prompt);
+}
+
 // ── Claude-Aufruf ─────────────────────────────────────────────────────────────
 async function callClaude(prompt: string): Promise<AuditResult> {
   const key = process.env.ANTHROPIC_API_KEY;
@@ -177,9 +259,7 @@ async function callClaude(prompt: string): Promise<AuditResult> {
       max_tokens: 2500,
       // Kurze, aber vorhandene Denkphase; hält Kosten/Latenz niedrig.
       output_config: { effort: 'low' },
-      system:
-        'Du bist ein strenger Sicherheits- und ML-Qualitäts-Auditor. Antworte immer ' +
-        'mit reinem JSON. Kein Markdown, kein zusätzlicher Text.',
+      system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     }),
   });
@@ -198,20 +278,7 @@ async function callClaude(prompt: string): Promise<AuditResult> {
     .join('')
     .trim();
 
-  const cleaned = rawText.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
-  // Robust: falls doch Prosa drumherum steht, das äußere JSON-Objekt ausschneiden.
-  const start = cleaned.indexOf('{');
-  const end   = cleaned.lastIndexOf('}');
-  const jsonStr = start >= 0 && end > start ? cleaned.slice(start, end + 1) : cleaned;
-
-  let parsed: AuditResult;
-  try {
-    parsed = JSON.parse(jsonStr);
-  } catch {
-    console.error('JSON parse failed:', rawText);
-    throw new Error('Claude hat kein valides JSON zurückgegeben');
-  }
-  return normalizeResult(parsed);
+  return parseAuditJson(rawText);
 }
 
 function normalizeResult(r: Partial<AuditResult>): AuditResult {
@@ -259,7 +326,7 @@ export async function auditScript(script: ScriptInput): Promise<AuditResult> {
     };
   }
 
-  const result = await callClaude(buildPrompt(script, hardHits, envVars));
+  const result = await callModel(buildPrompt(script, hardHits, envVars));
   // Env-Var-Befund deterministisch erzwingen (LLM kann es übersehen).
   if (envVars.length === 0 && result.checks.compatibility.pass) {
     result.checks.compatibility = { pass: false, note: 'Keine FrameTrain-Env-Vars (MODEL_PATH/DATASET_PATH/OUTPUT_PATH) genutzt' };
