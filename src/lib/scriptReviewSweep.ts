@@ -11,6 +11,7 @@
 // jederzeit von Hand angestoßen werden (siehe api/cron/review-library-scripts).
 
 import { findHardBlockers, runAutoReview, type AuditResult, type Decision, type ScriptInput } from './scriptAudit';
+import { findManipulation } from './scriptGuards';
 
 /** So speichern die Routen eine Ablehnung durch eine Sperr-Regel. */
 const RULE_REJECTION = /^AI:\s*(AI:\s*)?Sicherheit:\s*Blockierte Muster:/;
@@ -35,7 +36,8 @@ export type RecheckReason = 'unchecked' | 'rule_no_longer_matches';
 export function recheckReason(s: Pick<ReviewCandidate, 'verified' | 'aiCheckedAt' | 'rejectedAt' | 'rejectedReason' | 'script'>): RecheckReason | null {
   if (s.verified) return null;
   if (!s.rejectedAt) return s.aiCheckedAt ? null : 'unchecked';
-  if (RULE_REJECTION.test(s.rejectedReason ?? '') && findHardBlockers(s.script).length === 0) {
+  if (RULE_REJECTION.test(s.rejectedReason ?? '') && findHardBlockers(s.script).length === 0
+      && findManipulation(s.script).length === 0) {
     return 'rule_no_longer_matches';
   }
   return null;

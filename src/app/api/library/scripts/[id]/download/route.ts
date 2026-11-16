@@ -14,13 +14,25 @@ export async function OPTIONS() {
 }
 
 // ── POST /api/library/scripts/[id]/download ───────────────────────────────
-// Erhöht den Download-Zähler um 1 und gibt das vollständige Skript zurück
+// Erhöht den Download-Zähler um 1 und gibt das vollständige Skript zurück.
+// Abgelehnte Skripte sind gesperrt und werden an niemanden ausgeliefert –
+// vorher reichte die ID, um auch ein abgelehntes Skript zu laden.
 export async function POST(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
+    const current = await prisma.libraryScript.findUnique({ where: { id }, select: { rejectedAt: true } });
+    if (!current) {
+      return NextResponse.json({ error: 'Skript nicht gefunden' }, { status: 404, headers: CORS });
+    }
+    if (current.rejectedAt) {
+      return NextResponse.json(
+        { error: 'Dieses Skript wurde bei der Sicherheitsprüfung abgelehnt und ist gesperrt.' },
+        { status: 403, headers: CORS },
+      );
+    }
     const updated = await prisma.libraryScript.update({
       where: { id },
       data:  { downloads: { increment: 1 } },
