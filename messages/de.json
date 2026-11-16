@@ -8201,7 +8201,7 @@
     },
     "Compare": {
         "metaTitle": "Unsloth vs. MLX LoRA Studio vs. FrameTrain (Vergleich 2026)",
-        "metaDescription": "Unsloth oder MLX für Fine-Tuning? Unsloth zielt auf NVIDIA, MLX LoRA Studio nur auf den Mac, FrameTrain läuft auf beidem. Plattformen, LoRA und Preis.",
+        "metaDescription": "Unsloth Studio, MLX LoRA Studio oder FrameTrain für lokales Fine-Tuning? Ehrlicher Vergleich 2026: Oberfläche, Mac und NVIDIA, Datensätze, Bildmodelle und Preis.",
         "keywords": [
             "FrameTrain vs Unsloth",
             "MLX LoRA Studio Alternative",
@@ -8218,10 +8218,10 @@
         "heroTitleLine2": "vs. Unsloth",
         "heroSubtitle": "Es gibt nicht das eine „beste“ lokale Fine-Tuning-Tool – es hängt von deiner Hardware und Arbeitsweise ab. Hier ein ehrlicher Direktvergleich zur Entscheidung.",
         "intro": {
-            "p1": "Alle drei erlauben Fine-Tuning auf eigener Hardware, lösen aber unterschiedliche Probleme. <b>Unsloth</b> ist eine Code-first-Bibliothek für maximale Geschwindigkeit und Speichereffizienz auf NVIDIA-GPUs. <b>MLX LoRA Studio</b> ist eine kostenlose Open-Source-App für den Mac auf Basis von Apples MLX-Framework. <b>FrameTrain</b> ist eine plattformübergreifende Desktop-Umgebung, die den gesamten Workflow – Datensätze, Training, Monitoring, Testen, Versionierung – in einer GUI bündelt.",
-            "p2": "Willst du ein grafisches All-in-one-Tool für Windows, macOS und Linux, ist FrameTrain gebaut für dich. Lebst du in Python und holst jedes Token pro Sekunde aus einer NVIDIA-Karte, ist Unsloth exzellent. Trainierst du nur Sprachmodelle auf Apple Silicon und willst eine schlanke, kostenlose native App, passt MLX LoRA Studio vielleicht am besten."
+            "p1": "Alle drei trainieren Modelle auf deiner eigenen Hardware, setzen aber unterschiedliche Schwerpunkte. <b>Unsloth</b> ist als schnelle Python-Bibliothek bekannt geworden und bringt mit Unsloth Studio inzwischen eine kostenlose Oberfläche für Sprachmodelle mit. <b>MLX LoRA Studio</b> ist eine kostenlose Open-Source-App nur für den Mac. <b>FrameTrain</b> ist eine Desktop-App für Windows, macOS und Linux, die den ganzen Weg abdeckt – Datensatz, Training, Monitoring, Test und Versionierung.",
+            "p2": "Unsloth und MLX LoRA Studio sind stark, wenn du ausschließlich Sprachmodelle feinjustierst und dein Datensatz schon fertig ist. Sobald du Daten erst sammeln und labeln musst, auch Bild- oder Audiomodelle trainierst oder viele Läufe übersichtlich vergleichen willst, ist <b>FrameTrain</b> die passendere Wahl."
         },
-        "lastUpdated": "Vergleich zuletzt geprüft: Oktober 2026.",
+        "lastUpdated": "Vergleich zuletzt geprüft: November 2026.",
         "matrix": {
             "heading": "Feature-Vergleich",
             "colHeaders": [
@@ -8240,19 +8240,19 @@
                     "feature": "Native Desktop-GUI",
                     "frametrain": "yes",
                     "mlx": "yes",
-                    "unsloth": "no"
+                    "unsloth": "yes"
                 },
                 {
                     "feature": "Plattformen",
                     "frametrain": "Windows, macOS, Linux",
                     "mlx": "nur macOS",
-                    "unsloth": "Linux, Windows (WSL)"
+                    "unsloth": "Windows, macOS, Linux"
                 },
                 {
                     "feature": "Apple Silicon (M1–M4)",
                     "frametrain": "yes",
                     "mlx": "yes",
-                    "unsloth": "partial"
+                    "unsloth": "Ja, über MLX"
                 },
                 {
                     "feature": "NVIDIA CUDA",
@@ -8288,7 +8288,7 @@
                     "feature": "Dataset-Management in GUI",
                     "frametrain": "yes",
                     "mlx": "partial",
-                    "unsloth": "no"
+                    "unsloth": "partial"
                 },
                 {
                     "feature": "Modell-Versionierung & Lauf-Vergleich",
@@ -8300,7 +8300,7 @@
                     "feature": "Live-Training-Monitoring (GUI)",
                     "frametrain": "yes",
                     "mlx": "yes",
-                    "unsloth": "partial"
+                    "unsloth": "yes"
                 },
                 {
                     "feature": "Komplett lokal / offline",
@@ -8318,19 +8318,19 @@
                     "feature": "Python-Einrichtung",
                     "frametrain": "Python 3.10–3.13 nötig",
                     "mlx": "Richtet die App ein",
-                    "unsloth": "Eigene Python-Umgebung"
+                    "unsloth": "Desktop-App oder pip"
                 },
                 {
                     "feature": "Preis",
                     "frametrain": "ab 3,33 € im Monat",
                     "mlx": "Kostenlos (MIT-Lizenz)",
-                    "unsloth": "Open-Source-Version kostenlos"
+                    "unsloth": "Kostenlos (Open Source)"
                 },
                 {
                     "feature": "Am besten für",
                     "frametrain": "All-in-one, plattformübergreifende GUI",
                     "mlx": "Native Apple-Silicon-Nutzer",
-                    "unsloth": "Max. Speed auf NVIDIA, Code-first"
+                    "unsloth": "Schnelles LLM-Fine-Tuning, v. a. auf NVIDIA"
                 }
             ]
         },
@@ -8352,22 +8352,22 @@
                 {
                     "name": "Unsloth",
                     "tag": "Code-first Speed",
-                    "desc": "Eine Open-Source-Python-Bibliothek, die LoRA/QLoRA-Fine-Tuning auf NVIDIA-GPUs deutlich schneller und speichereffizienter macht.",
-                    "bestFor": "Du arbeitest in Python/Notebooks auf NVIDIA-Hardware und willst maximale Performance."
+                    "desc": "Open-Source-Bibliothek mit kostenloser Oberfläche (Unsloth Studio), die LoRA/QLoRA-Fine-Tuning von Sprachmodellen deutlich schneller und speichersparender macht – besonders auf NVIDIA-GPUs.",
+                    "bestFor": "Du feinjustierst nur Sprachmodelle, dein Datensatz ist fertig und du willst maximale Geschwindigkeit."
                 }
             ]
         },
-        "disclaimer": "¹ „MLX LoRA Studio“ meint die Open-Source-App für den Mac von Goekdeniz Guelmez (github.com/Goekdeniz-Guelmez/MLX-LoRA-Studio). Angaben zu Drittanbieter-Tools geben deren öffentliche Dokumentation mit Stand Oktober 2026 wieder und können sich ändern – bitte auf den offiziellen Quellen prüfen.",
+        "disclaimer": "¹ „MLX LoRA Studio“ meint die Open-Source-App für den Mac von Goekdeniz Guelmez (github.com/Goekdeniz-Guelmez/MLX-LoRA-Studio). Angaben zu Drittanbieter-Tools geben deren öffentliche Dokumentation mit Stand November 2026 wieder und können sich ändern – bitte auf den offiziellen Quellen prüfen.",
         "faq": {
             "heading": "Vergleichs-FAQ",
             "items": [
                 {
                     "question": "Ist FrameTrain eine gute Unsloth-Alternative?",
-                    "answer": "Wenn du eine grafische, plattformübergreifende App statt einer Python-Bibliothek willst: ja. Unsloth ist auf NVIDIA-GPUs für Code-first-Workflows schneller; FrameTrain tauscht etwas Rohgeschwindigkeit gegen eine komplette GUI, die auch auf macOS und Linux läuft und Datensätze, Monitoring und Versionierung abdeckt."
+                    "answer": "Ja, wenn du mehr als Sprachmodelle trainierst oder deinen Datensatz erst bauen musst. Unsloth ist beim reinen LLM-Fine-Tuning auf NVIDIA in der Regel schneller und hat mit Unsloth Studio inzwischen auch eine Oberfläche. FrameTrain deckt dafür den ganzen Workflow ab: Datensätze bauen und labeln, Bild- und Audiomodelle, Versionierung und Tests im Labor."
                 },
                 {
                     "question": "Funktioniert FrameTrain ohne NVIDIA-GPU?",
-                    "answer": "Ja. FrameTrain läuft auf Apple Silicon via Metal MPS und auf NVIDIA-GPUs via CUDA – du bist nicht an einen Hersteller gebunden. MLX-basierte Tools sind macOS-only; Unsloth ist primär NVIDIA-fokussiert."
+                    "answer": "Ja. FrameTrain läuft auf Apple Silicon über Metal (MPS) und auf NVIDIA-GPUs über CUDA, du bist also an keinen Hersteller gebunden. MLX-basierte Tools wie MLX LoRA Studio laufen nur auf dem Mac."
                 },
                 {
                     "question": "Welches Tool ist am besten für Apple Silicon?",
@@ -8375,7 +8375,7 @@
                 },
                 {
                     "question": "Unsloth oder MLX – was ist auf dem Mac besser?",
-                    "answer": "Auf Apple Silicon ist MLX die native Wahl: Die Geschwindigkeits-Optimierungen von Unsloth zielen auf NVIDIA-GPUs und greifen auf M-Macs nicht. MLX LoRA Studio packt MLX hinter eine Oberfläche. FrameTrain geht einen anderen Weg und trainiert mit PyTorch über Metal (MPS) – dieselbe App läuft so auch auf NVIDIA."
+                    "answer": "Beide nutzen auf Apple Silicon inzwischen MLX: MLX LoRA Studio von Anfang an, Unsloth Studio laut eigener Dokumentation seit 2026. Für reines LLM-Fine-Tuning sind beide gute, kostenlose Optionen. FrameTrain geht einen anderen Weg und trainiert mit PyTorch über Metal (MPS) – dadurch läuft dasselbe Projekt auch auf NVIDIA, und neben Sprachmodellen trainierst du in derselben App auch Bild- und Audiomodelle."
                 },
                 {
                     "question": "Ist MLX LoRA Studio kostenlos?",
@@ -9797,7 +9797,7 @@
         "faq": [
             {
                 "question": "Ist MLX schneller als PyTorch?",
-                "answer": "Beim LoRA-Fine-Tuning von Sprachmodellen auf Apple Silicon wird MLX häufig als schneller und speichersparender beschrieben. Wie groß der Unterschied ist, hängt von Modell, Chip und Speicher ab. Für andere Modelltypen ist PyTorch wegen des größeren Ökosystems meist die praktischere Wahl."
+                "answer": "Beim LoRA-Fine-Tuning von Sprachmodellen auf Apple Silicon wird MLX häufig als schneller und speichersparender beschrieben. Wie groß der Unterschied ist, hängt von Modell, Chip und Speicher ab. Für andere Modelltypen ist PyTorch wegen des größeren Ökosystems meist die praktischere Wahl. FrameTrain trainiert deshalb mit PyTorch: eine App für Sprach-, Bild- und Audiomodelle, die auch auf NVIDIA läuft."
             },
             {
                 "question": "Kann ich MLX-Modelle in PyTorch weiterverwenden?",
@@ -10830,7 +10830,7 @@
             },
             {
                 "question": "Kann Create ML Sprachmodelle feinjustieren?",
-                "answer": "Nein. Create ML trainiert Klassifikations- und Erkennungsmodelle, aber kein LoRA-Fine-Tuning großer Sprachmodelle. Dafür eignen sich FrameTrain, Unsloth Studio oder MLX LoRA Studio."
+                "answer": "Nein. Create ML trainiert Klassifikations- und Erkennungsmodelle, aber kein LoRA-Fine-Tuning großer Sprachmodelle. FrameTrain kann beides in einer App – Bildmodelle und Sprachmodelle. Reine LLM-Tools wie Unsloth Studio oder MLX LoRA Studio decken nur die Sprachmodelle ab."
             },
             {
                 "question": "Brauche ich für Create ML einen Mac mit Apple Silicon?",
@@ -10974,7 +10974,7 @@
         "faq": [
             {
                 "question": "Gibt es eine lokale Alternative zu Roboflow?",
-                "answer": "Ja. FrameTrain labelt Bilder, trainiert YOLO-Modelle und testet sie komplett lokal auf Mac, Windows oder Linux. Für reines Labeling gibt es außerdem Open-Source-Tools wie Label Studio oder CVAT, die du selbst hostest."
+                "answer": "Ja. FrameTrain labelt Bilder, trainiert YOLO-Modelle und testet sie komplett lokal auf Mac, Windows oder Linux. Reine Labeling-Tools wie Label Studio oder CVAT lassen sich zwar selbst hosten, trainieren aber kein Modell – dafür bräuchtest du wieder ein zweites Werkzeug."
             },
             {
                 "question": "Kann ich Roboflow-Datensätze in FrameTrain verwenden?",
@@ -11101,7 +11101,7 @@
                     },
                     {
                         "title": "Apple Create ML",
-                        "text": "Kostenlos und sehr einfach, wenn deine Bilder schon in Klassenordnern liegen und das Modell in eine Apple-App soll."
+                        "text": "Kostenlos und sehr einfach, wenn deine Bilder schon in Klassenordnern liegen und das Modell in eine Apple-App soll. Labeln von Objekten kann es nicht – dafür brauchst du ein zweites Werkzeug oder <b>FrameTrain</b>."
                     },
                     {
                         "title": "Google Teachable Machine",
@@ -11109,7 +11109,7 @@
                     },
                     {
                         "title": "Roboflow",
-                        "text": "Professionelle Cloud-Plattform mit Team-Labeling. Kostenlos nur, wenn deine Daten öffentlich sein dürfen."
+                        "text": "Professionelle Cloud-Plattform mit Team-Labeling. Kostenlos nur, wenn deine Daten öffentlich sein dürfen; denselben Ablauf ohne Upload bietet <b>FrameTrain</b> lokal."
                     }
                 ]
             }
@@ -11249,7 +11249,7 @@
         "faq": [
             {
                 "question": "Kann Kiln lokal auf dem Mac fine-tunen?",
-                "answer": "Nicht direkt in der App. Kiln startet Fine-Tuning bei Anbietern wie Fireworks, Together, OpenAI oder Google Vertex. Alternativ exportiert es den Datensatz als JSONL, den du mit Unsloth oder Axolotl selbst trainierst."
+                "answer": "Nicht direkt in der App. Kiln startet Fine-Tuning bei Anbietern wie Fireworks, Together, OpenAI oder Google Vertex. Alternativ exportiert es den Datensatz als JSONL – den kannst du in FrameTrain importieren und ohne Code lokal auf deinem Mac trainieren."
             },
             {
                 "question": "Kann ich Kiln und FrameTrain kombinieren?",
