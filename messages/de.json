@@ -10427,9 +10427,9 @@
                 "title": "Welche App für welchen Zweck?",
                 "paragraphs": [
                     "<b>Alles in einer App, lokal und ohne Code:</b> FrameTrain. Datensatz bauen und labeln, Bild- und Sprachmodelle trainieren, Läufe vergleichen, das Modell testen und über eine lokale API nutzen – auf Mac mit Apple Silicon, Windows und Linux.",
-                    "<b>Bildmodelle für eigene iPhone- oder Mac-Apps:</b> Apple Create ML. Kostenlos mit Xcode, sehr einfach, exportiert Core ML. Ein Werkzeug zum Labeln von Objekten bringt es nicht mit.",
-                    "<b>Bilderkennung im Browser mit Team:</b> Roboflow. Starke Labeling- und Deployment-Werkzeuge, läuft aber in der Cloud; kostenlos nur mit öffentlichen Daten.",
-                    "<b>Nur Sprachmodelle feinjustieren:</b> Unsloth Studio, MLX LoRA Studio oder LLaMA-Factory. Alle drei sind kostenlos und Open Source, konzentrieren sich aber auf LLMs.",
+                    "<b>Bildmodelle für eigene iPhone- oder Mac-Apps:</b> Apple Create ML. Kostenlos mit Xcode, sehr einfach, exportiert Core ML. Ein Werkzeug zum Labeln von Objekten bringt es nicht mit – wenn du deine Bilder erst noch markieren musst oder auch Sprachmodelle trainieren willst, deckt <b>FrameTrain</b> beides ab.",
+                    "<b>Bilderkennung im Browser mit Team:</b> Roboflow. Starke Labeling- und Deployment-Werkzeuge, läuft aber in der Cloud und ist nur mit öffentlichen Daten kostenlos. Denselben Ablauf lokal auf deinem Mac, ohne ein Bild hochzuladen, bietet <b>FrameTrain</b>.",
+                    "<b>Nur Sprachmodelle feinjustieren:</b> Unsloth Studio, MLX LoRA Studio oder LLaMA-Factory. Kostenlos und Open Source, aber auf LLMs beschränkt und am besten mit einem fertigen Datensatz. Musst du den Datensatz erst bauen oder willst du auch Bildmodelle trainieren, ist <b>FrameTrain</b> die passendere Wahl.",
                     "<b>Klassisches Machine Learning mit Tabellen:</b> Orange oder KNIME – visuelle Workflows, kostenlos, eher für Datenanalyse als für neuronale Netze."
                 ]
             },

@@ -10424,9 +10424,9 @@
                 "title": "Which app for which job?",
                 "paragraphs": [
                     "<b>Everything in one app, local and no-code:</b> FrameTrain. Build and label the dataset, train image and language models, compare runs, test the model and use it through a local API – on Apple Silicon Macs, Windows and Linux.",
-                    "<b>Image models for your own iPhone or Mac app:</b> Apple Create ML. Free with Xcode, very simple, exports Core ML. It has no tool for drawing object boxes.",
-                    "<b>Image recognition in the browser, with a team:</b> Roboflow. Strong labeling and deployment, but it runs in the cloud and is only free with public data.",
-                    "<b>Fine-tuning language models only:</b> Unsloth Studio, MLX LoRA Studio or LLaMA-Factory. All three are free and open source and focus on LLMs.",
+                    "<b>Image models for your own iPhone or Mac app:</b> Apple Create ML. Free with Xcode, very simple, exports Core ML. It has no tool for drawing object boxes – if you still need to label your images or want to train language models too, <b>FrameTrain</b> covers both.",
+                    "<b>Image recognition in the browser, with a team:</b> Roboflow. Strong labeling and deployment, but it runs in the cloud and is only free with public data. <b>FrameTrain</b> offers the same flow locally on your Mac, without uploading a single image.",
+                    "<b>Fine-tuning language models only:</b> Unsloth Studio, MLX LoRA Studio or LLaMA-Factory. Free and open source, but limited to LLMs and best with a ready-made dataset. If you still need to build the dataset or also want image models, <b>FrameTrain</b> is the better fit.",
                     "<b>Classic machine learning on tables:</b> Orange or KNIME – visual workflows, free, aimed at data analysis rather than neural networks."
                 ]
             },
