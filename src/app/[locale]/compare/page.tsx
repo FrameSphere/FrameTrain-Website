@@ -192,7 +192,7 @@ export default async function ComparePage({ params }: Props) {
             {/* Einzelvergleiche */}
             <div>
               <h2 className="ft-label m-0 px-1">{t('more.heading')}</h2>
-              <ul className="mt-4 p-0 list-none grid gap-x-8 sm:grid-cols-3">
+              <ul className="mt-4 p-0 list-none grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
                 {(t.raw('more.items') as { href: string; label: string }[]).map((m) => (
                   <li key={m.href} className="border-b border-line">
                     <Link href={m.href} className="group flex items-center justify-between gap-4 py-4 text-[16px] text-ink-muted hover:text-ink transition-colors duration-150">

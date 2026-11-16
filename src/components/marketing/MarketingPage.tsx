@@ -91,6 +91,8 @@ export async function MarketingPage({ locale, ns, path }: { locale: string; ns: 
   const faq = (t.has('faq') ? t.raw('faq') : []) as FaqEntry[]
   const related = (t.has('related') ? t.raw('related') : []) as { href: string; label: string }[]
   const heroShot = t.has('heroShot') ? (t('heroShot') as string) : null
+  // Optional: Ranglisten-/Übersichtsseiten ("beste Software für …") als ItemList auszeichnen
+  const itemList = (t.has('itemList') ? t.raw('itemList') : []) as string[]
   const labels = { yes: tCommon('yes'), no: tCommon('no'), partial: tCommon('partial') }
 
   const breadcrumbLd = {
@@ -115,6 +117,26 @@ export async function MarketingPage({ locale, ns, path }: { locale: string; ns: 
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
               mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+            }),
+          }}
+        />
+      )}
+
+      {itemList.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'ItemList',
+              name: t('metaTitle'),
+              itemListOrder: 'https://schema.org/ItemListUnordered',
+              numberOfItems: itemList.length,
+              itemListElement: itemList.map((name, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                item: { '@type': 'SoftwareApplication', name, applicationCategory: 'DeveloperApplication' },
+              })),
             }),
           }}
         />

@@ -35,12 +35,17 @@ export function Footer() {
     { href: '/about', label: t('about') },
   ]
   const audience = [
+    { href: '/best-ai-training-software-mac', label: t('bestMac') },
     { href: '/computer-vision', label: t('computerVision') },
+    { href: '/guides/parking-space-detection', label: t('parkingGuide') },
     { href: '/apple-silicon', label: t('mac') },
     { href: '/gdpr', label: t('gdpr') },
     { href: '/compare/unsloth', label: t('vsUnsloth') },
     { href: '/compare/mlx-lora-studio', label: t('vsMlxLoraStudio') },
     { href: '/compare/google-colab', label: t('vsColab') },
+    { href: '/compare/create-ml', label: t('vsCreateMl') },
+    { href: '/compare/roboflow', label: t('vsRoboflow') },
+    { href: '/compare/lobe', label: t('lobeAlternative') },
     { href: '/guides/mlx-vs-pytorch', label: t('mlxVsPytorch') },
   ]
   const legal = [

@@ -49,11 +49,20 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 - [LoRA fine-tuning](${base}/en/guides/lora-finetuning): step-by-step local LoRA fine-tuning
 - [Local vs. cloud training](${base}/en/guides/local-vs-cloud): when to train locally vs. in the cloud
 - [GPU guide](${base}/en/guides/gpu-guide): choosing hardware for local training
+- [Parking space detection with AI](${base}/en/guides/parking-space-detection): train a no-code model that detects free and occupied parking spaces from a camera, locally on a Mac
+- [AI for spelling correction](${base}/en/guides/spelling-correction-ai): fine-tune a small language model with LoRA on sentence pairs, locally
 
 ## Product
 - [Homepage](${base}/en): what FrameTrain is and who it is for
 - [Apple Silicon](${base}/en/apple-silicon): local AI training on Mac (M1/M2/M3/M4) via Metal MPS, no CUDA
+- [Best AI training software for Mac 2026](${base}/en/best-ai-training-software-mac): FrameTrain, Create ML, Roboflow, Unsloth Studio, MLX LoRA Studio, LLaMA-Factory, Kiln, Axolotl, Orange, KNIME compared by use case
 - [Compare](${base}/en/compare): Unsloth vs. MLX LoRA Studio vs. FrameTrain
+- [FrameTrain vs. Apple Create ML](${base}/en/compare/create-ml): Core ML for Apple apps vs. full local workflow incl. labeling and LLMs
+- [FrameTrain vs. Roboflow](${base}/en/compare/roboflow): cloud computer vision platform vs. local labeling and YOLO training
+- [Lobe alternatives](${base}/en/compare/lobe): replacements for the discontinued Microsoft Lobe
+- [FrameTrain vs. Kiln](${base}/en/compare/kiln): cloud-provider fine-tuning vs. local training
+- [FrameTrain vs. LLaMA-Factory](${base}/en/compare/llama-factory): WebUI for many LLMs vs. guided desktop app
+- [FrameTrain vs. Unsloth Studio](${base}/en/compare/unsloth): LLM-focused studio vs. multi-modality workflow
 - [FrameTrain vs. MLX LoRA Studio](${base}/en/compare/mlx-lora-studio): MLX-based Mac app vs. full cross-platform workflow
 - [Download](${base}/en/download): get FrameTrain for Windows, macOS and Linux
 - [Screenshots](${base}/en/screenshots): real screenshots of the desktop app
@@ -62,7 +71,9 @@ FrameTrain is aimed at developers, researchers and privacy-conscious teams who w
 - [About](${base}/en/about): the project, its stack and open-source components
 
 ## Facts
-- Category: local AI / machine-learning training desktop application
+- Category: local AI / machine-learning training desktop application (no-code AI training software for Mac, Windows and Linux)
+- Typical use cases: no-code image classification and object detection (e.g. parking occupancy detection), local LLM fine-tuning (e.g. spelling correction), managing many datasets, models and training runs in one dashboard
+- Requirements: Python 3.10–3.13; on Mac only Apple Silicon (M1 or newer), no Intel Macs
 - Platforms: Windows, macOS, Linux
 - Hardware: NVIDIA CUDA GPUs and Apple Silicon (M1/M2/M3/M4, Metal MPS)
 - Core tech: PyTorch, Hugging Face, PEFT/LoRA, QLoRA, BitsAndBytes, Tauri/Rust

@@ -59,7 +59,7 @@
         "computerVision": "Objekterkennung",
         "mac": "Mac & Apple Silicon",
         "gdpr": "DSGVO & Unternehmen",
-        "vsUnsloth": "vs. Unsloth",
+        "vsUnsloth": "vs. Unsloth Studio",
         "vsMlxLoraStudio": "vs. MLX LoRA Studio",
         "vsColab": "vs. Google Colab",
         "mlxVsPytorch": "MLX vs. PyTorch",
@@ -67,7 +67,12 @@
         "withdrawal": "Vertrag widerrufen",
         "cancel": "Verträge hier kündigen",
         "support": "Support",
-        "aiConnections": "Claude & ChatGPT verbinden"
+        "aiConnections": "Claude & ChatGPT verbinden",
+        "bestMac": "Beste KI-Software für Mac",
+        "vsCreateMl": "vs. Create ML",
+        "vsRoboflow": "vs. Roboflow",
+        "lobeAlternative": "Lobe-Alternativen",
+        "parkingGuide": "Parkplatzerkennung mit KI"
     },
     "Imprint": {
         "metaTitle": "Impressum – FrameTrain",
@@ -3580,6 +3585,26 @@
                     "PyTorch"
                 ],
                 "href": "/guides/mlx-vs-pytorch"
+            },
+            {
+                "title": "Parkplatzbelegung mit KI erkennen",
+                "description": "Freie und belegte Stellplätze per Kamera erkennen – eigene Objekterkennung ohne Programmieren trainieren, lokal auf Mac oder PC.",
+                "tags": [
+                    "Computer Vision",
+                    "YOLO",
+                    "Einsteiger"
+                ],
+                "href": "/guides/parking-space-detection"
+            },
+            {
+                "title": "KI für Rechtschreibkorrektur trainieren",
+                "description": "Ein kleines Sprachmodell mit LoRA auf Satzpaaren feinjustieren – lokal, geführt und ohne Trainingsskripte.",
+                "tags": [
+                    "LLM",
+                    "LoRA",
+                    "Text"
+                ],
+                "href": "/guides/spelling-correction-ai"
             }
         ]
     },
@@ -8368,12 +8393,32 @@
             "heading": "Einzelvergleiche",
             "items": [
                 {
-                    "href": "/compare/mlx-lora-studio",
-                    "label": "FrameTrain vs. MLX LoRA Studio"
+                    "href": "/best-ai-training-software-mac",
+                    "label": "Beste KI-Trainings-Software für Mac"
                 },
                 {
-                    "href": "/compare/unsloth",
-                    "label": "FrameTrain vs. Unsloth"
+                    "href": "/compare/create-ml",
+                    "label": "FrameTrain vs. Create ML"
+                },
+                {
+                    "href": "/compare/roboflow",
+                    "label": "FrameTrain vs. Roboflow"
+                },
+                {
+                    "href": "/compare/lobe",
+                    "label": "Lobe-Alternativen"
+                },
+                {
+                    "href": "/compare/kiln",
+                    "label": "FrameTrain vs. Kiln"
+                },
+                {
+                    "href": "/compare/llama-factory",
+                    "label": "FrameTrain vs. LLaMA-Factory"
+                },
+                {
+                    "href": "/compare/mlx-lora-studio",
+                    "label": "FrameTrain vs. MLX LoRA Studio"
                 },
                 {
                     "href": "/compare/google-colab",
@@ -8382,6 +8427,10 @@
                 {
                     "href": "/guides/mlx-vs-pytorch",
                     "label": "MLX vs. PyTorch auf dem Mac"
+                },
+                {
+                    "href": "/compare/unsloth",
+                    "label": "FrameTrain vs. Unsloth Studio"
                 }
             ]
         }
@@ -8966,6 +9015,14 @@
         ],
         "related": [
             {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
+                "href": "/guides/parking-space-detection",
+                "label": "Parkplatzbelegung mit KI erkennen"
+            },
+            {
                 "href": "/apple-silicon",
                 "label": "Training auf dem Mac"
             },
@@ -9126,22 +9183,22 @@
         "ctaTitle": "Testet FrameTrain mit euren eigenen Daten."
     },
     "PageVsUnsloth": {
-        "metaTitle": "FrameTrain vs. Unsloth – Desktop-App oder Python-Bibliothek?",
-        "metaDescription": "FrameTrain oder Unsloth für lokales LLM-Fine-Tuning? Ehrlicher Vergleich: GUI vs. Code, Plattformen, Apple Silicon, LoRA/QLoRA und für wen sich was lohnt.",
+        "metaTitle": "FrameTrain vs. Unsloth Studio – lokales Fine-Tuning im Vergleich",
+        "metaDescription": "Unsloth Studio oder FrameTrain? Vergleich für lokales Fine-Tuning auf Mac und PC: Oberfläche, Apple Silicon, Datensätze, Bildmodelle, Testen und Kosten.",
         "breadcrumb": [
             {
                 "name": "Vergleich",
                 "path": "/compare"
             },
             {
-                "name": "FrameTrain vs. Unsloth",
+                "name": "FrameTrain vs. Unsloth Studio",
                 "path": "/compare/unsloth"
             }
         ],
         "eyebrow": "Vergleich",
-        "titleA": "FrameTrain vs. Unsloth.",
-        "titleB": "Oberfläche oder Python-Code?",
-        "lead": "Beide trainieren Modelle mit LoRA auf eigener Hardware. <b>Unsloth</b> ist eine Python-Bibliothek, optimiert auf Geschwindigkeit auf NVIDIA-GPUs. <b>FrameTrain</b> ist eine Desktop-App, die den ganzen Weg vom Datensatz bis zum getesteten Modell abdeckt.",
+        "titleA": "FrameTrain vs. Unsloth Studio.",
+        "titleB": "Zwei Oberflächen, unterschiedlicher Fokus.",
+        "lead": "Beide trainieren Modelle lokal mit LoRA. <b>Unsloth</b> ist als Python-Bibliothek bekannt geworden und bringt mit <b>Unsloth Studio</b> inzwischen eine kostenlose Oberfläche für Sprachmodelle mit. <b>FrameTrain</b> ist eine Desktop-App, die den ganzen Weg vom Datensatz bis zum getesteten Modell abdeckt – auch für Bild-, Audio- und Objekterkennungsmodelle.",
         "sections": [
             {
                 "type": "table",
@@ -9156,17 +9213,17 @@
                     [
                         "Bedienung",
                         "Desktop-App mit Oberfläche",
-                        "Python-Code, z. B. in Notebooks"
+                        "Unsloth Studio (Desktop-App und lokale Weboberfläche) oder Python-Code"
                     ],
                     [
                         "Plattformen",
                         "Windows, macOS, Linux",
-                        "Linux, Windows (oft über WSL)"
+                        "Windows, macOS, Linux"
                     ],
                     [
                         "Apple Silicon (M1–M4)",
                         "yes",
-                        "partial"
+                        "Ja, über MLX"
                     ],
                     [
                         "NVIDIA CUDA",
@@ -9184,14 +9241,19 @@
                         "yes"
                     ],
                     [
-                        "Datensätze erstellen und labeln",
+                        "Datensätze erstellen",
+                        "Ja, inkl. Labeln von Bildern, Audio, Text",
+                        "Teilweise, aus Dokumenten wie PDF und CSV"
+                    ],
+                    [
+                        "Objekterkennung (YOLO)",
                         "yes",
                         "no"
                     ],
                     [
                         "Modelle testen und bewerten",
-                        "yes",
-                        "no"
+                        "Ja, Labor mit Fehler-Rückgabe",
+                        "Teilweise, Chat"
                     ],
                     [
                         "Versionierung der Trainingsläufe",
@@ -9206,10 +9268,10 @@
                     [
                         "Kosten",
                         "ab 3,33 € im Monat",
-                        "Open-Source-Version kostenlos"
+                        "kostenlos"
                     ]
                 ],
-                "note": "Stand: Oktober 2026. Beide Projekte entwickeln sich schnell – prüft die Details bei Unsloth im Zweifel selbst."
+                "note": "Stand: November 2026, laut Unsloth-Dokumentation. Unsloth entwickelt sich schnell – prüf die Details im Zweifel dort."
             },
             {
                 "type": "choose",
@@ -9219,21 +9281,21 @@
                     {
                         "title": "Nimm FrameTrain, wenn …",
                         "items": [
-                            "du nicht programmieren willst oder kannst",
-                            "du auf einem Mac oder unter Windows ohne WSL trainierst",
+                            "du auch Bild-, Audio- oder Objekterkennungsmodelle trainierst",
                             "du deinen Datensatz erst noch bauen und labeln musst",
-                            "du Modelle nach dem Training testen und verbessern willst",
-                            "du Bild-, Text- und Sprachmodelle in einer App willst"
+                            "du Modelle nach dem Training testen und Fehler zurück ins Training geben willst",
+                            "du Läufe versionieren und vergleichen willst",
+                            "du geführte Vorlagen und einen Coach mit RAM-Schätzung willst"
                         ]
                     },
                     {
-                        "title": "Nimm Unsloth, wenn …",
+                        "title": "Nimm Unsloth Studio, wenn …",
                         "items": [
-                            "du Python sicher beherrschst",
-                            "du auf einer NVIDIA-GPU das Maximum an Geschwindigkeit willst",
-                            "dein Datensatz schon fertig ist",
-                            "du dein Training in eigene Skripte oder Pipelines einbauen willst",
-                            "du ausschließlich Sprachmodelle feinjustierst"
+                            "du ausschließlich Sprachmodelle feinjustierst",
+                            "du ein kostenloses Open-Source-Tool willst",
+                            "du auf NVIDIA das Maximum an Geschwindigkeit willst",
+                            "dein Datensatz schon aus Dokumenten oder Hugging Face kommt",
+                            "du auch Bild- und Video-Diffusionsmodelle ausprobieren willst"
                         ]
                     }
                 ]
@@ -9241,10 +9303,10 @@
             {
                 "type": "text",
                 "eyebrow": "Der Kern",
-                "title": "Unterschiedliche Werkzeuge für unterschiedliche Leute.",
+                "title": "Unterschiedliche Werkzeuge mit anderem Schwerpunkt.",
                 "paragraphs": [
-                    "Unsloth ist exzellent darin, LoRA-Fine-Tuning von Sprachmodellen schneller und speichersparender zu machen. Dafür setzt es voraus, dass du in Python arbeitest und deine Daten schon in der richtigen Form vorliegen.",
-                    "FrameTrain setzt früher an: beim Sammeln und Labeln der Daten. Und es hört später auf: beim Testen im Labor, beim Zurückspielen von Fehlern und beim Bereitstellen über die lokale API. Dafür ist es kein Werkzeug, um das letzte Prozent Geschwindigkeit aus einer GPU zu holen."
+                    "Unsloth ist exzellent darin, LoRA-Fine-Tuning von Sprachmodellen schneller und speichersparender zu machen. Mit Unsloth Studio geht das inzwischen auch ohne Code – der Fokus bleibt aber auf Sprach- und Vision-LLMs.",
+                    "FrameTrain setzt früher an: beim Sammeln und Labeln der Daten, auch für Bilder, Audio und Video. Und es hört später auf: beim Testen im Labor, beim Zurückspielen von Fehlern und beim Bereitstellen über die lokale API."
                 ]
             }
         ],
@@ -9259,10 +9321,14 @@
             },
             {
                 "question": "Funktioniert Unsloth auf dem Mac?",
-                "answer": "Unsloth richtet sich in erster Linie an NVIDIA-GPUs; die Unterstützung für Apple Silicon ist eingeschränkt. FrameTrain läuft auf M1 bis M4 über Metal."
+                "answer": "Laut aktueller Unsloth-Dokumentation ja: Unsloth Studio gibt es als Desktop-App für macOS, Training auf Apple Silicon läuft über MLX. Ältere Anleitungen beschreiben noch reine Inferenz auf dem Mac. FrameTrain läuft auf M1 bis M4 über Metal."
             }
         ],
         "related": [
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
             {
                 "href": "/compare",
                 "label": "FrameTrain vs. MLX LoRA Studio vs. Unsloth"
@@ -9432,6 +9498,10 @@
         ],
         "related": [
             {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
                 "href": "/compare",
                 "label": "Unsloth vs. MLX LoRA Studio vs. FrameTrain"
             },
@@ -9584,6 +9654,10 @@
         ],
         "related": [
             {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
                 "href": "/guides/local-vs-cloud",
                 "label": "Lokal oder Cloud? Kosten und Datenschutz"
             },
@@ -9735,6 +9809,10 @@
             }
         ],
         "related": [
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
             {
                 "href": "/apple-silicon",
                 "label": "KI-Training auf Apple Silicon"
@@ -10322,5 +10400,1249 @@
             ]
         },
         "account": "Mit Konto findest du deine Gespräche auch im <link>Dashboard</link> und in der App unter Einstellungen > Support."
+    },
+    "PageBestMac": {
+        "metaTitle": "Beste KI-Trainings-Software für Mac 2026 – ohne Code, lokal",
+        "metaDescription": "Die besten Apps, um auf dem Mac eigene KI zu trainieren: FrameTrain, Create ML, Roboflow, Unsloth Studio, MLX LoRA Studio, LLaMA-Factory, Kiln, Orange, KNIME. Vergleich 2026.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "Beste KI-Trainings-Software für Mac",
+                "path": "/best-ai-training-software-mac"
+            }
+        ],
+        "eyebrow": "Marktüberblick 2026 · macOS",
+        "titleA": "Die beste Software, um auf dem Mac eine KI zu trainieren.",
+        "titleB": "Ohne Code, lokal, ehrlich verglichen.",
+        "lead": "Du willst eine eigene KI trainieren – etwa eine Bilderkennung, die freie Parkplätze erkennt, oder ein Sprachmodell, das Texte korrigiert – und hast keine Lust auf Skripte, Notebooks und verstreute Datensätze? Hier sind die <b>wichtigsten Mac-Apps für KI-Training 2026</b>, sortiert nach Anwendungsfall.",
+        "heroShot": "home",
+        "heroShotAlt": "FrameTrain auf dem Mac: Startseite mit laufenden Trainings, Ergebnissen und Loss-Verlauf",
+        "sections": [
+            {
+                "type": "text",
+                "eyebrow": "Kurze Antwort",
+                "title": "Welche App für welchen Zweck?",
+                "paragraphs": [
+                    "<b>Alles in einer App, lokal und ohne Code:</b> FrameTrain. Datensatz bauen und labeln, Bild- und Sprachmodelle trainieren, Läufe vergleichen, das Modell testen und über eine lokale API nutzen – auf Mac mit Apple Silicon, Windows und Linux.",
+                    "<b>Bildmodelle für eigene iPhone- oder Mac-Apps:</b> Apple Create ML. Kostenlos mit Xcode, sehr einfach, exportiert Core ML. Ein Werkzeug zum Labeln von Objekten bringt es nicht mit.",
+                    "<b>Bilderkennung im Browser mit Team:</b> Roboflow. Starke Labeling- und Deployment-Werkzeuge, läuft aber in der Cloud; kostenlos nur mit öffentlichen Daten.",
+                    "<b>Nur Sprachmodelle feinjustieren:</b> Unsloth Studio, MLX LoRA Studio oder LLaMA-Factory. Alle drei sind kostenlos und Open Source, konzentrieren sich aber auf LLMs.",
+                    "<b>Klassisches Machine Learning mit Tabellen:</b> Orange oder KNIME – visuelle Workflows, kostenlos, eher für Datenanalyse als für neuronale Netze."
+                ]
+            },
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Alle Tools im Vergleich.",
+                "lead": "Lokal heißt: Das Training läuft auf deinem Mac, deine Daten verlassen ihn nicht.",
+                "cols": [
+                    "Software",
+                    "Am besten für",
+                    "Lokal auf dem Mac",
+                    "Ohne Code",
+                    "Bildmodelle",
+                    "Sprachmodelle",
+                    "Kosten"
+                ],
+                "rows": [
+                    [
+                        "FrameTrain",
+                        "ganzer Workflow vom Datensatz bis zum getesteten Modell",
+                        "yes",
+                        "yes",
+                        "yes",
+                        "yes",
+                        "14 Tage gratis, dann ab 3,33 €/Monat"
+                    ],
+                    [
+                        "Apple Create ML",
+                        "Bild-, Ton- und Textklassifikation für Apple-Apps",
+                        "yes",
+                        "yes",
+                        "yes",
+                        "no",
+                        "kostenlos (Xcode)"
+                    ],
+                    [
+                        "Roboflow",
+                        "Objekterkennung im Team, Labeling im Browser",
+                        "no",
+                        "yes",
+                        "yes",
+                        "no",
+                        "gratis nur mit öffentlichen Daten"
+                    ],
+                    [
+                        "Unsloth Studio",
+                        "LLM-Fine-Tuning mit lokaler Weboberfläche",
+                        "yes",
+                        "yes",
+                        "partial",
+                        "yes",
+                        "kostenlos, Open Source"
+                    ],
+                    [
+                        "MLX LoRA Studio",
+                        "LLM-Fine-Tuning nativ auf Apple MLX",
+                        "yes",
+                        "yes",
+                        "no",
+                        "yes",
+                        "kostenlos, Open Source"
+                    ],
+                    [
+                        "LLaMA-Factory",
+                        "viele LLMs und Verfahren über eine WebUI",
+                        "partial",
+                        "partial",
+                        "no",
+                        "yes",
+                        "kostenlos, Open Source"
+                    ],
+                    [
+                        "Kiln",
+                        "Datensätze, Evals und Fine-Tuning über Cloud-Anbieter",
+                        "partial",
+                        "yes",
+                        "no",
+                        "yes",
+                        "App kostenlos, Training beim Anbieter"
+                    ],
+                    [
+                        "Axolotl",
+                        "LLM-Training per Konfigurationsdatei auf NVIDIA",
+                        "no",
+                        "no",
+                        "no",
+                        "yes",
+                        "kostenlos, Open Source"
+                    ],
+                    [
+                        "Orange Data Mining",
+                        "klassisches ML mit Tabellen, Lehre",
+                        "yes",
+                        "yes",
+                        "partial",
+                        "no",
+                        "kostenlos, Open Source"
+                    ],
+                    [
+                        "KNIME Analytics Platform",
+                        "Daten-Workflows und klassisches ML",
+                        "yes",
+                        "yes",
+                        "partial",
+                        "partial",
+                        "kostenlos, Open Source"
+                    ],
+                    [
+                        "Microsoft Lobe",
+                        "Bildklassifikation ohne Code",
+                        "yes",
+                        "yes",
+                        "yes",
+                        "no",
+                        "eingestellt"
+                    ]
+                ],
+                "note": "Stand: November 2026. Angaben laut den offiziellen Seiten und Dokumentationen der Projekte. Die Tools entwickeln sich schnell – prüf Details im Zweifel dort. Teilweise heißt: mit Einschränkungen, z. B. nur Vision-LLMs, nur Inferenz oder Einrichtung per Kommandozeile."
+            },
+            {
+                "type": "points",
+                "eyebrow": "Nach Anwendungsfall",
+                "title": "Das passende Werkzeug für dein Projekt.",
+                "items": [
+                    {
+                        "title": "Parkplätze, Kameras, Objekte erkennen",
+                        "text": "Für Anfänger ohne Programmierkenntnisse: <b>FrameTrain</b> (Boxen zeichnen, YOLO trainieren, testen – alles lokal) oder <b>Create ML</b>, wenn das Modell in eine iOS-App soll. Roboflow ist stark, lädt deine Kamerabilder aber in die Cloud."
+                    },
+                    {
+                        "title": "Texte korrigieren, Sprachmodell feinjustieren",
+                        "text": "Lokal und geführt: <b>FrameTrain</b> mit Vorlagen, Coach und RAM-Schätzung, oder <b>Unsloth Studio</b> und <b>MLX LoRA Studio</b>, wenn dein Datensatz schon fertig ist. Kiln hilft beim Erstellen von Daten, trainiert aber bei Cloud-Anbietern."
+                    },
+                    {
+                        "title": "Viele Modelle trainieren und alles im Blick behalten",
+                        "text": "Wer mehrere Modelle parallel pflegt, braucht Versionierung und Vergleich der Läufe. <b>FrameTrain</b> legt jede Version automatisch ab und zeigt Loss, Genauigkeit und Rangliste auf einer Startseite. LLaMA-Factory bietet viele Modelle, aber kaum Projektverwaltung."
+                    },
+                    {
+                        "title": "Keine Lust mehr auf Datensätze und Skripte",
+                        "text": "Der eigentliche Aufwand liegt selten im Training, sondern im Organisieren. <b>FrameTrain</b> bringt einen Dataset Builder mit (Import, Labeln, Duplikat- und Balance-Check, Train/Val/Test-Export). Create ML, Orange und KNIME setzen fertige Daten voraus."
+                    }
+                ]
+            },
+            {
+                "type": "points",
+                "eyebrow": "Worauf achten",
+                "title": "So erkennst du gute KI-Trainings-Software für den Mac.",
+                "items": [
+                    {
+                        "title": "Apple Silicon statt CUDA",
+                        "text": "Viele Werkzeuge sind für NVIDIA gebaut. Auf dem Mac zählt, ob die GPU über <b>Metal (MPS)</b> oder <b>MLX</b> genutzt wird – sonst trainierst du auf der CPU."
+                    },
+                    {
+                        "title": "Lokal oder Cloud",
+                        "text": "Cloud-Tools sind bequem, aber Bilder deiner Kameras, Kundentexte oder Firmendaten landen fremd. Lokale Apps trainieren auf deinem Rechner, ohne Stundenpreise."
+                    },
+                    {
+                        "title": "Datensatz inklusive?",
+                        "text": "Fast alle Tools erwarten fertige, gelabelte Daten. Prüf, ob du Daten importieren, labeln und aufteilen kannst, ohne zwischen drei Programmen zu wechseln."
+                    },
+                    {
+                        "title": "Testen nach dem Training",
+                        "text": "Ein Modell ist erst fertig, wenn du es mit echten Beispielen geprüft hast. Gut sind Apps, in denen du Fehler sofort zurück in den Datensatz gibst."
+                    }
+                ]
+            },
+            {
+                "type": "steps",
+                "eyebrow": "Beispiel",
+                "title": "So trainierst du in FrameTrain deine erste KI auf dem Mac.",
+                "items": [
+                    {
+                        "title": "App laden und Python prüfen",
+                        "text": "FrameTrain für macOS herunterladen. Die App braucht <b>Python 3.10 bis 3.13</b> und einen Mac mit M1 oder neuer."
+                    },
+                    {
+                        "title": "Datensatz bauen",
+                        "text": "Bilder oder Texte aus Ordnern, CSV, Webseiten oder Hugging Face importieren und per Tastatur labeln."
+                    },
+                    {
+                        "title": "Modell und Vorlage wählen",
+                        "text": "Zum Beispiel YOLO11 für Objekterkennung oder ein kleines Sprachmodell mit LoRA. Der Coach schätzt vorher den Speicherbedarf."
+                    },
+                    {
+                        "title": "Trainieren, testen, verbessern",
+                        "text": "Fortschritt live verfolgen, im Labor mit echten Beispielen testen, Fehler mit einem Klick zurück in den Datensatz geben."
+                    }
+                ],
+                "shot": "studio-boxes",
+                "shotAlt": "FrameTrain Dataset Builder: Bild mit Boxen für Objekterkennung"
+            }
+        ],
+        "faq": [
+            {
+                "question": "Welche Software ist die beste, um auf dem Mac eine KI ohne Programmieren zu trainieren?",
+                "answer": "Für Bild- und Sprachmodelle in einer App ist FrameTrain die umfassendste lokale Lösung ohne Code: Datensatz bauen, trainieren, testen und nutzen auf einem Mac mit Apple Silicon. Für reine Bildklassifikation in Apple-Apps ist Create ML kostenlos und sehr einfach. Für reines LLM-Fine-Tuning eignen sich Unsloth Studio und MLX LoRA Studio."
+            },
+            {
+                "question": "Gibt es eine Alternative zu Microsoft Lobe?",
+                "answer": "Ja. Lobe wird nicht mehr weiterentwickelt. Lokale Alternativen ohne Code sind Apple Create ML (Bildklassifikation, kostenlos) und FrameTrain (Klassifikation und Objekterkennung mit eingebautem Labeling). Im Browser bieten Google Teachable Machine und Roboflow ähnliche Funktionen."
+            },
+            {
+                "question": "Kann ich auf einem Mac überhaupt KI-Modelle trainieren?",
+                "answer": "Ja. Macs mit Apple Silicon (M1 bis M4) trainieren über Metal oder MLX auf der GPU. Kleine Bildmodelle und LoRA-Fine-Tuning kleiner Sprachmodelle laufen schon mit 16 GB gemeinsamem Speicher gut; für 7B-Modelle sind 32 GB empfehlenswert. Intel-Macs werden von den meisten aktuellen Tools nicht mehr unterstützt."
+            },
+            {
+                "question": "Welche Software erkennt freie und belegte Parkplätze?",
+                "answer": "Dafür trainierst du ein Objekterkennungs- oder Klassifikationsmodell auf Bildern deiner Kamera. Ohne Programmieren geht das mit FrameTrain (lokal, YOLO) oder Roboflow (Cloud). Eine Schritt-für-Schritt-Anleitung findest du in unserem Guide zur Parkplatzerkennung."
+            },
+            {
+                "question": "Welche App eignet sich, um eine KI für Rechtschreibkorrektur zu trainieren?",
+                "answer": "Du brauchst Satzpaare aus fehlerhaftem und korrigiertem Text und ein kleines Sprachmodell, das du mit LoRA feinjustierst. Lokal und geführt geht das mit FrameTrain; wenn die Daten schon fertig sind, auch mit Unsloth Studio oder MLX LoRA Studio."
+            },
+            {
+                "question": "Was kostet KI-Trainings-Software für den Mac?",
+                "answer": "Create ML, Unsloth Studio, MLX LoRA Studio, LLaMA-Factory, Orange und KNIME sind kostenlos. FrameTrain kostet nach 14 Tagen Testphase ab 3,33 € im Monat (39,99 € im Jahr). Bei Roboflow und Kiln-Fine-Tuning zahlst du je nach Plan oder Cloud-Anbieter."
+            }
+        ],
+        "related": [
+            {
+                "href": "/guides/parking-space-detection",
+                "label": "Parkplatzbelegung mit KI erkennen"
+            },
+            {
+                "href": "/guides/spelling-correction-ai",
+                "label": "KI für Rechtschreibkorrektur trainieren"
+            },
+            {
+                "href": "/compare/create-ml",
+                "label": "FrameTrain vs. Create ML"
+            },
+            {
+                "href": "/compare/roboflow",
+                "label": "FrameTrain vs. Roboflow"
+            },
+            {
+                "href": "/compare/lobe",
+                "label": "Lobe-Alternativen"
+            },
+            {
+                "href": "/compare/kiln",
+                "label": "FrameTrain vs. Kiln"
+            },
+            {
+                "href": "/compare/llama-factory",
+                "label": "FrameTrain vs. LLaMA-Factory"
+            },
+            {
+                "href": "/compare/unsloth",
+                "label": "FrameTrain vs. Unsloth Studio"
+            },
+            {
+                "href": "/compare/mlx-lora-studio",
+                "label": "FrameTrain vs. MLX LoRA Studio"
+            }
+        ],
+        "itemList": [
+            "FrameTrain",
+            "Apple Create ML",
+            "Roboflow",
+            "Unsloth Studio",
+            "MLX LoRA Studio",
+            "LLaMA-Factory",
+            "Kiln",
+            "Axolotl",
+            "Orange Data Mining",
+            "KNIME Analytics Platform"
+        ],
+        "ctaTitle": "Trainier deine erste KI heute Abend auf deinem Mac."
+    },
+    "PageVsCreateMl": {
+        "metaTitle": "FrameTrain vs. Apple Create ML – KI-Training auf dem Mac",
+        "metaDescription": "Create ML oder FrameTrain? Vergleich für Mac-Nutzer: Bildklassifikation, Objekterkennung, Labeling, Sprachmodelle, Export und Kosten – ehrlich und aktuell.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. Create ML",
+                "path": "/compare/create-ml"
+            }
+        ],
+        "eyebrow": "Vergleich",
+        "titleA": "FrameTrain vs. Apple Create ML.",
+        "titleB": "Apple-Werkzeug oder kompletter Trainings-Workflow?",
+        "lead": "<b>Create ML</b> ist Apples kostenlose App zum Trainieren von Core-ML-Modellen und liegt jedem Xcode bei. <b>FrameTrain</b> ist eine Desktop-App, die auch den Datensatz, Sprachmodelle und das Testen abdeckt – auf Mac, Windows und Linux.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Was beide können – und was nicht.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Create ML"
+                ],
+                "rows": [
+                    [
+                        "Bedienung",
+                        "Desktop-App ohne Code",
+                        "Mac-App ohne Code (Teil von Xcode)"
+                    ],
+                    [
+                        "Plattformen",
+                        "macOS, Windows, Linux",
+                        "nur macOS"
+                    ],
+                    [
+                        "Bildklassifikation",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Objekterkennung",
+                        "Ja (YOLO)",
+                        "yes"
+                    ],
+                    [
+                        "Objekte im Bild labeln",
+                        "Ja, eingebauter Dataset Builder",
+                        "Nein, Labels kommen von außen"
+                    ],
+                    [
+                        "Sprachmodelle feinjustieren (LoRA)",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Textklassifikation",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Modell nach dem Training testen",
+                        "Ja, Labor mit Fehler-Rückgabe",
+                        "Teilweise, Vorschau"
+                    ],
+                    [
+                        "Exportformat",
+                        "PyTorch/Hugging Face, YOLO-Gewichte",
+                        "Core ML für Apple-Apps"
+                    ],
+                    [
+                        "Lokale API zum Nutzen des Modells",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Kosten",
+                        "14 Tage gratis, dann ab 3,33 €/Monat",
+                        "kostenlos"
+                    ]
+                ],
+                "note": "Stand: November 2026, laut Apples Create-ML-Dokumentation."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Was passt zu dir?",
+                "cards": [
+                    {
+                        "title": "Nimm FrameTrain, wenn …",
+                        "items": [
+                            "du deine Bilder erst noch labeln musst",
+                            "du neben Bildmodellen auch Sprachmodelle trainieren willst",
+                            "das Modell in Python, auf einem Server oder Raspberry Pi laufen soll",
+                            "du Trainingsläufe versionieren und vergleichen willst",
+                            "du auch unter Windows oder Linux arbeitest"
+                        ]
+                    },
+                    {
+                        "title": "Nimm Create ML, wenn …",
+                        "items": [
+                            "dein Modell in eine iPhone-, iPad- oder Mac-App soll",
+                            "deine Daten schon gelabelt in Ordnern liegen",
+                            "dir Bild-, Ton- oder Textklassifikation reicht",
+                            "du ohnehin mit Xcode arbeitest",
+                            "es kostenlos sein soll"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "eyebrow": "Der Kern",
+                "title": "Create ML ist für Apple-Apps gebaut.",
+                "paragraphs": [
+                    "Create ML ist großartig, wenn das Ziel ein Core-ML-Modell für eine Swift-App ist: Ordner mit Bildern hineinziehen, trainieren, fertig. Die Grenze liegt davor und danach – Objekte labeln musst du mit einem anderen Werkzeug, und das Modell läuft vor allem in Apples Ökosystem.",
+                    "FrameTrain deckt den ganzen Weg ab: Bilder sammeln, Boxen zeichnen, YOLO oder ein Sprachmodell trainieren, im Labor testen und das Ergebnis über eine lokale API in eigene Skripte einbinden. Das macht es zur besseren Wahl für Projekte wie eine Parkplatz- oder Kameraüberwachung, die nicht in einer iPhone-App enden."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Ist Create ML kostenlos?",
+                "answer": "Ja. Create ML gehört zu Xcode und ist auf jedem Mac kostenlos nutzbar."
+            },
+            {
+                "question": "Kann Create ML Sprachmodelle feinjustieren?",
+                "answer": "Nein. Create ML trainiert Klassifikations- und Erkennungsmodelle, aber kein LoRA-Fine-Tuning großer Sprachmodelle. Dafür eignen sich FrameTrain, Unsloth Studio oder MLX LoRA Studio."
+            },
+            {
+                "question": "Brauche ich für Create ML einen Mac mit Apple Silicon?",
+                "answer": "Create ML läuft auf aktuellen macOS-Versionen, ist auf Apple Silicon aber deutlich schneller. FrameTrain setzt auf dem Mac Apple Silicon (M1 oder neuer) voraus."
+            }
+        ],
+        "related": [
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
+                "href": "/computer-vision",
+                "label": "Objekterkennung ohne Code"
+            },
+            {
+                "href": "/compare/lobe",
+                "label": "Lobe-Alternativen"
+            }
+        ],
+        "ctaTitle": "Von der Kamera zum fertigen Modell – in einer App."
+    },
+    "PageVsRoboflow": {
+        "metaTitle": "Roboflow-Alternative für den Mac – lokal trainieren mit FrameTrain",
+        "metaDescription": "Roboflow oder FrameTrain? Bilder labeln und Objekterkennung trainieren – in der Cloud oder lokal auf dem Mac. Vergleich von Datenschutz, Kosten und Workflow.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. Roboflow",
+                "path": "/compare/roboflow"
+            }
+        ],
+        "eyebrow": "Vergleich",
+        "titleA": "FrameTrain vs. Roboflow.",
+        "titleB": "Cloud-Plattform oder lokale Desktop-App?",
+        "lead": "Beide helfen dir, Bilder zu labeln und ein Objekterkennungsmodell zu trainieren. <b>Roboflow</b> ist eine Cloud-Plattform im Browser mit starken Team-Funktionen. <b>FrameTrain</b> erledigt denselben Weg lokal auf deinem Mac oder PC – deine Bilder verlassen den Rechner nicht.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Was beide können – und was nicht.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Roboflow"
+                ],
+                "rows": [
+                    [
+                        "Wo läuft es",
+                        "lokal auf deinem Rechner",
+                        "Cloud, im Browser"
+                    ],
+                    [
+                        "Bilder bleiben privat",
+                        "yes",
+                        "Teilweise, nur in bezahlten Plänen privat"
+                    ],
+                    [
+                        "Labeln mit Boxen",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Labeln im Team",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Objekterkennung (YOLO)",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Sprach- und Textmodelle",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Training ohne Upload großer Bildordner",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Öffentliche Datensätze",
+                        "Hugging Face, eigene Ordner",
+                        "Roboflow Universe"
+                    ],
+                    [
+                        "Bereitstellung",
+                        "lokale API",
+                        "gehostete API, Edge-Deployment"
+                    ],
+                    [
+                        "Kosten",
+                        "14 Tage gratis, dann ab 3,33 €/Monat",
+                        "gratis mit öffentlichen Daten, sonst kostenpflichtige Pläne"
+                    ]
+                ],
+                "note": "Stand: November 2026, laut roboflow.com/pricing und der Roboflow-Dokumentation. Preise und Credits ändern sich häufig."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Was passt zu dir?",
+                "cards": [
+                    {
+                        "title": "Nimm FrameTrain, wenn …",
+                        "items": [
+                            "Kamerabilder von Haus, Hof, Parkplatz oder Betrieb privat bleiben sollen",
+                            "du ohne monatliche Credits beliebig oft trainieren willst",
+                            "du allein oder im kleinen Team arbeitest",
+                            "du neben Bildern auch Text- oder Audiomodelle trainierst",
+                            "du große Bildordner nicht hochladen willst"
+                        ]
+                    },
+                    {
+                        "title": "Nimm Roboflow, wenn …",
+                        "items": [
+                            "mehrere Leute gleichzeitig labeln sollen",
+                            "deine Daten öffentlich sein dürfen",
+                            "du ein gehostetes Modell per Cloud-API willst",
+                            "du keine eigene GPU und keinen Apple-Silicon-Mac hast",
+                            "du fertige Datensätze aus Roboflow Universe nutzen willst"
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "eyebrow": "Der Kern",
+                "title": "Gleiche Aufgabe, anderer Ort.",
+                "paragraphs": [
+                    "Roboflow ist eine der bekanntesten Plattformen für Computer Vision: Hochladen, Labeln, Trainieren und Bereitstellen in einem Browser-Workflow. Der Preis dafür: Deine Bilder liegen auf fremden Servern, und das Training kostet Credits.",
+                    "FrameTrain bringt denselben Ablauf auf deinen Rechner. Du wählst einen Bildordner, zeichnest Boxen, trainierst YOLO auf der GPU deines Macs und testest das Modell im Labor. Für Projekte mit sensiblen Kamerabildern – etwa eine Parkplatzerkennung – ist das oft der entscheidende Unterschied."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Gibt es eine lokale Alternative zu Roboflow?",
+                "answer": "Ja. FrameTrain labelt Bilder, trainiert YOLO-Modelle und testet sie komplett lokal auf Mac, Windows oder Linux. Für reines Labeling gibt es außerdem Open-Source-Tools wie Label Studio oder CVAT, die du selbst hostest."
+            },
+            {
+                "question": "Kann ich Roboflow-Datensätze in FrameTrain verwenden?",
+                "answer": "Ja, wenn du sie im YOLO-Format exportierst. FrameTrain importiert YOLO-Labels direkt in den Dataset Builder."
+            },
+            {
+                "question": "Ist Roboflow kostenlos?",
+                "answer": "Der kostenlose Public-Plan setzt voraus, dass Datensätze und Modelle öffentlich auf Roboflow Universe liegen. Private Projekte brauchen einen bezahlten Plan."
+            }
+        ],
+        "related": [
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
+                "href": "/guides/parking-space-detection",
+                "label": "Parkplatzbelegung mit KI erkennen"
+            },
+            {
+                "href": "/computer-vision",
+                "label": "Objekterkennung ohne Code"
+            }
+        ],
+        "ctaTitle": "Labeln und trainieren, ohne ein Bild hochzuladen."
+    },
+    "PageVsLobe": {
+        "metaTitle": "Lobe-Alternative 2026 – Bilderkennung ohne Code auf dem Mac",
+        "metaDescription": "Microsoft Lobe wird nicht mehr entwickelt. Die besten Alternativen für Bildklassifikation ohne Code: FrameTrain, Create ML, Teachable Machine, Roboflow – im Vergleich.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "Lobe-Alternativen",
+                "path": "/compare/lobe"
+            }
+        ],
+        "eyebrow": "Alternativen",
+        "titleA": "Lobe wird nicht mehr entwickelt.",
+        "titleB": "Das sind die besten Alternativen.",
+        "lead": "<b>Microsoft Lobe</b> war die einfachste Art, ohne Code eine Bilderkennung zu trainieren. Die App wird nicht mehr weiterentwickelt, die Website leitet nur noch auf GitHub weiter. Wenn du ein Modell für Bilder trainieren willst – etwa für freie Parkplätze, Werkstücke oder Tiere –, findest du hier den passenden Ersatz.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Lobe-Alternativen im Vergleich.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Create ML",
+                    "Teachable Machine",
+                    "Roboflow"
+                ],
+                "rows": [
+                    [
+                        "Läuft lokal",
+                        "yes",
+                        "yes",
+                        "Teilweise, im Browser",
+                        "no"
+                    ],
+                    [
+                        "Plattformen",
+                        "Mac, Windows, Linux",
+                        "nur Mac",
+                        "Browser",
+                        "Browser"
+                    ],
+                    [
+                        "Bildklassifikation",
+                        "yes",
+                        "yes",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Objekterkennung mit Boxen",
+                        "yes",
+                        "yes",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Labeln in der App",
+                        "yes",
+                        "no",
+                        "Ja, per Ordner/Webcam",
+                        "yes"
+                    ],
+                    [
+                        "Modell testen und verbessern",
+                        "yes",
+                        "partial",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Sprachmodelle",
+                        "yes",
+                        "no",
+                        "no",
+                        "no"
+                    ],
+                    [
+                        "Kosten",
+                        "ab 3,33 €/Monat, 14 Tage gratis",
+                        "kostenlos",
+                        "kostenlos",
+                        "gratis mit öffentlichen Daten"
+                    ]
+                ],
+                "note": "Stand: November 2026."
+            },
+            {
+                "type": "points",
+                "eyebrow": "Kurz erklärt",
+                "title": "Welche Lobe-Alternative für wen?",
+                "items": [
+                    {
+                        "title": "FrameTrain",
+                        "text": "Am nächsten an Lobes Idee einer Desktop-App, geht aber weiter: Objekterkennung, Labeln per Tastatur mit Modellvorschlägen, Testen im Labor und Nutzung über eine <b>lokale API</b>."
+                    },
+                    {
+                        "title": "Apple Create ML",
+                        "text": "Kostenlos und sehr einfach, wenn deine Bilder schon in Klassenordnern liegen und das Modell in eine Apple-App soll."
+                    },
+                    {
+                        "title": "Google Teachable Machine",
+                        "text": "Schnell im Browser ausprobiert, ideal für Schule und Demos. Für echte Projekte mit vielen Bildern zu begrenzt."
+                    },
+                    {
+                        "title": "Roboflow",
+                        "text": "Professionelle Cloud-Plattform mit Team-Labeling. Kostenlos nur, wenn deine Daten öffentlich sein dürfen."
+                    }
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Wird Microsoft Lobe noch unterstützt?",
+                "answer": "Nein. Die Lobe-Desktop-App wird nicht mehr weiterentwickelt, lobe.ai leitet auf das GitHub-Repository weiter. Bestehende Installationen können weiter funktionieren, bekommen aber keine Updates."
+            },
+            {
+                "question": "Was ist die beste Lobe-Alternative für den Mac?",
+                "answer": "Für Bildklassifikation in Apple-Apps ist Create ML die kostenlose Wahl. Wer auch Objekte labeln, das Modell testen und lokal per API nutzen will, ist mit FrameTrain besser bedient."
+            },
+            {
+                "question": "Kann ich meine Lobe-Bilder weiterverwenden?",
+                "answer": "Ja. Lobe speichert Bilder in Ordnern pro Label. Diese Ordnerstruktur kannst du direkt in FrameTrain oder Create ML importieren."
+            }
+        ],
+        "related": [
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
+                "href": "/compare/create-ml",
+                "label": "FrameTrain vs. Create ML"
+            },
+            {
+                "href": "/computer-vision",
+                "label": "Objekterkennung ohne Code"
+            }
+        ],
+        "ctaTitle": "Mach weiter, wo Lobe aufgehört hat."
+    },
+    "PageVsKiln": {
+        "metaTitle": "FrameTrain vs. Kiln AI – lokales Fine-Tuning auf dem Mac",
+        "metaDescription": "Kiln oder FrameTrain? Kiln erstellt Datensätze und startet Fine-Tuning bei Cloud-Anbietern, FrameTrain trainiert lokal auf deinem Mac. Ehrlicher Vergleich.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. Kiln",
+                "path": "/compare/kiln"
+            }
+        ],
+        "eyebrow": "Vergleich",
+        "titleA": "FrameTrain vs. Kiln.",
+        "titleB": "Wo läuft das Training wirklich?",
+        "lead": "Beide sind Desktop-Apps für Mac, Windows und Linux, die dir Datensätze und Fine-Tuning ohne Code abnehmen. Der große Unterschied: <b>Kiln</b> schickt das Fine-Tuning an Cloud-Anbieter wie Fireworks, Together oder OpenAI. <b>FrameTrain</b> trainiert auf deiner eigenen GPU.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Was beide können – und was nicht.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "Kiln"
+                ],
+                "rows": [
+                    [
+                        "Bedienung",
+                        "Desktop-App ohne Code",
+                        "Desktop-App ohne Code"
+                    ],
+                    [
+                        "Plattformen",
+                        "macOS, Windows, Linux",
+                        "macOS, Windows, Linux"
+                    ],
+                    [
+                        "Fine-Tuning läuft lokal",
+                        "yes",
+                        "Nein, bei Cloud-Anbietern oder per Export"
+                    ],
+                    [
+                        "Synthetische Trainingsdaten erzeugen",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "Evals und Prompt-Optimierung",
+                        "partial",
+                        "yes"
+                    ],
+                    [
+                        "Bild-, Audio- und Videomodelle",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Live-Metriken beim Training",
+                        "yes",
+                        "Teilweise, beim Anbieter"
+                    ],
+                    [
+                        "Modell lokal testen und hosten",
+                        "yes",
+                        "Teilweise, über Ollama"
+                    ],
+                    [
+                        "Kosten",
+                        "14 Tage gratis, dann ab 3,33 €/Monat",
+                        "App kostenlos, Training beim Anbieter bezahlt"
+                    ]
+                ],
+                "note": "Stand: November 2026, laut der Kiln-Dokumentation (Fine-Tuning-Guide)."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Was passt zu dir?",
+                "cards": [
+                    {
+                        "title": "Nimm FrameTrain, wenn …",
+                        "items": [
+                            "deine Trainingsdaten den Rechner nicht verlassen dürfen",
+                            "du die GPU deines Macs nutzen willst statt Cloud-Rechnungen",
+                            "du auch Bild- oder Audiomodelle trainierst",
+                            "du Trainingsläufe live verfolgen und vergleichen willst"
+                        ]
+                    },
+                    {
+                        "title": "Nimm Kiln, wenn …",
+                        "items": [
+                            "du Prompts, Evals und Fine-Tuning für Produkt-LLMs kombinierst",
+                            "du große Modelle trainieren willst, die nicht auf deinen Mac passen",
+                            "Cloud-Training für dich in Ordnung ist",
+                            "du mit mehreren Leuten an Datensätzen arbeitest"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Kann Kiln lokal auf dem Mac fine-tunen?",
+                "answer": "Nicht direkt in der App. Kiln startet Fine-Tuning bei Anbietern wie Fireworks, Together, OpenAI oder Google Vertex. Alternativ exportiert es den Datensatz als JSONL, den du mit Unsloth oder Axolotl selbst trainierst."
+            },
+            {
+                "question": "Kann ich Kiln und FrameTrain kombinieren?",
+                "answer": "Ja. Einen in Kiln erzeugten JSONL-Datensatz kannst du in FrameTrain importieren und dort lokal mit LoRA trainieren."
+            }
+        ],
+        "related": [
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
+                "href": "/guides/spelling-correction-ai",
+                "label": "KI für Rechtschreibkorrektur trainieren"
+            },
+            {
+                "href": "/guides/lora-finetuning",
+                "label": "LoRA Fine-Tuning erklärt"
+            }
+        ],
+        "ctaTitle": "Fine-Tuning, das auf deinem Rechner bleibt."
+    },
+    "PageVsLlamaFactory": {
+        "metaTitle": "FrameTrain vs. LLaMA-Factory – Fine-Tuning-GUI für den Mac",
+        "metaDescription": "LLaMA-Factory WebUI oder FrameTrain? Vergleich für lokales LLM-Fine-Tuning auf Apple Silicon: Einrichtung, Modelle, Datensätze, Dashboard und Testen.",
+        "breadcrumb": [
+            {
+                "name": "Vergleich",
+                "path": "/compare"
+            },
+            {
+                "name": "FrameTrain vs. LLaMA-Factory",
+                "path": "/compare/llama-factory"
+            }
+        ],
+        "eyebrow": "Vergleich",
+        "titleA": "FrameTrain vs. LLaMA-Factory.",
+        "titleB": "Mächtige WebUI oder geführte Desktop-App?",
+        "lead": "<b>LLaMA-Factory</b> ist ein Open-Source-Framework, das hunderte Sprachmodelle und viele Trainingsverfahren unterstützt und eine WebUI mitbringt. <b>FrameTrain</b> ist eine Desktop-App, die auch Datensätze, Bildmodelle, Versionierung und Tests abdeckt.",
+        "sections": [
+            {
+                "type": "table",
+                "eyebrow": "Auf einen Blick",
+                "title": "Was beide können – und was nicht.",
+                "cols": [
+                    "",
+                    "FrameTrain",
+                    "LLaMA-Factory"
+                ],
+                "rows": [
+                    [
+                        "Installation",
+                        "App herunterladen, Python 3.10–3.13",
+                        "pip-Installation, Start per Kommandozeile"
+                    ],
+                    [
+                        "Oberfläche",
+                        "native Desktop-App",
+                        "WebUI im Browser"
+                    ],
+                    [
+                        "Apple Silicon",
+                        "Ja, über Metal",
+                        "Teilweise, über MPS mit Einschränkungen"
+                    ],
+                    [
+                        "NVIDIA CUDA",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "LoRA und QLoRA",
+                        "yes",
+                        "yes"
+                    ],
+                    [
+                        "DPO, PPO, ORPO und Co.",
+                        "no",
+                        "yes"
+                    ],
+                    [
+                        "Datensätze bauen und labeln",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Bildmodelle wie YOLO",
+                        "yes",
+                        "no"
+                    ],
+                    [
+                        "Dashboard über alle Läufe und Versionen",
+                        "yes",
+                        "partial"
+                    ],
+                    [
+                        "Kosten",
+                        "14 Tage gratis, dann ab 3,33 €/Monat",
+                        "kostenlos, Open Source"
+                    ]
+                ],
+                "note": "Stand: November 2026, laut LLaMA-Factory-README und Dokumentation."
+            },
+            {
+                "type": "choose",
+                "eyebrow": "Entscheidungshilfe",
+                "title": "Was passt zu dir?",
+                "cards": [
+                    {
+                        "title": "Nimm FrameTrain, wenn …",
+                        "items": [
+                            "du ohne Kommandozeile starten willst",
+                            "du viele Modelle und Versionen übersichtlich verwalten willst",
+                            "dein Datensatz noch nicht fertig ist",
+                            "du auch Bild- oder Audiomodelle trainierst"
+                        ]
+                    },
+                    {
+                        "title": "Nimm LLaMA-Factory, wenn …",
+                        "items": [
+                            "du die größte Auswahl an LLMs und Verfahren willst",
+                            "du Python und die Kommandozeile sicher beherrschst",
+                            "du hauptsächlich auf NVIDIA-GPUs trainierst",
+                            "es kostenlos und Open Source sein soll"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Läuft LLaMA-Factory auf dem Mac?",
+                "answer": "Ja, über das MPS-Backend von PyTorch auf Apple Silicon. Es gibt aber Einschränkungen, zum Beispiel bei einigen Quantisierungs- und Speicheroptimierungen, die für NVIDIA gebaut sind."
+            },
+            {
+                "question": "Ist FrameTrain eine Oberfläche für LLaMA-Factory?",
+                "answer": "Nein. FrameTrain ist eine eigenständige App auf Basis von PyTorch, Hugging Face und PEFT."
+            }
+        ],
+        "related": [
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            },
+            {
+                "href": "/compare/unsloth",
+                "label": "FrameTrain vs. Unsloth Studio"
+            },
+            {
+                "href": "/apple-silicon",
+                "label": "Fine-Tuning auf Apple Silicon"
+            }
+        ],
+        "ctaTitle": "Alle Modelle, alle Läufe, ein Überblick."
+    },
+    "PageGuideParking": {
+        "metaTitle": "Parkplatzbelegung mit KI erkennen – ohne Programmieren",
+        "metaDescription": "Freie und belegte Parkplätze per Kamera erkennen: eigene KI ohne Vorkenntnisse trainieren, lokal auf Mac oder PC. Anleitung mit Datensatz, Training und Test.",
+        "breadcrumb": [
+            {
+                "name": "Guides",
+                "path": "/guides"
+            },
+            {
+                "name": "Parkplatzerkennung mit KI",
+                "path": "/guides/parking-space-detection"
+            }
+        ],
+        "eyebrow": "Guide · Computer Vision für Einsteiger",
+        "titleA": "Freie Parkplätze mit KI erkennen.",
+        "titleB": "Ohne Programmieren, auf deinem eigenen Mac.",
+        "lead": "Eine Kamera filmt deinen Parkplatz, und eine KI sagt dir, welche Plätze frei und welche belegt sind. Das klingt nach einem Projekt für Data Scientists – mit der richtigen Software trainierst du so ein Modell aber <b>ohne eine Zeile Code</b>. Hier ist der Weg.",
+        "heroShot": "studio-boxes",
+        "heroShotAlt": "FrameTrain Dataset Builder: Boxen auf einem Bild markieren",
+        "sections": [
+            {
+                "type": "points",
+                "eyebrow": "Zwei Ansätze",
+                "title": "Wie eine KI Parkplätze erkennt.",
+                "items": [
+                    {
+                        "title": "Objekterkennung pro Stellplatz",
+                        "text": "Du markierst auf Kamerabildern jeden Stellplatz mit einer Box und der Klasse <b>frei</b> oder <b>belegt</b>. Das Modell lernt, beides zu unterscheiden – auch bei Regen, Nacht und Schatten. Das ist der robusteste Weg für eine fest montierte Kamera."
+                    },
+                    {
+                        "title": "Autos erkennen und abgleichen",
+                        "text": "Ein fertiges Modell erkennt Autos, und ein Skript vergleicht ihre Position mit festen Stellplatz-Bereichen. Geht ohne eigenes Training, ist aber ungenauer bei verdeckten oder schräg geparkten Autos und braucht Programmierung."
+                    }
+                ]
+            },
+            {
+                "type": "steps",
+                "eyebrow": "Schritt für Schritt",
+                "title": "So trainierst du dein Parkplatz-Modell in FrameTrain.",
+                "items": [
+                    {
+                        "title": "Bilder sammeln",
+                        "text": "Nimm über mehrere Tage Fotos von deiner Kamera auf – morgens, abends, bei Sonne und Regen. <b>100 bis 300 Bilder</b> sind ein guter Start. Videos zerlegt FrameTrain direkt in Einzelbilder."
+                    },
+                    {
+                        "title": "Projekt anlegen",
+                        "text": "Im Dataset Builder ein Projekt vom Typ Objekterkennung mit den Klassen frei und belegt anlegen und den Bildordner importieren. Die Bilder bleiben auf deinem Rechner."
+                    },
+                    {
+                        "title": "Stellplätze markieren",
+                        "text": "Boxen um jeden Stellplatz ziehen und per Tastatur die Klasse wählen. Nach den ersten Bildern schlägt ein vorläufiges Modell die Boxen selbst vor – du korrigierst nur noch."
+                    },
+                    {
+                        "title": "YOLO trainieren",
+                        "text": "Basismodell wie YOLO11 wählen, Vorlage übernehmen, Training starten. Auf einem Mac mit M-Chip dauert ein erster Durchlauf meist nur Minuten."
+                    },
+                    {
+                        "title": "Testen und nachbessern",
+                        "text": "Im Labor neue Kamerabilder prüfen. Falsch erkannte Plätze gibst du mit einem Klick als Korrektur zurück in den Datensatz und trainierst erneut."
+                    },
+                    {
+                        "title": "Modell nutzen",
+                        "text": "In der Hosting-Ansicht das Modell laden und über die <b>lokale API</b> abfragen, etwa aus einem kleinen Skript, das alle paar Minuten ein Kamerabild prüft."
+                    }
+                ],
+                "shot": "lab-pose",
+                "shotAlt": "FrameTrain Labor: Testergebnis mit Buttons Richtig und Falsch"
+            },
+            {
+                "type": "points",
+                "eyebrow": "Tipps aus der Praxis",
+                "title": "Damit dein Modell zuverlässig wird.",
+                "items": [
+                    {
+                        "title": "Gleiche Perspektive",
+                        "text": "Trainiere mit Bildern genau der Kamera, die später im Einsatz ist. Ein Modell von einer anderen Perspektive wird deutlich schlechter."
+                    },
+                    {
+                        "title": "Beide Klassen ausgewogen",
+                        "text": "Achte darauf, dass es ähnlich viele freie wie belegte Plätze gibt. FrameTrain warnt bei unausgewogenen Klassen."
+                    },
+                    {
+                        "title": "Schwierige Fälle gezielt sammeln",
+                        "text": "Nacht, Schnee, Gegenlicht, Motorräder und Menschen auf dem Platz – genau diese Bilder machen ein Modell robust."
+                    },
+                    {
+                        "title": "Öffentliche Daten als Start",
+                        "text": "Datensätze wie PKLot oder CNRPark zeigen Parkplätze aus vielen Blickwinkeln. Sie eignen sich zum Ausprobieren; für deinen Platz brauchst du trotzdem eigene Bilder."
+                    }
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Welche Software brauche ich, um eine Parkplatzerkennung ohne Programmieren zu trainieren?",
+                "answer": "Eine App, die Labeln, Training und Testen ohne Code abdeckt. FrameTrain macht das lokal auf Mac, Windows und Linux. Roboflow bietet den gleichen Ablauf in der Cloud, Create ML für Apple-Apps – dort musst du die Boxen aber mit einem anderen Werkzeug zeichnen."
+            },
+            {
+                "question": "Wie viele Bilder brauche ich?",
+                "answer": "Für einen ersten Test reichen 100 bis 300 Kamerabilder mit allen sichtbaren Stellplätzen markiert. Für einen zuverlässigen Dauerbetrieb solltest du Bilder aus verschiedenen Tageszeiten, Wetterlagen und Jahreszeiten ergänzen."
+            },
+            {
+                "question": "Reicht ein MacBook für das Training?",
+                "answer": "Ja. Ein Mac mit M1 oder neuer und 16 GB gemeinsamem Speicher trainiert ein YOLO-Modell für Parkplätze in Minuten bis wenigen Stunden. Mit 8 GB geht es auch, nur langsamer und mit kleineren Modellen."
+            },
+            {
+                "question": "Kann das Modell später auf einem Raspberry Pi laufen?",
+                "answer": "Ultralytics-YOLO-Modelle lassen sich mit den Ultralytics-Werkzeugen zum Beispiel nach ONNX exportieren und auf kleinen Geräten nutzen. FrameTrain selbst übernimmt diesen Export derzeit nicht."
+            },
+            {
+                "question": "Werden meine Kamerabilder hochgeladen?",
+                "answer": "Nein. In FrameTrain bleiben Bilder, Labels und Modell auf deinem Rechner."
+            }
+        ],
+        "related": [
+            {
+                "href": "/computer-vision",
+                "label": "Objekterkennung ohne Code"
+            },
+            {
+                "href": "/compare/roboflow",
+                "label": "FrameTrain vs. Roboflow"
+            },
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            }
+        ],
+        "ctaTitle": "Trainier deine Parkplatz-KI noch heute."
+    },
+    "PageGuideSpelling": {
+        "metaTitle": "KI für Rechtschreibkorrektur trainieren – lokal auf dem Mac",
+        "metaDescription": "Eigene KI zur Rechtschreib- und Grammatikkorrektur trainieren: Datensatz aus Satzpaaren, LoRA-Fine-Tuning eines kleinen Sprachmodells, lokal und ohne Code.",
+        "breadcrumb": [
+            {
+                "name": "Guides",
+                "path": "/guides"
+            },
+            {
+                "name": "KI für Rechtschreibkorrektur",
+                "path": "/guides/spelling-correction-ai"
+            }
+        ],
+        "eyebrow": "Guide · Sprachmodelle feinjustieren",
+        "titleA": "Eine KI für Rechtschreibkorrektur trainieren.",
+        "titleB": "Lokal, geführt und ohne Trainingsskripte.",
+        "lead": "Für dein Projekt brauchst du eine KI, die Texte korrigiert – in deinem Stil, mit deinen Fachbegriffen, ohne die Texte an einen Cloud-Dienst zu schicken? Dann feinjustierst du ein kleines Sprachmodell mit <b>LoRA</b> auf Satzpaaren. So geht es Schritt für Schritt.",
+        "sections": [
+            {
+                "type": "text",
+                "eyebrow": "Das Prinzip",
+                "title": "Aus fehlerhaft wird korrekt.",
+                "paragraphs": [
+                    "Ein Sprachmodell lernt Korrektur aus Beispielen: Auf der einen Seite steht ein Satz mit Fehlern, auf der anderen die korrigierte Fassung. Nach einigen tausend solcher Paare übernimmt das Modell das Muster – auch für Sätze, die es nie gesehen hat.",
+                    "Du musst dafür kein Modell von Grund auf trainieren. Ein vortrainiertes kleines Modell, etwa mit 0,5 bis 3 Milliarden Parametern, kennt die Sprache schon. Mit <b>LoRA</b> passt du nur einen kleinen Teil der Gewichte an – das läuft auf einem Mac mit Apple Silicon."
+                ]
+            },
+            {
+                "type": "steps",
+                "eyebrow": "Schritt für Schritt",
+                "title": "So trainierst du deinen Korrektor in FrameTrain.",
+                "items": [
+                    {
+                        "title": "Satzpaare sammeln",
+                        "text": "Im Dataset Builder ein Projekt vom Typ Text-zu-Antwort anlegen. Paare aus CSV oder JSONL importieren – oder korrekte Texte nehmen und Fehler erzeugen lassen."
+                    },
+                    {
+                        "title": "Beispiele ergänzen",
+                        "text": "Mit KI-generierten Beispielen typische Fehler abdecken: Groß- und Kleinschreibung, das und dass, Kommas, Tippfehler. <b>2.000 bis 10.000 Paare</b> sind ein guter Start."
+                    },
+                    {
+                        "title": "Modell wählen",
+                        "text": "Ein kleines, mehrsprachiges Modell von Hugging Face laden. Der Coach schätzt vorher, ob es in den Speicher deines Macs passt."
+                    },
+                    {
+                        "title": "Mit LoRA trainieren",
+                        "text": "Vorlage für LoRA übernehmen und starten. Loss-Kurve und Analyse zeigen live, ob das Modell lernt oder auswendig lernt."
+                    },
+                    {
+                        "title": "Testen",
+                        "text": "Im Labor eigene Sätze eingeben und das Ergebnis bewerten. Schlechte Korrekturen wandern als neue Beispiele in den Datensatz."
+                    },
+                    {
+                        "title": "Einbinden",
+                        "text": "Das Modell in der Hosting-Ansicht laden und über die lokale API aus deinem Projekt aufrufen."
+                    }
+                ],
+                "shot": "training-lora",
+                "shotAlt": "FrameTrain Training: LoRA-Einstellungen für ein Sprachmodell"
+            },
+            {
+                "type": "points",
+                "eyebrow": "Ehrlich gesagt",
+                "title": "Wann sich ein eigenes Modell lohnt.",
+                "items": [
+                    {
+                        "title": "Lohnt sich",
+                        "text": "Wenn Texte vertraulich sind, du Fachsprache oder einen Hausstil brauchst, offline arbeiten willst oder viele Texte ohne laufende API-Kosten korrigierst."
+                    },
+                    {
+                        "title": "Lohnt sich eher nicht",
+                        "text": "Wenn dir allgemeine Rechtschreibprüfung reicht. Dafür gibt es fertige Werkzeuge wie LanguageTool, die regelbasiert und sofort einsatzbereit sind."
+                    }
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "question": "Welche Software eignet sich, um eine Rechtschreibkorrektur-KI lokal auf dem Mac zu trainieren?",
+                "answer": "FrameTrain führt dich durch Datensatz, LoRA-Training und Test, alles lokal. Wenn dein Datensatz schon fertig ist, kannst du auch Unsloth Studio oder MLX LoRA Studio nutzen. Kiln hilft beim Erzeugen von Daten, trainiert aber bei Cloud-Anbietern."
+            },
+            {
+                "question": "Wie viele Beispiele brauche ich?",
+                "answer": "Für ein spürbares Ergebnis reichen oft einige tausend gute Satzpaare. Wichtiger als die Menge ist, dass die Fehler denen in deinen echten Texten ähneln."
+            },
+            {
+                "question": "Welches Modell soll ich nehmen?",
+                "answer": "Ein kleines, mehrsprachiges Instruct-Modell mit 0,5 bis 3 Milliarden Parametern. Es ist schnell, passt auf einen Mac mit 16 GB und genügt für Korrekturaufgaben."
+            },
+            {
+                "question": "Verlassen meine Texte den Rechner?",
+                "answer": "Nein. Training und Nutzung laufen in FrameTrain lokal. Nur wenn du den optionalen KI-Assistenten mit einem Cloud-Anbieter aktivierst, gehen Anfragen an diesen Anbieter."
+            }
+        ],
+        "related": [
+            {
+                "href": "/guides/lora-finetuning",
+                "label": "LoRA Fine-Tuning erklärt"
+            },
+            {
+                "href": "/compare/kiln",
+                "label": "FrameTrain vs. Kiln"
+            },
+            {
+                "href": "/best-ai-training-software-mac",
+                "label": "Beste KI-Trainings-Software für Mac"
+            }
+        ],
+        "ctaTitle": "Trainier deinen eigenen Korrektor – lokal."
     }
 }
