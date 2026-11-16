@@ -12,7 +12,7 @@
 
 // ── Modell / Konfiguration (per Vercel-Env überschreibbar) ───────────────────
 const AI_MODEL          = process.env.AI_AUDIT_MODEL      ?? 'claude-sonnet-5';
-const GROQ_MODEL        = process.env.GROQ_AUDIT_MODEL    ?? 'llama-3.3-70b-versatile';
+const GROQ_MODEL        = process.env.GROQ_AUDIT_MODEL    ?? 'openai/gpt-oss-120b';
 const APPROVE_THRESHOLD = numEnv('AI_APPROVE_THRESHOLD', 85); // Score >= X für Auto-Freigabe
 const REJECT_THRESHOLD  = numEnv('AI_REJECT_THRESHOLD',  40); // Score <  X → Auto-Ablehnung
 
@@ -207,31 +207,44 @@ async function callGroq(prompt: string, fetchImpl: typeof fetch = fetch): Promis
   const key = process.env.GROQ_API_KEY;
   if (!key) throw new Error('GROQ_API_KEY nicht konfiguriert');
 
-  const send = () => fetchImpl('https://api.groq.com/openai/v1/chat/completions', {
+  // gpt-oss denkt vor der Antwort; die Denk-Tokens zählen zum Ausgabelimit.
+  const reasoning = GROQ_MODEL.startsWith('openai/gpt-oss');
+  const body = (minimal: boolean) => JSON.stringify({
+    model: GROQ_MODEL,
+    temperature: 0.1,
+    max_completion_tokens: 2500,
+    ...(minimal ? {} : { response_format: { type: 'json_object' } }),
+    ...(minimal || !reasoning ? {} : { reasoning_effort: 'low' }),
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user',   content: prompt },
+    ],
+  });
+  const send = (minimal = false) => fetchImpl('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: GROQ_MODEL,
-      temperature: 0.1,
-      max_tokens: 1500,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user',   content: prompt },
-      ],
-    }),
+    body: body(minimal),
   });
 
   let res = await send();
   if (res.status === 429) {
-    const wait = Math.min(Math.max(Number(res.headers.get('retry-after')) || 5, 1), 15);
+    const wait = Math.min(Math.max(Number(res.headers.get('retry-after')) || 5, 1), 20);
     await new Promise((r) => setTimeout(r, wait * 1000));
     res = await send();
+  }
+  if (res.status === 400) {
+    // Ein Modell, das JSON-Modus oder reasoning_effort nicht kennt, lehnt die
+    // Anfrage ab. Dann ohne die Zusätze – die Antwort wird ohnehin tolerant gelesen.
+    console.error('Groq 400, zweiter Versuch ohne Zusatzparameter:', await res.text());
+    res = await send(true);
   }
   if (!res.ok) {
     const err = await res.text();
     console.error('Groq error:', res.status, err);
-    throw new Error(`Groq Fehler: ${res.status}`);
+    // 404 = Modell unbekannt oder abgeschaltet (16.08.2026: llama-3.3-70b-versatile).
+    throw new Error(res.status === 404
+      ? `Groq Fehler: 404 (Modell ${GROQ_MODEL} unbekannt oder abgeschaltet – GROQ_AUDIT_MODEL prüfen)`
+      : `Groq Fehler: ${res.status}`);
   }
   const data = await res.json();
   return parseAuditJson(String(data?.choices?.[0]?.message?.content ?? ''));

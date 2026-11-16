@@ -64,7 +64,9 @@ describe('Prüfung über Groq', () => {
     expect((init.headers as Record<string, string>).Authorization).toBe('Bearer gsk_test')
     const body = JSON.parse(init.body as string)
     expect(body.response_format).toEqual({ type: 'json_object' })
-    expect(body.model).toBe('llama-3.3-70b-versatile')
+    expect(body.model).toBe('openai/gpt-oss-120b')
+    expect(body.reasoning_effort).toBe('low')
+    expect(body.max_completion_tokens).toBeGreaterThanOrEqual(2000)
     expect(body.messages[1].content).toContain('model.eval()')
   })
 
@@ -90,6 +92,21 @@ describe('Prüfung über Groq', () => {
   it('ungültiger Key ist ein Fehler, keine Entscheidung', async () => {
     fetchMock.mockResolvedValue(response(401, '{"error":"invalid api key"}'))
     await expect(runAutoReview(script)).rejects.toThrow('Groq Fehler: 401')
+  })
+
+  it('ein 400 wird ohne Zusatzparameter wiederholt', async () => {
+    fetchMock
+      .mockResolvedValueOnce(response(400, '{"error":{"message":"response_format not supported"}}'))
+      .mockResolvedValueOnce(response(200, groqBody('Ergebnis: ' + JSON.stringify(good))))
+    await expect(auditScript(script)).resolves.toMatchObject({ verdict: 'approve' })
+    const second = JSON.parse(fetchMock.mock.calls[1][1].body as string)
+    expect(second.response_format).toBeUndefined()
+    expect(second.reasoning_effort).toBeUndefined()
+  })
+
+  it('abgeschaltetes Modell: 404 nennt Modell und Stellschraube', async () => {
+    fetchMock.mockResolvedValue(response(404, '{"error":{"code":"model_not_found"}}'))
+    await expect(runAutoReview(script)).rejects.toThrow(/404 \(Modell openai\/gpt-oss-120b .*GROQ_AUDIT_MODEL/)
   })
 
   it('Sperr-Regel greift ohne Modellaufruf', async () => {
