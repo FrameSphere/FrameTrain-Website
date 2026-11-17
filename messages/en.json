@@ -8782,7 +8782,7 @@
         },
         "pricing": {
             "eyebrow": "Price",
-            "titleA": "One plan. Everything included.",
+            "titleA": "Everything included. For you or your team.",
             "titleB": "Try first, decide later.",
             "lead": "14 days free, no payment details. Afterwards you decide whether to keep going – otherwise the trial simply ends.",
             "monthly": "Monthly",
@@ -8810,6 +8810,24 @@
             "foundingNote": "Founding members keep this price for good. After that, FrameTrain costs €9.99 a month.",
             "promoHint": "Have a voucher code?",
             "promoCta": "Redeem code"
+        },
+        "business": {
+            "planName": "FrameTrain Business",
+            "audience": "For companies where several people work with FrameTrain.",
+            "price": "€149",
+            "perMonth": "/ month",
+            "billing": "excl. VAT · for up to 5 people · businesses only",
+            "features": [
+                "Everything in the regular plan",
+                "Use by up to 5 people in your company, each with their own license key",
+                "Priority support: reply within 24 hours on business days",
+                "Onboarding call for your team (up to 60 minutes)",
+                "Invoice with VAT ID, payment by bank transfer"
+            ],
+            "cta": "Request Business",
+            "ctaNote": "You'll get a quote by email. More than 5 people? Just mention it.",
+            "mailSubject": "FrameTrain Business inquiry",
+            "mailBody": "Company:\nNumber of people:\nVAT ID:\nQuestions or requests:\n"
         },
         "faqExtra": [
             {

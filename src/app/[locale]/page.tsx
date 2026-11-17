@@ -11,6 +11,7 @@ import { NeuronDiagram } from '@/components/landing/NeuronDiagram'
 import { LoopPlayer } from '@/components/landing/LoopPlayer'
 import { UseCaseSwitcher } from '@/components/landing/UseCaseSwitcher'
 import { PricingCard, type PricingCopy } from '@/components/landing/PricingCard'
+import { BusinessCard, type BusinessCopy } from '@/components/landing/BusinessCard'
 import { FaqList } from '@/components/landing/FaqList'
 import { TrialButton, DemoButton, MobileCtaPill } from '@/components/landing/Ctas'
 
@@ -501,6 +502,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             lead={t('pricing.lead')}
           />
           <PricingCard copy={pricingCopy} foundingCount={foundingCount} foundingSpots={FOUNDING_SPOTS} />
+          <BusinessCard copy={t.raw('business') as BusinessCopy} />
         </section>
 
         {/* ── KI Training Coach ───────────────────────────────── */}

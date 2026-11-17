@@ -8785,7 +8785,7 @@
         },
         "pricing": {
             "eyebrow": "Preis",
-            "titleA": "Ein Plan. Alles drin.",
+            "titleA": "Alles drin. Für dich oder dein Team.",
             "titleB": "Erst testen, dann entscheiden.",
             "lead": "14 Tage kostenlos und ohne Zahlungsdaten. Danach entscheidest du, ob du weitermachst – sonst endet der Test einfach.",
             "monthly": "Monatlich",
@@ -8813,6 +8813,24 @@
             "foundingNote": "Founding Members behalten diesen Preis dauerhaft. Danach kostet FrameTrain 9,99 € im Monat.",
             "promoHint": "Gutscheincode?",
             "promoCta": "Code einlösen"
+        },
+        "business": {
+            "planName": "FrameTrain Business",
+            "audience": "Für Firmen, in denen mehrere Personen mit FrameTrain arbeiten.",
+            "price": "149 €",
+            "perMonth": "/ Monat",
+            "billing": "zzgl. USt · für bis zu 5 Personen · nur für Unternehmen",
+            "features": [
+                "Alles aus dem normalen Plan",
+                "Nutzung durch bis zu 5 Personen im Unternehmen, jede mit eigenem Lizenzschlüssel",
+                "Bevorzugter Support: Antwort innerhalb von 24 Stunden an Werktagen",
+                "Onboarding-Call für dein Team (bis 60 Minuten)",
+                "Rechnung mit USt-ID, Zahlung per Überweisung"
+            ],
+            "cta": "Business anfragen",
+            "ctaNote": "Du bekommst ein Angebot per E-Mail. Mehr als 5 Personen? Schreib es einfach dazu.",
+            "mailSubject": "Anfrage FrameTrain Business",
+            "mailBody": "Firma:\nAnzahl Personen:\nUSt-ID:\nFragen oder Wünsche:\n"
         },
         "faqExtra": [
             {
