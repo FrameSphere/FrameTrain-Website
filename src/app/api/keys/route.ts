@@ -32,6 +32,7 @@ export async function GET(req: NextRequest) {
         // Testphase = Gratiszugang ohne eingelösten Gutschein (siehe lib/trial.ts)
         _count: { select: { promoRedemptions: { where: { status: 'completed' } } } },
         apiKeys: {
+          where: { seat: null }, // Business-Plätze stehen im Team-Bereich
           orderBy: { createdAt: 'desc' },
           select: {
             id: true,

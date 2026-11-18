@@ -31,9 +31,10 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Lösche ALLE Keys dieses Users (aktive & inaktive)
+    // Lösche ALLE eigenen Keys dieses Users (aktive & inaktive) — Schlüssel
+    // von Business-Plätzen bleiben, die verwaltet der Inhaber im Team-Bereich
     await prisma.apiKey.deleteMany({
-      where: { userId: user.userId },
+      where: { userId: user.userId, seat: null },
     })
 
     // Generiere neuen Key im korrekten Format (ft_ + 64 hex chars)

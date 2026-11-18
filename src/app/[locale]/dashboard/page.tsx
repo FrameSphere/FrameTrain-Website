@@ -13,6 +13,7 @@ import { TermsUpdateBanner } from '@/components/TermsUpdateBanner'
 import { Footer } from '@/components/Footer'
 import { EmailVerificationBanner } from '@/components/EmailVerificationBanner'
 import { GettingStartedChecklist, DOWNLOAD_FLAG } from '@/components/GettingStartedChecklist'
+import { TeamSection } from '@/components/TeamSection'
 import {
   Download, Key, Copy, Check, ExternalLink, X, RefreshCw,
   Lightbulb, MessageCircle, Send, ChevronDown, Plus, Lock, Eye, EyeOff,
@@ -689,6 +690,9 @@ function DashboardPageInner() {
               </div>
             )}
           </div>
+
+          {/* ── Business-Team (nur Inhaber) ─────────────────────── */}
+          <TeamSection />
 
           {/* ── Download ─────────────────────────────────────────── */}
           <div className="bg-surface border border-line rounded-lg p-8 mb-8 border border-line">

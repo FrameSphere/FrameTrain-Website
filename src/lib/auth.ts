@@ -46,10 +46,13 @@ export async function getUserFromApiKey(key: string): Promise<JWTPayload | null>
 
   const apiKey = await prisma.apiKey.findUnique({
     where: { key },
-    include: { user: { select: { id: true, email: true } } },
+    include: { user: { select: { id: true, email: true } }, seat: { select: { id: true } } },
   })
 
   if (!apiKey || !apiKey.isActive || !apiKey.user) return null
+  // Business-Platz: gehoert technisch zum Konto des Inhabers, darf aber nicht
+  // in seinem Namen handeln (Open-Library-Uploads, Community-Name)
+  if (apiKey.seat) return null
 
   // last-used aktualisieren, aber den Request nicht blockieren
   prisma.apiKey

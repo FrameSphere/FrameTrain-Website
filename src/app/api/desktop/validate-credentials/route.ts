@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { CURRENT_TERMS_VERSION } from '@/lib/legal-version'
+import { cleanDeviceName, decideDevice, isTeamRole, teamHasAccess, type TeamInfo } from '@/lib/team'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -39,7 +40,7 @@ export async function POST(req: NextRequest) {
 
     // Parse request body
     const body = await req.json()
-    const { apiKey, password } = body
+    const { apiKey, password, deviceId, deviceName, takeover } = body
 
     // API-Key ist immer erforderlich; Passwort nur für Email-Accounts
     if (!apiKey) {
@@ -53,7 +54,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Check rate limit
-    const rateLimitCheck = checkRateLimit(clientIp)
+    // Pro IP und Schluessel: In einer Firma melden sich bis zu 5 Personen hinter
+    // derselben IP an (jeder App-Start zaehlt) — die sollen sich nicht
+    // gegenseitig aussperren. Passwort-Raten bleibt je Schluessel begrenzt.
+    const rateLimitCheck = checkRateLimit(`${clientIp}|${String(apiKey).slice(0, 24)}`)
     if (!rateLimitCheck.allowed) {
       return NextResponse.json(
         { 
@@ -94,8 +98,13 @@ export async function POST(req: NextRequest) {
             termsAcceptedAt: true,
             termsVersion: true,
             diagnosticsConsent: true,
+            ownedTeam: { select: { id: true, name: true, seatLimit: true, accessUntil: true } },
           }
-        }
+        },
+        // Business-Platz: eigener Schluessel einer Person im Team des Inhabers
+        seat: {
+          include: { team: { select: { id: true, name: true, seatLimit: true, accessUntil: true } } },
+        },
       }
     })
 
@@ -109,7 +118,13 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // 3. Check if key is active
+    // 3. Check if key is active (gesperrter Business-Platz mit eigener Meldung)
+    if (apiKeyRecord.seat && !apiKeyRecord.seat.isActive) {
+      return NextResponse.json(
+        { error: 'Dieser Platz wurde vom Team-Inhaber gesperrt.', isValid: false, seatLocked: true },
+        { status: 401 }
+      )
+    }
     if (!apiKeyRecord.isActive) {
       return NextResponse.json(
         { 
@@ -131,10 +146,29 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const seat = apiKeyRecord.seat
+
+    // 4b. Business-Platz: Passwort noch nicht festgelegt
+    if (seat) {
+      if (!seat.desktopPasswordHash) {
+        return NextResponse.json(
+          {
+            error: 'Lege für deinen Platz ein eigenes Passwort fest.',
+            isValid: false,
+            needsSeatPassword: true,
+            seatName: seat.name,
+            teamName: seat.team.name,
+          },
+          { status: 403 }
+        )
+      }
+    }
+
     // 5. Verify password
-    // Priorität: desktopPasswordHash (gesetzt via Dashboard) > passwordHash (Email-Accounts)
+    // Business-Platz: eigenes Passwort der Person. Sonst Priorität:
+    // desktopPasswordHash (gesetzt via Dashboard) > passwordHash (Email-Accounts)
     const { desktopPasswordHash, passwordHash } = apiKeyRecord.user
-    const hashToCheck = desktopPasswordHash || passwordHash
+    const hashToCheck = seat ? seat.desktopPasswordHash : (desktopPasswordHash || passwordHash)
 
     if (!hashToCheck) {
       // OAuth-User ohne gesetztes Desktop-Passwort
@@ -169,8 +203,12 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // 6. Check if user has paid
-    if (!apiKeyRecord.user.hasPaid) {
+    // 6. Check if user has paid (Team: Abo des Inhabers oder Rechnung bis accessUntil)
+    const team = seat ? seat.team : apiKeyRecord.user.ownedTeam
+    const hasAccess = team
+      ? teamHasAccess(apiKeyRecord.user.hasPaid, team.accessUntil)
+      : apiKeyRecord.user.hasPaid
+    if (!hasAccess) {
       return NextResponse.json(
         { 
           error: 'Account ist nicht aktiv. Bitte schließe eine Lizenz ab.',
@@ -180,11 +218,48 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // 6b. Ein Platz ist nur auf einem Geraet gleichzeitig aktiv
+    if (seat) {
+      const decision = decideDevice(seat, deviceId, takeover === true)
+      if (decision.kind === 'needs_device') {
+        return NextResponse.json(
+          { error: 'Bitte aktualisiere FrameTrain, um dich mit einem Team-Platz anzumelden.', isValid: false },
+          { status: 426 }
+        )
+      }
+      if (decision.kind === 'in_use') {
+        return NextResponse.json(
+          {
+            error: `Dein Platz wird gerade auf „${decision.deviceName}“ genutzt.`,
+            isValid: false,
+            seatInUse: true,
+            deviceName: decision.deviceName,
+          },
+          { status: 409 }
+        )
+      }
+      await prisma.teamSeat.update({
+        where: { id: seat.id },
+        data: { deviceId: deviceId as string, deviceName: cleanDeviceName(deviceName), lastSeenAt: new Date() },
+      })
+    }
+
     // 7. Update last_used_at
     await prisma.apiKey.update({
       where: { id: apiKeyRecord.id },
       data: { lastUsedAt: new Date() }
     })
+
+    const teamInfo: TeamInfo | null = team
+      ? {
+          id: team.id,
+          name: team.name,
+          seatLimit: team.seatLimit,
+          role: seat ? (isTeamRole(seat.role) ? seat.role : 'member') : 'admin',
+          isOwner: !seat,
+          seatId: seat ? seat.id : null,
+        }
+      : null
 
     // 8. Return success
     return NextResponse.json({
@@ -194,9 +269,13 @@ export async function POST(req: NextRequest) {
       // Einwilligungen aus der Registrierung — die App übernimmt sie als Standard
       // AGB-Zustimmung zählt nur für die aktuelle Fassung; termsUpdated = früher
       // zugestimmt, aber einer älteren Fassung (App zeigt "AGB aktualisiert").
-      termsAccepted: apiKeyRecord.user.termsVersion === CURRENT_TERMS_VERSION,
-      termsUpdated: !!apiKeyRecord.user.termsAcceptedAt && apiKeyRecord.user.termsVersion !== CURRENT_TERMS_VERSION,
+      // Business-Platz: AGB gelten ueber den Vertrag mit dem Unternehmen
+      termsAccepted: seat ? true : apiKeyRecord.user.termsVersion === CURRENT_TERMS_VERSION,
+      termsUpdated: seat ? false : !!apiKeyRecord.user.termsAcceptedAt && apiKeyRecord.user.termsVersion !== CURRENT_TERMS_VERSION,
       diagnosticsConsent: apiKeyRecord.user.diagnosticsConsent,
+      // Business: Team, Rolle und Platz; null = Einzelkonto
+      team: teamInfo,
+      memberName: seat ? seat.name : null,
       message: 'Validierung erfolgreich'
     })
 

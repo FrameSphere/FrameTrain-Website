@@ -57,7 +57,7 @@ export async function grantTrialIfEligible(userId: string): Promise<Date | null>
         data: { hasPaid: true, promoAccessUntil: until },
       })
 
-      const existingKey = await tx.apiKey.findFirst({ where: { userId, isActive: true } })
+      const existingKey = await tx.apiKey.findFirst({ where: { userId, isActive: true, seat: null } })
       if (!existingKey) {
         await tx.apiKey.create({ data: { userId, key: generateApiKey(), isActive: true } })
       }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { rateLimit, getClientIp } from '@/lib/rate-limit'
-import { userIdForApiKey } from '../_shared'
+import { accountForApiKey } from '../_shared'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,8 +17,12 @@ export async function POST(req: NextRequest) {
   if (typeof consent !== 'boolean') {
     return NextResponse.json({ error: 'consent must be boolean' }, { status: 400 })
   }
-  const userId = await userIdForApiKey(apiKey)
-  if (!userId) return NextResponse.json({ error: 'invalid api key' }, { status: 401 })
+  const account = await accountForApiKey(apiKey)
+  if (!account) return NextResponse.json({ error: 'invalid api key' }, { status: 401 })
+  // Business-Platz: Einwilligung gehoert dem Konto des Inhabers — nichts aendern,
+  // der Schalter wirkt dann nur lokal in der App.
+  if (account.seatId) return NextResponse.json({ ok: true, diagnosticsConsent: consent, local: true })
+  const userId = account.userId
 
   await prisma.user.update({
     where: { id: userId },

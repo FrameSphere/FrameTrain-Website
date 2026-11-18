@@ -11659,5 +11659,38 @@
             }
         ],
         "ctaTitle": "Train your own corrector – locally."
+    },
+    "BusinessTeam": {
+        "title": "Team {name}",
+        "seatCount": "{used} of {limit} people",
+        "intro": "Each person gets their own key and sets their own password the first time they sign in to the app. You keep using your regular key above.",
+        "paidUntil": "Paid until {date}.",
+        "statusLocked": "Locked",
+        "statusWaiting": "Waiting for first sign-in",
+        "statusReady": "Signed in",
+        "lastSeen": "last seen {date}",
+        "roleLabel": "Role",
+        "roleAdmin": "Admin",
+        "roleMember": "Member",
+        "roleViewer": "Read only",
+        "copyKey": "Copy key",
+        "lock": "Lock",
+        "unlock": "Unlock",
+        "resetPassword": "Reset password",
+        "releaseDevice": "Release device",
+        "newKey": "New key",
+        "delete": "Delete seat",
+        "confirmDelete": "Delete the seat of {name}? The key stops working.",
+        "confirmNewKey": "Create a new key? The old one stops working right away.",
+        "addTitle": "Add a seat ({free} left)",
+        "nameLabel": "Name",
+        "namePlaceholder": "Anna Smith",
+        "emailLabel": "Email (optional)",
+        "emailPlaceholder": "anna@company.com",
+        "addButton": "Add seat",
+        "addHint": "Then pass the key on. They set their own password.",
+        "full": "All seats are taken. Write to us if you need more.",
+        "nameRequired": "Enter a name.",
+        "genericError": "That didn't work. Try again."
     }
 }

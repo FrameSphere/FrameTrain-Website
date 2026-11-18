@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
       where: {
         userId: currentUser.userId,
         isActive: true,
+        seat: null, // Schlüssel von Business-Plätzen zählen nicht
       },
     })
 
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
 
     // Deactivate any stale inactive keys first (cleanup)
     await prisma.apiKey.deleteMany({
-      where: { userId: currentUser.userId, isActive: false },
+      where: { userId: currentUser.userId, isActive: false, seat: null },
     })
 
     // Save to database as plaintext

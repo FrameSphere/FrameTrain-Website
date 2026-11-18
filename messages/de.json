@@ -11662,5 +11662,38 @@
             }
         ],
         "ctaTitle": "Trainier deinen eigenen Korrektor – lokal."
+    },
+    "BusinessTeam": {
+        "title": "Team {name}",
+        "seatCount": "{used} von {limit} Personen",
+        "intro": "Jede Person bekommt einen eigenen Schlüssel und legt bei der ersten Anmeldung in der App ihr eigenes Passwort fest. Du selbst nutzt deinen normalen Schlüssel oben.",
+        "paidUntil": "Bezahlt bis {date}.",
+        "statusLocked": "Gesperrt",
+        "statusWaiting": "Wartet auf erste Anmeldung",
+        "statusReady": "Angemeldet",
+        "lastSeen": "zuletzt {date}",
+        "roleLabel": "Rolle",
+        "roleAdmin": "Admin",
+        "roleMember": "Mitglied",
+        "roleViewer": "Nur lesen",
+        "copyKey": "Schlüssel kopieren",
+        "lock": "Sperren",
+        "unlock": "Entsperren",
+        "resetPassword": "Passwort zurücksetzen",
+        "releaseDevice": "Gerät freigeben",
+        "newKey": "Neuer Schlüssel",
+        "delete": "Platz löschen",
+        "confirmDelete": "Platz von {name} löschen? Der Schlüssel funktioniert danach nicht mehr.",
+        "confirmNewKey": "Neuen Schlüssel erzeugen? Der alte funktioniert sofort nicht mehr.",
+        "addTitle": "Platz vergeben (noch {free} frei)",
+        "nameLabel": "Name",
+        "namePlaceholder": "Anna Muster",
+        "emailLabel": "E-Mail (optional)",
+        "emailPlaceholder": "anna@firma.de",
+        "addButton": "Platz vergeben",
+        "addHint": "Gib der Person danach den Schlüssel weiter. Das Passwort legt sie selbst fest.",
+        "full": "Alle Plätze sind vergeben. Schreib uns, wenn du mehr brauchst.",
+        "nameRequired": "Gib einen Namen an.",
+        "genericError": "Das hat nicht geklappt. Versuch es noch einmal."
     }
 }

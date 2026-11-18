@@ -52,6 +52,7 @@ model User {
   supportTickets   SupportTicketLink[]
   oauthAuthCodes   OAuthAuthCode[]
   oauthTokens      OAuthToken[]
+  ownedTeam        Team?
 
   @@map("users")
 }
@@ -108,6 +109,7 @@ model ApiKey {
   lastUsedAt DateTime? @map("last_used_at")
 
   user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  seat       TeamSeat?
 
   @@index([key])
   @@index([userId])
@@ -368,4 +370,91 @@ model SupportTicketLink {
   @@unique([userId, ticketId])
   @@index([userId])
   @@map("support_ticket_links")
+}
+
+// FrameTrain Business: ein Konto (Inhaber) teilt Lizenz und Daten mit bis zu
+// seatLimit Personen. Der Inhaber zaehlt als erster Platz und meldet sich mit
+// seinem normalen Schluessel an; jede weitere Person bekommt einen TeamSeat
+// mit eigenem Schluessel (ApiKey des Inhabers) und eigenem Desktop-Passwort.
+// Vergabe von Hand (scripts/business-team.mjs), Zahlung per Rechnung.
+model Team {
+  id          String    @id @default(cuid())
+  name        String
+  ownerId     String    @unique @map("owner_id")
+  seatLimit   Int       @default(5) @map("seat_limit") // Personen inklusive Inhaber
+  accessUntil DateTime? @map("access_until") // bezahlt bis (Rechnung); null = Zugang haengt nur an owner.hasPaid
+  storageHint String?   @map("storage_hint") // wo der Team-Speicher der Firma liegt (Hinweis fuer alle)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  owner      User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  seats      TeamSeat[]
+  entries    TeamEntry[]
+  activities TeamActivity[]
+
+  @@map("teams")
+}
+
+model TeamSeat {
+  id                  String    @id @default(cuid())
+  teamId              String    @map("team_id")
+  apiKeyId            String    @unique @map("api_key_id")
+  name                String
+  email               String?
+  role                String    @default("member") // "admin" | "member" | "viewer"
+  isActive            Boolean   @default(true) @map("is_active")
+  desktopPasswordHash String?   @map("desktop_password_hash") // null = Person legt es bei der ersten Anmeldung fest
+  deviceId            String?   @map("device_id") // Geraet, auf dem der Platz gerade genutzt wird
+  deviceName          String?   @map("device_name")
+  lastSeenAt          DateTime? @map("last_seen_at")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  apiKey ApiKey @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+
+  @@index([teamId])
+  @@map("team_seats")
+}
+
+// Team-Katalog (Business Stufe 2): geteilte Modellversionen und Datasets als
+// Metadaten. Dateien liegen nie hier, sondern im Team-Speicher der Firma
+// (storagePath relativ dazu) oder nur beim Autor (storagePath = null).
+// Jeder Eintrag gehoert seinem Autor; nur Autor oder Admin aendern/entfernen.
+model TeamEntry {
+  id           String    @id @default(cuid())
+  teamId       String    @map("team_id")
+  kind         String // "version" | "dataset"
+  localRef     String    @map("local_ref") // ID beim Autor — erneutes Teilen aktualisiert
+  authorKey    String    @map("author_key") // Seat-ID oder "owner"
+  authorName   String    @map("author_name")
+  title        String
+  payload      Json // Kennzahlen, Aufgabe, Parameter (max. 64 KB)
+  storagePath  String?   @map("storage_path") // relativ zum Team-Speicher; null = Dateien nur beim Autor
+  sizeBytes    BigInt?   @map("size_bytes")
+  auto         Boolean   @default(false) // automatisch nach Training geteilt (nur Kennzahlen)
+  deletedAt    DateTime? @map("deleted_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, kind, localRef, authorKey])
+  @@index([teamId, updatedAt])
+  @@map("team_entries")
+}
+
+model TeamActivity {
+  id        String   @id @default(cuid())
+  teamId    String   @map("team_id")
+  actorName String   @map("actor_name")
+  action    String // "shared" | "updated" | "stored" | "removed" | "fetched"
+  entryId   String?  @map("entry_id")
+  title     String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@index([teamId, createdAt])
+  @@map("team_activities")
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getClientIp, rateLimit } from '@/lib/rate-limit'
-import { userIdForApiKey } from '../_shared'
+import { accountForApiKey } from '../_shared'
 import { linkTickets, listTickets, parseTicketRefs } from '@/lib/support-links'
 
 // Support-Tickets fuer die Desktop-App (Authentifizierung per API-Key wie die
@@ -14,8 +14,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'rate_limited' }, { status: 429 })
   }
   const body = await req.json().catch(() => ({}))
-  const userId = await userIdForApiKey(body?.apiKey)
-  if (!userId) return NextResponse.json({ error: 'invalid api key' }, { status: 401 })
+  const account = await accountForApiKey(body?.apiKey)
+  if (!account) return NextResponse.json({ error: 'invalid api key' }, { status: 401 })
+  // Business-Platz: Support-Verlauf des Inhabers bleibt privat; die Anfragen
+  // der Person bleiben lokal in ihrer App.
+  if (account.seatId) return NextResponse.json({ tickets: [] })
+  const userId = account.userId
   await linkTickets(userId, parseTicketRefs(body?.tickets), 'app')
   return NextResponse.json({ tickets: await listTickets(userId) })
 }

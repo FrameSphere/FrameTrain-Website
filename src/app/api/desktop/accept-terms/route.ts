@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { rateLimit, getClientIp } from '@/lib/rate-limit'
-import { userIdForApiKey } from '../_shared'
+import { accountForApiKey } from '../_shared'
 import { CURRENT_TERMS_VERSION } from '@/lib/legal-version'
 
 export const dynamic = 'force-dynamic'
@@ -14,8 +14,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'rate_limited' }, { status: 429 })
   }
   const { apiKey } = await req.json().catch(() => ({}))
-  const userId = await userIdForApiKey(apiKey)
-  if (!userId) return NextResponse.json({ error: 'invalid api key' }, { status: 401 })
+  const account = await accountForApiKey(apiKey)
+  if (!account) return NextResponse.json({ error: 'invalid api key' }, { status: 401 })
+  // Business-Platz: AGB gelten ueber den Vertrag mit dem Unternehmen
+  if (account.seatId) return NextResponse.json({ ok: true })
+  const userId = account.userId
 
   await prisma.user.updateMany({
     // NULL explizit: "NOT version = X" trifft in SQL keine NULL-Zeilen
