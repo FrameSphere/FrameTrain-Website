@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 vi.mock('@/lib/prisma', () => ({ prisma: {} }))
 import { fetchCimd, isCimdClientId, redirectUriAllowed, validateRedirectUri, validateRegistration } from '../clients'
 import { checkAuthorizeRequest, grantedScope } from '../authorize'
-import { sanitizeManifest, publicTool } from '../types'
+import { sanitizeManifest, publicTool, isRemoteHidden } from '../types'
 
 describe('redirect URIs', () => {
   it('requires https except for loopback', () => {
@@ -144,6 +144,16 @@ describe('authorize request', () => {
 })
 
 describe('manifest', () => {
+  it('hides local-only tools from the remote connector', () => {
+    const tools = sanitizeManifest([
+      { name: 'studio_fetch_web', inputSchema: { type: 'object' } },
+      { name: 'studio_import', inputSchema: { type: 'object' } },
+    ])
+    expect(tools?.map((t) => t.name)).toEqual(['studio_import'])
+    expect(isRemoteHidden('studio_fetch_web')).toBe(true)
+    expect(isRemoteHidden('studio_import')).toBe(false)
+  })
+
   it('drops invalid tools and strips _meta for tools/list', () => {
     const tools = sanitizeManifest([
       { name: 'datasets_list', inputSchema: { type: 'object' }, annotations: { readOnlyHint: true }, _meta: { 'frametrain/approval': 'none' } },

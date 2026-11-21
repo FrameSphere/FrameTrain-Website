@@ -53,6 +53,17 @@ export function sanitizeCallToolResult(raw: unknown): CallToolResult | null {
 const TOOL_NAME_RE = /^[a-z][a-z0-9_]{0,63}$/
 
 /** Prueft ein Manifest der App; ungueltige Eintraege werden verworfen. */
+/**
+ * Werkzeuge, die es nur lokal gibt (Claude Desktop / Claude Code), nicht ueber
+ * frame-train.com. studio_fetch_web durchsucht fremde Webseiten; die OpenAI-Pruefung
+ * hat es nicht freigegeben (22.11.2026). Wieder aufnehmen: Namen hier entfernen.
+ */
+export const REMOTE_HIDDEN_TOOLS: ReadonlySet<string> = new Set(['studio_fetch_web'])
+
+export function isRemoteHidden(name: string): boolean {
+  return REMOTE_HIDDEN_TOOLS.has(name)
+}
+
 export function sanitizeManifest(raw: unknown, maxTools = 500): ManifestTool[] | null {
   if (!Array.isArray(raw)) return null
   const seen = new Set<string>()
@@ -61,6 +72,7 @@ export function sanitizeManifest(raw: unknown, maxTools = 500): ManifestTool[] |
     if (!t || typeof t !== 'object') continue
     const tool = t as ManifestTool
     if (typeof tool.name !== 'string' || !TOOL_NAME_RE.test(tool.name) || seen.has(tool.name)) continue
+    if (isRemoteHidden(tool.name)) continue
     if (!tool.inputSchema || typeof tool.inputSchema !== 'object') continue
     seen.add(tool.name)
     tools.push(tool)

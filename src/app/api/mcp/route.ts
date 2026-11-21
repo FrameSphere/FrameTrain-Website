@@ -12,7 +12,7 @@ import { normalizeResource, verifyAccessToken } from '@/lib/mcp/tokens'
 import { prismaTokenStore } from '@/lib/mcp/tokens-prisma'
 import { deviceManifest, isOnline, latestDevice } from '@/lib/mcp/devices'
 import { FALLBACK_STATUS_TEXT, FALLBACK_TOOLS } from '@/lib/mcp/fallback'
-import { publicTool, textResult } from '@/lib/mcp/types'
+import { isRemoteHidden, publicTool, textResult } from '@/lib/mcp/types'
 import { timeoutResult, waitForJobResult } from '@/lib/mcp/jobs'
 import { prismaJobStore } from '@/lib/mcp/jobs-prisma'
 import { isAllowedOrigin } from '@/lib/mcp/origin'
@@ -100,6 +100,9 @@ export async function POST(req: NextRequest) {
       return (tools && tools.length > 0 ? tools : FALLBACK_TOOLS).map(publicTool)
     },
     async callTool(name, args) {
+      if (isRemoteHidden(name)) {
+        return textResult(`The tool "${name}" is not available through the FrameTrain connector. It only works in the desktop app or a local connection.`, true)
+      }
       if (!connection.user.hasPaid) return textResult(SUBSCRIPTION_TEXT, true)
       const device = await latestDevice(userId)
       const offline = offlineText(connection.user.email)
