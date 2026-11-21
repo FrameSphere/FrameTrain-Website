@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 vi.mock('@/lib/prisma', () => ({ prisma: {} }))
 import { fetchCimd, isCimdClientId, redirectUriAllowed, validateRedirectUri, validateRegistration } from '../clients'
 import { checkAuthorizeRequest, grantedScope } from '../authorize'
-import { sanitizeManifest, publicTool, isRemoteHidden } from '../types'
+import { sanitizeManifest, publicTool, isRemoteHidden, stripHiddenMentions } from '../types'
 
 describe('redirect URIs', () => {
   it('requires https except for loopback', () => {
@@ -152,6 +152,16 @@ describe('manifest', () => {
     expect(tools?.map((t) => t.name)).toEqual(['studio_import'])
     expect(isRemoteHidden('studio_fetch_web')).toBe(true)
     expect(isRemoteHidden('studio_import')).toBe(false)
+  })
+
+  it('removes sentences that point to hidden tools', () => {
+    const d = 'Adds one image (base64-encoded PNG/JPEG/WebP, max ~15 MB) to an image Studio project. studio_fetch_web collects many images from the web at once.'
+    expect(stripHiddenMentions(d)).toBe('Adds one image (base64-encoded PNG/JPEG/WebP, max ~15 MB) to an image Studio project.')
+    expect(stripHiddenMentions('Lists models. Use models_info for details.')).toBe('Lists models. Use models_info for details.')
+    expect(stripHiddenMentions('Provenance, e.g. a source URL. See studio_fetch_web.')).toBe('Provenance, e.g. a source URL.')
+    expect(stripHiddenMentions('Keeps e.g. abbreviations intact.')).toBe('Keeps e.g. abbreviations intact.')
+    const t = publicTool({ name: 'studio_add_image', description: d, inputSchema: { type: 'object' } })
+    expect(t.description).not.toContain('studio_fetch_web')
   })
 
   it('drops invalid tools and strips _meta for tools/list', () => {

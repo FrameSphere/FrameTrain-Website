@@ -64,6 +64,13 @@ export function isRemoteHidden(name: string): boolean {
   return REMOTE_HIDDEN_TOOLS.has(name)
 }
 
+/** Saetze entfernen, die ein nur lokal verfuegbares Werkzeug erwaehnen (sonst verweist die Beschreibung ins Leere). */
+export function stripHiddenMentions(description: string): string {
+  const mentions = (s: string) => [...REMOTE_HIDDEN_TOOLS].some((name) => s.includes(name))
+  if (!mentions(description)) return description
+  return description.split(/(?<=[.!?])\s+/).filter((s) => !mentions(s)).join(' ').trim()
+}
+
 export function sanitizeManifest(raw: unknown, maxTools = 500): ManifestTool[] | null {
   if (!Array.isArray(raw)) return null
   const seen = new Set<string>()
@@ -114,7 +121,7 @@ export function publicTool(tool: ManifestTool): Omit<ManifestTool, '_meta'> {
   const title = typeof tool.title === 'string' && tool.title.trim() ? tool.title : titleFromName(tool.name)
   const annotations = normalizeAnnotations(tool)
   const out: Omit<ManifestTool, '_meta'> = { name: tool.name, title, inputSchema: tool.inputSchema }
-  if (tool.description) out.description = tool.description
+  if (tool.description) out.description = stripHiddenMentions(tool.description)
   if (tool.outputSchema) out.outputSchema = tool.outputSchema
   out.annotations = { ...annotations, title: annotations.title ?? title }
   return out
