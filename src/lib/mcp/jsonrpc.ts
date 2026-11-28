@@ -36,7 +36,9 @@ export const SERVER_INSTRUCTIONS =
   'FrameTrain desktop app, which must be open with remote access enabled. Long-running actions (training, ' +
   'downloads, tests, exports) return a job_id immediately; the matching *_status tool reports progress. ' +
   'Keep polling (system_job_status with wait_seconds 45) until the job is done or failed, even if that takes ' +
-  'several minutes, and never report a running job as a failure. A download that is too large or too slow ' +
+  'several minutes, and never report a running job as a failure. Check a downloaded dataset with datasets_tree ' +
+  'before training; datasets_repair fixes common structure problems and datasets_files_move / ' +
+  'datasets_files_delete manage files inside a dataset. A download that is too large or too slow ' +
   'can be stopped with system_job_cancel; then start a smaller one (include or max_rows for Hugging Face, ' +
   'max_files for URL imports). Good small starting sources: for people and ' +
   'vehicles (and 78 other everyday COCO classes) the 128 labeled images at ' +
